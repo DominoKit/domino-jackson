@@ -9,7 +9,7 @@ Quick start
 
 ### Maven dependencies
 
-currently this is only available by building from source, to get the dependencies clone the repository and do a `mvn clean install`  
+*currently this is only available by building from source*, to get the dependencies clone the repository and do a `mvn clean install`  
 
 then add the following dependecies to your project pom file
 
