@@ -28,7 +28,7 @@ then add the following dependecies to your project pom file
 
 ```
 
-### Usge
+### Usage
 
 Add `<inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>` to your module descriptor XML file.
 
