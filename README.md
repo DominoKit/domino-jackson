@@ -12,7 +12,19 @@ Quick start
 
 ### Maven dependencies
 
-*currently this is only available by building from source*, to get the dependencies clone the repository and do a `mvn clean install`  
+*currently this is only available as a snapshot on repository :
+
+```xml
+<repository>
+ <id>sonatype-snapshots-repo</id>
+ <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+ <snapshots>
+    <enabled>true</enabled>
+    <updatePolicy>always</updatePolicy>
+    <checksumPolicy>fail</checksumPolicy>
+ </snapshots>
+</repository>
+```
 
 then add the following dependecies to your project pom file
 
@@ -21,6 +33,7 @@ then add the following dependecies to your project pom file
     <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
     <artifactId>gwt-jackson-apt-api</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <type>gwt-lib</type>
 </dependency>
 <dependency>
     <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
