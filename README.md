@@ -237,7 +237,7 @@ public class TestBean {
 
 More features from the original GWT-Jackson will be supported, starting from the most basic and important ones
 - Remove all JSNI, _JSNI is partially removed but still used in the serializers and deserializers_ 
-- Support nested beans
+- ~~Support nested beans~~ _done_.
 - Support JsTypes
 - Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
 - Support Inheritance
