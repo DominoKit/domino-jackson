@@ -21,6 +21,7 @@ import com.progressoft.brix.domino.gwtjackson.deser.array.dd.Array2dJsonDeserial
 import com.progressoft.brix.domino.gwtjackson.processor.MappersChainBuilder;
 import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.processor.TypeRegistry;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 
@@ -36,8 +37,12 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private static final String NEW_INSTANCE = "$T.newInstance(";
 
     private CodeBlock.Builder builder = CodeBlock.builder();
-    private StringBuffer format = new StringBuffer();
     private Deque<TypeName> deserializers = new LinkedList<>();
+    private TypeMirror beanType;
+
+    public FieldDeserializersChainBuilder(TypeMirror beanType) {
+        this.beanType = beanType;
+    }
 
     @Override
     public CodeBlock getInstance(Element field) {
@@ -57,23 +62,47 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
             return getArrayDeserializer(typeMirror);
         if (Type.isEnum(typeMirror))
             return getEnumDeserializer(typeMirror);
-        return getBasicDeserializer(typeMirror);
+        return getBasicOrCustomDeserializer(typeMirror);
+    }
+
+    private String getBasicOrCustomDeserializer(TypeMirror typeMirror) {
+        if(Type.isBasicType(typeMirror))
+            return getBasicDeserializer(typeMirror);
+        return getCustomDeserializer(typeMirror);
+    }
+
+    private String getCustomDeserializer(TypeMirror typeMirror) {
+        if(typeMirror.toString().equals(beanType.toString())){
+            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(typeMirror)));
+        }else {
+            if (TypeRegistry.containsDeserializer(typeMirror)) {
+                deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
+            } else {
+                TypeRegistry.registerDeserializer(typeMirror.toString(), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
+                deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
+            }
+        }
+        return "new $T()";
+    }
+
+    private String generateCustomDeserializer(TypeMirror typeMirror) {
+        return Type.generateDeserializer(typeMirror);
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeName.get(EnumJsonDeserializer.class));
         deserializers.addLast(TypeName.get(typeMirror));
-        return NEW_INSTANCE+"$T.class)";
+        return NEW_INSTANCE + "$T.class)";
     }
 
     private String getBasicDeserializer(TypeMirror typeMirror) {
-        deserializers.addLast(TypeName.get(TypeRegistry.getDeserializer(typeMirror)));
+        deserializers.addLast(TypeRegistry.getDeserializer(typeMirror));
         return GET_INSTANCE;
     }
 
     private String getMapDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeName.get(TypeRegistry.getMapDeserializer(typeMirror)));
-        return NEW_INSTANCE+getKeyDeserializer(Type.firstTypeArgument(typeMirror))+", "+getFieldDeserializer(Type.secondTypeArgument(typeMirror))+")";
+        return NEW_INSTANCE + getKeyDeserializer(Type.firstTypeArgument(typeMirror)) + ", " + getFieldDeserializer(Type.secondTypeArgument(typeMirror)) + ")";
     }
 
     private String getKeyDeserializer(TypeMirror typeMirror) {
@@ -83,19 +112,19 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getBasicKeyDeserializer(TypeMirror typeMirror) {
-        deserializers.addLast(TypeName.get(TypeRegistry.getKeyDeserializer(typeMirror.toString())));
+        deserializers.addLast(TypeRegistry.getKeyDeserializer(typeMirror.toString()));
         return GET_INSTANCE;
     }
 
     private String getEnumKeyDeserializer(TypeMirror typeMirror) {
-        deserializers.addLast(TypeName.get(TypeRegistry.getKeyDeserializer(Enum.class.getName())));
+        deserializers.addLast(TypeRegistry.getKeyDeserializer(Enum.class.getName()));
         deserializers.addLast(TypeName.get(typeMirror));
-        return NEW_INSTANCE+"$T.class"+")";
+        return NEW_INSTANCE + "$T.class" + ")";
     }
 
     private String getIterableDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeName.get(TypeRegistry.getCollectionDeserializer(typeMirror)));
-        return NEW_INSTANCE+getFieldDeserializer(Type.firstTypeArgument(typeMirror))+")";
+        return NEW_INSTANCE + getFieldDeserializer(Type.firstTypeArgument(typeMirror)) + ")";
     }
 
     private String getArrayDeserializer(TypeMirror typeMirror) {
@@ -103,14 +132,12 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
             return getBasicDeserializer(typeMirror);
         } else if (Type.is2dArray(typeMirror)) {
             deserializers.addLast(TypeName.get(Array2dJsonDeserializer.class));
-            return NEW_INSTANCE+getFieldDeserializer(Type.deepArrayComponentType(typeMirror))+", "+getArray2dCreatorFormat(typeMirror)+ ")";
+            return NEW_INSTANCE + getFieldDeserializer(Type.deepArrayComponentType(typeMirror)) + ", " + getArray2dCreatorFormat(typeMirror) + ")";
         } else {
             deserializers.addLast(TypeName.get(ArrayJsonDeserializer.class));
-            return NEW_INSTANCE+getFieldDeserializer(Type.arrayComponentType(typeMirror))+", "+ getArrayCreatorFormat(typeMirror)+")";
+            return NEW_INSTANCE + getFieldDeserializer(Type.arrayComponentType(typeMirror)) + ", " + getArrayCreatorFormat(typeMirror) + ")";
         }
     }
-
-    //$T.newInstance($T.getInstance(), (first, second) -> new $T[first][second])
 
     private String getArrayCreatorFormat(TypeMirror typeMirror) {
         deserializers.addLast(TypeName.get(ArrayJsonDeserializer.ArrayCreator.class));

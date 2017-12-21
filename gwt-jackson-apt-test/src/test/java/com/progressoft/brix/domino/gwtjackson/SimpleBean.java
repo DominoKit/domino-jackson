@@ -119,7 +119,7 @@ public class SimpleBean {
         return string;
     }
 
-    public void setString( String string ) {
+    public void setString(String string) {
         this.string = string;
     }
 
@@ -127,7 +127,7 @@ public class SimpleBean {
         return bytePrimitive;
     }
 
-    public void setBytePrimitive( byte bytePrimitive ) {
+    public void setBytePrimitive(byte bytePrimitive) {
         this.bytePrimitive = bytePrimitive;
     }
 
@@ -135,7 +135,7 @@ public class SimpleBean {
         return byteBoxed;
     }
 
-    public void setByteBoxed( Byte byteBoxed ) {
+    public void setByteBoxed(Byte byteBoxed) {
         this.byteBoxed = byteBoxed;
     }
 
@@ -143,7 +143,7 @@ public class SimpleBean {
         return shortPrimitive;
     }
 
-    public void setShortPrimitive( short shortPrimitive ) {
+    public void setShortPrimitive(short shortPrimitive) {
         this.shortPrimitive = shortPrimitive;
     }
 
@@ -151,7 +151,7 @@ public class SimpleBean {
         return shortBoxed;
     }
 
-    public void setShortBoxed( Short shortBoxed ) {
+    public void setShortBoxed(Short shortBoxed) {
         this.shortBoxed = shortBoxed;
     }
 
@@ -159,7 +159,7 @@ public class SimpleBean {
         return intPrimitive;
     }
 
-    public void setIntPrimitive( int intPrimitive ) {
+    public void setIntPrimitive(int intPrimitive) {
         this.intPrimitive = intPrimitive;
     }
 
@@ -167,7 +167,7 @@ public class SimpleBean {
         return intBoxed;
     }
 
-    public void setIntBoxed( Integer intBoxed ) {
+    public void setIntBoxed(Integer intBoxed) {
         this.intBoxed = intBoxed;
     }
 
@@ -175,7 +175,7 @@ public class SimpleBean {
         return longPrimitive;
     }
 
-    public void setLongPrimitive( long longPrimitive ) {
+    public void setLongPrimitive(long longPrimitive) {
         this.longPrimitive = longPrimitive;
     }
 
@@ -183,7 +183,7 @@ public class SimpleBean {
         return longBoxed;
     }
 
-    public void setLongBoxed( Long longBoxed ) {
+    public void setLongBoxed(Long longBoxed) {
         this.longBoxed = longBoxed;
     }
 
@@ -191,7 +191,7 @@ public class SimpleBean {
         return doublePrimitive;
     }
 
-    public void setDoublePrimitive( double doublePrimitive ) {
+    public void setDoublePrimitive(double doublePrimitive) {
         this.doublePrimitive = doublePrimitive;
     }
 
@@ -199,7 +199,7 @@ public class SimpleBean {
         return doubleBoxed;
     }
 
-    public void setDoubleBoxed( Double doubleBoxed ) {
+    public void setDoubleBoxed(Double doubleBoxed) {
         this.doubleBoxed = doubleBoxed;
     }
 
@@ -207,7 +207,7 @@ public class SimpleBean {
         return floatPrimitive;
     }
 
-    public void setFloatPrimitive( float floatPrimitive ) {
+    public void setFloatPrimitive(float floatPrimitive) {
         this.floatPrimitive = floatPrimitive;
     }
 
@@ -215,7 +215,7 @@ public class SimpleBean {
         return floatBoxed;
     }
 
-    public void setFloatBoxed( Float floatBoxed ) {
+    public void setFloatBoxed(Float floatBoxed) {
         this.floatBoxed = floatBoxed;
     }
 
@@ -223,7 +223,7 @@ public class SimpleBean {
         return booleanPrimitive;
     }
 
-    public void setBooleanPrimitive( boolean booleanPrimitive ) {
+    public void setBooleanPrimitive(boolean booleanPrimitive) {
         this.booleanPrimitive = booleanPrimitive;
     }
 
@@ -231,7 +231,7 @@ public class SimpleBean {
         return booleanBoxed;
     }
 
-    public void setBooleanBoxed( Boolean booleanBoxed ) {
+    public void setBooleanBoxed(Boolean booleanBoxed) {
         this.booleanBoxed = booleanBoxed;
     }
 
@@ -239,7 +239,7 @@ public class SimpleBean {
         return charPrimitive;
     }
 
-    public void setCharPrimitive( char charPrimitive ) {
+    public void setCharPrimitive(char charPrimitive) {
         this.charPrimitive = charPrimitive;
     }
 
@@ -247,7 +247,7 @@ public class SimpleBean {
         return charBoxed;
     }
 
-    public void setCharBoxed( Character charBoxed ) {
+    public void setCharBoxed(Character charBoxed) {
         this.charBoxed = charBoxed;
     }
 
@@ -255,7 +255,7 @@ public class SimpleBean {
         return bigInteger;
     }
 
-    public void setBigInteger( BigInteger bigInteger ) {
+    public void setBigInteger(BigInteger bigInteger) {
         this.bigInteger = bigInteger;
     }
 
@@ -263,7 +263,7 @@ public class SimpleBean {
         return bigDecimal;
     }
 
-    public void setBigDecimal( BigDecimal bigDecimal ) {
+    public void setBigDecimal(BigDecimal bigDecimal) {
         this.bigDecimal = bigDecimal;
     }
 
@@ -271,7 +271,7 @@ public class SimpleBean {
         return enumProperty;
     }
 
-    public void setEnumProperty( AnEnum enumProperty ) {
+    public void setEnumProperty(AnEnum enumProperty) {
         this.enumProperty = enumProperty;
     }
 
@@ -279,7 +279,7 @@ public class SimpleBean {
         return date;
     }
 
-    public void setDate( Date date ) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -287,7 +287,7 @@ public class SimpleBean {
         return sqlDate;
     }
 
-    public void setSqlDate( java.sql.Date sqlDate ) {
+    public void setSqlDate(java.sql.Date sqlDate) {
         this.sqlDate = sqlDate;
     }
 
@@ -295,7 +295,7 @@ public class SimpleBean {
         return sqlTime;
     }
 
-    public void setSqlTime( Time sqlTime ) {
+    public void setSqlTime(Time sqlTime) {
         this.sqlTime = sqlTime;
     }
 
@@ -303,7 +303,7 @@ public class SimpleBean {
         return sqlTimestamp;
     }
 
-    public void setSqlTimestamp( Timestamp sqlTimestamp ) {
+    public void setSqlTimestamp(Timestamp sqlTimestamp) {
         this.sqlTimestamp = sqlTimestamp;
     }
 
@@ -311,7 +311,7 @@ public class SimpleBean {
         return stringArray;
     }
 
-    public void setStringArray( String[] stringArray ) {
+    public void setStringArray(String[] stringArray) {
         this.stringArray = stringArray;
     }
 
@@ -319,7 +319,7 @@ public class SimpleBean {
         return enumArray;
     }
 
-    public void setEnumArray( AnEnum[] enumArray ) {
+    public void setEnumArray(AnEnum[] enumArray) {
         this.enumArray = enumArray;
     }
 
@@ -327,7 +327,7 @@ public class SimpleBean {
         return booleanPrimitiveArray;
     }
 
-    public void setBooleanPrimitiveArray( boolean[] booleanPrimitiveArray ) {
+    public void setBooleanPrimitiveArray(boolean[] booleanPrimitiveArray) {
         this.booleanPrimitiveArray = booleanPrimitiveArray;
     }
 
@@ -335,7 +335,7 @@ public class SimpleBean {
         return bytePrimitiveArray;
     }
 
-    public void setBytePrimitiveArray( byte[] bytePrimitiveArray ) {
+    public void setBytePrimitiveArray(byte[] bytePrimitiveArray) {
         this.bytePrimitiveArray = bytePrimitiveArray;
     }
 
@@ -343,7 +343,7 @@ public class SimpleBean {
         return characterPrimitiveArray;
     }
 
-    public void setCharacterPrimitiveArray( char[] characterPrimitiveArray ) {
+    public void setCharacterPrimitiveArray(char[] characterPrimitiveArray) {
         this.characterPrimitiveArray = characterPrimitiveArray;
     }
 
@@ -351,7 +351,7 @@ public class SimpleBean {
         return doublePrimitiveArray;
     }
 
-    public void setDoublePrimitiveArray( double[] doublePrimitiveArray ) {
+    public void setDoublePrimitiveArray(double[] doublePrimitiveArray) {
         this.doublePrimitiveArray = doublePrimitiveArray;
     }
 
@@ -359,7 +359,7 @@ public class SimpleBean {
         return floatPrimitiveArray;
     }
 
-    public void setFloatPrimitiveArray( float[] floatPrimitiveArray ) {
+    public void setFloatPrimitiveArray(float[] floatPrimitiveArray) {
         this.floatPrimitiveArray = floatPrimitiveArray;
     }
 
@@ -367,7 +367,7 @@ public class SimpleBean {
         return integerPrimitiveArray;
     }
 
-    public void setIntegerPrimitiveArray( int[] integerPrimitiveArray ) {
+    public void setIntegerPrimitiveArray(int[] integerPrimitiveArray) {
         this.integerPrimitiveArray = integerPrimitiveArray;
     }
 
@@ -375,7 +375,7 @@ public class SimpleBean {
         return longPrimitiveArray;
     }
 
-    public void setLongPrimitiveArray( long[] longPrimitiveArray ) {
+    public void setLongPrimitiveArray(long[] longPrimitiveArray) {
         this.longPrimitiveArray = longPrimitiveArray;
     }
 
@@ -383,7 +383,7 @@ public class SimpleBean {
         return shortPrimitiveArray;
     }
 
-    public void setShortPrimitiveArray( short[] shortPrimitiveArray ) {
+    public void setShortPrimitiveArray(short[] shortPrimitiveArray) {
         this.shortPrimitiveArray = shortPrimitiveArray;
     }
 
@@ -391,7 +391,7 @@ public class SimpleBean {
         return stringArray2d;
     }
 
-    public void setStringArray2d( String[][] stringArray2d ) {
+    public void setStringArray2d(String[][] stringArray2d) {
         this.stringArray2d = stringArray2d;
     }
 
@@ -399,7 +399,7 @@ public class SimpleBean {
         return enumArray2d;
     }
 
-    public void setEnumArray2d( AnEnum[][] enumArray2d ) {
+    public void setEnumArray2d(AnEnum[][] enumArray2d) {
         this.enumArray2d = enumArray2d;
     }
 
@@ -407,7 +407,7 @@ public class SimpleBean {
         return booleanPrimitiveArray2d;
     }
 
-    public void setBooleanPrimitiveArray2d( boolean[][] booleanPrimitiveArray2d ) {
+    public void setBooleanPrimitiveArray2d(boolean[][] booleanPrimitiveArray2d) {
         this.booleanPrimitiveArray2d = booleanPrimitiveArray2d;
     }
 
@@ -415,7 +415,7 @@ public class SimpleBean {
         return bytePrimitiveArray2d;
     }
 
-    public void setBytePrimitiveArray2d( byte[][] bytePrimitiveArray2d ) {
+    public void setBytePrimitiveArray2d(byte[][] bytePrimitiveArray2d) {
         this.bytePrimitiveArray2d = bytePrimitiveArray2d;
     }
 
@@ -423,7 +423,7 @@ public class SimpleBean {
         return characterPrimitiveArray2d;
     }
 
-    public void setCharacterPrimitiveArray2d( char[][] characterPrimitiveArray2d ) {
+    public void setCharacterPrimitiveArray2d(char[][] characterPrimitiveArray2d) {
         this.characterPrimitiveArray2d = characterPrimitiveArray2d;
     }
 
@@ -431,7 +431,7 @@ public class SimpleBean {
         return doublePrimitiveArray2d;
     }
 
-    public void setDoublePrimitiveArray2d( double[][] doublePrimitiveArray2d ) {
+    public void setDoublePrimitiveArray2d(double[][] doublePrimitiveArray2d) {
         this.doublePrimitiveArray2d = doublePrimitiveArray2d;
     }
 
@@ -439,7 +439,7 @@ public class SimpleBean {
         return floatPrimitiveArray2d;
     }
 
-    public void setFloatPrimitiveArray2d( float[][] floatPrimitiveArray2d ) {
+    public void setFloatPrimitiveArray2d(float[][] floatPrimitiveArray2d) {
         this.floatPrimitiveArray2d = floatPrimitiveArray2d;
     }
 
@@ -447,7 +447,7 @@ public class SimpleBean {
         return integerPrimitiveArray2d;
     }
 
-    public void setIntegerPrimitiveArray2d( int[][] integerPrimitiveArray2d ) {
+    public void setIntegerPrimitiveArray2d(int[][] integerPrimitiveArray2d) {
         this.integerPrimitiveArray2d = integerPrimitiveArray2d;
     }
 
@@ -455,7 +455,7 @@ public class SimpleBean {
         return longPrimitiveArray2d;
     }
 
-    public void setLongPrimitiveArray2d( long[][] longPrimitiveArray2d ) {
+    public void setLongPrimitiveArray2d(long[][] longPrimitiveArray2d) {
         this.longPrimitiveArray2d = longPrimitiveArray2d;
     }
 
@@ -463,7 +463,7 @@ public class SimpleBean {
         return shortPrimitiveArray2d;
     }
 
-    public void setShortPrimitiveArray2d( short[][] shortPrimitiveArray2d ) {
+    public void setShortPrimitiveArray2d(short[][] shortPrimitiveArray2d) {
         this.shortPrimitiveArray2d = shortPrimitiveArray2d;
     }
 
@@ -471,11 +471,12 @@ public class SimpleBean {
         return voidProperty;
     }
 
-    public void setVoidProperty( Void voidProperty ) {
+    public void setVoidProperty(Void voidProperty) {
         this.voidProperty = voidProperty;
     }
 
-    public static void main( String[] args ) {
-        System.out.println( AbstractCollection.class.getCanonicalName());
+    public static void main(String[] args) {
+        System.out.println(AbstractCollection.class.getCanonicalName());
     }
+
 }

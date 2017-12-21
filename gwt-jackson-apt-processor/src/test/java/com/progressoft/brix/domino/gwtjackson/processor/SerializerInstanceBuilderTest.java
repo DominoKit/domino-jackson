@@ -23,15 +23,18 @@ import com.progressoft.brix.domino.gwtjackson.ser.map.MapJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.EnumKeySerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.NumberKeySerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.ToStringKeySerializer;
+import com.squareup.javapoet.ClassName;
 import org.junit.Test;
+
+import javax.lang.model.type.TypeMirror;
 
 import static org.junit.Assert.assertEquals;
 
 public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest{
 
     @Override
-    MappersChainBuilder getMappersChainBuilder() {
-        return new FieldSerializerChainBuilder();
+    MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
+        return new FieldSerializerChainBuilder(beanType);
     }
 
     @Test
@@ -330,4 +333,13 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest{
         runTests();
     }
 
+    @Test
+    public void testNestedBeanTypeField() throws Exception {
+
+        ClassName serializer = ClassName.bestGuess("com.progressoft.brix.domino.gwtjackson.processor.TestBeanBeanJsonSerializerImpl");
+        TypeRegistry.registerSerializer("com.progressoft.brix.domino.gwtjackson.processor.TestBean", serializer);
+        addFieldTest("testBean", result -> assertEquals(buildTestString("new $T()", serializer), result));
+
+        runTests();
+    }
 }

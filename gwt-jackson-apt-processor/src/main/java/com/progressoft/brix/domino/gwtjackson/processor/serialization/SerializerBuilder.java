@@ -77,7 +77,7 @@ class SerializerBuilder{
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD))
-                .addStatement("return $L", new FieldSerializerChainBuilder().getInstance(field))
+                .addStatement("return $L", new FieldSerializerChainBuilder(beanType).getInstance(field))
                 .build();
     }
 

@@ -76,7 +76,7 @@ class DeserializerBuilder {
                 .addModifiers( Modifier.PROTECTED )
                 .addAnnotation( Override.class )
                 .returns( ParameterizedTypeName.get( ClassName.get( JsonDeserializer.class ), DEFAULT_WILDCARD ) )
-                .addStatement( "return $L", new FieldDeserializersChainBuilder().getInstance(field) )
+                .addStatement( "return $L", new FieldDeserializersChainBuilder(beanType).getInstance(field) )
                 .build();
     }
 

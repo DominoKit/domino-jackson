@@ -16,6 +16,7 @@
 package com.progressoft.brix.domino.gwtjackson.processor.serialization;
 
 import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.AbstractBeanJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.BeanPropertySerializer;
 import com.squareup.javapoet.*;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class AptSerializerBuilder extends AbstractMapperGenerator {
 
-    public static final String BEAN_JSON_SERIALIZER_IMPL = "BeanJsonSerializerImpl";
+
 
     public AptSerializerBuilder(TypeMirror beanType, Filer filer) {
         super(beanType, filer);
@@ -42,7 +43,7 @@ public class AptSerializerBuilder extends AbstractMapperGenerator {
 
     @Override
     protected String namePostfix() {
-        return BEAN_JSON_SERIALIZER_IMPL;
+        return Type.BEAN_JSON_SERIALIZER_IMPL;
     }
 
     @Override

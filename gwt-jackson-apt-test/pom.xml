@@ -12,6 +12,10 @@
     <artifactId>gwt-jackson-apt-test</artifactId>
     <packaging>gwt-lib</packaging>
 
+    <name>gwt-jackson-apt-test</name>
+    <url>https://github.com/vegegoku/gwt-jackson-apt</url>
+    <description>Apt based gwt-jackson</description>
+
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -80,16 +84,28 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
                     <moduleName>com.progressoft.brix.domino.gwtjackson.AppTest</moduleName>
                     <moduleShortName>gwtjacksonapt</moduleShortName>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

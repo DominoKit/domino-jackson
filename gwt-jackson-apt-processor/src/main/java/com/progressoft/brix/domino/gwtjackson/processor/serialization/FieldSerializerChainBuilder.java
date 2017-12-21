@@ -24,7 +24,9 @@ import com.progressoft.brix.domino.gwtjackson.ser.IterableJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.array.ArrayJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.array.dd.Array2dJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.MapJsonSerializer;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
@@ -37,15 +39,20 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     private static final String NEW_INSTANCE = "$T.newInstance(";
 
     private CodeBlock.Builder builder=CodeBlock.builder();
-    private Deque<Class> serializers=new LinkedList<>();
+    private Deque<TypeName> serializers=new LinkedList<>();
+    private TypeMirror beanType;
+
+    public FieldSerializerChainBuilder(TypeMirror beanType) {
+        this.beanType = beanType;
+    }
 
     @Override
     public CodeBlock getInstance(Element field){
         return builder.add(getFieldSerializer(field.asType()), asClassesArray()).build();
     }
 
-    private Class[] asClassesArray() {
-        return serializers.toArray(new Class[serializers.size()]);
+    private TypeName[] asClassesArray() {
+        return serializers.toArray(new TypeName[serializers.size()]);
     }
 
     private String getFieldSerializer(TypeMirror typeMirror) {
@@ -59,11 +66,35 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
             return getArraySerializer(typeMirror);
         if(Type.isEnum(typeMirror))
             return getEnumSerializer();
-        return getBasicSerializer(typeMirror);
+        return getBasicOrCustomSerializer(typeMirror);
+    }
+
+    private String getBasicOrCustomSerializer(TypeMirror typeMirror) {
+        if(Type.isBasicType(typeMirror))
+            return getBasicSerializer(typeMirror);
+        return getCustomSerializer(typeMirror);
+    }
+
+    private String getCustomSerializer(TypeMirror typeMirror) {
+        if(typeMirror.toString().equals(beanType.toString())){
+            serializers.addLast(ClassName.bestGuess(Type.serializerName(typeMirror)));
+        }else {
+            if (TypeRegistry.containsSerializer(typeMirror)) {
+                serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
+            } else {
+                TypeRegistry.registerSerializer(typeMirror.toString(), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
+                serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
+            }
+        }
+        return "new $T()";
+    }
+
+    private String generateCustomSerializer(TypeMirror typeMirror) {
+        return Type.generateSerializer(typeMirror);
     }
 
     private String getEnumSerializer() {
-        serializers.addLast(EnumJsonSerializer.class);
+        serializers.addLast(TypeName.get(EnumJsonSerializer.class));
         return GET_INSTANCE;
     }
 
@@ -73,7 +104,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getMapSerializer(TypeMirror typeMirror) {
-        serializers.addLast(MapJsonSerializer.class);
+        serializers.addLast(TypeName.get(MapJsonSerializer.class));
         return NEW_INSTANCE+getKeySerializer(Type.firstTypeArgument(typeMirror))+", " + getFieldSerializer(Type.secondTypeArgument(typeMirror))+")";
     }
 
@@ -86,12 +117,12 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getCollectionSerializer(TypeMirror typeMirror) {
-        serializers.addLast(CollectionJsonSerializer.class);
+        serializers.addLast(TypeName.get(CollectionJsonSerializer.class));
         return NEW_INSTANCE+getFieldSerializer(Type.firstTypeArgument(typeMirror))+")";
     }
 
     private String getIterableSerializer(TypeMirror typeMirror) {
-        serializers.addLast(IterableJsonSerializer.class);
+        serializers.addLast(TypeName.get(IterableJsonSerializer.class));
         return NEW_INSTANCE+getFieldSerializer(Type.firstTypeArgument(typeMirror))+")";
     }
 
@@ -99,10 +130,10 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         if(Type.isPrimitiveArray(typeMirror)) {
             return getBasicSerializer(typeMirror);
         }else if(Type.is2dArray(typeMirror)){
-            serializers.addLast(Array2dJsonSerializer.class);
+            serializers.addLast(TypeName.get(Array2dJsonSerializer.class));
             return NEW_INSTANCE+getFieldSerializer(Type.deepArrayComponentType(typeMirror))+")";
         }else{
-            serializers.addLast(ArrayJsonSerializer.class);
+            serializers.addLast(TypeName.get(ArrayJsonSerializer.class));
             return NEW_INSTANCE+getFieldSerializer(Type.arrayComponentType(typeMirror))+")";
         }
     }

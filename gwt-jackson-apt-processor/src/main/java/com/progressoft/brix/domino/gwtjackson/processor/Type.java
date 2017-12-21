@@ -15,9 +15,12 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor;
 
+import com.progressoft.brix.domino.gwtjackson.processor.serialization.AptSerializerBuilder;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -33,6 +36,8 @@ public class Type {
 
     private static final int FIRST_ARGUMENT = 0;
     private static final int SECOND_ARGUMENT = 1;
+    public static final String BEAN_JSON_SERIALIZER_IMPL = "BeanJsonSerializerImpl";
+    public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
 
     public static TypeName wrapperType(TypeMirror type) {
         if (isPrimitive(type)) {
@@ -118,5 +123,45 @@ public class Type {
 
     public static TypeMirror secondTypeArgument(TypeMirror typeMirror) {
         return ((DeclaredType) typeMirror).getTypeArguments().get(SECOND_ARGUMENT);
+    }
+
+    public static boolean isBasicType(TypeMirror typeMirror) {
+        return TypeRegistry.isBasicType(typeMirror.toString());
+    }
+
+    public static String getPackage(TypeMirror typeMirror) {
+        return elementUtils.getPackageOf(typeUtils.asElement(typeMirror)).getSimpleName().toString();
+    }
+
+    public static Name simpleName(TypeMirror typeMirror) {
+        return typeUtils.asElement(typeMirror).getSimpleName();
+    }
+
+    public static String serializerName(TypeMirror typeMirror){
+        ClassName type = ClassName.bestGuess(typeMirror.toString());
+        return serializerName(type.packageName(), type.simpleName());
+    }
+
+    public static String serializerName(String packageName, String beanName){
+        return packageName + "." + beanName + BEAN_JSON_SERIALIZER_IMPL;
+    }
+
+    public static String deserializerName(TypeMirror typeMirror){
+        ClassName type = ClassName.bestGuess(typeMirror.toString());
+        return deserializerName(type.packageName(), type.simpleName());
+    }
+
+    public static String deserializerName(String packageName, String beanName){
+        return packageName + "." + beanName + BEAN_JSON_DESERIALIZER_IMPL;
+    }
+
+    public static String generateDeserializer(TypeMirror typeMirror) {
+        ClassName type = ClassName.bestGuess(typeMirror.toString());
+        return new DeserializerGenerator().generate(typeMirror, type.packageName(), Type.simpleName(typeMirror));
+    }
+
+    public static String generateSerializer(TypeMirror typeMirror) {
+        ClassName type = ClassName.bestGuess(typeMirror.toString());
+        return new SerializerGenerator().generate(typeMirror, type.packageName(), Type.simpleName(typeMirror));
     }
 }

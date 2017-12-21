@@ -24,8 +24,10 @@ import com.progressoft.brix.domino.gwtjackson.deser.map.key.BaseNumberKeyDeseria
 import com.progressoft.brix.domino.gwtjackson.deser.map.key.EnumKeyDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.map.key.StringKeyDeserializer;
 import com.progressoft.brix.domino.gwtjackson.processor.deserialization.FieldDeserializersChainBuilder;
+import com.squareup.javapoet.ClassName;
 import org.junit.Test;
 
+import javax.lang.model.type.TypeMirror;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Time;
@@ -41,8 +43,8 @@ import static org.junit.Assert.assertEquals;
 public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
 
     @Override
-    MappersChainBuilder getMappersChainBuilder() {
-        return new FieldDeserializersChainBuilder();
+    MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
+        return new FieldDeserializersChainBuilder(beanType);
     }
 
     @Test
@@ -461,7 +463,6 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
 
     @Test
     public void testCollectionArray2dTypeField() throws Exception {
-//        Array2dJsonDeserializer.newInstance(AbstractCollectionJsonDeserializer.newInstance(StringJsonDeserializer.getInstance()), (Array2dJsonDeserializer.Array2dCreator<AbstractCollection<String>>) (first, second) -> new AbstractCollection[first][second])
         addFieldTest("array2dAbstractCollection", result -> assertEquals(buildTestString(
                 "$T.newInstance($T.newInstance($T.getInstance()), ($T<$T<$T>>) (first, second) -> new $T[first][second])",
                 Array2dJsonDeserializer.class, AbstractCollectionJsonDeserializer.class, StringJsonDeserializer.class,
@@ -616,6 +617,16 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
                 "$T.newInstance($T.getInstance(), $T.newInstance($T.getInstance(), ($T<$T>) $T[]::new))",
                 TreeMapJsonDeserializer.class, StringKeyDeserializer.class, ArrayJsonDeserializer.class, BigIntegerJsonDeserializer.class,
                 ArrayCreator.class, BigInteger.class, BigInteger.class), result));
+
+        runTests();
+    }
+
+    @Test
+    public void testNestedBeanTypeField() throws Exception {
+
+        ClassName deserializer = ClassName.bestGuess("com.progressoft.brix.domino.gwtjackson.processor.TestBeanBeanJsonDeserializerImpl");
+        TypeRegistry.registerSerializer("com.progressoft.brix.domino.gwtjackson.processor.TestBean", deserializer);
+        addFieldTest("testBean", result -> assertEquals(buildTestString("new $T()", deserializer), result));
 
         runTests();
     }

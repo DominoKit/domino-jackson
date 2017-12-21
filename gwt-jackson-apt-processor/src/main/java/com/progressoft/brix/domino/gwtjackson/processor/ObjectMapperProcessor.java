@@ -15,12 +15,15 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
-import javax.annotation.processing.RoundEnvironment;
+import com.google.auto.common.MoreTypes;
+import com.google.auto.service.AutoService;
+import com.progressoft.brix.domino.gwtjackson.*;
+import com.progressoft.brix.domino.gwtjackson.annotation.JSONMapper;
+import com.progressoft.brix.domino.gwtjackson.annotation.JSONReader;
+import com.progressoft.brix.domino.gwtjackson.annotation.JSONWriter;
+import com.squareup.javapoet.*;
+
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -38,39 +41,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.progressoft.brix.domino.gwtjackson.AbstractObjectMapper;
-import com.progressoft.brix.domino.gwtjackson.AbstractObjectReader;
-import com.progressoft.brix.domino.gwtjackson.AbstractObjectWriter;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.google.auto.common.MoreTypes;
-import com.google.auto.service.AutoService;
-import com.progressoft.brix.domino.gwtjackson.annotation.JSONMapper;
-import com.progressoft.brix.domino.gwtjackson.annotation.JSONReader;
-import com.progressoft.brix.domino.gwtjackson.annotation.JSONWriter;
-import com.progressoft.brix.domino.gwtjackson.processor.deserialization.AptDeserializerBuilder;
-import com.progressoft.brix.domino.gwtjackson.processor.serialization.AptSerializerBuilder;
-import com.squareup.javapoet.*;
-
 import static java.util.Objects.isNull;
 
 @AutoService(Processor.class)
 public class ObjectMapperProcessor extends AbstractProcessor {
 
     public static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
-    static Messager messager;
+    public static Messager messager;
     public static Types typeUtils;
-    static Elements elementUtils;
-
-    private Filer filer;
-
-    private Set<String> serializers = new HashSet<>();
-    private Set<String> deserializers = new HashSet<>();
+    public static Filer filer;
+    public static Elements elementUtils;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        this.filer = processingEnv.getFiler();
+        filer = processingEnv.getFiler();
         messager = processingEnv.getMessager();
         typeUtils = processingEnv.getTypeUtils();
         elementUtils = processingEnv.getElementUtils();
@@ -103,10 +88,11 @@ public class ObjectMapperProcessor extends AbstractProcessor {
         try {
             String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
             String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            Name beanName = typeUtils.asElement(getBeanType(element)).getSimpleName();
+            TypeMirror beanType = getBeanType(element);
+            Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
-            generateDeSerializer(element, packageName, beanName);
-            generateSerializer(element, packageName, beanName);
+            new DeserializerGenerator().generate(beanType, packageName, beanName);
+            new SerializerGenerator().generate(beanType, packageName, beanName);
 
             MethodSpec constructor = makeConstructor(beanName);
             MethodSpec newDeserializerMethod = makeNewDeserializerMethod(element, beanName);
@@ -127,29 +113,14 @@ public class ObjectMapperProcessor extends AbstractProcessor {
         }
     }
 
-    private void generateSerializer(Element element, String packageName, Name beanName) throws IOException {
-        if (!serializers.contains(packageName + "." + beanName + AptSerializerBuilder.BEAN_JSON_SERIALIZER_IMPL)) {
-            new AptSerializerBuilder(getBeanType(element), filer)
-                    .generate(beanName, packageName);
-            serializers.add(packageName + "." + beanName + AptSerializerBuilder.BEAN_JSON_SERIALIZER_IMPL);
-        }
-    }
-
-    private void generateDeSerializer(Element element, String packageName, Name beanName) throws IOException {
-        if (!deserializers.contains(packageName + "." + beanName + AptDeserializerBuilder.BEAN_JSON_DESERIALIZER_IMPL)) {
-            new AptDeserializerBuilder( getBeanType(element), filer)
-                    .generate(beanName, packageName);
-            deserializers.add(packageName + "." + beanName + AptDeserializerBuilder.BEAN_JSON_DESERIALIZER_IMPL);
-        }
-    }
-
     private void generateMapperForReader(Element element) {
         try {
             String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
             String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            Name beanName = typeUtils.asElement(getBeanType(element)).getSimpleName();
+            TypeMirror beanType = getBeanType(element);
+            Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
-            generateDeSerializer(element, packageName, beanName);
+            new DeserializerGenerator().generate(beanType, packageName, beanName);
 
             MethodSpec constructor = makeConstructor(beanName);
             MethodSpec newDeserializer = makeNewDeserializerMethod(element, beanName);
@@ -163,7 +134,7 @@ public class ObjectMapperProcessor extends AbstractProcessor {
                     .build();
 
             JavaFile.builder(packageName, classSpec).build().writeTo(filer);
-        } catch (IOException e) {
+        } catch (Exception e) {
             messager.printMessage(Kind.ERROR, "error while creating source file " + e, element);
         }
     }
@@ -172,9 +143,10 @@ public class ObjectMapperProcessor extends AbstractProcessor {
         try {
             String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
             String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            Name beanName = typeUtils.asElement(getBeanType(element)).getSimpleName();
+            TypeMirror beanType = getBeanType(element);
+            Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
-            generateSerializer(element, packageName, beanName);
+            new SerializerGenerator().generate(beanType, packageName, beanName);
 
             MethodSpec constructor = makeConstructor(beanName);
             MethodSpec newSerializer = makeNewSerializerMethod(beanName);
@@ -188,7 +160,7 @@ public class ObjectMapperProcessor extends AbstractProcessor {
                     .build();
 
             JavaFile.builder(packageName, classSpec).build().writeTo(filer);
-        } catch (IOException e) {
+        } catch (Exception e) {
             messager.printMessage(Kind.ERROR, "error while creating source file " + e, element);
         }
     }

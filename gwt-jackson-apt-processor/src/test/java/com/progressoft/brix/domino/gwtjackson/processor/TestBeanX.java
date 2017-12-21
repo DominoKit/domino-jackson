@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @TestAnnotation
-public class TestBean {
+public class TestBeanX {
 
     public String stringField;
     public byte byteField;
@@ -237,6 +237,6 @@ public class TestBean {
     public SortedMap<String, Short[]> sortedMapArray;
     public TreeMap<String, BigInteger[]> treeMapArray;
 
-    public TestBean testBean;
+    public TestBeanX testBeanX;
 
 }

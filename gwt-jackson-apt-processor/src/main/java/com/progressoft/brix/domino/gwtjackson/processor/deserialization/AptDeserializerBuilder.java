@@ -19,6 +19,7 @@ import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.*;
 import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.squareup.javapoet.*;
 
@@ -33,7 +34,7 @@ import java.util.stream.Stream;
 public class AptDeserializerBuilder extends AbstractMapperGenerator {
 
     private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf( Object.class );
-    public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
+
 
     public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
         super( beanType, filer);
@@ -47,7 +48,7 @@ public class AptDeserializerBuilder extends AbstractMapperGenerator {
 
     @Override
     protected String namePostfix() {
-        return BEAN_JSON_DESERIALIZER_IMPL;
+        return Type.BEAN_JSON_DESERIALIZER_IMPL;
     }
 
     @Override

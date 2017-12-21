@@ -23,6 +23,7 @@ import org.junit.Before;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -43,9 +44,11 @@ public abstract class BaseInstanceBuilderTest {
         testSubjects = new LinkedHashSet<>();
     }
 
-    String buildTestString(String format, Class<?>... classes) {
+    String buildTestString(String format, Object... classes) {
         return CodeBlock.builder().add(format, classes).build().toString();
     }
+
+
 
     void addFieldTest(String fieldName, FieldTester tester) throws Exception {
         testSubjects.add(new TestSubject(fieldName, tester));
@@ -66,7 +69,7 @@ public abstract class BaseInstanceBuilderTest {
                 Map<String, ? extends Element> elements = typeElement.getEnclosedElements().stream().filter(e -> ElementKind.FIELD.equals(e.getKind())).collect(Collectors.toMap(o -> o.getSimpleName().toString(), o -> o));
                 testSubjects.forEach(testSubject -> {
                     if (elements.containsKey(testSubject.fieldName)) {
-                        CodeBlock instance = getMappersChainBuilder().getInstance(elements.get(testSubject.fieldName));
+                        CodeBlock instance = getMappersChainBuilder(element.get().asType()).getInstance(elements.get(testSubject.fieldName));
                         testSubject.tester.testField(instance.toString());
                     } else {
                         fail("field not found [" + testSubject.fieldName + "]");
@@ -80,7 +83,7 @@ public abstract class BaseInstanceBuilderTest {
         assertTrue("the processor did not execute.", executed[0]);
     }
 
-    abstract MappersChainBuilder getMappersChainBuilder();
+    abstract MappersChainBuilder getMappersChainBuilder(TypeMirror beanType);
 
     public interface FieldTester {
         void testField(String result);
