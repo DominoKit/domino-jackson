@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/vegegoku/gwt-jackson-apt.svg?branch=master)](https://travis-ci.org/vegegoku/gwt-jackson-apt)
+
 gwt-jackson-apt
 =====
 gwt-jackson-apt is an APT bases JSON parser for [GWT](http://www.gwtproject.org/) based on [gwt-jackson](https://github.com/nmorel/gwt-jackson) the original thanks goes to [Nicolas Morel](https://github.com/nmorel) for building gwt-jackson library.
