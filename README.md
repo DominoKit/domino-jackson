@@ -12,7 +12,7 @@ Quick start
 
 ### Maven dependencies
 
-*currently this is only available as a snapshot on repository :
+*currently this is only available as a snapshot on repository* :
 
 ```xml
 <repository>
@@ -26,7 +26,7 @@ Quick start
 </repository>
 ```
 
-then add the following dependecies to your project pom file
+Add the following dependecies to your project pom file
 
 ```xml
 <dependency>
