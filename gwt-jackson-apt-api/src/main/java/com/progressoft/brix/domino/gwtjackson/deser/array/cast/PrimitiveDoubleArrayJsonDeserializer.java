@@ -25,6 +25,9 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArrayNumber;
+import elemental2.core.JsArray;
+import elemental2.core.JsNumber;
+import jsinterop.base.Js;
 
 /**
  * Default {@link JsonDeserializer} implementation for array of double.
@@ -45,44 +48,41 @@ public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeser
         return INSTANCE;
     }
 
-    private static native double[] reinterpretCast( JsArrayNumber value ) /*-{
-        return value;
-    }-*/;
+    private static double[] reinterpretCast(JsArray<JsNumber> value) {
+        JsNumber[] sliced = value.slice();
+        return Js.uncheckedCast(sliced);
+    }
 
-    private static double DEFAULT;
+    ;
 
-    private PrimitiveDoubleArrayJsonDeserializer() { }
+    private PrimitiveDoubleArrayJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double[] doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        JsArrayNumber jsArray = JsArrayNumber.createArray().cast();
+    public double[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        JsArray<JsNumber> jsArray = new JsArray<>();
         reader.beginArray();
-        while ( JsonToken.END_ARRAY != reader.peek() ) {
-            if ( JsonToken.NULL == reader.peek() ) {
+        while (JsonToken.END_ARRAY != reader.peek()) {
+            if (JsonToken.NULL == reader.peek()) {
                 reader.skipValue();
-                jsArray.push( DEFAULT );
+                jsArray.push(null);
             } else {
-                jsArray.push( reader.nextDouble() );
+                jsArray.push((JsNumber) Js.cast(reader.nextDouble()));
             }
         }
         reader.endArray();
 
-        if ( GWT.isScript() ) {
-            return reinterpretCast( jsArray );
-        } else {
-            int length = jsArray.length();
-            double[] ret = new double[length];
-            for ( int i = 0; i < length; i++ ) {
-                ret[i] = jsArray.get( i );
-            }
-            return ret;
-        }
+        return reinterpretCast(jsArray);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected double[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new double[]{DoubleJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected double[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new double[]{DoubleJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

@@ -1598,7 +1598,7 @@ public class NonBufferedJsonReader implements com.progressoft.brix.domino.gwtjac
 
   /** {@inheritDoc} */
   @Override
-  public JavaScriptObject nextJavaScriptObject(boolean useSafeEval ) {
+  public JavaScriptObject nextObject(boolean useSafeEval ) {
     int p = peeked;
     if (p == PEEKED_NONE) {
       p = doPeek();

@@ -20,9 +20,12 @@ package com.progressoft.brix.domino.gwtjackson.stream.impl;
 import com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
+import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static elemental2.core.Global.JSON;
 
 /**
  * Writes a JSON (<a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>)
@@ -123,7 +126,7 @@ import java.util.logging.Logger;
  * @since 1.6
  * @version $Id: $
  */
-public class DefaultJsonWriter implements com.progressoft.brix.domino.gwtjackson.stream.JsonWriter {
+public class DefaultJsonWriter implements JsonWriter {
 
   private static final Logger logger = Logger.getLogger( "JsonWriter" );
 
@@ -465,7 +468,7 @@ public class DefaultJsonWriter implements com.progressoft.brix.domino.gwtjackson
 
   /** {@inheritDoc} */
   @Override
-  public DefaultJsonWriter value( JavaScriptObject value ) {
+  public DefaultJsonWriter value( Object value ) {
     if (value == null) {
       return nullValue();
     }
@@ -475,9 +478,9 @@ public class DefaultJsonWriter implements com.progressoft.brix.domino.gwtjackson
     return this;
   }
 
-  private native String stringify( JavaScriptObject jso ) /*-{
+  private String stringify( Object jso ) {
       return JSON.stringify(jso);
-  }-*/;
+  };
 
   /** {@inheritDoc} */
   @Override

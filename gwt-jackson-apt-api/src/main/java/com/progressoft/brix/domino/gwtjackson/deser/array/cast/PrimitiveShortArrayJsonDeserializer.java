@@ -23,8 +23,9 @@ import com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer.S
 import com.progressoft.brix.domino.gwtjackson.deser.array.AbstractArrayJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArrayInteger;
+import elemental2.core.JsArray;
+import elemental2.core.JsNumber;
+import jsinterop.base.Js;
 
 /**
  * Default {@link JsonDeserializer} implementation for array of short.
@@ -45,44 +46,39 @@ public class PrimitiveShortArrayJsonDeserializer extends AbstractArrayJsonDeseri
         return INSTANCE;
     }
 
-    private static native short[] reinterpretCast( JsArrayInteger value ) /*-{
-        return value;
-    }-*/;
+    private static short[] reinterpretCast(JsArray<JsNumber> value) {
+        JsNumber[] sliced = value.slice();
+        return Js.uncheckedCast(sliced);
+    }
 
-    private static short DEFAULT;
+    private PrimitiveShortArrayJsonDeserializer() {
+    }
 
-    private PrimitiveShortArrayJsonDeserializer() { }
-
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public short[] doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        JsArrayInteger jsArray = JsArrayInteger.createArray().cast();
+    public short[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        JsArray<JsNumber> jsArray = new JsArray<>();
         reader.beginArray();
-        while ( JsonToken.END_ARRAY != reader.peek() ) {
-            if ( JsonToken.NULL == reader.peek() ) {
+        while (JsonToken.END_ARRAY != reader.peek()) {
+            if (JsonToken.NULL == reader.peek()) {
                 reader.skipValue();
-                jsArray.push( DEFAULT );
+                jsArray.push(null);
             } else {
-                jsArray.push( reader.nextInt() );
+                jsArray.push((JsNumber) Js.cast(reader.nextInt()));
             }
         }
         reader.endArray();
 
-        if ( GWT.isScript() ) {
-            return reinterpretCast( jsArray );
-        } else {
-            int length = jsArray.length();
-            short[] ret = new short[length];
-            for ( int i = 0; i < length; i++ ) {
-                ret[i] = (short) jsArray.get( i );
-            }
-            return ret;
-        }
+        return reinterpretCast(jsArray);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected short[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new short[]{ShortJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected short[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new short[]{ShortJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

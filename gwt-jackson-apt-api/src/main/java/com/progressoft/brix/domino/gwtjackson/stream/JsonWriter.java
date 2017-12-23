@@ -16,7 +16,7 @@
 
 package com.progressoft.brix.domino.gwtjackson.stream;
 
-import com.google.gwt.core.client.JavaScriptObject;
+//import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * <p>JsonWriter interface.</p>
@@ -183,7 +183,7 @@ public interface JsonWriter {
      * @param value a value .
      * @return this writer.
      */
-    JsonWriter value(JavaScriptObject value);
+    JsonWriter value(Object value);
 
     /**
      * Encodes {@code value}.toString() as is.

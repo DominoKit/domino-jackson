@@ -238,5 +238,5 @@ public interface JsonReader
      * @param useSafeEval whether it should use {@link JsonUtils#safeEval(String)} or {@link JsonUtils#unsafeEval(String)}
      * @return the {@link JavaScriptObject}
      */
-    JavaScriptObject nextJavaScriptObject(boolean useSafeEval);
+    Object nextObject(boolean useSafeEval);
 }

@@ -32,9 +32,7 @@ public class GwtJacksonAptTest extends JacksonTestCase {
     private SimpleBeanJsonMapperTester tester = SimpleBeanJsonMapperTester.INSTANCE;
 
 
-    public String getModuleName() {
-        return "com.progressoft.brix.domino.gwtjackson.GwtJacksonAptJunit";
-    }
+
 
     @JSONMapper
     public interface SimpleBeanMapper extends ObjectReader<SimpleBean>, ObjectReaderTester<SimpleBean>,

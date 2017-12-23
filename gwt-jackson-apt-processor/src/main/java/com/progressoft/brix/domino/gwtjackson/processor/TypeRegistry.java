@@ -143,7 +143,7 @@ public final class TypeRegistry {
         MAPPER
                 .forType(JavaScriptObject.class)
                 .serializer(JavaScriptObjectJsonSerializer.class)
-                .deserializer(JavaScriptObjectJsonDeserializer.class)
+                .deserializer(ObjectJsonDeserializer.class)
                 .register(simpleTypes);
 
         MAPPER

@@ -21,6 +21,7 @@ import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.google.gwt.core.client.JavaScriptObject;
+import jsinterop.base.Js;
 
 /**
  * Default {@link JsonDeserializer} implementation for {@link JavaScriptObject}.
@@ -28,24 +29,24 @@ import com.google.gwt.core.client.JavaScriptObject;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public class JavaScriptObjectJsonDeserializer<T extends JavaScriptObject> extends JsonDeserializer<T> {
+public class ObjectJsonDeserializer<T extends Object> extends JsonDeserializer<T> {
 
-    private static final JavaScriptObjectJsonDeserializer INSTANCE = new JavaScriptObjectJsonDeserializer();
+    private static final ObjectJsonDeserializer INSTANCE = new ObjectJsonDeserializer();
 
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link JavaScriptObjectJsonDeserializer}
+     * @return an instance of {@link ObjectJsonDeserializer}
      */
-    public static JavaScriptObjectJsonDeserializer getInstance() {
+    public static ObjectJsonDeserializer getInstance() {
         return INSTANCE;
     }
 
-    private JavaScriptObjectJsonDeserializer() { }
+    private ObjectJsonDeserializer() { }
 
     /** {@inheritDoc} */
     @Override
     public T doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return reader.nextJavaScriptObject( ctx.isUseSafeEval() ).cast();
+        return Js.cast(reader.nextObject( ctx.isUseSafeEval() ));
     }
 }

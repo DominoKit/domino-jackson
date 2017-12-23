@@ -25,6 +25,10 @@ import java.util.Date;
  */
 public abstract class JacksonTestCase extends GWTTestCase {
 
+    public String getModuleName() {
+        return "com.progressoft.brix.domino.gwtjackson.GwtJacksonAptJunit";
+    }
+
     @SuppressWarnings("deprecation")
     protected long getUTCTime( int year, int month, int day, int hour, int minute, int second, int milli ) {
         return AbstractTester.getUTCTime( year, month, day, hour, minute, second, milli );
