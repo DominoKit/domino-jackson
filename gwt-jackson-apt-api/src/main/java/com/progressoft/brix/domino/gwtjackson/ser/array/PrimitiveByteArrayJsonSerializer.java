@@ -46,7 +46,7 @@ public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
     }
 
     @Override
-    public void doSerialize( JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

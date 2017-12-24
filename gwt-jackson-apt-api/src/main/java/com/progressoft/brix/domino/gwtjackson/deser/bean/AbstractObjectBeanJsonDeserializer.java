@@ -16,8 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer.NumberJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.BooleanJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.StringJsonDeserializer;
@@ -47,8 +47,8 @@ public abstract class AbstractObjectBeanJsonDeserializer extends AbstractBeanJso
 
     /** {@inheritDoc} */
     @Override
-    public Object deserializeWrapped( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                      IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
+    public Object deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
         switch ( reader.peek() ) {
             case NUMBER:
                 return NumberJsonDeserializer.getInstance().doDeserialize( reader, ctx, params );

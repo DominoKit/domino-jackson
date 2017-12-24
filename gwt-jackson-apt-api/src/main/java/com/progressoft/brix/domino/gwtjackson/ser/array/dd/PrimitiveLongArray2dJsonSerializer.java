@@ -50,7 +50,7 @@ public class PrimitiveLongArray2dJsonSerializer extends JsonSerializer<long[][]>
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, long[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, long[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

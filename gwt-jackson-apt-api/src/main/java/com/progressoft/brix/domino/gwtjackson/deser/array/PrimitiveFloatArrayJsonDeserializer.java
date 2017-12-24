@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer.FloatJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
@@ -47,7 +47,7 @@ public class PrimitiveFloatArrayJsonDeserializer extends AbstractArrayJsonDeseri
 
     /** {@inheritDoc} */
     @Override
-    public float[] doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public float[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         List<Float> list = deserializeIntoList( reader, ctx, FloatJsonDeserializer.getInstance(), params );
 
         float[] result = new float[list.size()];

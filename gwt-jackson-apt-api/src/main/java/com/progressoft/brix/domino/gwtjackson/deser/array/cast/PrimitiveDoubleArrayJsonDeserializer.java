@@ -16,15 +16,13 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array.cast;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer.DoubleJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.array.AbstractArrayJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArrayNumber;
 import elemental2.core.JsArray;
 import elemental2.core.JsNumber;
 import jsinterop.base.Js;

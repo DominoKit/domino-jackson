@@ -52,7 +52,7 @@ public class CharacterJsonSerializer extends JsonSerializer<Character> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.value( value.toString() );
     }
 }

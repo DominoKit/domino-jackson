@@ -19,8 +19,8 @@ package com.progressoft.brix.domino.gwtjackson.ser;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
-import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 /**
  * Default {@link JsonSerializer} implementation for {@link JavaScriptObject}.
@@ -45,7 +45,7 @@ public class JavaScriptObjectJsonSerializer<T extends JavaScriptObject> extends 
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.value( value );
     }
 }

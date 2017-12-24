@@ -16,9 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array.dd;
 
+import com.progressoft.brix.domino.gwtjackson.*;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 
@@ -44,8 +43,8 @@ public abstract class AbstractArray2dJsonDeserializer<T> extends JsonDeserialize
      * @param <C> type of the element inside the array
      * @return a list containing all the elements of the array
      */
-    protected <C> List<List<C>> deserializeIntoList( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializer<C> deserializer,
-                                                     JsonDeserializerParameters params ) {
+    protected <C> List<List<C>> deserializeIntoList(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializer<C> deserializer,
+                                                    JsonDeserializerParameters params ) {
         List<List<C>> list;
 
         reader.beginArray();
@@ -70,9 +69,9 @@ public abstract class AbstractArray2dJsonDeserializer<T> extends JsonDeserialize
      * <p>doDeserializeIntoList</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
      * @param deserializer a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializer} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @param token a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonToken} object.
      * @param <C> a C object.
      * @return a {@link List} object.

@@ -45,7 +45,7 @@ public class EnumJsonSerializer<E extends Enum<E>> extends JsonSerializer<E> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, E value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, E value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.unescapeValue( value.name() );
     }
 }

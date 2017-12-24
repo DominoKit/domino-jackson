@@ -18,7 +18,6 @@
 package com.progressoft.brix.domino.gwtjackson.stream.impl;
 
 import com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 

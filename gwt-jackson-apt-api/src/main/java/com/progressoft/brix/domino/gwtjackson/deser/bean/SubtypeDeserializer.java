@@ -16,6 +16,7 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
@@ -40,9 +41,9 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>> exte
     public abstract static class BeanSubtypeDeserializer<T> extends SubtypeDeserializer<T, AbstractBeanJsonDeserializer<T>> {
 
         @Override
-        public T deserializeInline( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
-                                    Map<String, String> bufferedProperties ) {
+        public T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                   IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
+                                   Map<String, String> bufferedProperties ) {
             return getDeserializer().deserializeInline( reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties );
         }
 

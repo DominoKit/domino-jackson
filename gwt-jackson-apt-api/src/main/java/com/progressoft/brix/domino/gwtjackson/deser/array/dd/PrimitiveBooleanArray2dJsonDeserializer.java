@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array.dd;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.BooleanJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
@@ -47,7 +47,7 @@ public class PrimitiveBooleanArray2dJsonDeserializer extends AbstractArray2dJson
 
     /** {@inheritDoc} */
     @Override
-    public boolean[][] doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public boolean[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         List<List<Boolean>> list = deserializeIntoList( reader, ctx, BooleanJsonDeserializer.getInstance(), params );
 
         if ( list.isEmpty() ) {

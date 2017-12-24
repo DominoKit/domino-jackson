@@ -16,6 +16,7 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
@@ -34,8 +35,8 @@ public interface InstanceBuilder<T> {
      * <p>newInstance</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @param bufferedProperties a {@link Map} object.
      * @param bufferedPropertiesValues a {@link Map} object.
      * @param bufferedPropertiesValues a {@link Map} object.

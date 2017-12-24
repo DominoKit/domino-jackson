@@ -122,7 +122,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
         }
 
         @Override
-        public void doSerialize( JsonWriter writer, Double value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+        public void doSerialize(JsonWriter writer, Double value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
             // writer has a special method to write double, let's use instead of default Number method.
             writer.value( value.doubleValue() );
         }
@@ -194,7 +194,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
         }
 
         @Override
-        public void doSerialize( JsonWriter writer, Long value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+        public void doSerialize(JsonWriter writer, Long value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
             // writer has a special method to write long, let's use instead of default Number method.
             writer.value( value.longValue() );
         }
@@ -248,7 +248,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.value( value );
     }
 }

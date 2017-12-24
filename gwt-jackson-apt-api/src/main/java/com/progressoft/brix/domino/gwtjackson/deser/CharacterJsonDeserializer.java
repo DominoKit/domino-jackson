@@ -45,7 +45,7 @@ public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
 
     /** {@inheritDoc} */
     @Override
-    public Character doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public Character doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         if ( JsonToken.NUMBER.equals( reader.peek() ) ) {
             return (char) reader.nextInt();
         } else {

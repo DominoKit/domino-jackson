@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser;
 
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 import java.util.Collection;
@@ -65,7 +65,7 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, C values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, C values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( values.isEmpty() ) {
             if ( ctx.isWriteEmptyJsonArrays() ) {
                 writer.beginArray();

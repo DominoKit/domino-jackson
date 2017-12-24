@@ -16,8 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.BooleanJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.StringJsonDeserializer;

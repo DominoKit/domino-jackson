@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.array.dd;
 
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 /**
@@ -63,7 +63,7 @@ public class Array2dJsonSerializer<T> extends JsonSerializer<T[][]> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, T[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, T[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

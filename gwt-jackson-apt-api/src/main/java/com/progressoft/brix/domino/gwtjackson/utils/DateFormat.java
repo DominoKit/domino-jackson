@@ -17,6 +17,7 @@
 package com.progressoft.brix.domino.gwtjackson.utils;
 
 import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 
@@ -103,7 +104,7 @@ public final class DateFormat {
      *
      * @param date date to format
      * @return the formatted date
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters} object.
+     * @param params a {@link JsonSerializerParameters} object.
      */
     public static String format( JsonSerializerParameters params, Date date ) {
         DateTimeFormat format;

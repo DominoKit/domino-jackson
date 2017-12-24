@@ -16,8 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
 /**
@@ -31,8 +31,8 @@ public abstract class AbstractDelegationBeanJsonDeserializer<T> extends Abstract
 
     /** {@inheritDoc} */
     @Override
-    public T deserializeWrapped( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                 IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
+    public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
         return instanceBuilder.newInstance( reader, ctx, params, null, null ).getInstance();
     }
 

@@ -17,6 +17,7 @@
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
@@ -35,7 +36,7 @@ public abstract class BeanPropertyDeserializer<T, V> extends HasDeserializerAndP
      * @param bean bean to set the deserialized property to
      * @param ctx context of the deserialization process
      */
-    public void deserialize( JsonReader reader, T bean, JsonDeserializationContext ctx ) {
+    public void deserialize(JsonReader reader, T bean, JsonDeserializationContext ctx ) {
         setValue( bean, deserialize( reader, ctx ), ctx );
     }
 
@@ -44,7 +45,7 @@ public abstract class BeanPropertyDeserializer<T, V> extends HasDeserializerAndP
      *
      * @param bean a T object.
      * @param value a V object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
      */
     public abstract void setValue( T bean, V value, JsonDeserializationContext ctx );
 }

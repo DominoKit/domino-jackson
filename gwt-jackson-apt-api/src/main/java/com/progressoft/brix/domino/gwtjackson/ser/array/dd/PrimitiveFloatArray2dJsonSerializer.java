@@ -50,7 +50,7 @@ public class PrimitiveFloatArray2dJsonSerializer extends JsonSerializer<float[][
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, float[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, float[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

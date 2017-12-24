@@ -17,6 +17,7 @@
 package com.progressoft.brix.domino.gwtjackson.ser;
 
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
@@ -44,7 +45,7 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
 
     /** {@inheritDoc} */
     @Override
-    protected void serializeNullValue( JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( writer.getSerializeNulls() ) {
             writer.setSerializeNulls( false );
             writer.nullValue();
@@ -56,7 +57,7 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         // we should never be here, the null value is already handled and it's the only possible value for Void
     }
 }

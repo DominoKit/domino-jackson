@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
 import java.util.AbstractCollection;
@@ -72,7 +72,7 @@ public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]>
 
     /** {@inheritDoc} */
     @Override
-    public T[] doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public T[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         List<T> list = deserializeIntoList( reader, ctx, deserializer, params );
         return list.toArray( arrayCreator.create( list.size() ) );
     }

@@ -44,7 +44,7 @@ public class StringJsonDeserializer extends JsonDeserializer<String> {
 
     /** {@inheritDoc} */
     @Override
-    public String doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public String doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         return reader.nextString();
     }
 }

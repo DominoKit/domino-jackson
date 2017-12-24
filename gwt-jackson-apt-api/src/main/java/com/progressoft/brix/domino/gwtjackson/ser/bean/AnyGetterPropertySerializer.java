@@ -17,6 +17,7 @@
 package com.progressoft.brix.domino.gwtjackson.ser.bean;
 
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.ser.map.MapJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
@@ -45,7 +46,7 @@ public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySeriali
     }
 
     /** {@inheritDoc} */
-    public void serializePropertyName( JsonWriter writer, T bean, JsonSerializationContext ctx ) {
+    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx ) {
         // no-op
     }
 

@@ -16,9 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.bean;
 
+import com.progressoft.brix.domino.gwtjackson.*;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 /**
@@ -45,7 +44,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>Getter for the field <code>parameters</code>.</p>
      *
-     * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters} object.
+     * @return a {@link JsonSerializerParameters} object.
      */
     protected JsonSerializerParameters getParameters() {
         if ( null == parameters ) {
@@ -57,10 +56,10 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>newParameters</p>
      *
-     * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters} object.
+     * @return a {@link JsonSerializerParameters} object.
      */
     protected JsonSerializerParameters newParameters() {
-        return JsonSerializerParameters.DEFAULT;
+        return GwtJacksonJsonSerializerParameters.DEFAULT;
     }
 
     /**
@@ -79,7 +78,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
      * @param bean bean containing the property to serialize
      * @param ctx context of the serialization process
      */
-    public void serializePropertyName( JsonWriter writer, T bean, JsonSerializationContext ctx ) {
+    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx ) {
         writer.unescapeName( propertyName );
     }
 

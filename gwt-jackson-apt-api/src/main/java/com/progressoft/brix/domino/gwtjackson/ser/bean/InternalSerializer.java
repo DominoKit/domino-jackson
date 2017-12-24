@@ -16,8 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.bean;
 
-import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 /**
@@ -32,8 +32,8 @@ interface InternalSerializer<T> {
      *
      * @param writer a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
      * @param value a T object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters} object.
+     * @param ctx a {@link JsonSerializationContext} object.
+     * @param params a {@link JsonSerializerParameters} object.
      * @param defaultIdentityInfo a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.IdentitySerializationInfo} object.
      * @param defaultTypeInfo a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo} object.
      */

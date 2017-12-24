@@ -50,7 +50,7 @@ public class PrimitiveShortArray2dJsonSerializer extends JsonSerializer<short[][
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, short[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, short[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

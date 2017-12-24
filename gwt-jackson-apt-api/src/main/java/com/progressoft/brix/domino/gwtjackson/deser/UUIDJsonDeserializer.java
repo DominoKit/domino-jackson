@@ -42,7 +42,7 @@ public class UUIDJsonDeserializer extends JsonDeserializer<UUID> {
     private UUIDJsonDeserializer() { }
 
     @Override
-    public UUID doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public UUID doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         return UUID.fromString( reader.nextString() );
     }
 }

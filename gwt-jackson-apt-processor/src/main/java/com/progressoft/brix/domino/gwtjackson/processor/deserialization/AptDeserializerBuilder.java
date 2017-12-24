@@ -18,7 +18,7 @@ package com.progressoft.brix.domino.gwtjackson.processor.deserialization;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.*;
-import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.AbstractJsonMapperGenerator;
 import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.squareup.javapoet.*;
@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AptDeserializerBuilder extends AbstractMapperGenerator {
+public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
     private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf( Object.class );
 
@@ -100,7 +100,7 @@ public class AptDeserializerBuilder extends AbstractMapperGenerator {
                 .addAnnotation( Override.class )
                 .returns( ParameterizedTypeName.get( ClassName.get( Instance.class ), ClassName.get( beanType ) ) )
                 .addParameter( JsonReader.class, "reader" )
-                .addParameter( JsonDeserializationContext.class, "ctx" )
+                .addParameter(JsonDeserializationContext.class, "ctx" )
                 .addParameter( JsonDeserializerParameters.class, "params" )
                 .addParameter( ParameterizedTypeName.get( Map.class, String.class, String.class ), "bufferedProperties" )
                 .addParameter( ParameterizedTypeName.get( Map.class, String.class, Object.class ), "bufferedPropertiesValues" )
@@ -142,10 +142,5 @@ public class AptDeserializerBuilder extends AbstractMapperGenerator {
         builder.addStatement( "return map" );
         return builder.build();
     }
-
-
-
-
-
 
 }

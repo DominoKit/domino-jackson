@@ -50,7 +50,7 @@ public class StringJsonSerializer extends JsonSerializer<String> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, String value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, String value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.value( value );
     }
 }

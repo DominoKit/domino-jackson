@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.collection;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 
@@ -45,7 +45,7 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
 
     /** {@inheritDoc} */
     @Override
-    public C doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public C doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         if ( JsonToken.BEGIN_ARRAY == reader.peek() ) {
 
             C result = newCollection();

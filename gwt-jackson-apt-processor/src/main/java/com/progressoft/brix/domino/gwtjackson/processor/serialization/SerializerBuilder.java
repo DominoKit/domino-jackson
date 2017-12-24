@@ -17,7 +17,7 @@ package com.progressoft.brix.domino.gwtjackson.processor.serialization;
 
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.AbstractJsonMapperGenerator;
 import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.BeanPropertySerializer;
 import com.progressoft.brix.domino.gwtjackson.stream.impl.DefaultJsonWriter;
@@ -61,7 +61,7 @@ class SerializerBuilder{
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(ClassName.get(beanType), paramBean);
-        AbstractMapperGenerator.AccessorInfo accessorInfo = getterInfo();
+        AbstractJsonMapperGenerator.AccessorInfo accessorInfo = getterInfo();
 
         methodBuilder
                 .addParameter(JsonSerializationContext.class, "ctx")
@@ -81,13 +81,13 @@ class SerializerBuilder{
                 .build();
     }
 
-    AbstractMapperGenerator.AccessorInfo getterInfo() {
+    AbstractJsonMapperGenerator.AccessorInfo getterInfo() {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
         String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
         if (allBeanMethods(beanType).contains(prefix + upperCaseFirstLetter)) {
-            return new AbstractMapperGenerator.AccessorInfo(true, prefix + upperCaseFirstLetter);
+            return new AbstractJsonMapperGenerator.AccessorInfo(true, prefix + upperCaseFirstLetter);
         }
-        return new AbstractMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
+        return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
     }
 
     private String upperCaseFirstLetter(String name) {

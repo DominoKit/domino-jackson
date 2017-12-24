@@ -16,9 +16,10 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
+import com.progressoft.brix.domino.gwtjackson.GwtJacksonJsonDeserializerParameters;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
 /**
@@ -34,7 +35,7 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
     /**
      * <p>Getter for the field <code>parameters</code>.</p>
      *
-     * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @return a {@link JsonDeserializerParameters} object.
      */
     protected JsonDeserializerParameters getParameters() {
         if ( null == parameters ) {
@@ -46,10 +47,10 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
     /**
      * <p>newParameters</p>
      *
-     * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @return a {@link JsonDeserializerParameters} object.
      */
     protected JsonDeserializerParameters newParameters() {
-        return JsonDeserializerParameters.DEFAULT;
+        return GwtJacksonJsonDeserializerParameters.DEFAULT;
     }
 
     /**
@@ -59,7 +60,7 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
      * @param ctx context of the deserialization process
      * @return a V object.
      */
-    public V deserialize( JsonReader reader, JsonDeserializationContext ctx ) {
+    public V deserialize(JsonReader reader, JsonDeserializationContext ctx ) {
         return getDeserializer().deserialize( reader, ctx, getParameters() );
     }
 }

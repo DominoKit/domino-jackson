@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser;
 
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 import java.util.Iterator;
@@ -65,7 +65,7 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         Iterator<T> iterator = values.iterator();
 
         if ( !iterator.hasNext() ) {

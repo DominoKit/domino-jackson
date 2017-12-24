@@ -234,7 +234,7 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
         private NumberJsonDeserializer() { }
 
         @Override
-        public Number doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        public Number doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
             return reader.nextNumber();
         }
     }

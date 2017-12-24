@@ -20,9 +20,6 @@ package com.progressoft.brix.domino.gwtjackson.stream.impl;
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
-import elemental2.core.JsArray;
-import elemental2.core.JsNumber;
-import jsinterop.base.Js;
 
 import java.math.BigInteger;
 import java.util.logging.Level;

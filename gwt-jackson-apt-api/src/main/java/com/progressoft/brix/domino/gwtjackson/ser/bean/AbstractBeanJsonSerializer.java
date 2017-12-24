@@ -19,9 +19,9 @@ package com.progressoft.brix.domino.gwtjackson.ser.bean;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 import java.util.Collections;
@@ -113,7 +113,7 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         getSerializer( writer, value, ctx ).serializeInternally( writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo );
     }
 
@@ -133,8 +133,8 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
     }
 
     /** {@inheritDoc} */
-    public void serializeInternally( JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                     IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
+    public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
+                                    IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
 
         // Processing the parameters. We fallback to default if parameter is not present.
         final IdentitySerializationInfo identityInfo = null == params.getIdentityInfo() ? defaultIdentityInfo : params.getIdentityInfo();
@@ -214,8 +214,8 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
      * @param identityInfo identity info
      * @param idWriter identifier writer
      */
-    private void serializeObject( JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                  IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter ) {
+    private void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
+                                 IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter ) {
         serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter, null, null );
     }
 
@@ -231,8 +231,8 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
      * @param typeName in case of type info as property, the name of the property
      * @param typeInformation in case of type info as property, the type information
      */
-    protected void serializeObject( JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                    IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
+    protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
+                                   IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
             typeInformation ) {
         writer.beginObject();
 
@@ -251,8 +251,8 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
         writer.endObject();
     }
 
-    private void serializeProperties( JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                      IdentitySerializationInfo identityInfo ) {
+    private void serializeProperties(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
+                                     IdentitySerializationInfo identityInfo ) {
         for ( BeanPropertySerializer<T, ?> propertySerializer : serializers ) {
             if ( (null == identityInfo || !identityInfo.isProperty() || !identityInfo.getPropertyName().equals( propertySerializer
                     .getPropertyName() )) && !ignoredProperties.contains( propertySerializer.getPropertyName() ) ) {

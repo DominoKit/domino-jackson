@@ -18,6 +18,7 @@ package com.progressoft.brix.domino.gwtjackson.processor;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
 import com.squareup.javapoet.CodeBlock;
+import junit.framework.TestCase;
 import org.junit.Before;
 
 import javax.lang.model.element.Element;
@@ -35,7 +36,7 @@ import static com.google.testing.compile.Compiler.javac;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public abstract class BaseInstanceBuilderTest {
+public abstract class BaseInstanceBuilderTest extends TestCase{
 
     private Set<TestSubject> testSubjects;
 

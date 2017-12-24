@@ -16,9 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser;
 
+import com.progressoft.brix.domino.gwtjackson.*;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 import com.progressoft.brix.domino.gwtjackson.utils.DateFormat;
@@ -57,7 +56,7 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
         }
 
         @Override
-        protected Date deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        protected Date deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
             return DateFormat.parse(ctx.isUseBrowserTimezone(), params.getPattern(), null, date );
         }
     }
@@ -147,7 +146,7 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
 
     /** {@inheritDoc} */
     @Override
-    public D doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public D doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         if ( params.getShape().isNumeric() || JsonToken.NUMBER.equals( reader.peek() ) ) {
             return deserializeNumber( reader.nextLong(), params );
         } else {
@@ -159,7 +158,7 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
      * <p>deserializeNumber</p>
      *
      * @param millis a long.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @return a D object.
      */
     protected abstract D deserializeNumber( long millis, JsonDeserializerParameters params );
@@ -168,8 +167,8 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
      * <p>deserializeString</p>
      *
      * @param date a {@link String} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @return a D object.
      */
     protected abstract D deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params );

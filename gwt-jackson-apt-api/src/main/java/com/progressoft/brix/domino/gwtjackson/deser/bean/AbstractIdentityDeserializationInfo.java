@@ -63,7 +63,7 @@ public abstract class AbstractIdentityDeserializationInfo<T, V> extends HasDeser
 
     /** {@inheritDoc} */
     @Override
-    public final Object readId( JsonReader reader, JsonDeserializationContext ctx ) {
+    public final Object readId(JsonReader reader, JsonDeserializationContext ctx ) {
         return getDeserializer().deserialize( reader, ctx );
     }
 

@@ -50,7 +50,7 @@ public class PrimitiveIntegerArray2dJsonSerializer extends JsonSerializer<int[][
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, int[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, int[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

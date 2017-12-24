@@ -19,8 +19,8 @@ package com.progressoft.brix.domino.gwtjackson.deser;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
-import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import jsinterop.base.Js;
 
 /**
@@ -46,7 +46,7 @@ public class ObjectJsonDeserializer<T extends Object> extends JsonDeserializer<T
 
     /** {@inheritDoc} */
     @Override
-    public T doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         return Js.cast(reader.nextObject( ctx.isUseSafeEval() ));
     }
 }

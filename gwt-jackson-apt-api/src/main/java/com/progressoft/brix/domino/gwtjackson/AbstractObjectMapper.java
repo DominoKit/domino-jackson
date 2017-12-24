@@ -28,7 +28,7 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
+public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, ObjectWriter<T> {
 
     private final String rootName;
 
@@ -48,11 +48,10 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
     /** {@inheritDoc} */
     @Override
     public T read( String in ) throws JsonDeserializationException {
-        return read( in, JsonDeserializationContext.builder().build() );
+        return read( in, DefaultJsonDeserializationContext.builder().build() );
     }
 
     /** {@inheritDoc} */
-    @Override
     public T read( String in, JsonDeserializationContext ctx ) throws JsonDeserializationException {
         JsonReader reader = ctx.newJsonReader( in );
 
@@ -112,11 +111,10 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
     /** {@inheritDoc} */
     @Override
     public String write( T value ) throws JsonSerializationException {
-        return write( value, JsonSerializationContext.builder().build() );
+        return write( value, DefaultJsonSerializationContext.builder().build() );
     }
 
     /** {@inheritDoc} */
-    @Override
     public String write( T value, JsonSerializationContext ctx ) throws JsonSerializationException {
         JsonWriter writer = ctx.newJsonWriter();
         try {

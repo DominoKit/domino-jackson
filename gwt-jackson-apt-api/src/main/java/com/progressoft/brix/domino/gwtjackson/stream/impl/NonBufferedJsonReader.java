@@ -18,11 +18,11 @@
 package com.progressoft.brix.domino.gwtjackson.stream.impl;
 
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
+import com.google.gwt.core.client.JsonUtils;
 import com.progressoft.brix.domino.gwtjackson.stream.BufferStack;
+import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
 
 import java.math.BigInteger;
 import java.util.logging.Level;
@@ -193,7 +193,7 @@ import java.util.logging.Logger;
  * @since 1.6
  * @version $Id: $
  */
-public class NonBufferedJsonReader implements com.progressoft.brix.domino.gwtjackson.stream.JsonReader
+public class NonBufferedJsonReader implements JsonReader
 {
   private static final Logger logger = Logger.getLogger( "JsonReader" );
 
@@ -1598,7 +1598,7 @@ public class NonBufferedJsonReader implements com.progressoft.brix.domino.gwtjac
 
   /** {@inheritDoc} */
   @Override
-  public JavaScriptObject nextObject(boolean useSafeEval ) {
+  public Object nextObject(boolean useSafeEval ) {
     int p = peeked;
     if (p == PEEKED_NONE) {
       p = doPeek();
@@ -1607,7 +1607,7 @@ public class NonBufferedJsonReader implements com.progressoft.brix.domino.gwtjac
     switch (p) {
     case PEEKED_BEGIN_OBJECT:
     case PEEKED_BEGIN_ARRAY:
-      JavaScriptObject result;
+      Object result;
       int peekStack = stack.getAt(stackSize - 1);
       if (peekStack == JsonScope.NONEMPTY_DOCUMENT) {
         // start of the document
@@ -1622,7 +1622,7 @@ public class NonBufferedJsonReader implements com.progressoft.brix.domino.gwtjac
       }
       return result;
     default:
-      throw new IllegalStateException("Expected an array or object to evaluate a JavaScriptObject but was " + peek()
+      throw new IllegalStateException("Expected an array or object to evaluate a Object but was " + peek()
           + " at line " + getLineNumber() + " column " + getColumnNumber());
     }
   }

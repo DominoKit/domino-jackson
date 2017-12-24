@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.map;
 
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.KeySerializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
@@ -80,7 +80,7 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.beginObject();
 
         serializeValues( writer, values, ctx, params );
@@ -93,10 +93,10 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
      *
      * @param writer a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
      * @param values a M object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters} object.
+     * @param ctx a {@link JsonSerializationContext} object.
+     * @param params a {@link JsonSerializerParameters} object.
      */
-    public void serializeValues( JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void serializeValues(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !values.isEmpty() ) {
             Map<K, V> map = values;
             if ( ctx.isOrderMapEntriesByKeys() && !(values instanceof SortedMap<?, ?>) ) {

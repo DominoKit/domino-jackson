@@ -18,7 +18,7 @@ package com.progressoft.brix.domino.gwtjackson.stream.impl;
 import com.progressoft.brix.domino.gwtjackson.stream.BufferStack;
 import elemental2.core.JsArray;
 
-public class ElementalArrayBufferStack<T> implements BufferStack<T>{
+public class ElementalArrayBufferStack<T> implements BufferStack<T> {
 
     JsArray<T> stack=new JsArray<T>( );
 

@@ -48,8 +48,8 @@ public abstract class AbstractValueBeanJsonSerializer<T> extends AbstractBeanJso
 
     /** {@inheritDoc} */
     @Override
-    protected void serializeObject( JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                    IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
+    protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
+                                   IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
             typeInformation ) {
         serializer.serialize( writer, value, ctx );
     }

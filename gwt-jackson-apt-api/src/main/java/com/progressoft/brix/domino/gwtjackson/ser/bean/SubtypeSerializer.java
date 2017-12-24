@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.bean;
 
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 /**
@@ -37,8 +37,8 @@ public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends 
     public abstract static class BeanSubtypeSerializer<T> extends SubtypeSerializer<T, AbstractBeanJsonSerializer<T>> {
 
         @Override
-        public void serializeInternally( JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                         IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
+        public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
+                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
             getSerializer().serializeInternally( writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo );
         }
     }
@@ -51,8 +51,8 @@ public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends 
     public abstract static class DefaultSubtypeSerializer<T> extends SubtypeSerializer<T, JsonSerializer<T>> {
 
         @Override
-        public void serializeInternally( JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                         IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
+        public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
+                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
 
             final TypeSerializationInfo typeInfo = null == params.getTypeInfo() ? defaultTypeInfo : params.getTypeInfo();
 

@@ -50,7 +50,7 @@ public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.value( value );
     }
 }

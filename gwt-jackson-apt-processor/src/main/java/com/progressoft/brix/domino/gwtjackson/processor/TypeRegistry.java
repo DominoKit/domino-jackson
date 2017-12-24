@@ -38,6 +38,7 @@ import com.progressoft.brix.domino.gwtjackson.ser.array.dd.*;
 import com.progressoft.brix.domino.gwtjackson.ser.map.MapJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.*;
 import com.squareup.javapoet.TypeName;
+import javaemul.internal.annotations.GwtIncompatible;
 
 import javax.lang.model.type.TypeMirror;
 import java.io.Serializable;

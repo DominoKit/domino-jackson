@@ -16,9 +16,8 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.array;
 
+import com.progressoft.brix.domino.gwtjackson.*;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
 
@@ -36,7 +35,7 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
 
     /** {@inheritDoc} */
     @Override
-    public T doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         if ( JsonToken.BEGIN_ARRAY == reader.peek() ) {
             return doDeserializeArray( reader, ctx, params );
         } else {
@@ -48,8 +47,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected abstract T doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params );
@@ -58,8 +57,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeNonArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected T doDeserializeNonArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
@@ -74,8 +73,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeSingleArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext} object.
-     * @param params a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters} object.
+     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected abstract T doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params );

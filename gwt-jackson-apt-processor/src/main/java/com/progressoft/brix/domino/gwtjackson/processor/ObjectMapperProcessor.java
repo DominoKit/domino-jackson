@@ -15,42 +15,33 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor;
 
-import com.google.auto.common.MoreTypes;
 import com.google.auto.service.AutoService;
-import com.progressoft.brix.domino.gwtjackson.*;
 import com.progressoft.brix.domino.gwtjackson.annotation.JSONMapper;
 import com.progressoft.brix.domino.gwtjackson.annotation.JSONReader;
 import com.progressoft.brix.domino.gwtjackson.annotation.JSONWriter;
-import com.squareup.javapoet.*;
+import com.squareup.javapoet.WildcardTypeName;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.Objects.isNull;
 
 @AutoService(Processor.class)
 public class ObjectMapperProcessor extends AbstractProcessor {
 
     public static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
-    public static Messager messager;
+    static Messager messager;
     public static Types typeUtils;
-    public static Filer filer;
-    public static Elements elementUtils;
+    static Filer filer;
+    static Elements elementUtils;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -63,161 +54,48 @@ public class ObjectMapperProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        try {
 
-            Set<? extends Element> mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
-            mappers.forEach(this::generateMappers);
+        Set<? extends Element> mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
+        mappers.forEach(this::generateMappers);
 
-            Set<? extends Element> readers = roundEnv.getElementsAnnotatedWith(JSONReader.class);
-            readers.forEach(this::generateMapperForReader);
+        Set<? extends Element> readers = roundEnv.getElementsAnnotatedWith(JSONReader.class);
+        readers.forEach(this::generateMapperForReader);
 
-            Set<? extends Element> writers = roundEnv.getElementsAnnotatedWith(JSONWriter.class);
-            writers.forEach(this::generateMapperForWriter);
+        Set<? extends Element> writers = roundEnv.getElementsAnnotatedWith(JSONWriter.class);
+        writers.forEach(this::generateMapperForWriter);
 
 
-        } catch (Exception e) {
-            final StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));
-            messager.printMessage(Kind.ERROR, "" + out.getBuffer().toString());
-        }
+        return true;
+    }
 
-        return false;
+    private void handleError(Exception e) {
+        StringWriter out = new StringWriter();
+        e.printStackTrace(new PrintWriter(out));
+        messager.printMessage(Kind.ERROR, "error while creating source file " + out.getBuffer().toString());
     }
 
     private void generateMappers(Element element) {
         try {
-            String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
-            String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            TypeMirror beanType = getBeanType(element);
-            Name beanName = typeUtils.asElement(beanType).getSimpleName();
-
-            new DeserializerGenerator().generate(beanType, packageName, beanName);
-            new SerializerGenerator().generate(beanType, packageName, beanName);
-
-            MethodSpec constructor = makeConstructor(beanName);
-            MethodSpec newDeserializerMethod = makeNewDeserializerMethod(element, beanName);
-            MethodSpec newSerializerMethod = makeNewSerializerMethod(beanName);
-
-            TypeSpec classSpec = TypeSpec.classBuilder(className)
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .superclass(abstractObjectMapper(element))
-                    .addSuperinterface(TypeName.get(element.asType()))
-                    .addMethod(constructor)
-                    .addMethod(newDeserializerMethod)
-                    .addMethod(newSerializerMethod)
-                    .build();
-
-            JavaFile.builder(packageName, classSpec).build().writeTo(filer);
+            new BeanMapperGenerator().generate(element);
         } catch (Exception e) {
-            messager.printMessage(Kind.ERROR, "error while creating source file " + e, element);
+            handleError(e);
         }
     }
 
     private void generateMapperForReader(Element element) {
         try {
-            String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
-            String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            TypeMirror beanType = getBeanType(element);
-            Name beanName = typeUtils.asElement(beanType).getSimpleName();
-
-            new DeserializerGenerator().generate(beanType, packageName, beanName);
-
-            MethodSpec constructor = makeConstructor(beanName);
-            MethodSpec newDeserializer = makeNewDeserializerMethod(element, beanName);
-
-            TypeSpec classSpec = TypeSpec.classBuilder(className)
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .superclass(abstractObjectReader(element))
-                    .addSuperinterface(TypeName.get(element.asType()))
-                    .addMethod(constructor)
-                    .addMethod(newDeserializer)
-                    .build();
-
-            JavaFile.builder(packageName, classSpec).build().writeTo(filer);
+            new BeanReaderGenerator().generate(element);
         } catch (Exception e) {
-            messager.printMessage(Kind.ERROR, "error while creating source file " + e, element);
+            handleError(e);
         }
     }
 
     private void generateMapperForWriter(Element element) {
         try {
-            String className = enclosingName(element, "_") + element.getSimpleName() + "Impl";
-            String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            TypeMirror beanType = getBeanType(element);
-            Name beanName = typeUtils.asElement(beanType).getSimpleName();
-
-            new SerializerGenerator().generate(beanType, packageName, beanName);
-
-            MethodSpec constructor = makeConstructor(beanName);
-            MethodSpec newSerializer = makeNewSerializerMethod(beanName);
-
-            TypeSpec classSpec = TypeSpec.classBuilder(className)
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .superclass(abstractObjectWriter(element))
-                    .addSuperinterface(TypeName.get(element.asType()))
-                    .addMethod(constructor)
-                    .addMethod(newSerializer)
-                    .build();
-
-            JavaFile.builder(packageName, classSpec).build().writeTo(filer);
+            new BeanWriterGenerator().generate(element);
         } catch (Exception e) {
-            messager.printMessage(Kind.ERROR, "error while creating source file " + e, element);
+            handleError(e);
         }
-    }
-
-    private MethodSpec makeNewDeserializerMethod(Element element, Name beanName) {
-        return MethodSpec.methodBuilder("newDeserializer")
-                .addModifiers(Modifier.PROTECTED)
-                .addAnnotation(Override.class)
-                .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class),
-                        ClassName.get(getBeanType(element))))
-                .addStatement("return new " + beanName + "BeanJsonDeserializerImpl()")
-                .build();
-    }
-
-    private MethodSpec makeNewSerializerMethod(Name beanName) {
-        return MethodSpec.methodBuilder("newSerializer")
-                .addModifiers(Modifier.PROTECTED)
-                .addAnnotation(Override.class)
-                .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD))
-                .addStatement("return new " + beanName + "BeanJsonSerializerImpl()")
-                .build();
-    }
-
-    private MethodSpec makeConstructor(Name beanName) {
-        return MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addStatement("super(\"" + beanName + "\")").build();
-    }
-
-    private TypeName abstractObjectMapper(Element element) {
-        TypeMirror beanType = getBeanType(element);
-        return ParameterizedTypeName.get(ClassName.get(AbstractObjectMapper.class),
-                ClassName.get(beanType));
-    }
-
-    private TypeName abstractObjectReader(Element element) {
-        TypeMirror beanType = getBeanType(element);
-        return ParameterizedTypeName.get(ClassName.get(AbstractObjectReader.class),
-                ClassName.get(beanType));
-    }
-
-    private TypeName abstractObjectWriter(Element element) {
-        TypeMirror beanType = getBeanType(element);
-        return ParameterizedTypeName.get(ClassName.get(AbstractObjectWriter.class),
-                ClassName.get(beanType));
-    }
-
-    private TypeMirror getBeanType(Element element) {
-        TypeMirror objectReader = ((TypeElement) typeUtils.asElement(element.asType())).getInterfaces().get(0);
-        return MoreTypes.asDeclared(objectReader).getTypeArguments().get(0);
-    }
-
-    private String enclosingName(Element element, String postfix) {
-        if (isNull(element.getEnclosingElement())) {
-            return "";
-        }
-        return element.getEnclosingElement().getSimpleName().toString() + postfix;
     }
 
     @Override

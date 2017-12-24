@@ -46,7 +46,7 @@ public class UUIDJsonSerializer extends JsonSerializer<UUID> {
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, UUID value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, UUID value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         writer.unescapeValue( value.toString() );
     }
 }

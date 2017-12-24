@@ -57,7 +57,7 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
 
     /** {@inheritDoc} */
     @Override
-    public E doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public E doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         try {
             return Enum.valueOf( enumClass, reader.nextString() );
         } catch ( IllegalArgumentException ex ) {

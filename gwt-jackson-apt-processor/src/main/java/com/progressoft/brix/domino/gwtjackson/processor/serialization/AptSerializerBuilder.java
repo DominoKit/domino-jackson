@@ -15,7 +15,7 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor.serialization;
 
-import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.AbstractJsonMapperGenerator;
 import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.AbstractBeanJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.BeanPropertySerializer;
@@ -27,7 +27,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import java.util.List;
 
-public class AptSerializerBuilder extends AbstractMapperGenerator {
+public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
 
 

@@ -64,7 +64,6 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -92,6 +91,12 @@
                 <groupId>com.google.elemental2</groupId>
                 <artifactId>elemental2-core</artifactId>
                 <version>1.0.0-RC1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.elemental2</groupId>
+                <artifactId>elemental2-core</artifactId>
+                <version>1.0.0-RC1</version>
+                <classifier>sources</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -200,7 +205,9 @@
     </build>
     <modules>
         <module>gwt-jackson-apt-api</module>
+        <module>gwt-jackson-apt-api-shared</module>
         <module>gwt-jackson-apt-test</module>
         <module>gwt-jackson-apt-processor</module>
+        <module>gwt-jackson-apt-processor-test</module>
     </modules>
 </project>

@@ -16,9 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.map;
 
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
-import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.map.key.KeyDeserializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonToken;
@@ -65,7 +65,7 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
 
     /** {@inheritDoc} */
     @Override
-    public M doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public M doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
         M result = newMap();
 
         reader.beginObject();

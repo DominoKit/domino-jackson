@@ -18,7 +18,7 @@ package com.progressoft.brix.domino.gwtjackson.processor.deserialization;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.BeanPropertyDeserializer;
-import com.progressoft.brix.domino.gwtjackson.processor.AbstractMapperGenerator;
+import com.progressoft.brix.domino.gwtjackson.processor.AbstractJsonMapperGenerator;
 import com.progressoft.brix.domino.gwtjackson.processor.Type;
 import com.squareup.javapoet.*;
 
@@ -60,7 +60,7 @@ class DeserializerBuilder {
                 .addAnnotation( Override.class )
                 .addParameter( ClassName.get( beanType ), paramBean );
 
-        AbstractMapperGenerator.AccessorInfo accessorInfo=setterInfo(field);
+        AbstractJsonMapperGenerator.AccessorInfo accessorInfo=setterInfo(field);
 
         methodBuilder.addParameter( Type.wrapperType( fieldType ), paramValue )
                 .addParameter( JsonDeserializationContext.class, "ctx" )
@@ -80,12 +80,12 @@ class DeserializerBuilder {
                 .build();
     }
 
-    private AbstractMapperGenerator.AccessorInfo setterInfo(Element field) {
+    private AbstractJsonMapperGenerator.AccessorInfo setterInfo(Element field) {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
         if (allBeanMethods(beanType).contains("set" + upperCaseFirstLetter)) {
-            return new AbstractMapperGenerator.AccessorInfo(true, "set" + upperCaseFirstLetter);
+            return new AbstractJsonMapperGenerator.AccessorInfo(true, "set" + upperCaseFirstLetter);
         }
-        return new AbstractMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
+        return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
     }
 
     private String upperCaseFirstLetter(String name) {

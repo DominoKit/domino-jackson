@@ -50,8 +50,8 @@ public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, double[][] values, JsonSerializationContext ctx,
-                             JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, double[][] values, JsonSerializationContext ctx,
+                            JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;

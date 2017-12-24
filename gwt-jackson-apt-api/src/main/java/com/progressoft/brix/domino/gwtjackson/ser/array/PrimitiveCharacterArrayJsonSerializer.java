@@ -50,7 +50,7 @@ public class PrimitiveCharacterArrayJsonSerializer extends JsonSerializer<char[]
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize( JsonWriter writer, char[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, char[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
         if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
             writer.cancelName();
             return;
