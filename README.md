@@ -247,7 +247,7 @@ More features from the original GWT-Jackson will be supported, starting from the
 - Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
 - Support Inheritance
 - Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
-- Support Guava exension.
+- Support Guava extension.
 - Support [Mix-in annotations](https://github.com/nmorel/gwt-jackson/wiki/Mix-in-annotations)
  
 
