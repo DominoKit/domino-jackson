@@ -36,12 +36,6 @@ Add the following dependecies to your project pom file
 </dependency>
 <dependency>
     <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-    <artifactId>gwt-jackson-apt-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <classifier>sources</classifier>
-</dependency>
-<dependency>
-    <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
     <artifactId>gwt-jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
@@ -247,7 +241,7 @@ More features from the original GWT-Jackson will be supported, starting from the
 - Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
 - Support Inheritance
 - Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
-- Support Guava exension.
+- Support Guava extension.
 - Support [Mix-in annotations](https://github.com/nmorel/gwt-jackson/wiki/Mix-in-annotations)
  
 
