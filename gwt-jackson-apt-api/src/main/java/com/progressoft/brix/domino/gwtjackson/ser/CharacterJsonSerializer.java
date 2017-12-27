@@ -42,17 +42,22 @@ public class CharacterJsonSerializer extends JsonSerializer<Character> {
 
     private static char defaultValue;
 
-    private CharacterJsonSerializer() { }
+    private CharacterJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isDefault( Character value ) {
+    protected boolean isDefault(Character value) {
         return null == value || value == defaultValue;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        writer.value( value.toString() );
+    public void doSerialize(JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        writer.value(value.toString());
     }
 }

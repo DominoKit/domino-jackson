@@ -48,16 +48,17 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
             return INSTANCE;
         }
 
-        private DateJsonDeserializer() { }
-
-        @Override
-        protected Date deserializeNumber( long millis, JsonDeserializerParameters params ) {
-            return new Date( millis );
+        private DateJsonDeserializer() {
         }
 
         @Override
-        protected Date deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return DateFormat.parse(ctx.isUseBrowserTimezone(), params.getPattern(), null, date );
+        protected Date deserializeNumber(long millis, JsonDeserializerParameters params) {
+            return new Date(millis);
+        }
+
+        @Override
+        protected Date deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return DateFormat.parse(ctx.isUseBrowserTimezone(), params.getPattern(), null, date);
         }
     }
 
@@ -77,16 +78,17 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
             return INSTANCE;
         }
 
-        private SqlDateJsonDeserializer() { }
-
-        @Override
-        protected java.sql.Date deserializeNumber( long millis, JsonDeserializerParameters params ) {
-            return new java.sql.Date( millis );
+        private SqlDateJsonDeserializer() {
         }
 
         @Override
-        protected java.sql.Date deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return new java.sql.Date( DateFormat.parse(ctx.isUseBrowserTimezone(), SQL_DATE_FORMAT, false, date).getTime() );
+        protected java.sql.Date deserializeNumber(long millis, JsonDeserializerParameters params) {
+            return new java.sql.Date(millis);
+        }
+
+        @Override
+        protected java.sql.Date deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return new java.sql.Date(DateFormat.parse(ctx.isUseBrowserTimezone(), SQL_DATE_FORMAT, false, date).getTime());
         }
     }
 
@@ -104,16 +106,17 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
             return INSTANCE;
         }
 
-        private SqlTimeJsonDeserializer() { }
-
-        @Override
-        protected Time deserializeNumber( long millis, JsonDeserializerParameters params ) {
-            return new Time( millis );
+        private SqlTimeJsonDeserializer() {
         }
 
         @Override
-        protected Time deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return Time.valueOf( date );
+        protected Time deserializeNumber(long millis, JsonDeserializerParameters params) {
+            return new Time(millis);
+        }
+
+        @Override
+        protected Time deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return Time.valueOf(date);
         }
     }
 
@@ -131,26 +134,29 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
             return INSTANCE;
         }
 
-        private SqlTimestampJsonDeserializer() { }
-
-        @Override
-        protected Timestamp deserializeNumber( long millis, JsonDeserializerParameters params ) {
-            return new Timestamp( millis );
+        private SqlTimestampJsonDeserializer() {
         }
 
         @Override
-        protected Timestamp deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return new Timestamp( DateFormat.parse(ctx.isUseBrowserTimezone(), params.getPattern(), null, date ).getTime() );
+        protected Timestamp deserializeNumber(long millis, JsonDeserializerParameters params) {
+            return new Timestamp(millis);
+        }
+
+        @Override
+        protected Timestamp deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return new Timestamp(DateFormat.parse(ctx.isUseBrowserTimezone(), params.getPattern(), null, date).getTime());
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public D doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( params.getShape().isNumeric() || JsonToken.NUMBER.equals( reader.peek() ) ) {
-            return deserializeNumber( reader.nextLong(), params );
+    public D doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (params.getShape().isNumeric() || JsonToken.NUMBER.equals(reader.peek())) {
+            return deserializeNumber(reader.nextLong(), params);
         } else {
-            return deserializeString( reader.nextString(), ctx, params );
+            return deserializeString(reader.nextString(), ctx, params);
         }
     }
 
@@ -161,15 +167,15 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
      * @param params a {@link JsonDeserializerParameters} object.
      * @return a D object.
      */
-    protected abstract D deserializeNumber( long millis, JsonDeserializerParameters params );
+    protected abstract D deserializeNumber(long millis, JsonDeserializerParameters params);
 
     /**
      * <p>deserializeString</p>
      *
-     * @param date a {@link String} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param date   a {@link String} object.
+     * @param ctx    a {@link JsonDeserializationContext} object.
      * @param params a {@link JsonDeserializerParameters} object.
      * @return a D object.
      */
-    protected abstract D deserializeString( String date, JsonDeserializationContext ctx, JsonDeserializerParameters params );
+    protected abstract D deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 }

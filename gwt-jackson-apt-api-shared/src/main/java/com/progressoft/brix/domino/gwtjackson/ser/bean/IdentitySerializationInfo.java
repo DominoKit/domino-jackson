@@ -36,7 +36,7 @@ public interface IdentitySerializationInfo<T> {
      * <p>getObjectId</p>
      *
      * @param bean a T object.
-     * @param ctx a {@link JsonSerializationContext} object.
+     * @param ctx  a {@link JsonSerializationContext} object.
      * @return a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.ObjectIdSerializer} object.
      */
     ObjectIdSerializer<?> getObjectId(T bean, JsonSerializationContext ctx);

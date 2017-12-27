@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright 2015 Ahmad Bawaneh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.progressoft.brix.domino.gwtjackson;
 
-import com.google.gwt.junit.tools.GWTTestSuite;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package com.progressoft.brix.domino.gwtjackson.processor;
 
-public class GwtJacksonAptSuite extends GWTTestSuite {
-    public static Test suite() {
-        TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
-        suite.addTestSuite(GwtJacksonAptTest.class);
+import jsinterop.annotations.JsType;
 
-        return suite;
-    }
+@JsType
+public class Person {
 }

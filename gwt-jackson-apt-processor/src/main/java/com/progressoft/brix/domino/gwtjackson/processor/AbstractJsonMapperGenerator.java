@@ -45,7 +45,7 @@ public abstract class AbstractJsonMapperGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(superClass())
                 .addMethod(constructor)
-                .addMethod(targetTypeMethod(beanName));
+                .addMethod(targetTypeMethod());
 
         moreMethods().forEach(builder::addMethod);
 
@@ -54,12 +54,12 @@ public abstract class AbstractJsonMapperGenerator {
         JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
     }
 
-    private MethodSpec targetTypeMethod(Name beanName) {
+    private MethodSpec targetTypeMethod() {
         return MethodSpec.methodBuilder(targetTypeMethodName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .returns(ClassName.get(Class.class))
-                .addStatement("return " + beanName + ".class")
+                .addStatement("return $T.class", TypeName.get(beanType))
                 .build();
     }
 

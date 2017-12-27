@@ -35,26 +35,28 @@ public final class LinkedHashMapJsonDeserializer<K, V> extends BaseMapJsonDeseri
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link LinkedHashMap}
-     * @param <V> Type of the values inside the {@link LinkedHashMap}
+     * @param <K>               Type of the keys inside the {@link LinkedHashMap}
+     * @param <V>               Type of the values inside the {@link LinkedHashMap}
      * @return a new instance of {@link LinkedHashMapJsonDeserializer}
      */
-    public static <K, V> LinkedHashMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                          JsonDeserializer<V> valueDeserializer ) {
-        return new LinkedHashMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> LinkedHashMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                         JsonDeserializer<V> valueDeserializer) {
+        return new LinkedHashMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private LinkedHashMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private LinkedHashMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LinkedHashMap<K, V> newMap() {
         return new LinkedHashMap<K, V>();

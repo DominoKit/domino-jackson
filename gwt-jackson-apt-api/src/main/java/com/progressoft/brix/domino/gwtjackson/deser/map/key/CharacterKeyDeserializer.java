@@ -37,11 +37,14 @@ public final class CharacterKeyDeserializer extends KeyDeserializer<Character> {
         return INSTANCE;
     }
 
-    private CharacterKeyDeserializer() { }
+    private CharacterKeyDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Character doDeserialize( String key, JsonDeserializationContext ctx ) {
-        return key.charAt( 0 );
+    protected Character doDeserialize(String key, JsonDeserializationContext ctx) {
+        return key.charAt(0);
     }
 }

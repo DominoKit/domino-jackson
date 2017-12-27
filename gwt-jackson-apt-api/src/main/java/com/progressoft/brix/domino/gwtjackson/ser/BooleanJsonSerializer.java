@@ -40,17 +40,22 @@ public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
         return INSTANCE;
     }
 
-    private BooleanJsonSerializer() { }
+    private BooleanJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isDefault( Boolean value ) {
+    protected boolean isDefault(Boolean value) {
         return null == value || !value;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        writer.value( value );
+    public void doSerialize(JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        writer.value(value);
     }
 }

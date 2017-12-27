@@ -43,19 +43,22 @@ public class PrimitiveShortArray2dJsonDeserializer extends AbstractArray2dJsonDe
         return INSTANCE;
     }
 
-    private PrimitiveShortArray2dJsonDeserializer() { }
+    private PrimitiveShortArray2dJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public short[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<List<Short>> list = deserializeIntoList( reader, ctx, ShortJsonDeserializer.getInstance(), params );
+    public short[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<List<Short>> list = deserializeIntoList(reader, ctx, ShortJsonDeserializer.getInstance(), params);
 
-        if ( list.isEmpty() ) {
+        if (list.isEmpty()) {
             return new short[0][0];
         }
 
-        List<Short> firstList = list.get( 0 );
-        if ( firstList.isEmpty() ) {
+        List<Short> firstList = list.get(0);
+        if (firstList.isEmpty()) {
             return new short[list.size()][0];
         }
 
@@ -63,10 +66,10 @@ public class PrimitiveShortArray2dJsonDeserializer extends AbstractArray2dJsonDe
 
         int i = 0;
         int j;
-        for ( List<Short> innerList : list ) {
+        for (List<Short> innerList : list) {
             j = 0;
-            for ( Short value : innerList ) {
-                if ( null != value ) {
+            for (Short value : innerList) {
+                if (null != value) {
                     array[i][j] = value;
                 }
                 j++;

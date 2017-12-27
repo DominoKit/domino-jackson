@@ -30,18 +30,18 @@ public abstract class AbstractJsonSerializerTest<T> extends JacksonTestCase {
     protected abstract JsonSerializer<T> createSerializer();
 
     public void testSerializeNullValue() {
-        assertSerialization( "null", null );
+        assertSerialization("null", null);
     }
 
-    protected String serialize( T value ) {
+    protected String serialize(T value) {
         JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
         JsonWriter writer = ctx.newJsonWriter();
-        createSerializer().serialize( writer, value, ctx );
+        createSerializer().serialize(writer, value, ctx);
         return writer.getOutput();
     }
 
-    protected void assertSerialization( String expected, T value ) {
-        assertEquals( expected, serialize( value ) );
+    protected void assertSerialization(String expected, T value) {
+        assertEquals(expected, serialize(value));
     }
 
     public abstract void testSerializeValue();

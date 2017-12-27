@@ -32,14 +32,14 @@ public class SetJsonDeserializerTest extends AbstractJsonDeserializerTest<Set<St
 
     @Override
     protected JsonDeserializer<Set<String>> createDeserializer() {
-        return SetJsonDeserializer.newInstance( StringJsonDeserializer.getInstance() );
+        return SetJsonDeserializer.newInstance(StringJsonDeserializer.getInstance());
     }
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( new HashSet<String>( Arrays.asList( "Hello", " ", "World", "!" ) ), "[Hello, \" \", \"World\", " +
-                "" + "\"!\"]" );
-        assertDeserialization( Collections.<String>emptySet(), "[]" );
+        assertDeserialization(new HashSet<String>(Arrays.asList("Hello", " ", "World", "!")), "[Hello, \" \", \"World\", " +
+                "" + "\"!\"]");
+        assertDeserialization(Collections.<String>emptySet(), "[]");
     }
 
 }

@@ -33,21 +33,23 @@ public class PriorityQueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link PriorityQueue}.
-     * @param <T> Type of the elements inside the {@link PriorityQueue}
+     * @param <T>          Type of the elements inside the {@link PriorityQueue}
      * @return a new instance of {@link PriorityQueueJsonDeserializer}
      */
-    public static <T> PriorityQueueJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new PriorityQueueJsonDeserializer<T>( deserializer );
+    public static <T> PriorityQueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new PriorityQueueJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link PriorityQueue}.
      */
-    private PriorityQueueJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private PriorityQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PriorityQueue<T> newCollection() {
         return new PriorityQueue<T>();

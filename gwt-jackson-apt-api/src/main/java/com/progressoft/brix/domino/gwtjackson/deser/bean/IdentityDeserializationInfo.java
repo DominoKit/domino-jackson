@@ -54,7 +54,7 @@ public interface IdentityDeserializationInfo<T> {
      * Reads the id and returns it.
      *
      * @param reader reader
-     * @param ctx context of the deserialization process
+     * @param ctx    context of the deserialization process
      * @return the identifier
      */
     Object readId(JsonReader reader, JsonDeserializationContext ctx);

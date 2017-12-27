@@ -36,19 +36,21 @@ public abstract class BaseIterableJsonDeserializer<I extends Iterable<T>, T> ext
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Iterable}.
      */
-    public BaseIterableJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        if ( null == deserializer ) {
-            throw new IllegalArgumentException( "deserializer can't be null" );
+    public BaseIterableJsonDeserializer(JsonDeserializer<T> deserializer) {
+        if (null == deserializer) {
+            throw new IllegalArgumentException("deserializer can't be null");
         }
         this.deserializer = deserializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setBackReference( String referenceName, Object reference, I value, JsonDeserializationContext ctx ) {
-        if ( null != value ) {
-            for ( T val : value ) {
-                deserializer.setBackReference( referenceName, reference, val, ctx );
+    public void setBackReference(String referenceName, Object reference, I value, JsonDeserializationContext ctx) {
+        if (null != value) {
+            for (T val : value) {
+                deserializer.setBackReference(referenceName, reference, val, ctx);
             }
         }
     }

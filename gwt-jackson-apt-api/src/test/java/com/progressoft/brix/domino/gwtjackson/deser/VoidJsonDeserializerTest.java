@@ -30,6 +30,6 @@ public class VoidJsonDeserializerTest extends AbstractJsonDeserializerTest<Void>
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( null, "null" );
+        assertDeserialization(null, "null");
     }
 }

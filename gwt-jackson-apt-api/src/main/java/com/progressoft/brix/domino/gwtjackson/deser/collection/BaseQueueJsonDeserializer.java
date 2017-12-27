@@ -35,11 +35,13 @@ public abstract class BaseQueueJsonDeserializer<Q extends Queue<T>, T> extends B
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Queue}.
      */
-    public BaseQueueJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    public BaseQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isNullValueAllowed() {
         return false;

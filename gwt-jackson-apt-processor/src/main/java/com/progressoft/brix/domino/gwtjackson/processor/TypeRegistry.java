@@ -15,7 +15,7 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor;
 
-import com.google.gwt.core.client.JavaScriptObject;
+
 import com.progressoft.brix.domino.gwtjackson.deser.BaseDateJsonDeserializer.DateJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseDateJsonDeserializer.SqlDateJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.deser.BaseDateJsonDeserializer.SqlTimeJsonDeserializer;
@@ -38,7 +38,6 @@ import com.progressoft.brix.domino.gwtjackson.ser.array.dd.*;
 import com.progressoft.brix.domino.gwtjackson.ser.map.MapJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.map.key.*;
 import com.squareup.javapoet.TypeName;
-import javaemul.internal.annotations.GwtIncompatible;
 
 import javax.lang.model.type.TypeMirror;
 import java.io.Serializable;
@@ -141,11 +140,6 @@ public final class TypeRegistry {
                 .deserializer(VoidJsonDeserializer.class)
                 .register(simpleTypes);
 
-        MAPPER
-                .forType(JavaScriptObject.class)
-                .serializer(JavaScriptObjectJsonSerializer.class)
-                .deserializer(ObjectJsonDeserializer.class)
-                .register(simpleTypes);
 
         MAPPER
                 .forType(Enum.class)
@@ -718,6 +712,7 @@ public final class TypeRegistry {
             return customMappers.get(type).deserializer;
         throw new TypeDeserializerNotFoundException(type);
     }
+
     public static ClassMapper get(String typeName) {
         return simpleTypes.get(typeName);
     }

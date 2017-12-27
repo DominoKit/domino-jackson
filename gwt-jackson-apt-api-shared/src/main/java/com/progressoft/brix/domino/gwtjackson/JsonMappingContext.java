@@ -31,6 +31,6 @@ public interface JsonMappingContext {
      *
      * @return a {@link Logger} object.
      */
-     Logger getLogger();
+    Logger getLogger();
 
 }

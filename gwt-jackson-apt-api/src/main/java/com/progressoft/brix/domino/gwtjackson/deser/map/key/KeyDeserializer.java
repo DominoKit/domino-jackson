@@ -35,11 +35,11 @@ public abstract class KeyDeserializer<T> {
      * @return the deserialized object
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException if an error occurs during the deserialization
      */
-    public T deserialize( String key, JsonDeserializationContext ctx ) throws JsonDeserializationException {
-        if ( null == key ) {
+    public T deserialize(String key, JsonDeserializationContext ctx) throws JsonDeserializationException {
+        if (null == key) {
             return null;
         }
-        return doDeserialize( key, ctx );
+        return doDeserialize(key, ctx);
     }
 
     /**
@@ -49,5 +49,5 @@ public abstract class KeyDeserializer<T> {
      * @param ctx Context for the full deserialization process
      * @return the deserialized object
      */
-    protected abstract T doDeserialize( String key, JsonDeserializationContext ctx );
+    protected abstract T doDeserialize(String key, JsonDeserializationContext ctx);
 }

@@ -39,17 +39,17 @@ public abstract class AbstractConfiguration {
 
         private final Class type;
 
-        private PrimitiveTypeConfiguration( Class type ) {
+        private PrimitiveTypeConfiguration(Class type) {
             this.type = type;
         }
 
-        public PrimitiveTypeConfiguration serializer( Class serializer ) {
-            mapTypeToSerializer.put( type, serializer );
+        public PrimitiveTypeConfiguration serializer(Class serializer) {
+            mapTypeToSerializer.put(type, serializer);
             return this;
         }
 
-        public PrimitiveTypeConfiguration deserializer( Class deserializer ) {
-            mapTypeToDeserializer.put( type, deserializer );
+        public PrimitiveTypeConfiguration deserializer(Class deserializer) {
+            mapTypeToDeserializer.put(type, deserializer);
             return this;
         }
     }
@@ -58,17 +58,17 @@ public abstract class AbstractConfiguration {
 
         private final Class<T> type;
 
-        private TypeConfiguration( Class<T> type ) {
+        private TypeConfiguration(Class<T> type) {
             this.type = type;
         }
 
-        public TypeConfiguration<T> serializer( Class<? extends JsonSerializer> serializer ) {
-            mapTypeToSerializer.put( type, serializer );
+        public TypeConfiguration<T> serializer(Class<? extends JsonSerializer> serializer) {
+            mapTypeToSerializer.put(type, serializer);
             return this;
         }
 
-        public TypeConfiguration<T> deserializer( Class<? extends JsonDeserializer> deserializer ) {
-            mapTypeToDeserializer.put( type, deserializer );
+        public TypeConfiguration<T> deserializer(Class<? extends JsonDeserializer> deserializer) {
+            mapTypeToDeserializer.put(type, deserializer);
             return this;
         }
     }
@@ -77,17 +77,17 @@ public abstract class AbstractConfiguration {
 
         private final Class<T> type;
 
-        private KeyTypeConfiguration( Class<T> type ) {
+        private KeyTypeConfiguration(Class<T> type) {
             this.type = type;
         }
 
-        public KeyTypeConfiguration<T> serializer( Class<? extends KeySerializer> serializer ) {
-            mapTypeToKeySerializer.put( type, serializer );
+        public KeyTypeConfiguration<T> serializer(Class<? extends KeySerializer> serializer) {
+            mapTypeToKeySerializer.put(type, serializer);
             return this;
         }
 
-        public KeyTypeConfiguration<T> deserializer( Class<? extends KeyDeserializer> deserializer ) {
-            mapTypeToKeyDeserializer.put( type, deserializer );
+        public KeyTypeConfiguration<T> deserializer(Class<? extends KeyDeserializer> deserializer) {
+            mapTypeToKeyDeserializer.put(type, deserializer);
             return this;
         }
     }
@@ -127,39 +127,39 @@ public abstract class AbstractConfiguration {
      * @param type Type
      * @return a {@link PrimitiveTypeConfiguration} to configure serializer and/or deserializer for the given primitive type.
      */
-    protected PrimitiveTypeConfiguration primitiveType( Class type ) {
-        if ( !type.isPrimitive() ) {
-            throw new IllegalArgumentException( "Type " + type + " is not a primitive. Call type(Class) instead" );
+    protected PrimitiveTypeConfiguration primitiveType(Class type) {
+        if (!type.isPrimitive()) {
+            throw new IllegalArgumentException("Type " + type + " is not a primitive. Call type(Class) instead");
         }
-        return new PrimitiveTypeConfiguration( type );
+        return new PrimitiveTypeConfiguration(type);
     }
 
     /**
      * <p>type</p>
      *
      * @param type Type
+     * @param <T>  a T object.
      * @return a {@link TypeConfiguration} to configure serializer and/or deserializer for the given type.
-     * @param <T> a T object.
      */
-    protected <T> TypeConfiguration<T> type( Class<T> type ) {
-        if ( type.isPrimitive() ) {
-            throw new IllegalArgumentException( "Type " + type + " is a primitive. Call primitiveType(Class) instead" );
+    protected <T> TypeConfiguration<T> type(Class<T> type) {
+        if (type.isPrimitive()) {
+            throw new IllegalArgumentException("Type " + type + " is a primitive. Call primitiveType(Class) instead");
         }
-        return new TypeConfiguration<T>( type );
+        return new TypeConfiguration<T>(type);
     }
 
     /**
      * Return a {@link KeyTypeConfiguration} to configure key serializer and/or deserializer for the given type.
      *
      * @param type a {@link Class} object.
-     * @param <T> Type
+     * @param <T>  Type
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration.KeyTypeConfiguration} object.
      */
-    protected <T> KeyTypeConfiguration<T> key( Class<T> type ) {
-        if ( type.isPrimitive() ) {
-            throw new IllegalArgumentException( "Primitive types cannot be used as a map's key" );
+    protected <T> KeyTypeConfiguration<T> key(Class<T> type) {
+        if (type.isPrimitive()) {
+            throw new IllegalArgumentException("Primitive types cannot be used as a map's key");
         }
-        return new KeyTypeConfiguration<T>( type );
+        return new KeyTypeConfiguration<T>(type);
     }
 
     /**
@@ -168,13 +168,13 @@ public abstract class AbstractConfiguration {
      * <code>mixinSource</code> are taken to override annotations
      * that <code>target</code> (or its supertypes) has.
      *
-     * @param target Class (or interface) whose annotations to effectively override
+     * @param target      Class (or interface) whose annotations to effectively override
      * @param mixinSource Class (or interface) whose annotations are to
-     * be "added" to target's annotations, overriding as necessary
+     *                    be "added" to target's annotations, overriding as necessary
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration addMixInAnnotations( Class<?> target, Class<?> mixinSource ) {
-        mapMixInAnnotations.put( target, mixinSource );
+    protected AbstractConfiguration addMixInAnnotations(Class<?> target, Class<?> mixinSource) {
+        mapMixInAnnotations.put(target, mixinSource);
         return this;
     }
 
@@ -188,8 +188,8 @@ public abstract class AbstractConfiguration {
      * @param regex the regex to add
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration whitelist( String regex ) {
-        whitelist.add( regex );
+    protected AbstractConfiguration whitelist(String regex) {
+        whitelist.add(regex);
         return this;
     }
 
@@ -199,7 +199,7 @@ public abstract class AbstractConfiguration {
      * @param visibility the new default behaviour
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration fieldVisibility( JsonAutoDetect.Visibility visibility ) {
+    protected AbstractConfiguration fieldVisibility(JsonAutoDetect.Visibility visibility) {
         this.fieldVisibility = visibility;
         return this;
     }
@@ -210,7 +210,7 @@ public abstract class AbstractConfiguration {
      * @param visibility the new default behaviour
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration getterVisibility( JsonAutoDetect.Visibility visibility ) {
+    protected AbstractConfiguration getterVisibility(JsonAutoDetect.Visibility visibility) {
         this.getterVisibility = visibility;
         return this;
     }
@@ -221,7 +221,7 @@ public abstract class AbstractConfiguration {
      * @param visibility the new default behaviour
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration isGetterVisibility( JsonAutoDetect.Visibility visibility ) {
+    protected AbstractConfiguration isGetterVisibility(JsonAutoDetect.Visibility visibility) {
         this.isGetterVisibility = visibility;
         return this;
     }
@@ -232,7 +232,7 @@ public abstract class AbstractConfiguration {
      * @param visibility the new default behaviour
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration setterVisibility( JsonAutoDetect.Visibility visibility ) {
+    protected AbstractConfiguration setterVisibility(JsonAutoDetect.Visibility visibility) {
         this.setterVisibility = visibility;
         return this;
     }
@@ -243,7 +243,7 @@ public abstract class AbstractConfiguration {
      * @param visibility the new default behaviour
      * @return a {@link com.progressoft.brix.domino.gwtjackson.AbstractConfiguration} object.
      */
-    protected AbstractConfiguration creatorVisibility( JsonAutoDetect.Visibility visibility ) {
+    protected AbstractConfiguration creatorVisibility(JsonAutoDetect.Visibility visibility) {
         this.creatorVisibility = visibility;
         return this;
     }

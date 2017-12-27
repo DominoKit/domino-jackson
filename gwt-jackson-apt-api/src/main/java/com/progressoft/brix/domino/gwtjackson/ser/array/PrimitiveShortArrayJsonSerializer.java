@@ -40,28 +40,33 @@ public class PrimitiveShortArrayJsonSerializer extends JsonSerializer<short[]> {
         return INSTANCE;
     }
 
-    private PrimitiveShortArrayJsonSerializer() { }
+    private PrimitiveShortArrayJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( short[] value ) {
+    protected boolean isEmpty(short[] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, short[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, short[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1 ) {
-            writer.value( values[0] );
+        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+            writer.value(values[0]);
         } else {
             writer.beginArray();
-            for ( short value : values ) {
-                writer.value( value );
+            for (short value : values) {
+                writer.value(value);
             }
             writer.endArray();
         }

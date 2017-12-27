@@ -40,28 +40,33 @@ public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[
         return INSTANCE;
     }
 
-    private PrimitiveDoubleArray2dJsonSerializer() { }
+    private PrimitiveDoubleArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( double[][] value ) {
+    protected boolean isEmpty(double[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void doSerialize(JsonWriter writer, double[][] values, JsonSerializationContext ctx,
-                            JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+                            JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( double[] array : values ) {
+        for (double[] array : values) {
             writer.beginArray();
-            for ( double value : array ) {
-                writer.value( value );
+            for (double value : array) {
+                writer.value(value);
             }
             writer.endArray();
         }

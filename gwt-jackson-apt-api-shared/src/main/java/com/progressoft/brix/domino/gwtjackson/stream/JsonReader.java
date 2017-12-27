@@ -24,36 +24,35 @@ import java.math.BigInteger;
  * @author nicolasmorel
  * @version $Id: $
  */
-public interface JsonReader
-{
+public interface JsonReader {
 
     /**
      * Configure this parser to be  be liberal in what it accepts. By default,
      * this parser is strict and only accepts JSON as specified by <a
      * href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>. Setting the
      * parser to lenient causes it to ignore the following syntax errors:
-     *
+     * <p>
      * <ul>
-     *   <li>Streams that start with the <a href="#nonexecuteprefix">non-execute
-     *       prefix</a>, <code>")]}'\n"</code>.
-     *   <li>Streams that include multiple top-level values. With strict parsing,
-     *       each stream must contain exactly one top-level value.
-     *   <li>Top-level values of any type. With strict parsing, the top-level
-     *       value must be an object or an array.
-     *   <li>Numbers may be {@link Double#isNaN() NaNs} or {@link
-     *       Double#isInfinite() infinities}.
-     *   <li>End of line comments starting with {@code //} or {@code #} and
-     *       ending with a newline character.
-     *   <li>C-style comments starting with {@code /*} and ending with
-     *       {@code *}{@code /}. Such comments may not be nested.
-     *   <li>Names that are unquoted or {@code 'single quoted'}.
-     *   <li>Strings that are unquoted or {@code 'single quoted'}.
-     *   <li>Array elements separated by {@code ;} instead of {@code ,}.
-     *   <li>Unnecessary array separators. These are interpreted as if null
-     *       was the omitted value.
-     *   <li>Names and values separated by {@code =} or {@code =>} instead of
-     *       {@code :}.
-     *   <li>Name/value pairs separated by {@code ;} instead of {@code ,}.
+     * <li>Streams that start with the <a href="#nonexecuteprefix">non-execute
+     * prefix</a>, <code>")]}'\n"</code>.
+     * <li>Streams that include multiple top-level values. With strict parsing,
+     * each stream must contain exactly one top-level value.
+     * <li>Top-level values of any type. With strict parsing, the top-level
+     * value must be an object or an array.
+     * <li>Numbers may be {@link Double#isNaN() NaNs} or {@link
+     * Double#isInfinite() infinities}.
+     * <li>End of line comments starting with {@code //} or {@code #} and
+     * ending with a newline character.
+     * <li>C-style comments starting with {@code /*} and ending with
+     * {@code *}{@code /}. Such comments may not be nested.
+     * <li>Names that are unquoted or {@code 'single quoted'}.
+     * <li>Strings that are unquoted or {@code 'single quoted'}.
+     * <li>Array elements separated by {@code ;} instead of {@code ,}.
+     * <li>Unnecessary array separators. These are interpreted as if null
+     * was the omitted value.
+     * <li>Names and values separated by {@code =} or {@code =>} instead of
+     * {@code :}.
+     * <li>Name/value pairs separated by {@code ;} instead of {@code ,}.
      * </ul>
      *
      * @param lenient a boolean.
@@ -111,9 +110,9 @@ public interface JsonReader
      * consuming it. If the next token is a number, this method will return its
      * string form.
      *
-     * @throws IllegalStateException if the next token is not a string or if
-     *     this reader is closed.
      * @return a {@link String} object.
+     * @throws IllegalStateException if the next token is not a string or if
+     *                               this reader is closed.
      */
     String nextString();
 
@@ -121,9 +120,9 @@ public interface JsonReader
      * Returns the {@link JsonToken#BOOLEAN boolean} value of the next token,
      * consuming it.
      *
-     * @throws IllegalStateException if the next token is not a boolean or if
-     *     this reader is closed.
      * @return a boolean.
+     * @throws IllegalStateException if the next token is not a boolean or if
+     *                               this reader is closed.
      */
     boolean nextBoolean();
 
@@ -132,7 +131,7 @@ public interface JsonReader
      * literal null.
      *
      * @throws IllegalStateException if the next token is not null or if this
-     *     reader is closed.
+     *                               reader is closed.
      */
     void nextNull();
 
@@ -141,10 +140,10 @@ public interface JsonReader
      * consuming it. If the next token is a string, this method will attempt to
      * parse it as a double using {@link Double#parseDouble(String)}.
      *
+     * @return a double.
      * @throws IllegalStateException if the next token is not a literal value.
      * @throws NumberFormatException if the next literal value cannot be parsed
-     *     as a double, or is non-finite.
-     * @return a double.
+     *                               as a double, or is non-finite.
      */
     double nextDouble();
 
@@ -154,10 +153,10 @@ public interface JsonReader
      * parse it as a long. If the next token's numeric value cannot be exactly
      * represented by a Java {@code long}, this method throws.
      *
+     * @return a long.
      * @throws IllegalStateException if the next token is not a literal value.
      * @throws NumberFormatException if the next literal value cannot be parsed
-     *     as a number, or exactly represented as a long.
-     * @return a long.
+     *                               as a number, or exactly represented as a long.
      */
     long nextLong();
 
@@ -167,10 +166,10 @@ public interface JsonReader
      * parse it as an int. If the next token's numeric value cannot be exactly
      * represented by a Java {@code int}, this method throws.
      *
+     * @return a int.
      * @throws IllegalStateException if the next token is not a literal value.
      * @throws NumberFormatException if the next literal value cannot be parsed
-     *     as a number, or exactly represented as an int.
-     * @return a int.
+     *                               as a number, or exactly represented as an int.
      */
     int nextInt();
 
@@ -223,16 +222,10 @@ public interface JsonReader
      * For decimal number, a double is returned.
      * If the next token's numeric value cannot be exactly represented by a Java {@link Number}, this method throws.
      *
+     * @return a {@link Number} object.
      * @throws IllegalStateException if the next token is not a number.
      * @throws NumberFormatException if the next value cannot be parsed as a number.
-     * @return a {@link Number} object.
      */
     Number nextNumber();
 
-    /**
-     *
-     * @param useSafeEval
-     * @return the Object
-     */
-    Object nextObject(boolean useSafeEval);
 }

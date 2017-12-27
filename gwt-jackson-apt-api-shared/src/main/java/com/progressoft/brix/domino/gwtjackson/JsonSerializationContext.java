@@ -5,7 +5,7 @@ import com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationExcepti
 import com.progressoft.brix.domino.gwtjackson.ser.bean.ObjectIdSerializer;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
-public interface JsonSerializationContext extends JsonMappingContext{
+public interface JsonSerializationContext extends JsonMappingContext {
     boolean isSerializeNulls();
 
     boolean isWriteDatesAsTimestamps();
@@ -38,10 +38,10 @@ public interface JsonSerializationContext extends JsonMappingContext{
 
     ObjectIdSerializer<?> getObjectId(Object object);
 
-    @SuppressWarnings( "UnusedDeclaration" )
+    @SuppressWarnings("UnusedDeclaration")
     void addGenerator(ObjectIdGenerator<?> generator);
 
-    @SuppressWarnings( {"UnusedDeclaration", "unchecked"} )
+    @SuppressWarnings({"UnusedDeclaration", "unchecked"})
     <T> ObjectIdGenerator<T> findObjectIdGenerator(ObjectIdGenerator<T> gen);
 
 

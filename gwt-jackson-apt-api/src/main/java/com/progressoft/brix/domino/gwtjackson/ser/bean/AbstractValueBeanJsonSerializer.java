@@ -46,11 +46,13 @@ public abstract class AbstractValueBeanJsonSerializer<T> extends AbstractBeanJso
      */
     protected abstract BeanPropertySerializer<T, ?> initValueSerializer();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
                                    IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
-            typeInformation ) {
-        serializer.serialize( writer, value, ctx );
+                                           typeInformation) {
+        serializer.serialize(writer, value, ctx);
     }
 }

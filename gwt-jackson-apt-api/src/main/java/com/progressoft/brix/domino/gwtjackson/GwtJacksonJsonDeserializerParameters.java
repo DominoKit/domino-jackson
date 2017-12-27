@@ -37,7 +37,9 @@ import java.util.Set;
  */
 public final class GwtJacksonJsonDeserializerParameters implements JsonDeserializerParameters {
 
-    /** Constant <code>DEFAULT</code> */
+    /**
+     * Constant <code>DEFAULT</code>
+     */
     public static final JsonDeserializerParameters DEFAULT = new GwtJacksonJsonDeserializerParameters();
 
     /**
@@ -171,10 +173,10 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
      */
     @Override
     public JsonDeserializerParameters addIgnoredProperty(String ignoredProperty) {
-        if ( null == ignoredProperties ) {
+        if (null == ignoredProperties) {
             ignoredProperties = new HashSet<String>();
         }
-        ignoredProperties.add( ignoredProperty );
+        ignoredProperties.add(ignoredProperty);
         return this;
     }
 

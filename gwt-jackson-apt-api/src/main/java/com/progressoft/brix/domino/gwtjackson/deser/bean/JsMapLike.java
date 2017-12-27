@@ -21,15 +21,15 @@ import jsinterop.base.JsPropertyMap;
 
 public class JsMapLike<T> implements MapLike<T> {
 
-    private JsPropertyMap<T> map= (JsPropertyMap<T>) Js.asAny(JsObject.create(null)).asPropertyMap();
+    private JsPropertyMap<T> map = (JsPropertyMap<T>) Js.asAny(JsObject.create(null)).asPropertyMap();
 
     @Override
-    public T get( String key ) {
-        return map.get( key );
+    public T get(String key) {
+        return map.get(key);
     }
 
     @Override
-    public void put( String key, T value ) {
-        map.set( key, value );
+    public void put(String key, T value) {
+        map.set(key, value);
     }
 }

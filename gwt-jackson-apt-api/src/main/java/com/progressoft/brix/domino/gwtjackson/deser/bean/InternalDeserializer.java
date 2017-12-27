@@ -40,12 +40,12 @@ interface InternalDeserializer<T, S extends JsonDeserializer<T>> {
     /**
      * <p>deserializeInline</p>
      *
-     * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
-     * @param identityInfo a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.IdentityDeserializationInfo} object.
-     * @param typeInfo a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo} object.
-     * @param typeInformation a {@link String} object.
+     * @param reader             a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
+     * @param ctx                a {@link JsonDeserializationContext} object.
+     * @param params             a {@link JsonDeserializerParameters} object.
+     * @param identityInfo       a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.IdentityDeserializationInfo} object.
+     * @param typeInfo           a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo} object.
+     * @param typeInformation    a {@link String} object.
      * @param bufferedProperties a {@link Map} object.
      * @return a T object.
      */
@@ -57,11 +57,11 @@ interface InternalDeserializer<T, S extends JsonDeserializer<T>> {
     /**
      * <p>deserializeWrapped</p>
      *
-     * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
-     * @param identityInfo a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.IdentityDeserializationInfo} object.
-     * @param typeInfo a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo} object.
+     * @param reader          a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
+     * @param ctx             a {@link JsonDeserializationContext} object.
+     * @param params          a {@link JsonDeserializerParameters} object.
+     * @param identityInfo    a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.IdentityDeserializationInfo} object.
+     * @param typeInfo        a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo} object.
      * @param typeInformation a {@link String} object.
      * @return a T object.
      */

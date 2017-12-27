@@ -32,7 +32,7 @@ public class SqlTimeKeyDeserializerTest extends AbstractKeyDeserializerTest<Time
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( new Time( 1377543971773l ), "1377543971773" );
-        assertDeserialization( new Time( getUTCTime( 2012, 8, 18, 15, 45, 56, 543 ) ), "2012-08-18T17:45:56.543+02:00" );
+        assertDeserialization(new Time(1377543971773l), "1377543971773");
+        assertDeserialization(new Time(getUTCTime(2012, 8, 18, 15, 45, 56, 543)), "2012-08-18T17:45:56.543+02:00");
     }
 }

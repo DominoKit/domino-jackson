@@ -37,11 +37,14 @@ public final class StringKeyDeserializer extends KeyDeserializer<String> {
         return INSTANCE;
     }
 
-    private StringKeyDeserializer() { }
+    private StringKeyDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doDeserialize( String key, JsonDeserializationContext ctx ) {
+    protected String doDeserialize(String key, JsonDeserializationContext ctx) {
         return key;
     }
 }

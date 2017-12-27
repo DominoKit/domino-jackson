@@ -38,20 +38,21 @@ public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
         return INSTANCE;
     }
 
-    private PrimitiveByteArrayJsonSerializer() { }
+    private PrimitiveByteArrayJsonSerializer() {
+    }
 
     @Override
-    protected boolean isEmpty( byte[] value ) {
+    protected boolean isEmpty(byte[] value) {
         return null == value || value.length == 0;
     }
 
     @Override
-    public void doSerialize(JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        writer.unescapeValue( Base64Utils.toBase64( values ) );
+        writer.unescapeValue(Base64Utils.toBase64(values));
     }
 }

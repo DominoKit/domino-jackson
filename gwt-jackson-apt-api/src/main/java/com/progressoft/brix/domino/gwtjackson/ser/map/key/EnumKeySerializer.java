@@ -31,25 +31,30 @@ public final class EnumKeySerializer<E extends Enum<E>> extends KeySerializer<E>
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link EnumKeySerializer}
      * @param <S> a S object.
+     * @return an instance of {@link EnumKeySerializer}
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static <S extends EnumKeySerializer<?>> S getInstance() {
         return (S) INSTANCE;
     }
 
-    private EnumKeySerializer() { }
+    private EnumKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( E value, JsonSerializationContext ctx ) {
+    protected String doSerialize(E value, JsonSerializationContext ctx) {
         return value.name();
     }
 }

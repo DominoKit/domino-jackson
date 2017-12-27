@@ -174,9 +174,11 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
      */
     public abstract Class getDeserializedType();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 
         // Processing the parameters. We fallback to default if parameter is not present.
         final IdentityDeserializationInfo identityInfo = null == params.getIdentityInfo() ? defaultIdentityInfo : params.getIdentityInfo();
@@ -185,61 +187,61 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
         JsonToken token = reader.peek();
 
         // If it's not a json object or array, it must be an identifier
-        if ( null != identityInfo && !JsonToken.BEGIN_OBJECT.equals( token ) && !JsonToken.BEGIN_ARRAY.equals( token ) ) {
+        if (null != identityInfo && !JsonToken.BEGIN_OBJECT.equals(token) && !JsonToken.BEGIN_ARRAY.equals(token)) {
             Object id;
-            if ( identityInfo.isProperty() ) {
-                HasDeserializerAndParameters propertyDeserializer = deserializers.get( identityInfo.getPropertyName() );
-                if ( null == propertyDeserializer ) {
-                    propertyDeserializer = instanceBuilder.getParametersDeserializer().get( identityInfo.getPropertyName() );
+            if (identityInfo.isProperty()) {
+                HasDeserializerAndParameters propertyDeserializer = deserializers.get(identityInfo.getPropertyName());
+                if (null == propertyDeserializer) {
+                    propertyDeserializer = instanceBuilder.getParametersDeserializer().get(identityInfo.getPropertyName());
                 }
-                id = propertyDeserializer.getDeserializer().deserialize( reader, ctx );
+                id = propertyDeserializer.getDeserializer().deserialize(reader, ctx);
             } else {
-                id = identityInfo.readId( reader, ctx );
+                id = identityInfo.readId(reader, ctx);
             }
-            Object instance = ctx.getObjectWithId( identityInfo.newIdKey( id ) );
-            if ( null == instance ) {
-                throw ctx.traceError( "Cannot find an object with id " + id, reader );
+            Object instance = ctx.getObjectWithId(identityInfo.newIdKey(id));
+            if (null == instance) {
+                throw ctx.traceError("Cannot find an object with id " + id, reader);
             }
             return (T) instance;
         }
 
         T result;
 
-        if ( null != typeInfo ) {
+        if (null != typeInfo) {
 
             As include;
-            if ( JsonToken.BEGIN_ARRAY.equals( token ) ) {
+            if (JsonToken.BEGIN_ARRAY.equals(token)) {
                 // we can have a wrapper array even if the user specified As.PROPERTY in some cases (enum, creator delegation)
                 include = As.WRAPPER_ARRAY;
             } else {
                 include = typeInfo.getInclude();
             }
 
-            switch ( include ) {
+            switch (include) {
                 case PROPERTY:
                     // the type info is the first property of the object
                     reader.beginObject();
                     Map<String, String> bufferedProperties = null;
                     String typeInfoProperty = null;
-                    while ( JsonToken.NAME.equals( reader.peek() ) ) {
+                    while (JsonToken.NAME.equals(reader.peek())) {
                         String name = reader.nextName();
 
-                        if ( typeInfo.getPropertyName().equals( name ) ) {
+                        if (typeInfo.getPropertyName().equals(name)) {
                             typeInfoProperty = reader.nextString();
                             break;
                         } else {
-                            if ( null == bufferedProperties ) {
+                            if (null == bufferedProperties) {
                                 bufferedProperties = new HashMap<String, String>();
                             }
-                            bufferedProperties.put( name, reader.nextValue() );
+                            bufferedProperties.put(name, reader.nextValue());
                         }
                     }
-                    if ( null == typeInfoProperty ) {
-                        throw ctx.traceError( "Cannot find the property " + typeInfo
-                                .getPropertyName() + " containing the type information", reader );
+                    if (null == typeInfoProperty) {
+                        throw ctx.traceError("Cannot find the property " + typeInfo
+                                .getPropertyName() + " containing the type information", reader);
                     }
-                    result = getDeserializer( reader, ctx, typeInfo, typeInfoProperty )
-                            .deserializeInline( reader, ctx, params, identityInfo, typeInfo, typeInfoProperty, bufferedProperties );
+                    result = getDeserializer(reader, ctx, typeInfo, typeInfoProperty)
+                            .deserializeInline(reader, ctx, params, identityInfo, typeInfo, typeInfoProperty, bufferedProperties);
                     reader.endObject();
                     break;
 
@@ -248,8 +250,8 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
                     // info and the value the object
                     reader.beginObject();
                     String typeInfoWrapObj = reader.nextName();
-                    result = getDeserializer( reader, ctx, typeInfo, typeInfoWrapObj )
-                            .deserializeWrapped( reader, ctx, params, identityInfo, typeInfo, typeInfoWrapObj );
+                    result = getDeserializer(reader, ctx, typeInfo, typeInfoWrapObj)
+                            .deserializeWrapped(reader, ctx, params, identityInfo, typeInfo, typeInfoWrapObj);
                     reader.endObject();
                     break;
 
@@ -258,18 +260,18 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
                     // info and the second one the object
                     reader.beginArray();
                     String typeInfoWrapArray = reader.nextString();
-                    result = getDeserializer( reader, ctx, typeInfo, typeInfoWrapArray )
-                            .deserializeWrapped( reader, ctx, params, identityInfo, typeInfo, typeInfoWrapArray );
+                    result = getDeserializer(reader, ctx, typeInfo, typeInfoWrapArray)
+                            .deserializeWrapped(reader, ctx, params, identityInfo, typeInfo, typeInfoWrapArray);
                     reader.endArray();
                     break;
 
                 default:
-                    throw ctx.traceError( "JsonTypeInfo.As." + typeInfo.getInclude() + " is not supported", reader );
+                    throw ctx.traceError("JsonTypeInfo.As." + typeInfo.getInclude() + " is not supported", reader);
             }
-        } else if ( canDeserialize() ) {
-            result = deserializeWrapped( reader, ctx, params, identityInfo, null, null );
+        } else if (canDeserialize()) {
+            result = deserializeWrapped(reader, ctx, params, identityInfo, null, null);
         } else {
-            throw ctx.traceError( "Cannot instantiate the type " + getDeserializedType().getName(), reader );
+            throw ctx.traceError("Cannot instantiate the type " + getDeserializedType().getName(), reader);
         }
 
         return result;
@@ -284,230 +286,236 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
         return null != instanceBuilder;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public T deserializeWrapped( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                 IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
+    public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
         reader.beginObject();
-        T result = deserializeInline( reader, ctx, params, identityInfo, typeInfo, typeInformation, null );
+        T result = deserializeInline(reader, ctx, params, identityInfo, typeInfo, typeInformation, null);
         reader.endObject();
         return result;
     }
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Deserializes all the properties of the bean. The {@link JsonReader} must be in a json object.
      */
     @Override
-    public final T deserializeInline( final JsonReader reader, final JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                      IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String type,
-                                      Map<String, String> bufferedProperties ) {
+    public final T deserializeInline(final JsonReader reader, final JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String type,
+                                     Map<String, String> bufferedProperties) {
         final boolean ignoreUnknown = params.isIgnoreUnknown() || isDefaultIgnoreUnknown();
         final Set<String> ignoredProperties;
-        if ( null == params.getIgnoredProperties() ) {
+        if (null == params.getIgnoredProperties()) {
             ignoredProperties = defaultIgnoredProperties;
         } else {
-            ignoredProperties = new HashSet<String>( defaultIgnoredProperties );
-            ignoredProperties.addAll( params.getIgnoredProperties() );
+            ignoredProperties = new HashSet<String>(defaultIgnoredProperties);
+            ignoredProperties.addAll(params.getIgnoredProperties());
         }
 
         // we will remove the properties read from this list and check at the end it's empty
         Set<String> requiredPropertiesLeft = requiredProperties.isEmpty() ? Collections
-                .<String>emptySet() : new HashSet<String>( requiredProperties );
+                .<String>emptySet() : new HashSet<String>(requiredProperties);
 
         // we first look for identity. It can also buffer properties if it is not in current reader position.
         Object id = null;
         Map<String, Object> bufferedPropertiesValues = null;
-        if ( null != identityInfo ) {
+        if (null != identityInfo) {
             JsonReader identityReader = null;
 
             // we look if it has not been already buffered
             String propertyValue = null;
 
             // we fisrt look if the identity property has not been read already
-            if ( null != bufferedProperties ) {
-                propertyValue = bufferedProperties.remove( identityInfo.getPropertyName() );
+            if (null != bufferedProperties) {
+                propertyValue = bufferedProperties.remove(identityInfo.getPropertyName());
             }
 
-            if ( null != propertyValue ) {
-                identityReader = ctx.newJsonReader( propertyValue );
+            if (null != propertyValue) {
+                identityReader = ctx.newJsonReader(propertyValue);
             } else {
                 // we search for the identity property
-                while ( JsonToken.NAME.equals( reader.peek() ) ) {
+                while (JsonToken.NAME.equals(reader.peek())) {
                     String name = reader.nextName();
 
-                    if ( ignoredProperties.contains( name ) ) {
+                    if (ignoredProperties.contains(name)) {
                         reader.skipValue();
                         continue;
                     }
 
-                    if ( identityInfo.getPropertyName().equals( name ) ) {
+                    if (identityInfo.getPropertyName().equals(name)) {
                         identityReader = reader;
                         break;
                     } else {
-                        if ( null == bufferedProperties ) {
+                        if (null == bufferedProperties) {
                             bufferedProperties = new HashMap<String, String>();
                         }
-                        bufferedProperties.put( name, reader.nextValue() );
+                        bufferedProperties.put(name, reader.nextValue());
                     }
                 }
             }
 
-            if ( null != identityReader ) {
-                if ( identityInfo.isProperty() ) {
-                    HasDeserializerAndParameters propertyDeserializer = deserializers.get( identityInfo.getPropertyName() );
-                    if ( null == propertyDeserializer ) {
+            if (null != identityReader) {
+                if (identityInfo.isProperty()) {
+                    HasDeserializerAndParameters propertyDeserializer = deserializers.get(identityInfo.getPropertyName());
+                    if (null == propertyDeserializer) {
                         // the identity property is defined in constructor
-                        propertyDeserializer = instanceBuilder.getParametersDeserializer().get( identityInfo.getPropertyName() );
-                        id = propertyDeserializer.getDeserializer().deserialize( identityReader, ctx );
-                        bufferedPropertiesValues = new HashMap<String, Object>( 1 );
-                        bufferedPropertiesValues.put( identityInfo.getPropertyName(), id );
+                        propertyDeserializer = instanceBuilder.getParametersDeserializer().get(identityInfo.getPropertyName());
+                        id = propertyDeserializer.getDeserializer().deserialize(identityReader, ctx);
+                        bufferedPropertiesValues = new HashMap<String, Object>(1);
+                        bufferedPropertiesValues.put(identityInfo.getPropertyName(), id);
                     } else {
-                        id = propertyDeserializer.getDeserializer().deserialize( identityReader, ctx );
+                        id = propertyDeserializer.getDeserializer().deserialize(identityReader, ctx);
                     }
                 } else {
-                    id = identityInfo.readId( identityReader, ctx );
+                    id = identityInfo.readId(identityReader, ctx);
                 }
             }
         }
 
         // we first instantiate the bean. It might buffer properties if there are properties required for constructor and they are not in
         // first position
-        Instance<T> instance = instanceBuilder.newInstance( reader, ctx, params, bufferedProperties, bufferedPropertiesValues );
+        Instance<T> instance = instanceBuilder.newInstance(reader, ctx, params, bufferedProperties, bufferedPropertiesValues);
 
         T bean = instance.getInstance();
         bufferedProperties = instance.getBufferedProperties();
 
         // we save the instance if we have an id
-        if ( null != id ) {
-            if ( identityInfo.isProperty() ) {
-                BeanPropertyDeserializer propertyDeserializer = deserializers.get( identityInfo.getPropertyName() );
-                if ( null != propertyDeserializer ) {
-                    propertyDeserializer.setValue( bean, id, ctx );
+        if (null != id) {
+            if (identityInfo.isProperty()) {
+                BeanPropertyDeserializer propertyDeserializer = deserializers.get(identityInfo.getPropertyName());
+                if (null != propertyDeserializer) {
+                    propertyDeserializer.setValue(bean, id, ctx);
                 }
             }
-            ctx.addObjectId( identityInfo.newIdKey( id ), bean );
+            ctx.addObjectId(identityInfo.newIdKey(id), bean);
         }
 
         // we flush any buffered properties
-        flushBufferedProperties( bean, bufferedProperties, requiredPropertiesLeft, ctx, ignoreUnknown, ignoredProperties );
+        flushBufferedProperties(bean, bufferedProperties, requiredPropertiesLeft, ctx, ignoreUnknown, ignoredProperties);
 
         // in case there is a property that need the type info
-        if ( null != typeInfo && null != typeInfo.getPropertyName() && null != type ) {
-            BeanPropertyDeserializer deserializer = getPropertyDeserializer( typeInfo.getPropertyName(), ctx, true );
-            if ( null != deserializer ) {
-                deserializer.setValue( bean, type, ctx );
+        if (null != typeInfo && null != typeInfo.getPropertyName() && null != type) {
+            BeanPropertyDeserializer deserializer = getPropertyDeserializer(typeInfo.getPropertyName(), ctx, true);
+            if (null != deserializer) {
+                deserializer.setValue(bean, type, ctx);
             }
         }
 
-        while ( JsonToken.NAME.equals( reader.peek() ) ) {
+        while (JsonToken.NAME.equals(reader.peek())) {
             String propertyName = reader.nextName();
 
-            requiredPropertiesLeft.remove( propertyName );
+            requiredPropertiesLeft.remove(propertyName);
 
-            if ( ignoredProperties.contains( propertyName ) ) {
+            if (ignoredProperties.contains(propertyName)) {
                 reader.skipValue();
                 continue;
             }
 
-            BeanPropertyDeserializer<T, ?> property = getPropertyDeserializer( propertyName, ctx, ignoreUnknown );
-            if ( null != property ) {
-                property.deserialize( reader, bean, ctx );
-            } else if ( null != anySetterDeserializer ) {
-                anySetterDeserializer.deserialize( reader, bean, propertyName, ctx );
+            BeanPropertyDeserializer<T, ?> property = getPropertyDeserializer(propertyName, ctx, ignoreUnknown);
+            if (null != property) {
+                property.deserialize(reader, bean, ctx);
+            } else if (null != anySetterDeserializer) {
+                anySetterDeserializer.deserialize(reader, bean, propertyName, ctx);
             } else {
                 reader.skipValue();
             }
         }
 
-        if ( !requiredPropertiesLeft.isEmpty() ) {
-            throw ctx.traceError( "Required properties are missing : " + requiredPropertiesLeft, reader );
+        if (!requiredPropertiesLeft.isEmpty()) {
+            throw ctx.traceError("Required properties are missing : " + requiredPropertiesLeft, reader);
         }
         return bean;
     }
 
-    private void flushBufferedProperties( T bean, Map<String, String> bufferedProperties, Set<String> requiredPropertiesLeft,
-                                          JsonDeserializationContext ctx, boolean ignoreUnknown, Set<String> ignoredProperties ) {
-        if ( null != bufferedProperties && !bufferedProperties.isEmpty() ) {
-            for ( Entry<String, String> bufferedProperty : bufferedProperties.entrySet() ) {
+    private void flushBufferedProperties(T bean, Map<String, String> bufferedProperties, Set<String> requiredPropertiesLeft,
+                                         JsonDeserializationContext ctx, boolean ignoreUnknown, Set<String> ignoredProperties) {
+        if (null != bufferedProperties && !bufferedProperties.isEmpty()) {
+            for (Entry<String, String> bufferedProperty : bufferedProperties.entrySet()) {
                 String propertyName = bufferedProperty.getKey();
 
-                requiredPropertiesLeft.remove( propertyName );
+                requiredPropertiesLeft.remove(propertyName);
 
-                if ( ignoredProperties.contains( propertyName ) ) {
+                if (ignoredProperties.contains(propertyName)) {
                     continue;
                 }
 
-                BeanPropertyDeserializer<T, ?> property = getPropertyDeserializer( propertyName, ctx, ignoreUnknown );
-                if ( null != property ) {
-                    property.deserialize( ctx.newJsonReader( bufferedProperty.getValue() ), bean, ctx );
-                } else if ( null != anySetterDeserializer ) {
-                    anySetterDeserializer.deserialize( ctx.newJsonReader( bufferedProperty.getValue() ), bean, propertyName, ctx );
+                BeanPropertyDeserializer<T, ?> property = getPropertyDeserializer(propertyName, ctx, ignoreUnknown);
+                if (null != property) {
+                    property.deserialize(ctx.newJsonReader(bufferedProperty.getValue()), bean, ctx);
+                } else if (null != anySetterDeserializer) {
+                    anySetterDeserializer.deserialize(ctx.newJsonReader(bufferedProperty.getValue()), bean, propertyName, ctx);
                 }
             }
         }
     }
 
-    private BeanPropertyDeserializer<T, ?> getPropertyDeserializer( String propertyName, JsonDeserializationContext ctx, boolean
-            ignoreUnknown ) {
-        BeanPropertyDeserializer<T, ?> property = deserializers.get( propertyName );
-        if ( null == property ) {
-            if ( !ignoreUnknown && ctx.isFailOnUnknownProperties() && null == anySetterDeserializer ) {
-                throw ctx.traceError( "Unknown property '" + propertyName + "'" );
+    private BeanPropertyDeserializer<T, ?> getPropertyDeserializer(String propertyName, JsonDeserializationContext ctx, boolean
+            ignoreUnknown) {
+        BeanPropertyDeserializer<T, ?> property = deserializers.get(propertyName);
+        if (null == property) {
+            if (!ignoreUnknown && ctx.isFailOnUnknownProperties() && null == anySetterDeserializer) {
+                throw ctx.traceError("Unknown property '" + propertyName + "'");
             }
         }
         return property;
     }
 
-    private InternalDeserializer<T, ? extends JsonDeserializer<T>> getDeserializer( JsonReader reader, JsonDeserializationContext ctx,
-                                                                                    TypeDeserializationInfo typeInfo, String
-                                                                                            typeInformation ) {
-        Class typeClass = typeInfo.getTypeClass( typeInformation );
-        if ( null == typeClass ) {
-            throw ctx.traceError( "Could not find the type associated to " + typeInformation, reader );
+    private InternalDeserializer<T, ? extends JsonDeserializer<T>> getDeserializer(JsonReader reader, JsonDeserializationContext ctx,
+                                                                                   TypeDeserializationInfo typeInfo, String
+                                                                                           typeInformation) {
+        Class typeClass = typeInfo.getTypeClass(typeInformation);
+        if (null == typeClass) {
+            throw ctx.traceError("Could not find the type associated to " + typeInformation, reader);
         }
 
-        return getDeserializer( reader, ctx, typeClass );
+        return getDeserializer(reader, ctx, typeClass);
     }
 
-    private InternalDeserializer<T, ? extends JsonDeserializer<T>> getDeserializer( JsonReader reader, JsonDeserializationContext ctx,
-                                                                                    Class typeClass ) {
-        if ( typeClass == getDeserializedType() ) {
+    private InternalDeserializer<T, ? extends JsonDeserializer<T>> getDeserializer(JsonReader reader, JsonDeserializationContext ctx,
+                                                                                   Class typeClass) {
+        if (typeClass == getDeserializedType()) {
             return this;
         }
 
-        SubtypeDeserializer deserializer = subtypeClassToDeserializer.get( typeClass );
-        if ( null == deserializer ) {
-            throw ctx.traceError( "No deserializer found for the type " + typeClass.getName(), reader );
+        SubtypeDeserializer deserializer = subtypeClassToDeserializer.get(typeClass);
+        if (null == deserializer) {
+            throw ctx.traceError("No deserializer found for the type " + typeClass.getName(), reader);
         }
         return deserializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AbstractBeanJsonDeserializer<T> getDeserializer() {
         return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setBackReference( String referenceName, Object reference, T value, JsonDeserializationContext ctx ) {
-        if ( null == value ) {
+    public void setBackReference(String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
+        if (null == value) {
             return;
         }
 
-        JsonDeserializer<T> deserializer = getDeserializer( null, ctx, value.getClass() ).getDeserializer();
-        if ( deserializer.getClass() != getClass() ) {
+        JsonDeserializer<T> deserializer = getDeserializer(null, ctx, value.getClass()).getDeserializer();
+        if (deserializer.getClass() != getClass()) {
             // we test if it's not this deserializer to avoid an infinite loop
-            deserializer.setBackReference( referenceName, reference, value, ctx );
+            deserializer.setBackReference(referenceName, reference, value, ctx);
             return;
         }
 
-        BackReferenceProperty backReferenceProperty = backReferenceDeserializers.get( referenceName );
-        if ( null == backReferenceProperty ) {
-            throw ctx.traceError( "The back reference '" + referenceName + "' does not exist" );
+        BackReferenceProperty backReferenceProperty = backReferenceDeserializers.get(referenceName);
+        if (null == backReferenceProperty) {
+            throw ctx.traceError("The back reference '" + referenceName + "' does not exist");
         }
-        backReferenceProperty.setBackReference( value, reference, ctx );
+        backReferenceProperty.setBackReference(value, reference, ctx);
     }
 }

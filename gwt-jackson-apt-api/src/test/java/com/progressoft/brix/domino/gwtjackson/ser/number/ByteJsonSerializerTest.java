@@ -30,9 +30,9 @@ public class ByteJsonSerializerTest extends AbstractJsonSerializerTest<Byte> {
     }
 
     public void testSerializeValue() {
-        assertSerialization( "34", (byte) 34 );
-        assertSerialization( "1", new Byte( "1" ) );
-        assertSerialization( "-128", Byte.MIN_VALUE );
-        assertSerialization( "127", Byte.MAX_VALUE );
+        assertSerialization("34", (byte) 34);
+        assertSerialization("1", new Byte("1"));
+        assertSerialization("-128", Byte.MIN_VALUE);
+        assertSerialization("127", Byte.MAX_VALUE);
     }
 }

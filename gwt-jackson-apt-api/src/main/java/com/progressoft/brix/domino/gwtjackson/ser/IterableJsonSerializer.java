@@ -36,11 +36,11 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
      * <p>newInstance</p>
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Iterable}.
-     * @param <I> the type
+     * @param <I>        the type
      * @return a new instance of {@link IterableJsonSerializer}
      */
-    public static <I extends Iterable<?>> IterableJsonSerializer<I, ?> newInstance( JsonSerializer<?> serializer ) {
-        return new IterableJsonSerializer( serializer );
+    public static <I extends Iterable<?>> IterableJsonSerializer<I, ?> newInstance(JsonSerializer<?> serializer) {
+        return new IterableJsonSerializer(serializer);
     }
 
     protected final JsonSerializer<T> serializer;
@@ -50,26 +50,30 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Iterable}.
      */
-    protected IterableJsonSerializer( JsonSerializer<T> serializer ) {
-        if ( null == serializer ) {
-            throw new IllegalArgumentException( "serializer cannot be null" );
+    protected IterableJsonSerializer(JsonSerializer<T> serializer) {
+        if (null == serializer) {
+            throw new IllegalArgumentException("serializer cannot be null");
         }
         this.serializer = serializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( I value ) {
+    protected boolean isEmpty(I value) {
         return null == value || !value.iterator().hasNext();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         Iterator<T> iterator = values.iterator();
 
-        if ( !iterator.hasNext() ) {
-            if ( ctx.isWriteEmptyJsonArrays() ) {
+        if (!iterator.hasNext()) {
+            if (ctx.isWriteEmptyJsonArrays()) {
                 writer.beginArray();
                 writer.endArray();
             } else {
@@ -78,27 +82,27 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() ) {
+        if (ctx.isWriteSingleElemArraysUnwrapped()) {
 
             T first = iterator.next();
 
-            if ( iterator.hasNext() ) {
+            if (iterator.hasNext()) {
                 // there is more than one element, we write the array normally
                 writer.beginArray();
-                serializer.serialize( writer, first, ctx, params );
-                while ( iterator.hasNext() ) {
-                    serializer.serialize( writer, iterator.next(), ctx, params );
+                serializer.serialize(writer, first, ctx, params);
+                while (iterator.hasNext()) {
+                    serializer.serialize(writer, iterator.next(), ctx, params);
                 }
                 writer.endArray();
             } else {
                 // there is only one element, we write it directly
-                serializer.serialize( writer, first, ctx, params );
+                serializer.serialize(writer, first, ctx, params);
             }
 
         } else {
             writer.beginArray();
-            while ( iterator.hasNext() ) {
-                serializer.serialize( writer, iterator.next(), ctx, params );
+            while (iterator.hasNext()) {
+                serializer.serialize(writer, iterator.next(), ctx, params);
             }
             writer.endArray();
         }

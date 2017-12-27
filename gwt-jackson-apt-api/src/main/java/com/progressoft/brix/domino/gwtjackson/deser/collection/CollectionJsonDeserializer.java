@@ -34,21 +34,23 @@ public class CollectionJsonDeserializer<T> extends BaseCollectionJsonDeserialize
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Collection}.
-     * @param <T> Type of the elements inside the {@link Collection}
+     * @param <T>          Type of the elements inside the {@link Collection}
      * @return a new instance of {@link CollectionJsonDeserializer}
      */
-    public static <T> CollectionJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new CollectionJsonDeserializer<T>( deserializer );
+    public static <T> CollectionJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new CollectionJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Collection}.
      */
-    private CollectionJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private CollectionJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Collection<T> newCollection() {
         return new ArrayList<T>();

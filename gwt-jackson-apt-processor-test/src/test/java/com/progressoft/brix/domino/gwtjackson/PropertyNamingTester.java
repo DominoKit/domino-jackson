@@ -30,25 +30,25 @@ public final class PropertyNamingTester extends AbstractTester {
 
     }
 
-    public void testValue( ObjectMapperTester<PropertyNamingBean> mapper ) {
+    public void testValue(ObjectMapperTester<PropertyNamingBean> mapper) {
 
         PropertyNamingBean bean = new PropertyNamingBean();
-        bean.setSimpleName( "simple" );
-        bean.setHTML( Arrays.asList("html") );
-        bean.setHTMLParser( "htmlparser" );
+        bean.setSimpleName("simple");
+        bean.setHTML(Arrays.asList("html"));
+        bean.setHTMLParser("htmlparser");
 
-        String json = mapper.write( bean );
-        assertEquals(jsonString, json );
+        String json = mapper.write(bean);
+        assertEquals(jsonString, json);
 
-        bean = mapper.read( json );
-        assertEquals( "simple", bean.getSimpleName() );
-        assertEquals( Arrays.asList("html"), bean.getHTML() );
-        assertEquals( "htmlparser", bean.getHTMLParser() );
+        bean = mapper.read(json);
+        assertEquals("simple", bean.getSimpleName());
+        assertEquals(Arrays.asList("html"), bean.getHTML());
+        assertEquals("htmlparser", bean.getHTMLParser());
     }
 
-    public void testRead( ObjectMapperTester<PropertyNamingBean> mapper ) {
+    public void testRead(ObjectMapperTester<PropertyNamingBean> mapper) {
 
-        PropertyNamingBean bean = mapper.read( jsonString );
+        PropertyNamingBean bean = mapper.read(jsonString);
 
         assertEquals(bean.getHTMLParser(), "htmlparser");
         assertEquals(bean.getSimpleName(), "simple");

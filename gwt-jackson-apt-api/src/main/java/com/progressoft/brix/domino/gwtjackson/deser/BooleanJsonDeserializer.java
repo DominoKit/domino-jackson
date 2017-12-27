@@ -41,17 +41,20 @@ public class BooleanJsonDeserializer extends JsonDeserializer<Boolean> {
         return INSTANCE;
     }
 
-    private BooleanJsonDeserializer() { }
+    private BooleanJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Boolean doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public Boolean doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         JsonToken token = reader.peek();
-        if ( JsonToken.BOOLEAN.equals( token ) ) {
+        if (JsonToken.BOOLEAN.equals(token)) {
             return reader.nextBoolean();
-        } else if ( JsonToken.STRING.equals( token ) ) {
-            return Boolean.valueOf( reader.nextString() );
-        } else if ( JsonToken.NUMBER.equals( token ) ) {
+        } else if (JsonToken.STRING.equals(token)) {
+            return Boolean.valueOf(reader.nextString());
+        } else if (JsonToken.NUMBER.equals(token)) {
             return reader.nextInt() == 1;
         } else {
             return null;

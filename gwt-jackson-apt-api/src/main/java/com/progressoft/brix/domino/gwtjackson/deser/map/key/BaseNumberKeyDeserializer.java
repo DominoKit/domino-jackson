@@ -43,11 +43,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private BigDecimalKeyDeserializer() { }
+        private BigDecimalKeyDeserializer() {
+        }
 
         @Override
-        protected BigDecimal doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return new BigDecimal( key );
+        protected BigDecimal doDeserialize(String key, JsonDeserializationContext ctx) {
+            return new BigDecimal(key);
         }
     }
 
@@ -65,11 +66,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private BigIntegerKeyDeserializer() { }
+        private BigIntegerKeyDeserializer() {
+        }
 
         @Override
-        protected BigInteger doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return new BigInteger( key );
+        protected BigInteger doDeserialize(String key, JsonDeserializationContext ctx) {
+            return new BigInteger(key);
         }
     }
 
@@ -87,11 +89,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private ByteKeyDeserializer() { }
+        private ByteKeyDeserializer() {
+        }
 
         @Override
-        protected Byte doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Byte.valueOf( key );
+        protected Byte doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Byte.valueOf(key);
         }
     }
 
@@ -109,11 +112,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private DoubleKeyDeserializer() { }
+        private DoubleKeyDeserializer() {
+        }
 
         @Override
-        protected Double doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Double.valueOf( key );
+        protected Double doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Double.valueOf(key);
         }
 
     }
@@ -132,11 +136,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private FloatKeyDeserializer() { }
+        private FloatKeyDeserializer() {
+        }
 
         @Override
-        protected Float doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Float.valueOf( key );
+        protected Float doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Float.valueOf(key);
         }
     }
 
@@ -154,11 +159,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private IntegerKeyDeserializer() { }
+        private IntegerKeyDeserializer() {
+        }
 
         @Override
-        protected Integer doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Integer.valueOf( key );
+        protected Integer doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Integer.valueOf(key);
         }
     }
 
@@ -176,11 +182,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private LongKeyDeserializer() { }
+        private LongKeyDeserializer() {
+        }
 
         @Override
-        protected Long doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Long.valueOf( key );
+        protected Long doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Long.valueOf(key);
         }
     }
 
@@ -198,11 +205,12 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
             return INSTANCE;
         }
 
-        private ShortKeyDeserializer() { }
+        private ShortKeyDeserializer() {
+        }
 
         @Override
-        protected Short doDeserialize( String key, JsonDeserializationContext ctx ) {
-            return Short.valueOf( key );
+        protected Short doDeserialize(String key, JsonDeserializationContext ctx) {
+            return Short.valueOf(key);
         }
     }
 

@@ -40,28 +40,33 @@ public class PrimitiveBooleanArray2dJsonSerializer extends JsonSerializer<boolea
         return INSTANCE;
     }
 
-    private PrimitiveBooleanArray2dJsonSerializer() { }
+    private PrimitiveBooleanArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( boolean[][] value ) {
+    protected boolean isEmpty(boolean[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize( JsonWriter writer, boolean[][] values, JsonSerializationContext ctx,
-                             JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, boolean[][] values, JsonSerializationContext ctx,
+                            JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( boolean[] array : values ) {
+        for (boolean[] array : values) {
             writer.beginArray();
-            for ( boolean value : array ) {
-                writer.value( value );
+            for (boolean value : array) {
+                writer.value(value);
             }
             writer.endArray();
         }

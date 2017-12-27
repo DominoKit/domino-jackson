@@ -30,13 +30,15 @@ public abstract class AbstractObjectWriter<T> extends AbstractObjectMapper<T> im
      *
      * @param rootName a {@link String} object.
      */
-    public AbstractObjectWriter( String rootName ) {
-        super( rootName );
+    public AbstractObjectWriter(String rootName) {
+        super(rootName);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final JsonDeserializer<T> newDeserializer() {
-        throw new UnsupportedOperationException( "ObjectWriter doesn't support deserialization" );
+        throw new UnsupportedOperationException("ObjectWriter doesn't support deserialization");
     }
 }

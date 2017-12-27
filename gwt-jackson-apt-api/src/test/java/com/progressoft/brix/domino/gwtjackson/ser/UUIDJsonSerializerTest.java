@@ -31,6 +31,6 @@ public class UUIDJsonSerializerTest extends AbstractJsonSerializerTest<UUID> {
     @Override
     public void testSerializeValue() {
         String uuid = "550e8400-e29b-41d4-a716-446655440000";
-        assertSerialization( "\"" + uuid + "\"", UUID.fromString( uuid ) );
+        assertSerialization("\"" + uuid + "\"", UUID.fromString(uuid));
     }
 }

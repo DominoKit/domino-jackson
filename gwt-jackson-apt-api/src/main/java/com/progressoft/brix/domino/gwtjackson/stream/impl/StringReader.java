@@ -35,9 +35,9 @@ public class StringReader {
      *
      * @param in a {@link String} object.
      */
-    public StringReader( String in ) {
-        if ( in == null ) {
-            throw new NullPointerException( "in == null" );
+    public StringReader(String in) {
+        if (in == null) {
+            throw new NullPointerException("in == null");
         }
         this.in = in;
         this.length = in.length();
@@ -57,23 +57,23 @@ public class StringReader {
      * Reads characters into a portion of an array.
      *
      * @param cbuf Destination buffer
-     * @param off Offset at which to start writing characters
-     * @param len Maximum number of characters to read
+     * @param off  Offset at which to start writing characters
+     * @param len  Maximum number of characters to read
      * @return The number of characters read, or -1 if the end of the
      * stream has been reached
      */
-    public int read( char cbuf[], int off, int len ) {
-        if ( (off < 0) || (off > cbuf.length) || (len < 0) ||
-                ((off + len) > cbuf.length) || ((off + len) < 0) ) {
+    public int read(char cbuf[], int off, int len) {
+        if ((off < 0) || (off > cbuf.length) || (len < 0) ||
+                ((off + len) > cbuf.length) || ((off + len) < 0)) {
             throw new IndexOutOfBoundsException();
-        } else if ( len == 0 ) {
+        } else if (len == 0) {
             return 0;
         }
-        if ( next >= length ) {
+        if (next >= length) {
             return -1;
         }
-        int n = Math.min( length - next, len );
-        in.getChars( next, next + n, cbuf, off );
+        int n = Math.min(length - next, len);
+        in.getChars(next, next + n, cbuf, off);
         next += n;
         return n;
     }

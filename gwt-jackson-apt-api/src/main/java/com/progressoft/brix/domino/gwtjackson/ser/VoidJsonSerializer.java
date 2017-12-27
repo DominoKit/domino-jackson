@@ -41,23 +41,28 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
         return INSTANCE;
     }
 
-    private VoidJsonSerializer() { }
+    private VoidJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( writer.getSerializeNulls() ) {
-            writer.setSerializeNulls( false );
+    protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (writer.getSerializeNulls()) {
+            writer.setSerializeNulls(false);
             writer.nullValue();
-            writer.setSerializeNulls( true );
+            writer.setSerializeNulls(true);
         } else {
             writer.nullValue();
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         // we should never be here, the null value is already handled and it's the only possible value for Void
     }
 }

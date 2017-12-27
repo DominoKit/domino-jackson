@@ -40,21 +40,26 @@ public class DateKeySerializer<D extends Date> extends KeySerializer<D> {
         return INSTANCE;
     }
 
-    private DateKeySerializer() { }
+    private DateKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( Date value, JsonSerializationContext ctx ) {
-        if ( ctx.isWriteDateKeysAsTimestamps() ) {
-            return Long.toString( value.getTime() );
+    protected String doSerialize(Date value, JsonSerializationContext ctx) {
+        if (ctx.isWriteDateKeysAsTimestamps()) {
+            return Long.toString(value.getTime());
         } else {
-            return DateFormat.format( value );
+            return DateFormat.format(value);
         }
     }
 }

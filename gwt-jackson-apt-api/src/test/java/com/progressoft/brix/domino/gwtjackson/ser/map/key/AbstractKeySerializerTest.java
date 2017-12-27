@@ -29,16 +29,16 @@ public abstract class AbstractKeySerializerTest<T> extends JacksonTestCase {
     protected abstract KeySerializer createSerializer();
 
     public void testSerializeNullValue() {
-        assertSerialization( null, null );
+        assertSerialization(null, null);
     }
 
-    protected String serialize( T value ) {
+    protected String serialize(T value) {
         JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
-        return createSerializer().serialize( value, ctx );
+        return createSerializer().serialize(value, ctx);
     }
 
-    protected void assertSerialization( String expected, T value ) {
-        assertEquals( expected, serialize( value ) );
+    protected void assertSerialization(String expected, T value) {
+        assertEquals(expected, serialize(value));
     }
 
     public abstract void testSerializeValue();

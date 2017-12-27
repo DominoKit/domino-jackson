@@ -3,7 +3,7 @@ package com.fasterxml.jackson.annotation;
 /**
  * Super source for {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} to remove the use of
  * {@link java.lang.String#format(String, Object...)}
- *
+ * <p>
  * Definition of API used for constructing Object Identifiers
  * (as annotated using {@link JsonIdentityInfo}).
  * Also defines factory methods used for creating instances
@@ -13,8 +13,7 @@ package com.fasterxml.jackson.annotation;
  */
 @SuppressWarnings("serial")
 public abstract class ObjectIdGenerator<T>
-    implements java.io.Serializable
-{
+        implements java.io.Serializable {
     /*
     /**********************************************************
     /* Accessors
@@ -42,7 +41,7 @@ public abstract class ObjectIdGenerator<T>
      * more complex and may incur additional buffering or performance overhead,
      * avoiding of which makes sense for common case of scalar object ids
      * (or native object ids some formats support).
-     *<p>
+     * <p>
      * Default implementation returns <code>false</code>, so needs to be overridden
      * by Object-producing generators.
      *
@@ -56,11 +55,10 @@ public abstract class ObjectIdGenerator<T>
      * Accessor that may be called (after verifying (via {@link #maySerializeAsObject()})
      * whether given name
      *
-     * @param name Name of property to check
+     * @param name   Name of property to check
      * @param parser Parser that points to property name, in case generator needs
-     *    further verification (note: untyped, because <code>JsonParser</code> is defined
-     *    in `jackson-core`, and this package does not depend on it).
-     *
+     *               further verification (note: untyped, because <code>JsonParser</code> is defined
+     *               in `jackson-core`, and this package does not depend on it).
      * @since 2.5
      */
     public boolean isValidReferencePropertyName(String name, Object parser) {
@@ -83,16 +81,16 @@ public abstract class ObjectIdGenerator<T>
      * Factory method called to create a new instance to use for
      * serialization: needed since generators may have state
      * (next id to produce).
-     *<p>
+     * <p>
      * Note that actual type of 'context' is
      * <code>com.fasterxml.jackson.databind.SerializerProvider</code>,
      * but can not be declared here as type itself (as well as call
      * to this object) comes from databind package.
      *
      * @param context Serialization context object used (of type
-     *    <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
-     *    may be needed by more complex generators to access contextual
-     *    information such as configuration.
+     *                <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
+     *                may be needed by more complex generators to access contextual
+     *                information such as configuration.
      */
     public abstract ObjectIdGenerator<T> newForSerialization(Object context);
 
@@ -112,7 +110,6 @@ public abstract class ObjectIdGenerator<T>
      * for given POJO.
      *
      * @param forPojo POJO for which identifier is needed
-     *
      * @return Object Identifier to use.
      */
     public abstract T generateId(Object forPojo);
@@ -129,8 +126,7 @@ public abstract class ObjectIdGenerator<T>
      * and scopes are used.
      */
     public final static class IdKey
-        implements java.io.Serializable
-    {
+            implements java.io.Serializable {
         private static final long serialVersionUID = 1L;
 
         /**
@@ -166,11 +162,12 @@ public abstract class ObjectIdGenerator<T>
         }
 
         @Override
-        public int hashCode() { return hashCode; }
+        public int hashCode() {
+            return hashCode;
+        }
 
         @Override
-        public boolean equals(Object o)
-        {
+        public boolean equals(Object o) {
             if (o == this) return true;
             if (o == null) return false;
             if (o.getClass() != getClass()) return false;

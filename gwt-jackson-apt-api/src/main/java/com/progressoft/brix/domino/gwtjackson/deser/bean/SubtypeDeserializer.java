@@ -43,14 +43,14 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>> exte
         @Override
         public T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
-                                   Map<String, String> bufferedProperties ) {
-            return getDeserializer().deserializeInline( reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties );
+                                   Map<String, String> bufferedProperties) {
+            return getDeserializer().deserializeInline(reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties);
         }
 
         @Override
-        public T deserializeWrapped( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
-            return getDeserializer().deserializeWrapped( reader, ctx, params, identityInfo, typeInfo, typeInformation );
+        public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
+            return getDeserializer().deserializeWrapped(reader, ctx, params, identityInfo, typeInfo, typeInformation);
         }
     }
 
@@ -62,16 +62,16 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>> exte
     public abstract static class DefaultSubtypeDeserializer<T> extends SubtypeDeserializer<T, JsonDeserializer<T>> {
 
         @Override
-        public T deserializeInline( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
-                                    Map<String, String> bufferedProperties ) {
-            throw ctx.traceError( "Cannot deserialize into a bean when not using an AbstractBeanJsonDeserializer" );
+        public T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                   IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
+                                   Map<String, String> bufferedProperties) {
+            throw ctx.traceError("Cannot deserialize into a bean when not using an AbstractBeanJsonDeserializer");
         }
 
         @Override
-        public T deserializeWrapped( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
-            return getDeserializer().deserialize( reader, ctx, params );
+        public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
+                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
+            return getDeserializer().deserialize(reader, ctx, params);
         }
     }
 }

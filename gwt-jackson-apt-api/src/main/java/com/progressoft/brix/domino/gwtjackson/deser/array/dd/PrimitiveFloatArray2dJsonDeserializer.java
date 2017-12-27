@@ -43,19 +43,22 @@ public class PrimitiveFloatArray2dJsonDeserializer extends AbstractArray2dJsonDe
         return INSTANCE;
     }
 
-    private PrimitiveFloatArray2dJsonDeserializer() { }
+    private PrimitiveFloatArray2dJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public float[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<List<Float>> list = deserializeIntoList( reader, ctx, FloatJsonDeserializer.getInstance(), params );
+    public float[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<List<Float>> list = deserializeIntoList(reader, ctx, FloatJsonDeserializer.getInstance(), params);
 
-        if ( list.isEmpty() ) {
+        if (list.isEmpty()) {
             return new float[0][0];
         }
 
-        List<Float> firstList = list.get( 0 );
-        if ( firstList.isEmpty() ) {
+        List<Float> firstList = list.get(0);
+        if (firstList.isEmpty()) {
             return new float[list.size()][0];
         }
 
@@ -63,10 +66,10 @@ public class PrimitiveFloatArray2dJsonDeserializer extends AbstractArray2dJsonDe
 
         int i = 0;
         int j;
-        for ( List<Float> innerList : list ) {
+        for (List<Float> innerList : list) {
             j = 0;
-            for ( Float value : innerList ) {
-                if ( null != value ) {
+            for (Float value : innerList) {
+                if (null != value) {
                     array[i][j] = value;
                 }
                 j++;

@@ -34,11 +34,11 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
      * <p>newInstance</p>
      *
      * @param enumClass class of the enumeration
+     * @param <E>       a E object.
      * @return a new instance of {@link EnumJsonDeserializer}
-     * @param <E> a E object.
      */
-    public static <E extends Enum<E>> EnumJsonDeserializer<E> newInstance( Class<E> enumClass ) {
-        return new EnumJsonDeserializer<E>( enumClass );
+    public static <E extends Enum<E>> EnumJsonDeserializer<E> newInstance(Class<E> enumClass) {
+        return new EnumJsonDeserializer<E>(enumClass);
     }
 
     private final Class<E> enumClass;
@@ -48,20 +48,22 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
      *
      * @param enumClass class of the enumeration
      */
-    protected EnumJsonDeserializer( Class<E> enumClass ) {
-        if ( null == enumClass ) {
-            throw new IllegalArgumentException( "enumClass cannot be null" );
+    protected EnumJsonDeserializer(Class<E> enumClass) {
+        if (null == enumClass) {
+            throw new IllegalArgumentException("enumClass cannot be null");
         }
         this.enumClass = enumClass;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public E doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public E doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         try {
-            return Enum.valueOf( enumClass, reader.nextString() );
-        } catch ( IllegalArgumentException ex ) {
-            if ( ctx.isReadUnknownEnumValuesAsNull() ) {
+            return Enum.valueOf(enumClass, reader.nextString());
+        } catch (IllegalArgumentException ex) {
+            if (ctx.isReadUnknownEnumValuesAsNull()) {
                 return null;
             }
             throw ex;

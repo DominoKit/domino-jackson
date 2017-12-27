@@ -43,17 +43,20 @@ public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDese
         return INSTANCE;
     }
 
-    private PrimitiveBooleanArrayJsonDeserializer() { }
+    private PrimitiveBooleanArrayJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<Boolean> list = deserializeIntoList( reader, ctx, BooleanJsonDeserializer.getInstance(), params );
+    public boolean[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<Boolean> list = deserializeIntoList(reader, ctx, BooleanJsonDeserializer.getInstance(), params);
 
         boolean[] result = new boolean[list.size()];
         int i = 0;
-        for ( Boolean value : list ) {
-            if ( null != value ) {
+        for (Boolean value : list) {
+            if (null != value) {
                 result[i] = value;
             }
             i++;
@@ -61,9 +64,11 @@ public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDese
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new boolean[]{BooleanJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected boolean[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new boolean[]{BooleanJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

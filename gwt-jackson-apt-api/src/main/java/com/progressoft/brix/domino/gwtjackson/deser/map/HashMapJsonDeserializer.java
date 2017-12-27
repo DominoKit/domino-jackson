@@ -35,26 +35,28 @@ public final class HashMapJsonDeserializer<K, V> extends BaseMapJsonDeserializer
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link HashMap}
-     * @param <V> Type of the values inside the {@link HashMap}
+     * @param <K>               Type of the keys inside the {@link HashMap}
+     * @param <V>               Type of the values inside the {@link HashMap}
      * @return a new instance of {@link HashMapJsonDeserializer}
      */
-    public static <K, V> HashMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                    JsonDeserializer<V> valueDeserializer ) {
-        return new HashMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> HashMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                   JsonDeserializer<V> valueDeserializer) {
+        return new HashMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private HashMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private HashMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected HashMap<K, V> newMap() {
         return new HashMap<K, V>();

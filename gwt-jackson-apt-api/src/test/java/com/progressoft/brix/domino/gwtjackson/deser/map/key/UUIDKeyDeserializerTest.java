@@ -32,6 +32,6 @@ public class UUIDKeyDeserializerTest extends AbstractKeyDeserializerTest<UUID> {
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( UUID.fromString( uuid ), uuid );
+        assertDeserialization(UUID.fromString(uuid), uuid);
     }
 }

@@ -35,7 +35,7 @@ public abstract class BaseListJsonDeserializer<L extends List<T>, T> extends Bas
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link List}.
      */
-    public BaseListJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    public BaseListJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 }

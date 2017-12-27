@@ -37,11 +37,14 @@ public final class BooleanKeyDeserializer extends KeyDeserializer<Boolean> {
         return INSTANCE;
     }
 
-    private BooleanKeyDeserializer() { }
+    private BooleanKeyDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Boolean doDeserialize( String key, JsonDeserializationContext ctx ) {
-        return Boolean.valueOf( key );
+    protected Boolean doDeserialize(String key, JsonDeserializationContext ctx) {
+        return Boolean.valueOf(key);
     }
 }

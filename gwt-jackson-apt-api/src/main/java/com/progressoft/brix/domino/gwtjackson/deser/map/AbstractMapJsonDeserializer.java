@@ -36,26 +36,28 @@ public final class AbstractMapJsonDeserializer<K, V> extends BaseMapJsonDeserial
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link AbstractMap}
-     * @param <V> Type of the values inside the {@link AbstractMap}
+     * @param <K>               Type of the keys inside the {@link AbstractMap}
+     * @param <V>               Type of the values inside the {@link AbstractMap}
      * @return a new instance of {@link AbstractMapJsonDeserializer}
      */
-    public static <K, V> AbstractMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                        JsonDeserializer<V> valueDeserializer ) {
-        return new AbstractMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> AbstractMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                       JsonDeserializer<V> valueDeserializer) {
+        return new AbstractMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private AbstractMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private AbstractMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected AbstractMap<K, V> newMap() {
         return new LinkedHashMap<K, V>();

@@ -30,9 +30,9 @@ public class ShortJsonSerializerTest extends AbstractJsonSerializerTest<Short> {
     }
 
     public void testSerializeValue() {
-        assertSerialization( "34", new Short( "34" ) );
-        assertSerialization( "-1", new Short( "-1" ) );
-        assertSerialization( "-32768", Short.MIN_VALUE );
-        assertSerialization( "32767", Short.MAX_VALUE );
+        assertSerialization("34", new Short("34"));
+        assertSerialization("-1", new Short("-1"));
+        assertSerialization("-32768", Short.MIN_VALUE);
+        assertSerialization("32767", Short.MAX_VALUE);
     }
 }

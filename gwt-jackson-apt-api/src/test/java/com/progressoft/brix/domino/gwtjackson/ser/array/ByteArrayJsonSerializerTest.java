@@ -30,10 +30,10 @@ public class ByteArrayJsonSerializerTest extends AbstractJsonSerializerTest<byte
     }
 
     public void testSerializeValue() {
-        assertSerialization( "\"AAsWIQ==\"", new byte[]{0, 11, 22, 33} );
-        assertSerialization( "\"APXq3w==\"", new byte[]{0, -11, -22, -33} );
-        assertSerialization( "\"AGScAA==\"", new byte[]{0, 100, -100, 0} );
-        assertSerialization( "\"\"", new byte[0] );
+        assertSerialization("\"AAsWIQ==\"", new byte[]{0, 11, 22, 33});
+        assertSerialization("\"APXq3w==\"", new byte[]{0, -11, -22, -33});
+        assertSerialization("\"AGScAA==\"", new byte[]{0, 100, -100, 0});
+        assertSerialization("\"\"", new byte[0]);
     }
 
 }

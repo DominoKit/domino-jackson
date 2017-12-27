@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SerializerGenerator {
 
-    public String generate(TypeMirror beanType, String packageName, Name beanName)  {
+    public String generate(TypeMirror beanType, String packageName, Name beanName) {
         String generatedClassName = Type.serializerName(packageName, beanName.toString());
         if (!TypeRegistry.containsSerializer(beanType.toString())) {
             try {

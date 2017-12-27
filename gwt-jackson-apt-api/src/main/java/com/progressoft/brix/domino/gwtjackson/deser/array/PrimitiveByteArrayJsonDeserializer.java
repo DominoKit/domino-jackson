@@ -45,17 +45,20 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return INSTANCE;
     }
 
-    private PrimitiveByteArrayJsonDeserializer() { }
+    private PrimitiveByteArrayJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public byte[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<Byte> list = deserializeIntoList( reader, ctx, ByteJsonDeserializer.getInstance(), params );
+    public byte[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<Byte> list = deserializeIntoList(reader, ctx, ByteJsonDeserializer.getInstance(), params);
 
         byte[] result = new byte[list.size()];
         int i = 0;
-        for ( Byte value : list ) {
-            if ( null != value ) {
+        for (Byte value : list) {
+            if (null != value) {
                 result[i] = value;
             }
             i++;
@@ -63,21 +66,25 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected byte[] doDeserializeNonArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( JsonToken.STRING == reader.peek() ) {
-            return Base64Utils.fromBase64( reader.nextString() );
-        } else if ( ctx.isAcceptSingleValueAsArray() ) {
-            return doDeserializeSingleArray( reader, ctx, params );
+    protected byte[] doDeserializeNonArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (JsonToken.STRING == reader.peek()) {
+            return Base64Utils.fromBase64(reader.nextString());
+        } else if (ctx.isAcceptSingleValueAsArray()) {
+            return doDeserializeSingleArray(reader, ctx, params);
         } else {
-            throw ctx.traceError( "Cannot deserialize a byte[] out of " + reader.peek() + " token", reader );
+            throw ctx.traceError("Cannot deserialize a byte[] out of " + reader.peek() + " token", reader);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected byte[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new byte[]{ByteJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected byte[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new byte[]{ByteJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

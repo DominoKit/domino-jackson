@@ -26,14 +26,16 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
  * @author Nicolas Morel
  * @version $Id: $
  */
-@SuppressWarnings( "UnusedDeclaration" )
+@SuppressWarnings("UnusedDeclaration")
 public abstract class AbstractDelegationBeanJsonDeserializer<T> extends AbstractBeanJsonDeserializer<T> {
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
-        return instanceBuilder.newInstance( reader, ctx, params, null, null ).getInstance();
+                                IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
+        return instanceBuilder.newInstance(reader, ctx, params, null, null).getInstance();
     }
 
 }

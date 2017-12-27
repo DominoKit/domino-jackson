@@ -35,26 +35,28 @@ public final class TreeMapJsonDeserializer<K, V> extends BaseMapJsonDeserializer
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link TreeMap}
-     * @param <V> Type of the values inside the {@link TreeMap}
+     * @param <K>               Type of the keys inside the {@link TreeMap}
+     * @param <V>               Type of the values inside the {@link TreeMap}
      * @return a new instance of {@link TreeMapJsonDeserializer}
      */
-    public static <K, V> TreeMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                    JsonDeserializer<V> valueDeserializer ) {
-        return new TreeMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> TreeMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                   JsonDeserializer<V> valueDeserializer) {
+        return new TreeMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private TreeMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private TreeMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected TreeMap<K, V> newMap() {
         return new TreeMap<K, V>();

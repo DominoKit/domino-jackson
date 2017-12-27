@@ -40,17 +40,22 @@ public class StringJsonSerializer extends JsonSerializer<String> {
         return INSTANCE;
     }
 
-    private StringJsonSerializer() { }
+    private StringJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( String value ) {
+    protected boolean isEmpty(String value) {
         return null == value || value.length() == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, String value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        writer.value( value );
+    public void doSerialize(JsonWriter writer, String value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        writer.value(value);
     }
 }

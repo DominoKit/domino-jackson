@@ -34,29 +34,35 @@ public abstract class PropertyIdentitySerializationInfo<T, V> extends BeanProper
     /**
      * <p>Constructor for PropertyIdentitySerializationInfo.</p>
      *
-     * @param alwaysAsId a boolean.
+     * @param alwaysAsId   a boolean.
      * @param propertyName a {@link String} object.
      */
-    public PropertyIdentitySerializationInfo( boolean alwaysAsId, String propertyName ) {
-        super( propertyName );
+    public PropertyIdentitySerializationInfo(boolean alwaysAsId, String propertyName) {
+        super(propertyName);
         this.alwaysAsId = alwaysAsId;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAlwaysAsId() {
         return alwaysAsId;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isProperty() {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ObjectIdSerializer<?> getObjectId( T bean, JsonSerializationContext ctx ) {
-        return new ObjectIdSerializer( getValue( bean, ctx ), getSerializer() );
+    public ObjectIdSerializer<?> getObjectId(T bean, JsonSerializationContext ctx) {
+        return new ObjectIdSerializer(getValue(bean, ctx), getSerializer());
     }
 }

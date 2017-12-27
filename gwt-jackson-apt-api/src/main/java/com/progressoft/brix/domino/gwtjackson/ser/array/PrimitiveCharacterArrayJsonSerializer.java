@@ -40,30 +40,35 @@ public class PrimitiveCharacterArrayJsonSerializer extends JsonSerializer<char[]
         return INSTANCE;
     }
 
-    private PrimitiveCharacterArrayJsonSerializer() { }
+    private PrimitiveCharacterArrayJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( char[] value ) {
+    protected boolean isEmpty(char[] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, char[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, char[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        if ( ctx.isWriteCharArraysAsJsonArrays() && !(ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) ) {
+        if (ctx.isWriteCharArraysAsJsonArrays() && !(ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1)) {
             writer.beginArray();
-            for ( char value : values ) {
-                writer.value( Character.toString( value ) );
+            for (char value : values) {
+                writer.value(Character.toString(value));
             }
             writer.endArray();
         } else {
-            writer.value( new String( values ) );
+            writer.value(new String(values));
         }
     }
 }

@@ -16,36 +16,21 @@
 
 package com.progressoft.brix.domino.gwtjackson.stream;
 
-import com.google.gwt.core.client.JavaScriptObject;
+
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
 
 /**
  * @author Nicolas Morel
  */
-public class Person extends JavaScriptObject {
+@JsType
+public class Person {
 
-    protected Person() {}
-
-    public final native String getFirstName() /*-{
-        return this.firstName;
-    }-*/;
-
-    public final native void setFirstName(String firstName) /*-{
-        this.firstName = firstName;
-    }-*/;
-
-    public final native String getLastName() /*-{
-        return this.lastName;
-    }-*/;
-
-    public final native void setLastName(String lastName) /*-{
-        this.lastName = lastName;
-    }-*/;
-
-    public final native String getBio() /*-{
-        return this.bio;
-    }-*/;
-
-    public final native void setBio(String bio) /*-{
-        this.bio = bio;
-    }-*/;
+    @JsProperty(name = "firstName")
+    public String firstName;
+    @JsProperty(name = "lastName")
+    public String lastName;
+    @JsProperty(name = "bio")
+    public String bio;
 }
+

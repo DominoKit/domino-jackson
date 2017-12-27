@@ -27,9 +27,9 @@ public class BooleanJsonSerializerTest extends AbstractJsonSerializerTest<Boolea
     }
 
     public void testSerializeValue() {
-        assertSerialization( "true", true );
-        assertSerialization( "true", Boolean.TRUE );
-        assertSerialization( "false", false );
-        assertSerialization( "false", Boolean.FALSE );
+        assertSerialization("true", true);
+        assertSerialization("true", Boolean.TRUE);
+        assertSerialization("false", false);
+        assertSerialization("false", Boolean.FALSE);
     }
 }

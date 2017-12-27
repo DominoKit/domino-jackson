@@ -40,27 +40,32 @@ public class PrimitiveIntegerArray2dJsonSerializer extends JsonSerializer<int[][
         return INSTANCE;
     }
 
-    private PrimitiveIntegerArray2dJsonSerializer() { }
+    private PrimitiveIntegerArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( int[][] value ) {
+    protected boolean isEmpty(int[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, int[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, int[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( int[] array : values ) {
+        for (int[] array : values) {
             writer.beginArray();
-            for ( int value : array ) {
-                writer.value( value );
+            for (int value : array) {
+                writer.value(value);
             }
             writer.endArray();
         }

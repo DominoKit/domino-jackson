@@ -39,11 +39,14 @@ public final class UUIDKeyDeserializer extends KeyDeserializer<UUID> {
         return INSTANCE;
     }
 
-    private UUIDKeyDeserializer() { }
+    private UUIDKeyDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected UUID doDeserialize( String key, JsonDeserializationContext ctx ) {
-        return UUID.fromString( key );
+    protected UUID doDeserialize(String key, JsonDeserializationContext ctx) {
+        return UUID.fromString(key);
     }
 }

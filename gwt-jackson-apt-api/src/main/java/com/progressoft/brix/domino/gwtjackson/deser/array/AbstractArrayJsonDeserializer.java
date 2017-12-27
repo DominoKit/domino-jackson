@@ -33,13 +33,15 @@ import java.util.List;
  */
 public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<T> {
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( JsonToken.BEGIN_ARRAY == reader.peek() ) {
-            return doDeserializeArray( reader, ctx, params );
+    public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (JsonToken.BEGIN_ARRAY == reader.peek()) {
+            return doDeserializeArray(reader, ctx, params);
         } else {
-            return doDeserializeNonArray( reader, ctx, params );
+            return doDeserializeNonArray(reader, ctx, params);
         }
     }
 
@@ -47,25 +49,25 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param ctx    a {@link JsonDeserializationContext} object.
      * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
-    protected abstract T doDeserializeArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params );
+    protected abstract T doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 
     /**
      * <p>doDeserializeNonArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param ctx    a {@link JsonDeserializationContext} object.
      * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
-    protected T doDeserializeNonArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( ctx.isAcceptSingleValueAsArray() ) {
-            return doDeserializeSingleArray( reader, ctx, params );
+    protected T doDeserializeNonArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (ctx.isAcceptSingleValueAsArray()) {
+            return doDeserializeSingleArray(reader, ctx, params);
         } else {
-            throw ctx.traceError( "Cannot deserialize an array out of " + reader.peek() + " token", reader );
+            throw ctx.traceError("Cannot deserialize an array out of " + reader.peek() + " token", reader);
         }
     }
 
@@ -73,30 +75,30 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeSingleArray</p>
      *
      * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
+     * @param ctx    a {@link JsonDeserializationContext} object.
      * @param params a {@link JsonDeserializerParameters} object.
      * @return a T object.
      */
-    protected abstract T doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params );
+    protected abstract T doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 
     /**
      * Deserializes the array into a {@link List}. We need the length of the array before creating it.
      *
-     * @param reader reader
-     * @param ctx context of the deserialization process
+     * @param reader       reader
+     * @param ctx          context of the deserialization process
      * @param deserializer deserializer for element inside the array
-     * @param params Parameters for the deserializer
-     * @param <C> type of the element inside the array
+     * @param params       Parameters for the deserializer
+     * @param <C>          type of the element inside the array
      * @return a list containing all the elements of the array
      */
-    protected <C> List<C> deserializeIntoList( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializer<C> deserializer,
-                                               JsonDeserializerParameters params ) {
+    protected <C> List<C> deserializeIntoList(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializer<C> deserializer,
+                                              JsonDeserializerParameters params) {
         List<C> list;
 
         reader.beginArray();
         JsonToken token = reader.peek();
 
-        if ( JsonToken.END_ARRAY == token ) {
+        if (JsonToken.END_ARRAY == token) {
 
             // empty array, no need to create a list
             list = Collections.emptyList();
@@ -105,8 +107,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
 
             list = new ArrayList<C>();
 
-            while ( JsonToken.END_ARRAY != token ) {
-                list.add( deserializer.deserialize( reader, ctx, params ) );
+            while (JsonToken.END_ARRAY != token) {
+                list.add(deserializer.deserialize(reader, ctx, params));
                 token = reader.peek();
             }
 

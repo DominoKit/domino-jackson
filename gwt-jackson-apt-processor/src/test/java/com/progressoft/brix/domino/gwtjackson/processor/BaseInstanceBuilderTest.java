@@ -36,7 +36,7 @@ import static com.google.testing.compile.Compiler.javac;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public abstract class BaseInstanceBuilderTest extends TestCase{
+public abstract class BaseInstanceBuilderTest extends TestCase {
 
     private Set<TestSubject> testSubjects;
 
@@ -50,7 +50,6 @@ public abstract class BaseInstanceBuilderTest extends TestCase{
     }
 
 
-
     void addFieldTest(String fieldName, FieldTester tester) throws Exception {
         testSubjects.add(new TestSubject(fieldName, tester));
     }
@@ -61,7 +60,7 @@ public abstract class BaseInstanceBuilderTest extends TestCase{
         testProcessor.setDelegate((annotations, roundEnv, typeUtils, elementUtils, filer, messager) -> {
             Optional<? extends Element> element = roundEnv.getElementsAnnotatedWith(TestAnnotation.class).stream().findFirst();
             if (element.isPresent()) {
-                executed[0] =true;
+                executed[0] = true;
                 ObjectMapperProcessor.typeUtils = typeUtils;
                 ObjectMapperProcessor.elementUtils = elementUtils;
                 ObjectMapperProcessor.messager = messager;

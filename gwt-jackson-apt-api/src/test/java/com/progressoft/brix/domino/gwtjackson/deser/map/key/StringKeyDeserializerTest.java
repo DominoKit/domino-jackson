@@ -28,8 +28,8 @@ public class StringKeyDeserializerTest extends AbstractKeyDeserializerTest<Strin
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( "", "" );
-        assertDeserialization( "Json", "Json" );
-        assertDeserialization( "&é(-è_ çà)='", "&é(-è_ çà)='" );
+        assertDeserialization("", "");
+        assertDeserialization("Json", "Json");
+        assertDeserialization("&é(-è_ çà)='", "&é(-è_ çà)='");
     }
 }

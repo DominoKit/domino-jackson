@@ -30,7 +30,6 @@ import java.util.List;
 public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
 
-
     public AptSerializerBuilder(TypeMirror beanType, Filer filer) {
         super(beanType, filer);
     }

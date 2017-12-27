@@ -20,15 +20,15 @@ import elemental2.core.JsArray;
 
 public class ElementalArrayBufferStack<T> implements BufferStack<T> {
 
-    JsArray<T> stack=new JsArray<T>( );
+    JsArray<T> stack = new JsArray<T>();
 
     @Override
-    public T getAt( int index ) {
-        return stack.getAt( index );
+    public T getAt(int index) {
+        return stack.getAt(index);
     }
 
     @Override
-    public void setAt( int index, T value ) {
-        stack.setAt( index, value );
+    public void setAt(int index, T value) {
+        stack.setAt(index, value);
     }
 }

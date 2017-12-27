@@ -59,9 +59,9 @@ public interface ObjectWriter<T> {
      * Writes an object to JSON.
      *
      * @param value Object to write
-     * @param ctx Context for the full writing process
-     * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException if an exception occurs while writing the output
+     * @param ctx   Context for the full writing process
      * @return a {@link String} object.
+     * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException if an exception occurs while writing the output
      */
     String write(T value, JsonSerializationContext ctx) throws JsonSerializationException;
 }

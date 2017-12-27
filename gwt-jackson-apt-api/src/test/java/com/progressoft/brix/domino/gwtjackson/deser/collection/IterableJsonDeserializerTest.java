@@ -30,13 +30,13 @@ public class IterableJsonDeserializerTest extends AbstractJsonDeserializerTest<I
 
     @Override
     protected JsonDeserializer<Iterable<String>> createDeserializer() {
-        return IterableJsonDeserializer.newInstance( StringJsonDeserializer.getInstance() );
+        return IterableJsonDeserializer.newInstance(StringJsonDeserializer.getInstance());
     }
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( Arrays.asList( "Hello", " ", "World", "!" ), "[Hello, \" \", \"World\", \"!\"]" );
-        assertDeserialization( Collections.<String>emptyList(), "[]" );
+        assertDeserialization(Arrays.asList("Hello", " ", "World", "!"), "[Hello, \" \", \"World\", \"!\"]");
+        assertDeserialization(Collections.<String>emptyList(), "[]");
     }
 
 }

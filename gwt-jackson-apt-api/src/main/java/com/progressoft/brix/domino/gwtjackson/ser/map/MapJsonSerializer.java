@@ -41,14 +41,14 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
     /**
      * <p>newInstance</p>
      *
-     * @param keySerializer {@link KeySerializer} used to serialize the keys.
+     * @param keySerializer   {@link KeySerializer} used to serialize the keys.
      * @param valueSerializer {@link JsonSerializer} used to serialize the values.
+     * @param <M>             a M object.
      * @return a new instance of {@link MapJsonSerializer}
-     * @param <M> a M object.
      */
-    public static <M extends Map<?, ?>> MapJsonSerializer<M, ?, ?> newInstance( KeySerializer<?> keySerializer, JsonSerializer<?>
-            valueSerializer ) {
-        return new MapJsonSerializer( keySerializer, valueSerializer );
+    public static <M extends Map<?, ?>> MapJsonSerializer<M, ?, ?> newInstance(KeySerializer<?> keySerializer, JsonSerializer<?>
+            valueSerializer) {
+        return new MapJsonSerializer(keySerializer, valueSerializer);
     }
 
     protected final KeySerializer<K> keySerializer;
@@ -58,32 +58,36 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
     /**
      * <p>Constructor for MapJsonSerializer.</p>
      *
-     * @param keySerializer {@link KeySerializer} used to serialize the keys.
+     * @param keySerializer   {@link KeySerializer} used to serialize the keys.
      * @param valueSerializer {@link JsonSerializer} used to serialize the values.
      */
-    protected MapJsonSerializer( KeySerializer<K> keySerializer, JsonSerializer<V> valueSerializer ) {
-        if ( null == keySerializer ) {
-            throw new IllegalArgumentException( "keySerializer cannot be null" );
+    protected MapJsonSerializer(KeySerializer<K> keySerializer, JsonSerializer<V> valueSerializer) {
+        if (null == keySerializer) {
+            throw new IllegalArgumentException("keySerializer cannot be null");
         }
-        if ( null == valueSerializer ) {
-            throw new IllegalArgumentException( "valueSerializer cannot be null" );
+        if (null == valueSerializer) {
+            throw new IllegalArgumentException("valueSerializer cannot be null");
         }
         this.keySerializer = keySerializer;
         this.valueSerializer = valueSerializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( M value ) {
+    protected boolean isEmpty(M value) {
         return null == value || value.isEmpty();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    public void doSerialize(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.beginObject();
 
-        serializeValues( writer, values, ctx, params );
+        serializeValues(writer, values, ctx, params);
 
         writer.endObject();
     }
@@ -93,39 +97,39 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
      *
      * @param writer a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
      * @param values a M object.
-     * @param ctx a {@link JsonSerializationContext} object.
+     * @param ctx    a {@link JsonSerializationContext} object.
      * @param params a {@link JsonSerializerParameters} object.
      */
-    public void serializeValues(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !values.isEmpty() ) {
+    public void serializeValues(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!values.isEmpty()) {
             Map<K, V> map = values;
-            if ( ctx.isOrderMapEntriesByKeys() && !(values instanceof SortedMap<?, ?>) ) {
-                map = new TreeMap<K, V>( map );
+            if (ctx.isOrderMapEntriesByKeys() && !(values instanceof SortedMap<?, ?>)) {
+                map = new TreeMap<K, V>(map);
             }
 
-            if ( ctx.isWriteNullMapValues() ) {
+            if (ctx.isWriteNullMapValues()) {
 
-                for ( Entry<K, V> entry : map.entrySet() ) {
-                    String name = keySerializer.serialize( entry.getKey(), ctx );
-                    if ( keySerializer.mustBeEscaped( ctx ) ) {
-                        writer.name( name );
+                for (Entry<K, V> entry : map.entrySet()) {
+                    String name = keySerializer.serialize(entry.getKey(), ctx);
+                    if (keySerializer.mustBeEscaped(ctx)) {
+                        writer.name(name);
                     } else {
-                        writer.unescapeName( name );
+                        writer.unescapeName(name);
                     }
-                    valueSerializer.serialize( writer, entry.getValue(), ctx, params, true );
+                    valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
                 }
 
             } else {
 
-                for ( Entry<K, V> entry : map.entrySet() ) {
-                    if ( null != entry.getValue() ) {
-                        String name = keySerializer.serialize( entry.getKey(), ctx );
-                        if ( keySerializer.mustBeEscaped( ctx ) ) {
-                            writer.name( name );
+                for (Entry<K, V> entry : map.entrySet()) {
+                    if (null != entry.getValue()) {
+                        String name = keySerializer.serialize(entry.getKey(), ctx);
+                        if (keySerializer.mustBeEscaped(ctx)) {
+                            writer.name(name);
                         } else {
-                            writer.unescapeName( name );
+                            writer.unescapeName(name);
                         }
-                        valueSerializer.serialize( writer, entry.getValue(), ctx, params, true );
+                        valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
                     }
                 }
 

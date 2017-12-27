@@ -41,25 +41,30 @@ public class PrimitiveByteArray2dJsonSerializer extends JsonSerializer<byte[][]>
         return INSTANCE;
     }
 
-    private PrimitiveByteArray2dJsonSerializer() { }
+    private PrimitiveByteArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( byte[][] value ) {
+    protected boolean isEmpty(byte[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, byte[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, byte[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( byte[] array : values ) {
-            writer.unescapeValue( Base64Utils.toBase64( array ) );
+        for (byte[] array : values) {
+            writer.unescapeValue(Base64Utils.toBase64(array));
         }
         writer.endArray();
     }

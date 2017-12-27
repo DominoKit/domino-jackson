@@ -48,15 +48,16 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
             return INSTANCE;
         }
 
-        private DateKeyDeserializer() { }
-
-        @Override
-        protected Date deserializeMillis( long millis ) {
-            return new Date( millis );
+        private DateKeyDeserializer() {
         }
 
         @Override
-        protected Date deserializeDate( Date date ) {
+        protected Date deserializeMillis(long millis) {
+            return new Date(millis);
+        }
+
+        @Override
+        protected Date deserializeDate(Date date) {
             return date;
         }
     }
@@ -75,16 +76,17 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
             return INSTANCE;
         }
 
-        private SqlDateKeyDeserializer() { }
-
-        @Override
-        protected java.sql.Date deserializeMillis( long millis ) {
-            return new java.sql.Date( millis );
+        private SqlDateKeyDeserializer() {
         }
 
         @Override
-        protected java.sql.Date deserializeDate( Date date ) {
-            return deserializeMillis( date.getTime() );
+        protected java.sql.Date deserializeMillis(long millis) {
+            return new java.sql.Date(millis);
+        }
+
+        @Override
+        protected java.sql.Date deserializeDate(Date date) {
+            return deserializeMillis(date.getTime());
         }
     }
 
@@ -102,16 +104,17 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
             return INSTANCE;
         }
 
-        private SqlTimeKeyDeserializer() { }
-
-        @Override
-        protected Time deserializeMillis( long millis ) {
-            return new Time( millis );
+        private SqlTimeKeyDeserializer() {
         }
 
         @Override
-        protected Time deserializeDate( Date date ) {
-            return deserializeMillis( date.getTime() );
+        protected Time deserializeMillis(long millis) {
+            return new Time(millis);
+        }
+
+        @Override
+        protected Time deserializeDate(Date date) {
+            return deserializeMillis(date.getTime());
         }
     }
 
@@ -129,52 +132,55 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
             return INSTANCE;
         }
 
-        private SqlTimestampKeyDeserializer() { }
-
-        @Override
-        protected Timestamp deserializeMillis( long millis ) {
-            return new Timestamp( millis );
+        private SqlTimestampKeyDeserializer() {
         }
 
         @Override
-        protected Timestamp deserializeDate( Date date ) {
-            return deserializeMillis( date.getTime() );
+        protected Timestamp deserializeMillis(long millis) {
+            return new Timestamp(millis);
+        }
+
+        @Override
+        protected Timestamp deserializeDate(Date date) {
+            return deserializeMillis(date.getTime());
         }
     }
 
-    private static final DateTimeFormat ISO_8601_FORMAT = DateTimeFormat.getFormat( PredefinedFormat.ISO_8601 );
+    private static final DateTimeFormat ISO_8601_FORMAT = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601);
 
-    private static final DateTimeFormat RFC_2822_FORMAT = DateTimeFormat.getFormat( PredefinedFormat.RFC_2822 );
+    private static final DateTimeFormat RFC_2822_FORMAT = DateTimeFormat.getFormat(PredefinedFormat.RFC_2822);
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected D doDeserialize( String key, JsonDeserializationContext ctx ) {
+    protected D doDeserialize(String key, JsonDeserializationContext ctx) {
         // TODO could probably find a better way to handle the parsing without try/catch
 
         // Default configuration for serializing keys is using ISO-8601, we try that one first
 
         // in ISO-8601
         try {
-            return deserializeDate( ISO_8601_FORMAT.parse( key ) );
-        } catch ( IllegalArgumentException e ) {
+            return deserializeDate(ISO_8601_FORMAT.parse(key));
+        } catch (IllegalArgumentException e) {
             // can happen if it's not the correct format
         }
 
         // maybe it's in milliseconds
         try {
-            return deserializeMillis( Long.parseLong( key ) );
-        } catch ( NumberFormatException e ) {
+            return deserializeMillis(Long.parseLong(key));
+        } catch (NumberFormatException e) {
             // can happen if the key is string-based like an ISO-8601 format
         }
 
         // or in RFC-2822
         try {
-            return deserializeDate( RFC_2822_FORMAT.parse( key ) );
-        } catch ( IllegalArgumentException e ) {
+            return deserializeDate(RFC_2822_FORMAT.parse(key));
+        } catch (IllegalArgumentException e) {
             // can happen if it's not the correct format
         }
 
-        throw new JsonDeserializationException( "Cannot parse the key '" + key + "' as a date" );
+        throw new JsonDeserializationException("Cannot parse the key '" + key + "' as a date");
     }
 
     /**
@@ -183,7 +189,7 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
      * @param millis a long.
      * @return a D object.
      */
-    protected abstract D deserializeMillis( long millis );
+    protected abstract D deserializeMillis(long millis);
 
     /**
      * <p>deserializeDate</p>
@@ -191,5 +197,5 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
      * @param date a {@link Date} object.
      * @return a D object.
      */
-    protected abstract D deserializeDate( Date date );
+    protected abstract D deserializeDate(Date date);
 }

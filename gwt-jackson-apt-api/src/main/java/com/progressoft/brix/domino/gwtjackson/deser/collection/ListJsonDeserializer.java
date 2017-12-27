@@ -34,21 +34,23 @@ public final class ListJsonDeserializer<T> extends BaseListJsonDeserializer<List
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link List}.
-     * @param <T> Type of the elements inside the {@link List}
+     * @param <T>          Type of the elements inside the {@link List}
      * @return a new instance of {@link ListJsonDeserializer}
      */
-    public static <T> ListJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new ListJsonDeserializer<T>( deserializer );
+    public static <T> ListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new ListJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link List}.
      */
-    private ListJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private ListJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected List<T> newCollection() {
         return new ArrayList<T>();

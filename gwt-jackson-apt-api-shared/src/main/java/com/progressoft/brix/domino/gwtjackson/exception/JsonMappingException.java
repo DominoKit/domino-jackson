@@ -35,18 +35,18 @@ public class JsonMappingException extends RuntimeException {
      *
      * @param message a {@link String} object.
      */
-    public JsonMappingException( String message ) {
-        super( message );
+    public JsonMappingException(String message) {
+        super(message);
     }
 
     /**
      * <p>Constructor for JsonMappingException.</p>
      *
      * @param message a {@link String} object.
-     * @param cause a {@link Throwable} object.
+     * @param cause   a {@link Throwable} object.
      */
-    public JsonMappingException( String message, Throwable cause ) {
-        super( message, cause );
+    public JsonMappingException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
@@ -54,7 +54,7 @@ public class JsonMappingException extends RuntimeException {
      *
      * @param cause a {@link Throwable} object.
      */
-    public JsonMappingException( Throwable cause ) {
-        super( cause );
+    public JsonMappingException(Throwable cause) {
+        super(cause);
     }
 }

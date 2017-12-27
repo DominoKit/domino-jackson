@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
 
-@JsonPropertyOrder( alphabetic = true )
+@JsonPropertyOrder(alphabetic = true)
 public class PropertyNamingBean {
 
     private String simpleName;
@@ -33,7 +33,7 @@ public class PropertyNamingBean {
         return simpleName;
     }
 
-    public void setSimpleName( String simpleName ) {
+    public void setSimpleName(String simpleName) {
         this.simpleName = simpleName;
     }
 
@@ -41,11 +41,11 @@ public class PropertyNamingBean {
         return HTML;
     }
 
-    public void setHTML( List<String> HTML ) {
+    public void setHTML(List<String> HTML) {
         this.HTML = HTML;
     }
 
-    public List<String> getHTML( String filter ) {
+    public List<String> getHTML(String filter) {
         return HTML;
     }
 
@@ -53,7 +53,7 @@ public class PropertyNamingBean {
         return HTMLParser;
     }
 
-    public void setHTMLParser( String HTMLParser ) {
+    public void setHTMLParser(String HTMLParser) {
         this.HTMLParser = HTMLParser;
     }
 }

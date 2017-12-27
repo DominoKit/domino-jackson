@@ -31,8 +31,8 @@ public class SqlTimestampKeySerializerTest extends AbstractKeySerializerTest<Tim
     }
 
     public void testSerializeValue() {
-        Timestamp date = new Timestamp( getUTCTime( 2012, 8, 18, 12, 45, 56, 543 ) );
-        String expected = DateFormat.format( date );
-        assertSerialization( expected, date );
+        Timestamp date = new Timestamp(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+        String expected = DateFormat.format(date);
+        assertSerialization(expected, date);
     }
 }

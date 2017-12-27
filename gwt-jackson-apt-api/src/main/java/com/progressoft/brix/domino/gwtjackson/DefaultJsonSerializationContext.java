@@ -78,7 +78,8 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * @deprecated Use {@link DefaultJsonSerializationContext#builder()} instead. This constructor will be made protected in v1.0.
          */
         @Deprecated
-        public Builder() { }
+        public Builder() {
+        }
 
         /**
          * Determines whether Object Identity is compared using
@@ -91,10 +92,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * </p>
          *
          * @param useEqualityForObjectId true if should useEqualityForObjectId
-         *
          * @return the builder
          */
-        public Builder useEqualityForObjectId( boolean useEqualityForObjectId ) {
+        public Builder useEqualityForObjectId(boolean useEqualityForObjectId) {
             this.useEqualityForObjectId = useEqualityForObjectId;
             return this;
         }
@@ -104,10 +104,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * This has no impact on array elements. The default is true.
          *
          * @param serializeNulls true if should serializeNulls
-         *
          * @return the builder
          */
-        public Builder serializeNulls( boolean serializeNulls ) {
+        public Builder serializeNulls(boolean serializeNulls) {
             this.serializeNulls = serializeNulls;
             return this;
         }
@@ -120,10 +119,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * Option is enabled by default.
          *
          * @param writeDatesAsTimestamps true if should writeDatesAsTimestamps
-         *
          * @return the builder
          */
-        public Builder writeDatesAsTimestamps( boolean writeDatesAsTimestamps ) {
+        public Builder writeDatesAsTimestamps(boolean writeDatesAsTimestamps) {
             this.writeDatesAsTimestamps = writeDatesAsTimestamps;
             return this;
         }
@@ -136,10 +134,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * Option is disabled by default.
          *
          * @param writeDateKeysAsTimestamps true if should writeDateKeysAsTimestamps
-         *
          * @return the builder
          */
-        public Builder writeDateKeysAsTimestamps( boolean writeDateKeysAsTimestamps ) {
+        public Builder writeDateKeysAsTimestamps(boolean writeDateKeysAsTimestamps) {
             this.writeDateKeysAsTimestamps = writeDateKeysAsTimestamps;
             return this;
         }
@@ -150,10 +147,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * <p>Feature is disabled by default.</p>
          *
          * @param indent true if should indent
-         *
          * @return the builder
          */
-        public Builder indent( boolean indent ) {
+        public Builder indent(boolean indent) {
             this.indent = indent;
             return this;
         }
@@ -167,10 +163,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * <p>Feature is disabled by default.</p>
          *
          * @param wrapRootValue true if should wrapRootValue
-         *
          * @return the builder
          */
-        public Builder wrapRootValue( boolean wrapRootValue ) {
+        public Builder wrapRootValue(boolean wrapRootValue) {
             this.wrapRootValue = wrapRootValue;
             return this;
         }
@@ -185,10 +180,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * </p>
          *
          * @param writeCharArraysAsJsonArrays true if should writeCharArraysAsJsonArrays
-         *
          * @return the builder
          */
-        public Builder writeCharArraysAsJsonArrays( boolean writeCharArraysAsJsonArrays ) {
+        public Builder writeCharArraysAsJsonArrays(boolean writeCharArraysAsJsonArrays) {
             this.writeCharArraysAsJsonArrays = writeCharArraysAsJsonArrays;
             return this;
         }
@@ -201,10 +195,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * </p>
          *
          * @param writeNullMapValues true if should writeNullMapValues
-         *
          * @return the builder
          */
-        public Builder writeNullMapValues( boolean writeNullMapValues ) {
+        public Builder writeNullMapValues(boolean writeNullMapValues) {
             this.writeNullMapValues = writeNullMapValues;
             return this;
         }
@@ -223,10 +216,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * </p>
          *
          * @param writeEmptyJsonArrays true if should writeEmptyJsonArrays
-         *
          * @return the builder
          */
-        public Builder writeEmptyJsonArrays( boolean writeEmptyJsonArrays ) {
+        public Builder writeEmptyJsonArrays(boolean writeEmptyJsonArrays) {
             this.writeEmptyJsonArrays = writeEmptyJsonArrays;
             return this;
         }
@@ -241,10 +233,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * </p>
          *
          * @param orderMapEntriesByKeys true if should orderMapEntriesByKeys
-         *
          * @return the builder
          */
-        public Builder orderMapEntriesByKeys( boolean orderMapEntriesByKeys ) {
+        public Builder orderMapEntriesByKeys(boolean orderMapEntriesByKeys) {
             this.orderMapEntriesByKeys = orderMapEntriesByKeys;
             return this;
         }
@@ -272,10 +263,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * Feature is disabled by default, so that no special handling is done.
          *
          * @param writeSingleElemArraysUnwrapped true if should writeSingleElemArraysUnwrapped
-         *
          * @return the builder
          */
-        public Builder writeSingleElemArraysUnwrapped( boolean writeSingleElemArraysUnwrapped ) {
+        public Builder writeSingleElemArraysUnwrapped(boolean writeSingleElemArraysUnwrapped) {
             this.writeSingleElemArraysUnwrapped = writeSingleElemArraysUnwrapped;
             return this;
         }
@@ -295,24 +285,24 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
          * Feature is enabled by default.
          *
          * @param wrapExceptions true if should wrapExceptions
-         *
          * @return the builder
          */
-        public Builder wrapExceptions( boolean wrapExceptions ) {
+        public Builder wrapExceptions(boolean wrapExceptions) {
             this.wrapExceptions = wrapExceptions;
             return this;
         }
 
         public final JsonSerializationContext build() {
-            return new DefaultJsonSerializationContext( useEqualityForObjectId, serializeNulls, writeDatesAsTimestamps,
+            return new DefaultJsonSerializationContext(useEqualityForObjectId, serializeNulls, writeDatesAsTimestamps,
                     writeDateKeysAsTimestamps, indent, wrapRootValue, writeCharArraysAsJsonArrays, writeNullMapValues,
-                    writeEmptyJsonArrays, orderMapEntriesByKeys, writeSingleElemArraysUnwrapped, wrapExceptions );
+                    writeEmptyJsonArrays, orderMapEntriesByKeys, writeSingleElemArraysUnwrapped, wrapExceptions);
         }
     }
 
     public static class DefaultBuilder extends Builder {
 
-        private DefaultBuilder() { }
+        private DefaultBuilder() {
+        }
 
     }
 
@@ -325,7 +315,7 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
         return new DefaultBuilder();
     }
 
-    private static final Logger logger = Logger.getLogger( "JsonSerialization" );
+    private static final Logger logger = Logger.getLogger("JsonSerialization");
 
     private Map<Object, ObjectIdSerializer<?>> mapObjectId;
 
@@ -360,9 +350,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
 
     private DefaultJsonSerializationContext(boolean useEqualityForObjectId, boolean serializeNulls, boolean writeDatesAsTimestamps, boolean
             writeDateKeysAsTimestamps, boolean indent, boolean wrapRootValue, boolean writeCharArraysAsJsonArrays, boolean
-                                              writeNullMapValues, boolean writeEmptyJsonArrays, boolean orderMapEntriesByKeys, boolean
-            writeSingleElemArraysUnwrapped,
-                                            boolean wrapExceptions ) {
+                                                    writeNullMapValues, boolean writeEmptyJsonArrays, boolean orderMapEntriesByKeys, boolean
+                                                    writeSingleElemArraysUnwrapped,
+                                            boolean wrapExceptions) {
         this.useEqualityForObjectId = useEqualityForObjectId;
         this.serializeNulls = serializeNulls;
         this.writeDatesAsTimestamps = writeDatesAsTimestamps;
@@ -491,10 +481,10 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      */
     @Override
     public JsonWriter newJsonWriter() {
-        JsonWriter writer = new FastJsonWriter( new StringBuilder() );
-        writer.setLenient( true );
-        if ( indent ) {
-            writer.setIndent( "  " );
+        JsonWriter writer = new FastJsonWriter(new StringBuilder());
+        writer.setLenient(true);
+        if (indent) {
+            writer.setIndent("  ");
         }
         return writer;
     }
@@ -502,30 +492,28 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     /**
      * Trace an error and returns a corresponding exception.
      *
-     * @param value current value
+     * @param value   current value
      * @param message error message
-     *
      * @return a {@link JsonSerializationException} with the given message
      */
     @Override
     public JsonSerializationException traceError(Object value, String message) {
-        getLogger().log( Level.SEVERE, message );
-        return new JsonSerializationException( message );
+        getLogger().log(Level.SEVERE, message);
+        return new JsonSerializationException(message);
     }
 
     /**
      * Trace an error with current writer state and returns a corresponding exception.
      *
-     * @param value current value
+     * @param value   current value
      * @param message error message
-     * @param writer current writer
-     *
+     * @param writer  current writer
      * @return a {@link JsonSerializationException} with the given message
      */
     @Override
     public JsonSerializationException traceError(Object value, String message, JsonWriter writer) {
-        JsonSerializationException exception = traceError( value, message );
-        traceWriterInfo( value, writer );
+        JsonSerializationException exception = traceError(value, message);
+        traceWriterInfo(value, writer);
         return exception;
     }
 
@@ -534,14 +522,13 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      *
      * @param value current value
      * @param cause cause of the error
-     *
      * @return a {@link JsonSerializationException} if we wrap the exceptions, the cause otherwise
      */
     @Override
     public RuntimeException traceError(Object value, RuntimeException cause) {
-        getLogger().log( Level.SEVERE, "Error during serialization", cause );
-        if ( wrapExceptions ) {
-            return new JsonSerializationException( cause );
+        getLogger().log(Level.SEVERE, "Error during serialization", cause);
+        if (wrapExceptions) {
+            return new JsonSerializationException(cause);
         } else {
             return cause;
         }
@@ -550,16 +537,15 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     /**
      * Trace an error with current writer state and returns a corresponding exception.
      *
-     * @param value current value
-     * @param cause cause of the error
+     * @param value  current value
+     * @param cause  cause of the error
      * @param writer current writer
-     *
      * @return a {@link JsonSerializationException} if we wrap the exceptions, the cause otherwise
      */
     @Override
     public RuntimeException traceError(Object value, RuntimeException cause, JsonWriter writer) {
-        RuntimeException exception = traceError( value, cause );
-        traceWriterInfo( value, writer );
+        RuntimeException exception = traceError(value, cause);
+        traceWriterInfo(value, writer);
         return exception;
     }
 
@@ -568,9 +554,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      *
      * @param value current value
      */
-    private void traceWriterInfo( Object value, JsonWriter writer ) {
-        if ( getLogger().isLoggable( Level.INFO ) ) {
-            getLogger().log( Level.INFO, "Error on value <" + value + ">. Current output : <" + writer.getOutput() + ">" );
+    private void traceWriterInfo(Object value, JsonWriter writer) {
+        if (getLogger().isLoggable(Level.INFO)) {
+            getLogger().log(Level.INFO, "Error on value <" + value + ">. Current output : <" + writer.getOutput() + ">");
         }
     }
 
@@ -578,31 +564,30 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      * <p>addObjectId</p>
      *
      * @param object a {@link Object} object.
-     * @param id a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.ObjectIdSerializer} object.
+     * @param id     a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.ObjectIdSerializer} object.
      */
     @Override
     public void addObjectId(Object object, ObjectIdSerializer<?> id) {
-        if ( null == mapObjectId ) {
-            if ( useEqualityForObjectId ) {
+        if (null == mapObjectId) {
+            if (useEqualityForObjectId) {
                 mapObjectId = new HashMap<Object, ObjectIdSerializer<?>>();
             } else {
                 mapObjectId = new IdentityHashMap<Object, ObjectIdSerializer<?>>();
             }
         }
-        mapObjectId.put( object, id );
+        mapObjectId.put(object, id);
     }
 
     /**
      * <p>getObjectId</p>
      *
      * @param object a {@link Object} object.
-     *
      * @return a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.ObjectIdSerializer} object.
      */
     @Override
     public ObjectIdSerializer<?> getObjectId(Object object) {
-        if ( null != mapObjectId ) {
-            return mapObjectId.get( object );
+        if (null != mapObjectId) {
+            return mapObjectId.get(object);
         }
         return null;
     }
@@ -613,12 +598,12 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      * @param generator instance of generator to add
      */
     @Override
-    @SuppressWarnings( "UnusedDeclaration" )
+    @SuppressWarnings("UnusedDeclaration")
     public void addGenerator(ObjectIdGenerator<?> generator) {
-        if ( null == generators ) {
+        if (null == generators) {
             generators = new ArrayList<ObjectIdGenerator<?>>();
         }
-        generators.add( generator );
+        generators.add(generator);
     }
 
     /**
@@ -626,15 +611,14 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
      *
      * @param gen generator used to find equivalent generator
      * @param <T> a T object.
-     *
      * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     @Override
-    @SuppressWarnings( {"UnusedDeclaration", "unchecked"} )
+    @SuppressWarnings({"UnusedDeclaration", "unchecked"})
     public <T> ObjectIdGenerator<T> findObjectIdGenerator(ObjectIdGenerator<T> gen) {
-        if ( null != generators ) {
-            for ( ObjectIdGenerator<?> generator : generators ) {
-                if ( generator.canUseFor( gen ) ) {
+        if (null != generators) {
+            for (ObjectIdGenerator<?> generator : generators) {
+                if (generator.canUseFor(gen)) {
                     return (ObjectIdGenerator<T>) generator;
                 }
             }

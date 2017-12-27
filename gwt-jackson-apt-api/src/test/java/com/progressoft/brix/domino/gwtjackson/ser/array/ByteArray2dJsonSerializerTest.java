@@ -34,6 +34,6 @@ public class ByteArray2dJsonSerializerTest extends AbstractJsonSerializerTest<by
     public void testSerializeValue() {
         assertSerialization(
                 "[\"AAsWIQ==\",\"APXq3w==\",\"AGScAA==\",\"\"]",
-                new byte[][]{{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}} );
+                new byte[][]{{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}});
     }
 }

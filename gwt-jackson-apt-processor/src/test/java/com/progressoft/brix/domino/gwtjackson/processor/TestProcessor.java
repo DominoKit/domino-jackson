@@ -36,7 +36,7 @@ public class TestProcessor extends AbstractProcessor {
 
     private ProcessingDelegate delegate;
 
-    void setDelegate(ProcessingDelegate delegate){
+    void setDelegate(ProcessingDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -56,7 +56,7 @@ public class TestProcessor extends AbstractProcessor {
     }
 
     @FunctionalInterface
-    public interface ProcessingDelegate{
+    public interface ProcessingDelegate {
         void onProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv, Types typeUtils, Elements elementUtils, Filer filer, Messager messager);
     }
 

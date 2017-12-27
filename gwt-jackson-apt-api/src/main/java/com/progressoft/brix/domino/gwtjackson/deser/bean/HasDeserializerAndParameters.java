@@ -38,7 +38,7 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
      * @return a {@link JsonDeserializerParameters} object.
      */
     protected JsonDeserializerParameters getParameters() {
-        if ( null == parameters ) {
+        if (null == parameters) {
             parameters = newParameters();
         }
         return parameters;
@@ -57,10 +57,10 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
      * Deserializes the property defined for this instance.
      *
      * @param reader reader
-     * @param ctx context of the deserialization process
+     * @param ctx    context of the deserialization process
      * @return a V object.
      */
-    public V deserialize(JsonReader reader, JsonDeserializationContext ctx ) {
-        return getDeserializer().deserialize( reader, ctx, getParameters() );
+    public V deserialize(JsonReader reader, JsonDeserializationContext ctx) {
+        return getDeserializer().deserialize(reader, ctx, getParameters());
     }
 }

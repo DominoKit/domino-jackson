@@ -35,11 +35,13 @@ public abstract class BaseSortedSetJsonDeserializer<S extends SortedSet<T>, T> e
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link SortedSet}.
      */
-    public BaseSortedSetJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    public BaseSortedSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isNullValueAllowed() {
         return false;

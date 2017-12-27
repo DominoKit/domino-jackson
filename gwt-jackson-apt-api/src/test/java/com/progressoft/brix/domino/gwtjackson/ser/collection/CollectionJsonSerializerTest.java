@@ -32,12 +32,12 @@ public class CollectionJsonSerializerTest extends AbstractJsonSerializerTest<Col
 
     @Override
     protected JsonSerializer<Collection<String>> createSerializer() {
-        return (JsonSerializer) IterableJsonSerializer.newInstance( StringJsonSerializer.getInstance() );
+        return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
     }
 
     public void testSerializeValue() {
-        assertSerialization( "[\"Hello\",\" \",\"World\",\"!\"]", Arrays.asList( "Hello", " ", "World", "!" ) );
-        assertSerialization( "[]", Collections.<String>emptyList() );
+        assertSerialization("[\"Hello\",\" \",\"World\",\"!\"]", Arrays.asList("Hello", " ", "World", "!"));
+        assertSerialization("[]", Collections.<String>emptyList());
     }
 
 }

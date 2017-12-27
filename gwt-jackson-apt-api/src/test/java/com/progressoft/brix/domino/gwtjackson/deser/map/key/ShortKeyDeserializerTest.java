@@ -30,9 +30,9 @@ public class ShortKeyDeserializerTest extends AbstractKeyDeserializerTest<Short>
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( new Short( "34" ), "34" );
-        assertDeserialization( new Short( "-1" ), "-1" );
-        assertDeserialization( Short.MIN_VALUE, "-32768" );
-        assertDeserialization( Short.MAX_VALUE, "32767" );
+        assertDeserialization(new Short("34"), "34");
+        assertDeserialization(new Short("-1"), "-1");
+        assertDeserialization(Short.MIN_VALUE, "-32768");
+        assertDeserialization(Short.MAX_VALUE, "32767");
     }
 }

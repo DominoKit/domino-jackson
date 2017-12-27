@@ -30,13 +30,13 @@ public class BooleanJsonDeserializerTest extends AbstractJsonDeserializerTest<Bo
 
     @Override
     public void testDeserializeValue() {
-        assertTrue( deserialize( "true" ) );
-        assertTrue( deserialize( "\"trUe\"" ) );
-        assertTrue( deserialize( "1" ) );
+        assertTrue(deserialize("true"));
+        assertTrue(deserialize("\"trUe\""));
+        assertTrue(deserialize("1"));
 
-        assertFalse( deserialize( "faLse" ) );
-        assertFalse( deserialize( "\"false\"" ) );
-        assertFalse( deserialize( "0" ) );
-        assertFalse( deserialize( "other" ) );
+        assertFalse(deserialize("faLse"));
+        assertFalse(deserialize("\"false\""));
+        assertFalse(deserialize("0"));
+        assertFalse(deserialize("other"));
     }
 }

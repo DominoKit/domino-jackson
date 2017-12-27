@@ -15,6 +15,7 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor;
 
+//import com.progressoft.brix.domino.gwtjackson.deser.JsTypeJsonDeserializer;
 import com.progressoft.brix.domino.gwtjackson.processor.serialization.FieldSerializerChainBuilder;
 import com.progressoft.brix.domino.gwtjackson.ser.*;
 import com.progressoft.brix.domino.gwtjackson.ser.array.*;
@@ -30,7 +31,7 @@ import javax.lang.model.type.TypeMirror;
 
 import static org.junit.Assert.assertEquals;
 
-public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest{
+public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
     @Override
     MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
@@ -193,7 +194,7 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest{
     public void testArrayCollectionTypeField() throws Exception {
         addFieldTest("abstractCollectionArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, ArrayJsonSerializer.class, StringJsonSerializer.class), result));
         addFieldTest("abstractListArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, ArrayJsonSerializer.class, BaseNumberJsonSerializer.IntegerJsonSerializer.class), result));
-        addFieldTest("abstractQueueArray", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", CollectionJsonSerializer.class,PrimitiveIntegerArrayJsonSerializer.class), result));
+        addFieldTest("abstractQueueArray", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", CollectionJsonSerializer.class, PrimitiveIntegerArrayJsonSerializer.class), result));
         addFieldTest("abstractSequentialListArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, ArrayJsonSerializer.class, BaseNumberJsonSerializer.DoubleJsonSerializer.class), result));
         addFieldTest("abstractSetArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, ArrayJsonSerializer.class, EnumJsonSerializer.class), result));
         addFieldTest("arrayListArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, ArrayJsonSerializer.class, BaseDateJsonSerializer.DateJsonSerializer.class), result));
@@ -218,7 +219,7 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest{
     public void testArray2dCollectionTypeField() throws Exception {
         addFieldTest("abstractCollectionArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, Array2dJsonSerializer.class, StringJsonSerializer.class), result));
         addFieldTest("abstractListArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, Array2dJsonSerializer.class, BaseNumberJsonSerializer.IntegerJsonSerializer.class), result));
-        addFieldTest("abstractQueueArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", CollectionJsonSerializer.class,PrimitiveIntegerArray2dJsonSerializer.class), result));
+        addFieldTest("abstractQueueArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", CollectionJsonSerializer.class, PrimitiveIntegerArray2dJsonSerializer.class), result));
         addFieldTest("abstractSequentialListArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, Array2dJsonSerializer.class, BaseNumberJsonSerializer.DoubleJsonSerializer.class), result));
         addFieldTest("abstractSetArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, Array2dJsonSerializer.class, EnumJsonSerializer.class), result));
         addFieldTest("arrayListArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.getInstance()))", CollectionJsonSerializer.class, Array2dJsonSerializer.class, BaseDateJsonSerializer.DateJsonSerializer.class), result));

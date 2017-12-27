@@ -17,7 +17,7 @@ public class IntegerStack implements Stack<Integer> {
         stack.setAt(index, new JsNumber(value));
     }
 
-    public JsNumber get(int index){
+    public JsNumber get(int index) {
         JsNumber[] slice = stack.slice();
         return slice[index];
     }

@@ -38,42 +38,44 @@ public class IterableJsonDeserializer<T> extends BaseIterableJsonDeserializer<It
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Iterable}.
-     * @param <T> Type of the elements inside the {@link Iterable}
+     * @param <T>          Type of the elements inside the {@link Iterable}
      * @return a new instance of {@link IterableJsonDeserializer}
      */
-    public static <T> IterableJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new IterableJsonDeserializer<T>( deserializer );
+    public static <T> IterableJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new IterableJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Iterable}.
      */
-    private IterableJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private IterableJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Iterable<T> doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( JsonToken.BEGIN_ARRAY == reader.peek() ) {
+    public Iterable<T> doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (JsonToken.BEGIN_ARRAY == reader.peek()) {
 
             Collection<T> result = new ArrayList<T>();
 
             reader.beginArray();
-            while ( JsonToken.END_ARRAY != reader.peek() ) {
-                result.add( deserializer.deserialize( reader, ctx, params ) );
+            while (JsonToken.END_ARRAY != reader.peek()) {
+                result.add(deserializer.deserialize(reader, ctx, params));
             }
             reader.endArray();
             return result;
 
-        } else if ( ctx.isAcceptSingleValueAsArray() ) {
+        } else if (ctx.isAcceptSingleValueAsArray()) {
 
             Collection<T> result = new ArrayList<T>();
-            result.add( deserializer.deserialize( reader, ctx, params ) );
+            result.add(deserializer.deserialize(reader, ctx, params));
             return result;
 
         } else {
-            throw ctx.traceError( "Cannot deserialize a java.lang.Iterable out of " + reader.peek() + " token", reader );
+            throw ctx.traceError("Cannot deserialize a java.lang.Iterable out of " + reader.peek() + " token", reader);
         }
     }
 }

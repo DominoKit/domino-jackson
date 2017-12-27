@@ -41,51 +41,55 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      *
      * @param rootName a {@link String} object.
      */
-    protected AbstractObjectMapper( String rootName ) {
+    protected AbstractObjectMapper(String rootName) {
         this.rootName = rootName;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public T read( String in ) throws JsonDeserializationException {
-        return read( in, DefaultJsonDeserializationContext.builder().build() );
+    public T read(String in) throws JsonDeserializationException {
+        return read(in, DefaultJsonDeserializationContext.builder().build());
     }
 
-    /** {@inheritDoc} */
-    public T read( String in, JsonDeserializationContext ctx ) throws JsonDeserializationException {
-        JsonReader reader = ctx.newJsonReader( in );
+    /**
+     * {@inheritDoc}
+     */
+    public T read(String in, JsonDeserializationContext ctx) throws JsonDeserializationException {
+        JsonReader reader = ctx.newJsonReader(in);
 
         try {
 
-            if ( ctx.isUnwrapRootValue() ) {
+            if (ctx.isUnwrapRootValue()) {
 
-                if ( JsonToken.BEGIN_OBJECT != reader.peek() ) {
-                    throw ctx.traceError( "Unwrap root value is enabled but the input is not a JSON Object", reader );
+                if (JsonToken.BEGIN_OBJECT != reader.peek()) {
+                    throw ctx.traceError("Unwrap root value is enabled but the input is not a JSON Object", reader);
                 }
                 reader.beginObject();
-                if ( JsonToken.END_OBJECT == reader.peek() ) {
-                    throw ctx.traceError( "Unwrap root value is enabled but the JSON Object is empty", reader );
+                if (JsonToken.END_OBJECT == reader.peek()) {
+                    throw ctx.traceError("Unwrap root value is enabled but the JSON Object is empty", reader);
                 }
                 String name = reader.nextName();
-                if ( !name.equals( rootName ) ) {
-                    throw ctx.traceError( "Unwrap root value is enabled but the name '" + name + "' don't match the expected rootName " +
-                            "'" + rootName + "'", reader );
+                if (!name.equals(rootName)) {
+                    throw ctx.traceError("Unwrap root value is enabled but the name '" + name + "' don't match the expected rootName " +
+                            "'" + rootName + "'", reader);
                 }
-                T result = getDeserializer().deserialize( reader, ctx );
+                T result = getDeserializer().deserialize(reader, ctx);
                 reader.endObject();
                 return result;
 
             } else {
 
-                return getDeserializer().deserialize( reader, ctx );
+                return getDeserializer().deserialize(reader, ctx);
 
             }
 
-        } catch ( JsonDeserializationException e ) {
+        } catch (JsonDeserializationException e) {
             // already logged, we just throw it
             throw e;
-        } catch ( RuntimeException e ) {
-            throw ctx.traceError( e, reader );
+        } catch (RuntimeException e) {
+            throw ctx.traceError(e, reader);
         }
     }
 
@@ -95,7 +99,7 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      * @return the {@link JsonDeserializer} used by this mapper
      */
     public JsonDeserializer<T> getDeserializer() {
-        if ( null == deserializer ) {
+        if (null == deserializer) {
             deserializer = newDeserializer();
         }
         return deserializer;
@@ -108,30 +112,34 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      */
     protected abstract JsonDeserializer<T> newDeserializer();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String write( T value ) throws JsonSerializationException {
-        return write( value, DefaultJsonSerializationContext.builder().build() );
+    public String write(T value) throws JsonSerializationException {
+        return write(value, DefaultJsonSerializationContext.builder().build());
     }
 
-    /** {@inheritDoc} */
-    public String write( T value, JsonSerializationContext ctx ) throws JsonSerializationException {
+    /**
+     * {@inheritDoc}
+     */
+    public String write(T value, JsonSerializationContext ctx) throws JsonSerializationException {
         JsonWriter writer = ctx.newJsonWriter();
         try {
-            if ( ctx.isWrapRootValue() ) {
+            if (ctx.isWrapRootValue()) {
                 writer.beginObject();
-                writer.name( rootName );
-                getSerializer().serialize( writer, value, ctx );
+                writer.name(rootName);
+                getSerializer().serialize(writer, value, ctx);
                 writer.endObject();
             } else {
-                getSerializer().serialize( writer, value, ctx );
+                getSerializer().serialize(writer, value, ctx);
             }
             return writer.getOutput();
-        } catch ( JsonSerializationException e ) {
+        } catch (JsonSerializationException e) {
             // already logged, we just throw it
             throw e;
-        } catch ( RuntimeException e ) {
-            throw ctx.traceError( value, e, writer );
+        } catch (RuntimeException e) {
+            throw ctx.traceError(value, e, writer);
         }
     }
 
@@ -141,7 +149,7 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      * @return the {@link JsonSerializer} used by this mapper
      */
     public JsonSerializer<T> getSerializer() {
-        if ( null == serializer ) {
+        if (null == serializer) {
             serializer = (JsonSerializer<T>) newSerializer();
         }
         return serializer;

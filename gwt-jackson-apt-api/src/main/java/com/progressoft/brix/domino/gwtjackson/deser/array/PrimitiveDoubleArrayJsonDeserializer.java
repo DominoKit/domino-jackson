@@ -43,17 +43,20 @@ public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeser
         return INSTANCE;
     }
 
-    private PrimitiveDoubleArrayJsonDeserializer() { }
+    private PrimitiveDoubleArrayJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<Double> list = deserializeIntoList( reader, ctx, DoubleJsonDeserializer.getInstance(), params );
+    public double[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<Double> list = deserializeIntoList(reader, ctx, DoubleJsonDeserializer.getInstance(), params);
 
         double[] result = new double[list.size()];
         int i = 0;
-        for ( Double value : list ) {
-            if ( null != value ) {
+        for (Double value : list) {
+            if (null != value) {
                 result[i] = value;
             }
             i++;
@@ -61,9 +64,11 @@ public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeser
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected double[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new double[]{DoubleJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected double[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new double[]{DoubleJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

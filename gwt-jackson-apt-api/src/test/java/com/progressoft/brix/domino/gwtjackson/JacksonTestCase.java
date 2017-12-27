@@ -30,6 +30,7 @@ public abstract class JacksonTestCase extends GwtJacksonTestCase {
     protected JsonDeserializationContext newDefaultDeserializationContext() {
         return DefaultJsonDeserializationContext.builder().build();
     }
+
     @Override
     protected JsonSerializationContext newDefaultSerializationContext() {
         return DefaultJsonSerializationContext.builder().build();

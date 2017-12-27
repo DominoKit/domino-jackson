@@ -139,7 +139,6 @@
         </plugins>
         <pluginManagement>
             <plugins>
-
                 <plugin>
                     <groupId>net.ltgt.gwt.maven</groupId>
                     <artifactId>gwt-maven-plugin</artifactId>
@@ -148,6 +147,13 @@
                     <configuration>
                         <sourceLevel>1.8</sourceLevel>
                         <failOnError>true</failOnError>
+                        <useCompilerArgsForTests>true</useCompilerArgsForTests>
+                        <codeserverArgs>
+                            <arg>-generateJsInteropExports</arg>
+                        </codeserverArgs>
+                        <compilerArgs>
+                            <compilerArg>-generateJsInteropExports</compilerArg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>

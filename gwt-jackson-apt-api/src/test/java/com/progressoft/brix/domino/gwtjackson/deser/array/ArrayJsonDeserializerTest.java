@@ -29,14 +29,14 @@ public class ArrayJsonDeserializerTest extends AbstractJsonDeserializerTest<Stri
 
     @Override
     protected JsonDeserializer<String[]> createDeserializer() {
-        return ArrayJsonDeserializer.newInstance( StringJsonDeserializer.getInstance(), String[]::new);
+        return ArrayJsonDeserializer.newInstance(StringJsonDeserializer.getInstance(), String[]::new);
     }
 
     @Override
     public void testDeserializeValue() {
-        assertTrue( Arrays.deepEquals( new String[]{"Hello", " ", "World", "!"}, deserialize( "[Hello, \" \", \"World\", " +
-                "" + "\"!\"]" ) ) );
-        assertTrue( Arrays.deepEquals( new String[0], deserialize( "[]" ) ) );
+        assertTrue(Arrays.deepEquals(new String[]{"Hello", " ", "World", "!"}, deserialize("[Hello, \" \", \"World\", " +
+                "" + "\"!\"]")));
+        assertTrue(Arrays.deepEquals(new String[0], deserialize("[]")));
     }
 
 }

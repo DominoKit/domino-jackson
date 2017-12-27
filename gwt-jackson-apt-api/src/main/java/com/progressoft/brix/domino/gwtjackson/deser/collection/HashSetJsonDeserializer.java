@@ -33,21 +33,23 @@ public class HashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<HashSet<
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link HashSet}.
-     * @param <T> Type of the elements inside the {@link HashSet}
+     * @param <T>          Type of the elements inside the {@link HashSet}
      * @return a new instance of {@link HashSetJsonDeserializer}
      */
-    public static <T> HashSetJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new HashSetJsonDeserializer<T>( deserializer );
+    public static <T> HashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new HashSetJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link HashSet}.
      */
-    private HashSetJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private HashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected HashSet<T> newCollection() {
         return new HashSet<T>();

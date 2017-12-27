@@ -25,7 +25,7 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 public class NonBufferedJsonReaderTest extends AbstractJsonReaderTest {
 
     @Override
-    public JsonReader newJsonReader(String input ) {
-        return new NonBufferedJsonReader( input );
+    public JsonReader newJsonReader(String input) {
+        return new NonBufferedJsonReader(input);
     }
 }

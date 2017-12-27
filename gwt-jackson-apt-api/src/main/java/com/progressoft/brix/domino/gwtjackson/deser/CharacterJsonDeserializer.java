@@ -41,19 +41,22 @@ public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
         return INSTANCE;
     }
 
-    private CharacterJsonDeserializer() { }
+    private CharacterJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Character doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( JsonToken.NUMBER.equals( reader.peek() ) ) {
+    public Character doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (JsonToken.NUMBER.equals(reader.peek())) {
             return (char) reader.nextInt();
         } else {
             String value = reader.nextString();
-            if ( value.isEmpty() ) {
+            if (value.isEmpty()) {
                 return null;
             }
-            return value.charAt( 0 );
+            return value.charAt(0);
         }
     }
 }

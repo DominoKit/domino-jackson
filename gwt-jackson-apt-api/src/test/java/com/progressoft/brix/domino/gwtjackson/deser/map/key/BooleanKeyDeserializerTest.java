@@ -28,11 +28,11 @@ public class BooleanKeyDeserializerTest extends AbstractKeyDeserializerTest<Bool
 
     @Override
     public void testDeserializeValue() {
-        assertTrue( deserialize( "true" ) );
-        assertTrue( deserialize( "trUe" ) );
+        assertTrue(deserialize("true"));
+        assertTrue(deserialize("trUe"));
 
-        assertFalse( deserialize( "faLse" ) );
-        assertFalse( deserialize( "false" ) );
-        assertFalse( deserialize( "other" ) );
+        assertFalse(deserialize("faLse"));
+        assertFalse(deserialize("false"));
+        assertFalse(deserialize("other"));
     }
 }

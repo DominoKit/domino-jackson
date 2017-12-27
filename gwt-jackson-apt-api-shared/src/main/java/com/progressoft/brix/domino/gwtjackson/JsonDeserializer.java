@@ -32,40 +32,40 @@ public abstract class JsonDeserializer<T> {
      * Deserializes a JSON input into an object.
      *
      * @param reader {@link JsonReader} used to read the JSON input
-     * @param ctx Context for the full deserialization process
+     * @param ctx    Context for the full deserialization process
      * @return the deserialized object
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException if an error occurs during the deserialization
      */
-    public T deserialize(JsonReader reader, JsonDeserializationContext ctx ) throws JsonDeserializationException {
-        return deserialize( reader, ctx, ctx.defaultParameters() );
+    public T deserialize(JsonReader reader, JsonDeserializationContext ctx) throws JsonDeserializationException {
+        return deserialize(reader, ctx, ctx.defaultParameters());
     }
 
     /**
      * Deserializes a JSON input into an object.
      *
      * @param reader {@link JsonReader} used to read the JSON input
-     * @param ctx Context for the full deserialization process
+     * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException if an error occurs during the deserialization
      */
-    public T deserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) throws
+    public T deserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) throws
             JsonDeserializationException {
-        if ( JsonToken.NULL.equals( reader.peek() ) ) {
-            return deserializeNullValue( reader, ctx, params );
+        if (JsonToken.NULL.equals(reader.peek())) {
+            return deserializeNullValue(reader, ctx, params);
         }
-        return doDeserialize( reader, ctx, params );
+        return doDeserialize(reader, ctx, params);
     }
 
     /**
      * Deserialize the null value. This method allows children to override the default behaviour.
      *
      * @param reader {@link JsonReader} used to read the JSON input
-     * @param ctx Context for the full deserialization process
+     * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
      */
-    protected T deserializeNullValue( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    protected T deserializeNullValue(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         reader.skipValue();
         return null;
     }
@@ -74,11 +74,11 @@ public abstract class JsonDeserializer<T> {
      * Deserializes a non-null JSON input into an object.
      *
      * @param reader {@link JsonReader} used to read the JSON input
-     * @param ctx Context for the full deserialization process
+     * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
      */
-    protected abstract T doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params );
+    protected abstract T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 
     /**
      * Set the back reference.
@@ -89,12 +89,12 @@ public abstract class JsonDeserializer<T> {
      * @param referenceName name of the reference
      * @param referenceName name of the reference
      * @param referenceName name of the reference
-     * @param reference reference to set
-     * @param value value to set the reference to.
-     * @param ctx Context for the full deserialization process
+     * @param reference     reference to set
+     * @param value         value to set the reference to.
+     * @param ctx           Context for the full deserialization process
      * @see com.fasterxml.jackson.annotation.JsonBackReference
      */
-    public void setBackReference( String referenceName, Object reference, T value, JsonDeserializationContext ctx ) {
-        throw new JsonDeserializationException( "Cannot set a back reference to the type managed by this deserializer" );
+    public void setBackReference(String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
+        throw new JsonDeserializationException("Cannot set a back reference to the type managed by this deserializer");
     }
 }

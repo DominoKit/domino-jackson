@@ -38,8 +38,8 @@ public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends 
 
         @Override
         public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
-            getSerializer().serializeInternally( writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo );
+                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo) {
+            getSerializer().serializeInternally(writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo);
         }
     }
 
@@ -52,35 +52,35 @@ public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends 
 
         @Override
         public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
+                                        IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo) {
 
             final TypeSerializationInfo typeInfo = null == params.getTypeInfo() ? defaultTypeInfo : params.getTypeInfo();
 
-            if ( null != typeInfo ) {
-                String typeInformation = typeInfo.getTypeInfo( value.getClass() );
-                if ( null == typeInformation ) {
-                    throw ctx.traceError( value, "Cannot find type info for class " + value.getClass(), writer );
+            if (null != typeInfo) {
+                String typeInformation = typeInfo.getTypeInfo(value.getClass());
+                if (null == typeInformation) {
+                    throw ctx.traceError(value, "Cannot find type info for class " + value.getClass(), writer);
                 }
 
-                switch ( typeInfo.getInclude() ) {
+                switch (typeInfo.getInclude()) {
                     case WRAPPER_OBJECT:
                         // type info is included in a wrapper object that contains only one property. The name of this property is the type
                         // info and the value the object
                         writer.beginObject();
-                        writer.name( typeInformation );
-                        getSerializer().serialize( writer, value, ctx, params );
+                        writer.name(typeInformation);
+                        getSerializer().serialize(writer, value, ctx, params);
                         writer.endObject();
                         break;
 
                     default:
                         // included as wrapper array even if property is set
                         writer.beginArray();
-                        writer.value( typeInformation );
-                        getSerializer().serialize( writer, value, ctx, params );
+                        writer.value(typeInformation);
+                        getSerializer().serialize(writer, value, ctx, params);
                         writer.endArray();
                 }
             } else {
-                getSerializer().serialize( writer, value, ctx, params );
+                getSerializer().serialize(writer, value, ctx, params);
             }
         }
     }

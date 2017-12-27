@@ -35,21 +35,23 @@ public final class AbstractSetJsonDeserializer<T> extends BaseSetJsonDeserialize
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSet}.
-     * @param <T> Type of the elements inside the {@link AbstractSet}
+     * @param <T>          Type of the elements inside the {@link AbstractSet}
      * @return a new instance of {@link AbstractSetJsonDeserializer}
      */
-    public static <T> AbstractSetJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new AbstractSetJsonDeserializer<T>( deserializer );
+    public static <T> AbstractSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new AbstractSetJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSet}.
      */
-    private AbstractSetJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private AbstractSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected AbstractSet<T> newCollection() {
         return new LinkedHashSet<T>();

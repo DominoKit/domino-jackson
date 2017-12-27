@@ -33,21 +33,23 @@ public class StackJsonDeserializer<T> extends BaseListJsonDeserializer<Stack<T>,
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Stack}.
-     * @param <T> Type of the elements inside the {@link Stack}
+     * @param <T>          Type of the elements inside the {@link Stack}
      * @return a new instance of {@link StackJsonDeserializer}
      */
-    public static <T> StackJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new StackJsonDeserializer<T>( deserializer );
+    public static <T> StackJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new StackJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Stack}.
      */
-    private StackJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private StackJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Stack<T> newCollection() {
         return new Stack<T>();

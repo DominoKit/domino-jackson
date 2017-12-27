@@ -43,17 +43,20 @@ public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return INSTANCE;
     }
 
-    private PrimitiveLongArrayJsonDeserializer() { }
+    private PrimitiveLongArrayJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public long[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<Long> list = deserializeIntoList( reader, ctx, LongJsonDeserializer.getInstance(), params );
+    public long[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<Long> list = deserializeIntoList(reader, ctx, LongJsonDeserializer.getInstance(), params);
 
         long[] result = new long[list.size()];
         int i = 0;
-        for ( Long value : list ) {
-            if ( null != value ) {
+        for (Long value : list) {
+            if (null != value) {
                 result[i] = value;
             }
             i++;
@@ -61,9 +64,11 @@ public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected long[] doDeserializeSingleArray( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        return new long[]{LongJsonDeserializer.getInstance().deserialize( reader, ctx, params )};
+    protected long[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        return new long[]{LongJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
     }
 }

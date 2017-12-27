@@ -36,7 +36,7 @@ public abstract class Deserializer<T> {
      * @return a {@link com.progressoft.brix.domino.gwtjackson.deser.map.key.KeyDeserializer} object.
      */
     public KeyDeserializer<T> key() {
-        if ( null == key ) {
+        if (null == key) {
             key = createKeyDeserializer();
         }
         return key;
@@ -55,7 +55,7 @@ public abstract class Deserializer<T> {
      * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonDeserializer} object.
      */
     public JsonDeserializer<T> json() {
-        if ( null == json ) {
+        if (null == json) {
             json = createJsonDeserializer();
         }
         return json;

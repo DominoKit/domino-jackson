@@ -37,7 +37,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
      *
      * @param propertyName a {@link String} object.
      */
-    protected BeanPropertySerializer( String propertyName ) {
+    protected BeanPropertySerializer(String propertyName) {
         this.propertyName = propertyName;
     }
 
@@ -47,7 +47,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
      * @return a {@link JsonSerializerParameters} object.
      */
     protected JsonSerializerParameters getParameters() {
-        if ( null == parameters ) {
+        if (null == parameters) {
             parameters = newParameters();
         }
         return parameters;
@@ -75,30 +75,30 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
      * Serializes the property name
      *
      * @param writer writer
-     * @param bean bean containing the property to serialize
-     * @param ctx context of the serialization process
+     * @param bean   bean containing the property to serialize
+     * @param ctx    context of the serialization process
      */
-    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx ) {
-        writer.unescapeName( propertyName );
+    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx) {
+        writer.unescapeName(propertyName);
     }
 
     /**
      * <p>getValue</p>
      *
      * @param bean bean containing the property to serialize
-     * @param ctx context of the serialization process
+     * @param ctx  context of the serialization process
      * @return the property's value
      */
-    public abstract V getValue( T bean, JsonSerializationContext ctx );
+    public abstract V getValue(T bean, JsonSerializationContext ctx);
 
     /**
      * Serializes the property defined for this instance.
      *
      * @param writer writer
-     * @param bean bean containing the property to serialize
-     * @param ctx context of the serialization process
+     * @param bean   bean containing the property to serialize
+     * @param ctx    context of the serialization process
      */
-    public void serialize( JsonWriter writer, T bean, JsonSerializationContext ctx ) {
-        getSerializer().serialize( writer, getValue( bean, ctx ), ctx, getParameters() );
+    public void serialize(JsonWriter writer, T bean, JsonSerializationContext ctx) {
+        getSerializer().serialize(writer, getValue(bean, ctx), ctx, getParameters());
     }
 }

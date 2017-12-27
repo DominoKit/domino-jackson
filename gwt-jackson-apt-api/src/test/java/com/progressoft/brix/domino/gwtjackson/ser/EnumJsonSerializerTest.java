@@ -34,9 +34,9 @@ public class EnumJsonSerializerTest extends AbstractJsonSerializerTest<EnumTest>
     }
 
     public void testSerializeValue() {
-        assertSerialization( "\"ONE\"", EnumTest.ONE );
-        assertSerialization( "\"TWO\"", EnumTest.TWO );
-        assertSerialization( "\"THREE\"", EnumTest.THREE );
-        assertSerialization( "\"FOUR\"", EnumTest.FOUR );
+        assertSerialization("\"ONE\"", EnumTest.ONE);
+        assertSerialization("\"TWO\"", EnumTest.TWO);
+        assertSerialization("\"THREE\"", EnumTest.THREE);
+        assertSerialization("\"FOUR\"", EnumTest.FOUR);
     }
 }

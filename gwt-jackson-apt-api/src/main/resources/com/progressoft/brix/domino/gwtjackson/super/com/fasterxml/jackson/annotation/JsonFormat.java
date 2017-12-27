@@ -8,53 +8,52 @@ import java.lang.annotation.Target;
 /**
  * Super source for {@link com.fasterxml.jackson.annotation.JsonFormat} to remove the use of java.util.Locale and java.util.TimeZone
  * classes
- *
+ * <p>
  * General-purpose annotation used for configuring details of how
  * values of properties are to be serialized.
  * Unlike most other Jackson annotations, annotation does not
  * have specific universal interpretation: instead, effect depends on datatype
  * of property being annotated (or more specifically, deserializer
  * and serializer being used).
- *<p>
+ * <p>
  * Common uses include choosing between alternate representations -- for example,
  * whether {@link java.util.Date} is to be serialized as number (Java timestamp)
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
- *<p>
+ * <p>
  * As of Jackson 2.6, known special handling includes:
- *<ul>
+ * <ul>
  * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
- *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
- *   </li>
+ * pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
+ * </li>
  * <li>Can be used on Classes (types) as well, for modified default behavior, possibly
- *   overridden by per-property annotation
- *   </li>
+ * overridden by per-property annotation
+ * </li>
  * <li>{@link java.lang.Enum}s: Shapes {@link Shape#STRING} and {@link Shape#NUMBER} can be
- *    used to change between numeric (index) and textual (name or <code>toString()</code>);
- *    but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
- *    {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
- *     as JSON Object only works with class annotation;
- *    will not work as per-property annotation.
- *   </li>
+ * used to change between numeric (index) and textual (name or <code>toString()</code>);
+ * but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
+ * {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
+ * as JSON Object only works with class annotation;
+ * will not work as per-property annotation.
+ * </li>
  * <li>{@link java.util.Collection}s can be serialized as (and deserialized from) JSON Objects,
- *    if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
- *    will not work as per-property annotation.
- *   </li>
+ * if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
+ * will not work as per-property annotation.
+ * </li>
  * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
- *    {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
- *    scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
- *    will not work as per-property annotation.
- *   </li>
- *</ul>
+ * {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
+ * scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
+ * will not work as per-property annotation.
+ * </li>
+ * </ul>
  *
  * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
-    ElementType.TYPE})
+        ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-public @interface JsonFormat
-{
+public @interface JsonFormat {
     /**
      * Value that indicates that default {@link java.util.Locale}
      * (from deserialization or serialization context) should be used:
@@ -112,7 +111,7 @@ public @interface JsonFormat
      *
      * @since 2.6
      */
-    public JsonFormat.Feature[] with() default { };
+    public JsonFormat.Feature[] with() default {};
 
     /**
      * Set of {@link JsonFormat.Feature}s to explicitly disable with respect
@@ -121,7 +120,7 @@ public @interface JsonFormat
      *
      * @since 2.6
      */
-    public JsonFormat.Feature[] without() default { };
+    public JsonFormat.Feature[] without() default {};
 
     /*
     /**********************************************************
@@ -134,8 +133,7 @@ public @interface JsonFormat
      * loosely to JSON types, with some extra values to indicate less precise
      * choices (i.e. allowing one of multiple actual shapes)
      */
-    public enum Shape
-    {
+    public enum Shape {
         /**
          * Marker enum value that indicates "default" (or "whatever") choice; needed
          * since Annotations can not have null values for enums.
@@ -185,8 +183,7 @@ public @interface JsonFormat
          * Value that indicates that (JSON) boolean type
          * (true, false) should be used.
          */
-        BOOLEAN
-        ;
+        BOOLEAN;
 
         public boolean isNumeric() {
             return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
@@ -201,7 +198,7 @@ public @interface JsonFormat
      * Set of features that can be enabled/disabled for property annotated.
      * These often relate to specific <code>SerializationFeature</code>
      * or <code>DeserializationFeature</code>, as noted by entries.
-     *<p>
+     * <p>
      * Note that whether specific setting has an effect depends on whether
      * <code>JsonSerializer</code> / <code>JsonDeserializer</code> being used
      * takes the format setting into account. If not, please file an issue
@@ -242,7 +239,6 @@ public @interface JsonFormat
          * enabling of which will force sorting of {@link java.util.Map} keys before
          * serialization.
          */
-        WRITE_SORTED_MAP_ENTRIES,
-        ;
+        WRITE_SORTED_MAP_ENTRIES,;
     }
 }

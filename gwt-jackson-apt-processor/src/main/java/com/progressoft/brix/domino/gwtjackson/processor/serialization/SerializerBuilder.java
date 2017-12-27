@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import static com.progressoft.brix.domino.gwtjackson.processor.ObjectMapperProcessor.DEFAULT_WILDCARD;
 import static com.progressoft.brix.domino.gwtjackson.processor.ObjectMapperProcessor.typeUtils;
 
-class SerializerBuilder{
+class SerializerBuilder {
 
     private final TypeMirror beanType;
     private final Element field;
@@ -72,7 +72,7 @@ class SerializerBuilder{
         return builder.build();
     }
 
-    private MethodSpec buildSerializerMethod(){
+    private MethodSpec buildSerializerMethod() {
         return MethodSpec.methodBuilder("newSerializer")
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)

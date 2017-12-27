@@ -66,7 +66,7 @@ public class StringArrayJsonDeserializer extends AbstractArrayJsonDeserializer<S
                 reader.skipValue();
                 jsArray.push(null);
             } else {
-                jsArray.push((JsString)Js.cast(reader.nextString()));
+                jsArray.push((JsString) Js.cast(reader.nextString()));
             }
         }
         reader.endArray();

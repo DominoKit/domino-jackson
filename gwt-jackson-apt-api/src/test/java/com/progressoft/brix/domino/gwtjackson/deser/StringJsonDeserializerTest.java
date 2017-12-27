@@ -30,8 +30,8 @@ public class StringJsonDeserializerTest extends AbstractJsonDeserializerTest<Str
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( "", "\"\"" );
-        assertDeserialization( "Json", "Json" );
-        assertDeserialization( "&é(-è_ çà)='", "\"&é(-è_ çà)='\"" );
+        assertDeserialization("", "\"\"");
+        assertDeserialization("Json", "Json");
+        assertDeserialization("&é(-è_ çà)='", "\"&é(-è_ çà)='\"");
     }
 }

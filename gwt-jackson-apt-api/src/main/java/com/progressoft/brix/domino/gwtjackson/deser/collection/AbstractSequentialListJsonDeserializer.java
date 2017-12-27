@@ -26,26 +26,24 @@ import java.util.LinkedList;
  * LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link AbstractSequentialList}
- *
  * @author Nicolas Morel
  */
 public class AbstractSequentialListJsonDeserializer<T> extends BaseListJsonDeserializer<AbstractSequentialList<T>, T> {
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSequentialList}.
-     * @param <T> Type of the elements inside the {@link AbstractSequentialList}
-     *
+     * @param <T>          Type of the elements inside the {@link AbstractSequentialList}
      * @return a new instance of {@link AbstractSequentialListJsonDeserializer}
      */
-    public static <T> AbstractSequentialListJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new AbstractSequentialListJsonDeserializer<T>( deserializer );
+    public static <T> AbstractSequentialListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new AbstractSequentialListJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSequentialList}.
      */
-    private AbstractSequentialListJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private AbstractSequentialListJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
     @Override

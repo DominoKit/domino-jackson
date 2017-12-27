@@ -40,11 +40,14 @@ public class StringJsonDeserializer extends JsonDeserializer<String> {
         return INSTANCE;
     }
 
-    private StringJsonDeserializer() { }
+    private StringJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public String doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return reader.nextString();
     }
 }

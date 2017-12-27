@@ -33,21 +33,23 @@ public class LinkedListJsonDeserializer<T> extends BaseListJsonDeserializer<Link
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedList}.
-     * @param <T> Type of the elements inside the {@link LinkedList}
+     * @param <T>          Type of the elements inside the {@link LinkedList}
      * @return a new instance of {@link LinkedListJsonDeserializer}
      */
-    public static <T> LinkedListJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new LinkedListJsonDeserializer<T>( deserializer );
+    public static <T> LinkedListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new LinkedListJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedList}.
      */
-    private LinkedListJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private LinkedListJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LinkedList<T> newCollection() {
         return new LinkedList<T>();

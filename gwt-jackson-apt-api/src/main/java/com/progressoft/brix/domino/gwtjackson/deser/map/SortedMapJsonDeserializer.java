@@ -36,26 +36,28 @@ public final class SortedMapJsonDeserializer<K, V> extends BaseMapJsonDeserializ
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link SortedMap}
-     * @param <V> Type of the values inside the {@link SortedMap}
+     * @param <K>               Type of the keys inside the {@link SortedMap}
+     * @param <V>               Type of the values inside the {@link SortedMap}
      * @return a new instance of {@link SortedMapJsonDeserializer}
      */
-    public static <K, V> SortedMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                      JsonDeserializer<V> valueDeserializer ) {
-        return new SortedMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> SortedMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                     JsonDeserializer<V> valueDeserializer) {
+        return new SortedMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private SortedMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private SortedMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected SortedMap<K, V> newMap() {
         return new TreeMap<K, V>();

@@ -111,30 +111,34 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
      */
     public abstract Class getSerializedType();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        getSerializer( writer, value, ctx ).serializeInternally( writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo );
+    public void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        getSerializer(writer, value, ctx).serializeInternally(writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo);
     }
 
-    private InternalSerializer<T> getSerializer( JsonWriter writer, T value, JsonSerializationContext ctx ) {
-        if ( value.getClass() == getSerializedType() ) {
+    private InternalSerializer<T> getSerializer(JsonWriter writer, T value, JsonSerializationContext ctx) {
+        if (value.getClass() == getSerializedType()) {
             return this;
         }
-        SubtypeSerializer subtypeSerializer = subtypeClassToSerializer.get( value.getClass() );
-        if ( null == subtypeSerializer ) {
-            if ( ctx.getLogger().isLoggable( Level.FINE ) ) {
-                ctx.getLogger().fine( "Cannot find serializer for class " + value
-                        .getClass() + ". Fallback to the serializer of " + getSerializedType() );
+        SubtypeSerializer subtypeSerializer = subtypeClassToSerializer.get(value.getClass());
+        if (null == subtypeSerializer) {
+            if (ctx.getLogger().isLoggable(Level.FINE)) {
+                ctx.getLogger().fine("Cannot find serializer for class " + value
+                        .getClass() + ". Fallback to the serializer of " + getSerializedType());
             }
             return this;
         }
         return subtypeSerializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                                    IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo ) {
+                                    IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo) {
 
         // Processing the parameters. We fallback to default if parameter is not present.
         final IdentitySerializationInfo identityInfo = null == params.getIdentityInfo() ? defaultIdentityInfo : params.getIdentityInfo();
@@ -142,47 +146,47 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
         final Set<String> ignoredProperties = null == params.getIgnoredProperties() ? Collections.<String>emptySet() : params
                 .getIgnoredProperties();
 
-        if ( params.isUnwrapped() ) {
+        if (params.isUnwrapped()) {
             // if unwrapped, we serialize the properties inside the current object
-            serializeProperties( writer, value, ctx, ignoredProperties, identityInfo );
+            serializeProperties(writer, value, ctx, ignoredProperties, identityInfo);
             return;
         }
 
         ObjectIdSerializer<?> idWriter = null;
-        if ( null != identityInfo ) {
-            idWriter = ctx.getObjectId( value );
-            if ( null != idWriter ) {
+        if (null != identityInfo) {
+            idWriter = ctx.getObjectId(value);
+            if (null != idWriter) {
                 // the bean has already been serialized, we just serialize the id
-                idWriter.serializeId( writer, ctx );
+                idWriter.serializeId(writer, ctx);
                 return;
             }
 
-            idWriter = identityInfo.getObjectId( value, ctx );
-            if ( identityInfo.isAlwaysAsId() ) {
-                idWriter.serializeId( writer, ctx );
+            idWriter = identityInfo.getObjectId(value, ctx);
+            if (identityInfo.isAlwaysAsId()) {
+                idWriter.serializeId(writer, ctx);
                 return;
             }
-            ctx.addObjectId( value, idWriter );
+            ctx.addObjectId(value, idWriter);
         }
 
-        if ( null != typeInfo ) {
-            String typeInformation = typeInfo.getTypeInfo( value.getClass() );
-            if ( null == typeInformation ) {
-                ctx.getLogger().log( Level.WARNING, "Cannot find type info for class " + value.getClass() );
+        if (null != typeInfo) {
+            String typeInformation = typeInfo.getTypeInfo(value.getClass());
+            if (null == typeInformation) {
+                ctx.getLogger().log(Level.WARNING, "Cannot find type info for class " + value.getClass());
             } else {
-                switch ( typeInfo.getInclude() ) {
+                switch (typeInfo.getInclude()) {
                     case PROPERTY:
                         // type info is included as a property of the object
-                        serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter, typeInfo
-                                .getPropertyName(), typeInformation );
+                        serializeObject(writer, value, ctx, ignoredProperties, identityInfo, idWriter, typeInfo
+                                .getPropertyName(), typeInformation);
                         return;
 
                     case WRAPPER_OBJECT:
                         // type info is included in a wrapper object that contains only one property. The name of this property is the type
                         // info and the value the object
                         writer.beginObject();
-                        writer.name( typeInformation );
-                        serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter );
+                        writer.name(typeInformation);
+                        serializeObject(writer, value, ctx, ignoredProperties, identityInfo, idWriter);
                         writer.endObject();
                         return;
 
@@ -190,79 +194,79 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
                         // type info is included in a wrapper array that contains two elements. First one is the type
                         // info and the second one the object
                         writer.beginArray();
-                        writer.value( typeInformation );
-                        serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter );
+                        writer.value(typeInformation);
+                        serializeObject(writer, value, ctx, ignoredProperties, identityInfo, idWriter);
                         writer.endArray();
                         return;
 
                     default:
-                        ctx.getLogger().log( Level.SEVERE, "JsonTypeInfo.As." + typeInfo.getInclude() + " is not supported" );
+                        ctx.getLogger().log(Level.SEVERE, "JsonTypeInfo.As." + typeInfo.getInclude() + " is not supported");
                 }
             }
         }
 
-        serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter );
+        serializeObject(writer, value, ctx, ignoredProperties, identityInfo, idWriter);
     }
 
     /**
      * Serializes all the properties of the bean in a json object.
      *
-     * @param writer writer
-     * @param value bean to serialize
-     * @param ctx context of the serialization process
+     * @param writer            writer
+     * @param value             bean to serialize
+     * @param ctx               context of the serialization process
      * @param ignoredProperties ignored properties
-     * @param identityInfo identity info
-     * @param idWriter identifier writer
+     * @param identityInfo      identity info
+     * @param idWriter          identifier writer
      */
     private void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                 IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter ) {
-        serializeObject( writer, value, ctx, ignoredProperties, identityInfo, idWriter, null, null );
+                                 IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter) {
+        serializeObject(writer, value, ctx, ignoredProperties, identityInfo, idWriter, null, null);
     }
 
     /**
      * Serializes all the properties of the bean in a json object.
      *
-     * @param writer writer
-     * @param value bean to serialize
-     * @param ctx context of the serialization process
+     * @param writer            writer
+     * @param value             bean to serialize
+     * @param ctx               context of the serialization process
      * @param ignoredProperties ignored properties
-     * @param identityInfo identity info
-     * @param idWriter identifier writer
-     * @param typeName in case of type info as property, the name of the property
-     * @param typeInformation in case of type info as property, the type information
+     * @param identityInfo      identity info
+     * @param idWriter          identifier writer
+     * @param typeName          in case of type info as property, the name of the property
+     * @param typeInformation   in case of type info as property, the type information
      */
     protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
                                    IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
-            typeInformation ) {
+                                           typeInformation) {
         writer.beginObject();
 
-        if ( null != typeName && null != typeInformation ) {
-            writer.name( typeName );
-            writer.value( typeInformation );
+        if (null != typeName && null != typeInformation) {
+            writer.name(typeName);
+            writer.value(typeInformation);
         }
 
-        if ( null != idWriter ) {
-            writer.name( identityInfo.getPropertyName() );
-            idWriter.serializeId( writer, ctx );
+        if (null != idWriter) {
+            writer.name(identityInfo.getPropertyName());
+            idWriter.serializeId(writer, ctx);
         }
 
-        serializeProperties( writer, value, ctx, ignoredProperties, identityInfo );
+        serializeProperties(writer, value, ctx, ignoredProperties, identityInfo);
 
         writer.endObject();
     }
 
     private void serializeProperties(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                     IdentitySerializationInfo identityInfo ) {
-        for ( BeanPropertySerializer<T, ?> propertySerializer : serializers ) {
-            if ( (null == identityInfo || !identityInfo.isProperty() || !identityInfo.getPropertyName().equals( propertySerializer
-                    .getPropertyName() )) && !ignoredProperties.contains( propertySerializer.getPropertyName() ) ) {
-                propertySerializer.serializePropertyName( writer, value, ctx );
-                propertySerializer.serialize( writer, value, ctx );
+                                     IdentitySerializationInfo identityInfo) {
+        for (BeanPropertySerializer<T, ?> propertySerializer : serializers) {
+            if ((null == identityInfo || !identityInfo.isProperty() || !identityInfo.getPropertyName().equals(propertySerializer
+                    .getPropertyName())) && !ignoredProperties.contains(propertySerializer.getPropertyName())) {
+                propertySerializer.serializePropertyName(writer, value, ctx);
+                propertySerializer.serialize(writer, value, ctx);
             }
         }
 
-        if ( null != anyGetterPropertySerializer ) {
-            anyGetterPropertySerializer.serialize( writer, value, ctx );
+        if (null != anyGetterPropertySerializer) {
+            anyGetterPropertySerializer.serialize(writer, value, ctx);
         }
     }
 }

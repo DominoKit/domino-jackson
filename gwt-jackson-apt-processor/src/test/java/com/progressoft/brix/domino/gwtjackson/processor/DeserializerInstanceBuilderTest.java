@@ -38,9 +38,8 @@ import static com.progressoft.brix.domino.gwtjackson.deser.BaseDateJsonDeseriali
 import static com.progressoft.brix.domino.gwtjackson.deser.BaseNumberJsonDeserializer.*;
 import static com.progressoft.brix.domino.gwtjackson.deser.array.ArrayJsonDeserializer.ArrayCreator;
 import static com.progressoft.brix.domino.gwtjackson.deser.array.dd.Array2dJsonDeserializer.Array2dCreator;
-import static org.junit.Assert.assertEquals;
 
-public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
+public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
     @Override
     MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
@@ -212,7 +211,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
 
         addFieldTest("abstractQueueArray", result -> assertEquals(buildTestString(
                 "$T.newInstance($T.getInstance())",
-                AbstractQueueJsonDeserializer.class,PrimitiveIntegerArrayJsonDeserializer.class), result));
+                AbstractQueueJsonDeserializer.class, PrimitiveIntegerArrayJsonDeserializer.class), result));
 
         addFieldTest("abstractSequentialListArray", result -> assertEquals(buildTestString(
                 "$T.newInstance($T.newInstance($T.getInstance(), ($T<$T>) $T[]::new))",
@@ -307,7 +306,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest{
 
         addFieldTest("abstractQueueArray2d", result -> assertEquals(buildTestString(
                 "$T.newInstance($T.getInstance())",
-                AbstractQueueJsonDeserializer.class,PrimitiveIntegerArray2dJsonDeserializer.class), result));
+                AbstractQueueJsonDeserializer.class, PrimitiveIntegerArray2dJsonDeserializer.class), result));
 
         addFieldTest("abstractSequentialListArray2d", result -> assertEquals(buildTestString(
                 "$T.newInstance($T.newInstance($T.getInstance(), ($T<$T>) (first, second) -> new $T[first][second]))",

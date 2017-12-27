@@ -26,6 +26,6 @@ public class FastJsonWriterTest extends AbstractJsonWriterTest {
 
     @Override
     public JsonWriter newJsonWriter() {
-        return new FastJsonWriter( new StringBuilder() );
+        return new FastJsonWriter(new StringBuilder());
     }
 }

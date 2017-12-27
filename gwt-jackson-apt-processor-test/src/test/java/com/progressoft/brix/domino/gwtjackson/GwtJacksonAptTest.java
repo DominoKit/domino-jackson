@@ -81,7 +81,7 @@ public class GwtJacksonAptTest extends JacksonTestCase {
     }
 
     @Test
-    public void testMapsMapper(){
+    public void testMapsMapper() {
         testMapsDeserializeValue();
         testMapsSerializeValue();
     }
@@ -234,38 +234,38 @@ public class GwtJacksonAptTest extends JacksonTestCase {
                 "\"treeMap\":{\"one\":1,\"three\":3,\"four\":4,\"two\":2}" +
                 "}";
 
-        BeanWithMapsType bean = BeanWithMapsTypeMapper.INSTANCE.read( input );
-        assertNotNull( bean );
+        BeanWithMapsType bean = BeanWithMapsTypeMapper.INSTANCE.read(input);
+        assertNotNull(bean);
 
         LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
-        linkedHashMap.put( "one", 1 );
-        linkedHashMap.put( "two", 2 );
-        linkedHashMap.put( "three", 3 );
-        linkedHashMap.put( "four", 4 );
+        linkedHashMap.put("one", 1);
+        linkedHashMap.put("two", 2);
+        linkedHashMap.put("three", 3);
+        linkedHashMap.put("four", 4);
 
-        assertEquals( linkedHashMap, bean.abstractMap );
-        assertEquals( linkedHashMap, bean.hashMap );
-        assertEquals( linkedHashMap, bean.linkedHashMap );
-        assertEquals( linkedHashMap, bean.map );
+        assertEquals(linkedHashMap, bean.abstractMap);
+        assertEquals(linkedHashMap, bean.hashMap);
+        assertEquals(linkedHashMap, bean.linkedHashMap);
+        assertEquals(linkedHashMap, bean.map);
 
         Map.Entry<String, Integer> entry = bean.identityHashMap.entrySet().iterator().next();
-        assertEquals( "three", entry.getKey() );
-        assertEquals( 3, (int) entry.getValue() );
+        assertEquals("three", entry.getKey());
+        assertEquals(3, (int) entry.getValue());
 
         TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();
-        treeMap.put( "one", 1 );
-        treeMap.put( "two", 2 );
-        treeMap.put( "three", 3 );
-        treeMap.put( "four", 4 );
-        assertEquals( treeMap, bean.treeMap );
-        assertEquals( treeMap, bean.sortedMap );
+        treeMap.put("one", 1);
+        treeMap.put("two", 2);
+        treeMap.put("three", 3);
+        treeMap.put("four", 4);
+        assertEquals(treeMap, bean.treeMap);
+        assertEquals(treeMap, bean.sortedMap);
 
-        EnumMap<AnEnum, Integer> enumMap = new EnumMap<AnEnum, Integer>( AnEnum.class );
-        enumMap.put( AnEnum.A, 1 );
-        enumMap.put( AnEnum.D, 5 );
-        enumMap.put( AnEnum.C, 3 );
-        enumMap.put( AnEnum.B, 2 );
-        assertEquals( enumMap, bean.enumMap );
+        EnumMap<AnEnum, Integer> enumMap = new EnumMap<AnEnum, Integer>(AnEnum.class);
+        enumMap.put(AnEnum.A, 1);
+        enumMap.put(AnEnum.D, 5);
+        enumMap.put(AnEnum.C, 3);
+        enumMap.put(AnEnum.B, 2);
+        assertEquals(enumMap, bean.enumMap);
     }
 
     public void testMapsSerializeValue() {
@@ -273,10 +273,10 @@ public class GwtJacksonAptTest extends JacksonTestCase {
         BeanWithMapsType bean = new BeanWithMapsType();
 
         LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
-        linkedHashMap.put( "one", 1 );
-        linkedHashMap.put( "two", 2 );
-        linkedHashMap.put( "three", 3 );
-        linkedHashMap.put( "four", 4 );
+        linkedHashMap.put("one", 1);
+        linkedHashMap.put("two", 2);
+        linkedHashMap.put("three", 3);
+        linkedHashMap.put("four", 4);
 
         bean.abstractMap = linkedHashMap;
         bean.hashMap = linkedHashMap;
@@ -284,24 +284,24 @@ public class GwtJacksonAptTest extends JacksonTestCase {
         bean.map = linkedHashMap;
 
         IdentityHashMap<String, Integer> identityHashMap = new IdentityHashMap<String, Integer>();
-        identityHashMap.put( "one", 1 );
+        identityHashMap.put("one", 1);
 
         bean.identityHashMap = identityHashMap;
 
         TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();
-        treeMap.put( "one", 1 );
-        treeMap.put( "two", 2 );
-        treeMap.put( "three", 3 );
-        treeMap.put( "four", 4 );
+        treeMap.put("one", 1);
+        treeMap.put("two", 2);
+        treeMap.put("three", 3);
+        treeMap.put("four", 4);
 
         bean.sortedMap = treeMap;
         bean.treeMap = treeMap;
 
-        EnumMap<AnEnum, Integer> enumMap = new EnumMap<AnEnum, Integer>( AnEnum.class );
-        enumMap.put( AnEnum.A, 1 );
-        enumMap.put( AnEnum.D, 4 );
-        enumMap.put( AnEnum.C, 3 );
-        enumMap.put( AnEnum.B, 2 );
+        EnumMap<AnEnum, Integer> enumMap = new EnumMap<AnEnum, Integer>(AnEnum.class);
+        enumMap.put(AnEnum.A, 1);
+        enumMap.put(AnEnum.D, 4);
+        enumMap.put(AnEnum.C, 3);
+        enumMap.put(AnEnum.B, 2);
 
         bean.enumMap = enumMap;
 
@@ -316,9 +316,8 @@ public class GwtJacksonAptTest extends JacksonTestCase {
                 "\"treeMap\":{\"four\":4,\"one\":1,\"three\":3,\"two\":2}" +
                 "}";
 
-        assertEquals( expected, BeanWithMapsTypeMapper.INSTANCE.write( bean ) );
+        assertEquals(expected, BeanWithMapsTypeMapper.INSTANCE.write(bean));
     }
-
 
 
 }

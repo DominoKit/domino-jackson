@@ -47,11 +47,12 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private BigDecimalJsonDeserializer() { }
+        private BigDecimalJsonDeserializer() {
+        }
 
         @Override
-        protected BigDecimal doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return new BigDecimal( reader.nextString() );
+        protected BigDecimal doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return new BigDecimal(reader.nextString());
         }
     }
 
@@ -69,11 +70,12 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private BigIntegerJsonDeserializer() { }
+        private BigIntegerJsonDeserializer() {
+        }
 
         @Override
-        protected BigInteger doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return new BigInteger( reader.nextString() );
+        protected BigInteger doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return new BigInteger(reader.nextString());
         }
     }
 
@@ -91,10 +93,11 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private ByteJsonDeserializer() { }
+        private ByteJsonDeserializer() {
+        }
 
         @Override
-        protected Byte doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        protected Byte doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
             return (byte) reader.nextInt();
         }
     }
@@ -113,10 +116,11 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private DoubleJsonDeserializer() { }
+        private DoubleJsonDeserializer() {
+        }
 
         @Override
-        protected Double doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        protected Double doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
             return reader.nextDouble();
         }
     }
@@ -135,11 +139,12 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private FloatJsonDeserializer() { }
+        private FloatJsonDeserializer() {
+        }
 
         @Override
-        protected Float doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            return Float.parseFloat( reader.nextString() );
+        protected Float doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            return Float.parseFloat(reader.nextString());
         }
     }
 
@@ -157,14 +162,15 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private IntegerJsonDeserializer() { }
+        private IntegerJsonDeserializer() {
+        }
 
         @Override
-        protected Integer doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            if ( JsonToken.NUMBER.equals( reader.peek() ) ) {
+        protected Integer doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            if (JsonToken.NUMBER.equals(reader.peek())) {
                 return reader.nextInt();
             } else {
-                return Integer.parseInt( reader.nextString() );
+                return Integer.parseInt(reader.nextString());
             }
         }
     }
@@ -183,10 +189,11 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private LongJsonDeserializer() { }
+        private LongJsonDeserializer() {
+        }
 
         @Override
-        protected Long doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        protected Long doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
             return reader.nextLong();
         }
     }
@@ -205,14 +212,15 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private ShortJsonDeserializer() { }
+        private ShortJsonDeserializer() {
+        }
 
         @Override
-        protected Short doDeserialize( JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-            if ( JsonToken.NUMBER.equals( reader.peek() ) ) {
+        protected Short doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+            if (JsonToken.NUMBER.equals(reader.peek())) {
                 return (short) reader.nextInt();
             } else {
-                return Short.parseShort( reader.nextString() );
+                return Short.parseShort(reader.nextString());
             }
         }
     }
@@ -231,10 +239,11 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
             return INSTANCE;
         }
 
-        private NumberJsonDeserializer() { }
+        private NumberJsonDeserializer() {
+        }
 
         @Override
-        public Number doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+        public Number doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
             return reader.nextNumber();
         }
     }

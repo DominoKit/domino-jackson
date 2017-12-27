@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import static elemental2.core.Global.JSON;
 
 /**
- *
  * @author nicolasmorel
  * @version $Id: $
  */
@@ -390,9 +389,11 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    private String stringify(Object jso){
+    private String stringify(Object jso) {
         return JSON.stringify(jso);
-    };
+    }
+
+    ;
 
     /**
      * {@inheritDoc}

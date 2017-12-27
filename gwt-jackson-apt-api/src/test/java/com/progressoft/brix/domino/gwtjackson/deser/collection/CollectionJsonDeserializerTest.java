@@ -31,13 +31,13 @@ public class CollectionJsonDeserializerTest extends AbstractJsonDeserializerTest
 
     @Override
     protected JsonDeserializer<Collection<String>> createDeserializer() {
-        return CollectionJsonDeserializer.newInstance( StringJsonDeserializer.getInstance() );
+        return CollectionJsonDeserializer.newInstance(StringJsonDeserializer.getInstance());
     }
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( Arrays.asList( "Hello", " ", "World", "!" ), "[Hello, \" \", \"World\", \"!\"]" );
-        assertDeserialization( Collections.<String>emptyList(), "[]" );
+        assertDeserialization(Arrays.asList("Hello", " ", "World", "!"), "[Hello, \" \", \"World\", \"!\"]");
+        assertDeserialization(Collections.<String>emptyList(), "[]");
     }
 
 }

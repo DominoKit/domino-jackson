@@ -46,11 +46,12 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private BigDecimalJsonSerializer() { }
+        private BigDecimalJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( BigDecimal value ) {
-            return null == value || BigDecimal.ZERO.compareTo( value ) == 0;
+        protected boolean isDefault(BigDecimal value) {
+            return null == value || BigDecimal.ZERO.compareTo(value) == 0;
         }
     }
 
@@ -68,11 +69,12 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private BigIntegerJsonSerializer() { }
+        private BigIntegerJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( BigInteger value ) {
-            return null == value || BigInteger.ZERO.compareTo( value ) == 0;
+        protected boolean isDefault(BigInteger value) {
+            return null == value || BigInteger.ZERO.compareTo(value) == 0;
         }
     }
 
@@ -92,10 +94,11 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
         private static byte defaultValue;
 
-        private ByteJsonSerializer() { }
+        private ByteJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Byte value ) {
+        protected boolean isDefault(Byte value) {
             return null == value || defaultValue == value;
         }
     }
@@ -114,17 +117,18 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private DoubleJsonSerializer() { }
+        private DoubleJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Double value ) {
+        protected boolean isDefault(Double value) {
             return null == value || value == 0d;
         }
 
         @Override
-        public void doSerialize(JsonWriter writer, Double value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+        public void doSerialize(JsonWriter writer, Double value, JsonSerializationContext ctx, JsonSerializerParameters params) {
             // writer has a special method to write double, let's use instead of default Number method.
-            writer.value( value.doubleValue() );
+            writer.value(value.doubleValue());
         }
     }
 
@@ -142,10 +146,11 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private FloatJsonSerializer() { }
+        private FloatJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Float value ) {
+        protected boolean isDefault(Float value) {
             return null == value || value == 0f;
         }
     }
@@ -164,10 +169,11 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private IntegerJsonSerializer() { }
+        private IntegerJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Integer value ) {
+        protected boolean isDefault(Integer value) {
             return null == value || value == 0;
         }
     }
@@ -186,17 +192,18 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private LongJsonSerializer() { }
+        private LongJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Long value ) {
+        protected boolean isDefault(Long value) {
             return null == value || value == 0l;
         }
 
         @Override
-        public void doSerialize(JsonWriter writer, Long value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+        public void doSerialize(JsonWriter writer, Long value, JsonSerializationContext ctx, JsonSerializerParameters params) {
             // writer has a special method to write long, let's use instead of default Number method.
-            writer.value( value.longValue() );
+            writer.value(value.longValue());
         }
     }
 
@@ -216,10 +223,11 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
         private static short defaultValue;
 
-        private ShortJsonSerializer() { }
+        private ShortJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Short value ) {
+        protected boolean isDefault(Short value) {
             return null == value || defaultValue == value;
         }
     }
@@ -238,17 +246,20 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
             return INSTANCE;
         }
 
-        private NumberJsonSerializer() { }
+        private NumberJsonSerializer() {
+        }
 
         @Override
-        protected boolean isDefault( Number value ) {
+        protected boolean isDefault(Number value) {
             return null == value || value.intValue() == 0;
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        writer.value( value );
+    public void doSerialize(JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        writer.value(value);
     }
 }

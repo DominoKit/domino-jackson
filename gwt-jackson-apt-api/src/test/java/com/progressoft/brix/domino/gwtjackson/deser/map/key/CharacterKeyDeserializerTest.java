@@ -28,7 +28,7 @@ public class CharacterKeyDeserializerTest extends AbstractKeyDeserializerTest<Ch
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( 'e', "e" );
-        assertDeserialization( '\u00e9', "\u00e9" );
+        assertDeserialization('e', "e");
+        assertDeserialization('\u00e9', "\u00e9");
     }
 }

@@ -49,31 +49,33 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
     /**
      * <p>Constructor for BaseMapJsonDeserializer.</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    protected BaseMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        if ( null == keyDeserializer ) {
-            throw new IllegalArgumentException( "keyDeserializer cannot be null" );
+    protected BaseMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        if (null == keyDeserializer) {
+            throw new IllegalArgumentException("keyDeserializer cannot be null");
         }
-        if ( null == valueDeserializer ) {
-            throw new IllegalArgumentException( "valueDeserializer cannot be null" );
+        if (null == valueDeserializer) {
+            throw new IllegalArgumentException("valueDeserializer cannot be null");
         }
         this.keyDeserializer = keyDeserializer;
         this.valueDeserializer = valueDeserializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public M doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public M doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         M result = newMap();
 
         reader.beginObject();
-        while ( JsonToken.END_OBJECT != reader.peek() ) {
+        while (JsonToken.END_OBJECT != reader.peek()) {
             String name = reader.nextName();
-            K key = keyDeserializer.deserialize( name, ctx );
-            V value = valueDeserializer.deserialize( reader, ctx, params );
-            result.put( key, value );
+            K key = keyDeserializer.deserialize(name, ctx);
+            V value = valueDeserializer.deserialize(reader, ctx, params);
+            result.put(key, value);
         }
         reader.endObject();
 
@@ -87,12 +89,14 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
      */
     protected abstract M newMap();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setBackReference( String referenceName, Object reference, M value, JsonDeserializationContext ctx ) {
-        if ( null != value ) {
-            for ( V val : value.values() ) {
-                valueDeserializer.setBackReference( referenceName, reference, val, ctx );
+    public void setBackReference(String referenceName, Object reference, M value, JsonDeserializationContext ctx) {
+        if (null != value) {
+            for (V val : value.values()) {
+                valueDeserializer.setBackReference(referenceName, reference, val, ctx);
             }
         }
     }

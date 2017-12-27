@@ -1,138 +1,111 @@
-/*
- * Copyright 2013 Nicolas Morel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package java.util;
 
 import java.io.Serializable;
 
 /**
- * A simplified implementation of {@link java.util.UUID} as a translatable class
- * for GWT. Only methods implemented here can be used in client-side code. Also
- * note that while the equality and hashcode should operate as expected, the
- * hash codes would not translate between client and server; also note that
- * natural ordering of these objects on the client side would likely be
- * different.
- *
- * @author Ross M. Lodge
+ * @author senk.christian@gmail.com
  */
 public class UUID implements Serializable, Comparable<UUID> {
 
-    private String uuidValue;
+    private static final long serialVersionUID = 7373345728974414241L;
+    private static final char[] CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+
+    private String value;
 
     /**
-     * Default constructor to make this work for GWT serialization.
+     *
      */
     private UUID() {
-        // Intentionally blank
     }
 
     /**
-     * Constructs a new UUID from a string representation.
-     *
-     * @param name
-     *
+     * @param uuidString
      * @return
      */
-    public static UUID fromString( String name ) {
-        UUID newUUID = new UUID();
-        newUUID.uuidValue = name;
-        return newUUID;
+    public static UUID fromString(String uuidString) {
+        //TODO: Validation
+
+        final UUID uuid = new UUID();
+        uuid.value = uuidString;
+
+        return uuid;
     }
 
     /**
-     * Generates a random UUID that <em>should</em> be RFC-4122 Version 4 compliant,
-     * although we can't really guarantee much about it's randomness.
-     *
      * @return
      */
     public static UUID randomUUID() {
-        return fromString( generateUUIDString() );
+        return fromString(generateUUIDString());
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * Generate a RFC4122, version 4 ID. Example:
+     * "92329D39-6F5C-4520-ABFC-AAB64544E172"
      */
-    @Override
-    public int compareTo( UUID o ) {
-        return uuidValue.compareTo( o.toString() );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return uuidValue.hashCode();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( obj == null || getClass() != obj.getClass() ) {
-            return false;
-        }
-        return uuidValue.equals( obj.toString() );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return uuidValue;
-    }
-
-    /**
-     * Generates an RFC-4122, version 4, random UUID as a formatted string.  Code altered
-     * from http://www.broofa.com/Tools/Math.uuid.js under the MIT license.
-     *
-     * @return
-     */
-    private static native String generateUUIDString() /*-{
-        var chars = '0123456789ABCDEF'.split(''), uuid = [];
-        radix = chars.length;
-
-        var r;
+    private static String generateUUIDString() {
+        char[] uuid = new char[36];
+        int r;
 
         // rfc4122 requires these characters
         uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
         uuid[14] = '4';
 
-        // Fill in random data.  At i==19 set the high bits of clock sequence as per rfc4122, sec. 4.1.5
-        for (var i = 0; i < 36; i++) {
-            if (!uuid[i]) {
-                r = 0 | Math.random() * 16;
-                uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+        // Fill in random data.  At i==19 set the high bits of clock sequence as
+        // per rfc4122, sec. 4.1.5
+        for (int i = 0; i < 36; i++) {
+            if (uuid[i] == 0) {
+                r = (int) (Math.random() * 16);
+                uuid[i] = CHARS[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
             }
         }
+        return new String(uuid);
+    }
 
-        return uuid.join('');
-    }-*/;
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(UUID arg0) {
+        return value.compareTo(arg0.value);
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UUID other = (UUID) obj;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        return true;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return value;
+    }
 
 }

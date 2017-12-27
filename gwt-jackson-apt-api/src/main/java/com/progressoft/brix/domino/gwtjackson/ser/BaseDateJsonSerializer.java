@@ -49,18 +49,19 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
             return INSTANCE;
         }
 
-        private DateJsonSerializer() { }
+        private DateJsonSerializer() {
+        }
 
         @Override
-        protected void doSerialize(JsonWriter writer, Date value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-            if ( (ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric()) && params.getShape() != Shape.STRING ) {
-                writer.value( value.getTime() );
+        protected void doSerialize(JsonWriter writer, Date value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+            if ((ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric()) && params.getShape() != Shape.STRING) {
+                writer.value(value.getTime());
             } else {
-                String date = DateFormat.format( params, value );
-                if ( null == params.getPattern() ) {
-                    writer.unescapeValue( date );
+                String date = DateFormat.format(params, value);
+                if (null == params.getPattern()) {
+                    writer.unescapeValue(date);
                 } else {
-                    writer.value( date );
+                    writer.value(date);
                 }
             }
         }
@@ -80,12 +81,13 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
             return INSTANCE;
         }
 
-        private SqlDateJsonSerializer() { }
+        private SqlDateJsonSerializer() {
+        }
 
         @Override
-        protected void doSerialize( JsonWriter writer, java.sql.Date value, JsonSerializationContext ctx,
-                                    JsonSerializerParameters params ) {
-            writer.unescapeValue( value.toString() );
+        protected void doSerialize(JsonWriter writer, java.sql.Date value, JsonSerializationContext ctx,
+                                   JsonSerializerParameters params) {
+            writer.unescapeValue(value.toString());
         }
     }
 
@@ -103,12 +105,13 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
             return INSTANCE;
         }
 
-        private SqlTimeJsonSerializer() { }
+        private SqlTimeJsonSerializer() {
+        }
 
         @Override
         protected void doSerialize(JsonWriter writer, Time value, JsonSerializationContext ctx, JsonSerializerParameters params
         ) {
-            writer.unescapeValue( value.toString() );
+            writer.unescapeValue(value.toString());
         }
     }
 
@@ -126,27 +129,30 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
             return INSTANCE;
         }
 
-        private SqlTimestampJsonSerializer() { }
+        private SqlTimestampJsonSerializer() {
+        }
 
         @Override
         protected void doSerialize(JsonWriter writer, Timestamp value, JsonSerializationContext ctx, JsonSerializerParameters
-                params ) {
-            if ( ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric() ) {
-                writer.value( value.getTime() );
+                params) {
+            if (ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric()) {
+                writer.value(value.getTime());
             } else {
-                String date = DateFormat.format( params, value );
-                if ( null == params.getPattern() ) {
-                    writer.unescapeValue( date );
+                String date = DateFormat.format(params, value);
+                if (null == params.getPattern()) {
+                    writer.unescapeValue(date);
                 } else {
-                    writer.value( date );
+                    writer.value(date);
                 }
             }
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( D value ) {
+    protected boolean isEmpty(D value) {
         return null == value || value.getTime() == 0l;
     }
 }

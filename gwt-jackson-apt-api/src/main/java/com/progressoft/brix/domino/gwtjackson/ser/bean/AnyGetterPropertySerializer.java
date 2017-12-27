@@ -42,23 +42,25 @@ public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySeriali
      * <p>Constructor for AnyGetterPropertySerializer.</p>
      */
     public AnyGetterPropertySerializer() {
-        super( null );
+        super(null);
     }
 
-    /** {@inheritDoc} */
-    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx ) {
+    /**
+     * {@inheritDoc}
+     */
+    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx) {
         // no-op
     }
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Serializes the property defined for this instance.
      */
-    public void serialize( JsonWriter writer, T bean, JsonSerializationContext ctx ) {
-        Map map = getValue( bean, ctx );
-        if ( null != map ) {
-            ((MapJsonSerializer) getSerializer()).serializeValues( writer, map, ctx, getParameters() );
+    public void serialize(JsonWriter writer, T bean, JsonSerializationContext ctx) {
+        Map map = getValue(bean, ctx);
+        if (null != map) {
+            ((MapJsonSerializer) getSerializer()).serializeValues(writer, map, ctx, getParameters());
         }
     }
 }

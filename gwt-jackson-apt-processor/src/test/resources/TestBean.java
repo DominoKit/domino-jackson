@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
+import com.progressoft.brix.domino.gwtjackson.processor.Person;
 
 @TestAnnotation
 public class TestBean {
@@ -48,6 +49,7 @@ public class TestBean {
     public Time timeField;
     public Timestamp timestampField;
     public Void voidField;
+    public Person person;
 
     public AnEnum enumField;
 

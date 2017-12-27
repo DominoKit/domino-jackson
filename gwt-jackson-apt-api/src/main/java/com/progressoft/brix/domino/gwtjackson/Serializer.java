@@ -36,7 +36,7 @@ public abstract class Serializer<T> {
      * @return a {@link com.progressoft.brix.domino.gwtjackson.ser.map.key.KeySerializer} object.
      */
     public KeySerializer<T> key() {
-        if ( null == key ) {
+        if (null == key) {
             key = createKeySerializer();
         }
         return key;
@@ -55,7 +55,7 @@ public abstract class Serializer<T> {
      * @return a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializer} object.
      */
     public JsonSerializer<T> json() {
-        if ( null == json ) {
+        if (null == json) {
             json = createJsonSerializer();
         }
         return json;

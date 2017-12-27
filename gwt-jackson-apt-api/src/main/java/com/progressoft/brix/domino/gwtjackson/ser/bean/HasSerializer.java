@@ -34,7 +34,7 @@ public abstract class HasSerializer<V, S extends JsonSerializer<V>> {
      * @return a S object.
      */
     protected S getSerializer() {
-        if ( null == serializer ) {
+        if (null == serializer) {
             serializer = (S) newSerializer();
         }
         return serializer;

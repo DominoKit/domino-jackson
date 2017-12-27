@@ -16,7 +16,6 @@
 
 package com.progressoft.brix.domino.gwtjackson.deser.map.key;
 
-import com.google.gwt.core.client.GWT;
 import com.progressoft.brix.domino.gwtjackson.deser.map.key.BaseNumberKeyDeserializer.FloatKeyDeserializer;
 
 /**
@@ -31,12 +30,12 @@ public class FloatKeyDeserializerTest extends AbstractKeyDeserializerTest<Float>
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( new Float( "34.10245" ), "34.10245" );
-        assertDeserialization( new Float( "-784.15454" ), "-784.15454" );
+        assertDeserialization(new Float("34.10245"), "34.10245");
+        assertDeserialization(new Float("-784.15454"), "-784.15454");
         // the float emulation gives slightly different results => use BigDecimal for precision!
-        if ( !GWT.isProdMode() ) {
-            assertDeserialization( Float.MIN_VALUE, "1.4e-45" );
-            assertDeserialization( Float.MAX_VALUE, "3.4028235e38" );
+        if (System.getProperty("superdevmode").equals("on")) {
+            assertDeserialization(Float.MIN_VALUE, "1.4e-45");
+            assertDeserialization(Float.MAX_VALUE, "3.4028235e38");
         }
     }
 }

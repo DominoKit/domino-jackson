@@ -46,39 +46,42 @@ public class PrimitiveByteArray2dJsonDeserializer extends AbstractArray2dJsonDes
         return INSTANCE;
     }
 
-    private PrimitiveByteArray2dJsonDeserializer() { }
+    private PrimitiveByteArray2dJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public byte[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public byte[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 
         byte[][] result;
 
         reader.beginArray();
         JsonToken token = reader.peek();
 
-        if ( JsonToken.END_ARRAY == token ) {
+        if (JsonToken.END_ARRAY == token) {
 
             // empty array
             result = new byte[0][0];
 
-        } else if ( JsonToken.STRING == token ) {
+        } else if (JsonToken.STRING == token) {
 
             // byte[] are encoded as String
 
             List<byte[]> list = new ArrayList<byte[]>();
             int size = 0;
-            while ( JsonToken.END_ARRAY != token ) {
-                byte[] decoded = Base64Utils.fromBase64( reader.nextString() );
-                size = Math.max( size, decoded.length );
-                list.add( decoded );
+            while (JsonToken.END_ARRAY != token) {
+                byte[] decoded = Base64Utils.fromBase64(reader.nextString());
+                size = Math.max(size, decoded.length);
+                list.add(decoded);
                 token = reader.peek();
             }
 
             result = new byte[list.size()][size];
             int i = 0;
-            for ( byte[] value : list ) {
-                if ( null != value ) {
+            for (byte[] value : list) {
+                if (null != value) {
                     result[i] = value;
                 }
                 i++;
@@ -86,10 +89,10 @@ public class PrimitiveByteArray2dJsonDeserializer extends AbstractArray2dJsonDes
 
         } else {
 
-            List<List<Byte>> list = doDeserializeIntoList( reader, ctx, ByteJsonDeserializer.getInstance(), params, token );
+            List<List<Byte>> list = doDeserializeIntoList(reader, ctx, ByteJsonDeserializer.getInstance(), params, token);
 
-            List<Byte> firstList = list.get( 0 );
-            if ( firstList.isEmpty() ) {
+            List<Byte> firstList = list.get(0);
+            if (firstList.isEmpty()) {
 
                 result = new byte[list.size()][0];
 
@@ -99,10 +102,10 @@ public class PrimitiveByteArray2dJsonDeserializer extends AbstractArray2dJsonDes
 
                 int i = 0;
                 int j;
-                for ( List<Byte> innerList : list ) {
+                for (List<Byte> innerList : list) {
                     j = 0;
-                    for ( Byte value : innerList ) {
-                        if ( null != value ) {
+                    for (Byte value : innerList) {
+                        if (null != value) {
                             result[i][j] = value;
                         }
                         j++;

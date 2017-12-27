@@ -35,7 +35,7 @@ public abstract class KeySerializer<T> {
      * @param ctx Context for the full serialization process
      * @return true if the serialized key must be escaped
      */
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return true;
     }
 
@@ -43,23 +43,23 @@ public abstract class KeySerializer<T> {
      * Serializes an object into a {@link String} to use as map's key.
      *
      * @param value Object to serialize
-     * @param ctx Context for the full serialization process
+     * @param ctx   Context for the full serialization process
      * @return the key
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException if an error occurs during the serialization
      */
-    public String serialize( T value, JsonSerializationContext ctx ) throws JsonSerializationException {
-        if ( null == value ) {
+    public String serialize(T value, JsonSerializationContext ctx) throws JsonSerializationException {
+        if (null == value) {
             return null;
         }
-        return doSerialize( value, ctx );
+        return doSerialize(value, ctx);
     }
 
     /**
      * Serializes a non-null object into a {@link String} to use as map's key.
      *
      * @param value Object to serialize
-     * @param ctx Context for the full serialization process
+     * @param ctx   Context for the full serialization process
      * @return the key
      */
-    protected abstract String doSerialize( T value, JsonSerializationContext ctx );
+    protected abstract String doSerialize(T value, JsonSerializationContext ctx);
 }

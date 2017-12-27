@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-  <inherits name="com.google.gwt.user.User" />
-  <inherits name="com.google.gwt.user.theme.clean.Clean" />
-  <inherits name="elemental2.core.Core"/>
-  <inherits name="elemental2.dom.Dom"/>
-  <inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.user.theme.clean.Clean"/>
+    <inherits name="elemental2.core.Core"/>
+    <inherits name="elemental2.dom.Dom"/>
+    <inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>
 
-  <source path="" />
+    <source path=""/>
 
-  <entry-point class="com.progressoft.gwtjackson.samples.basic.App" />
+    <entry-point class="com.progressoft.gwtjackson.samples.basic.App"/>
 
-  <!-- Only support recent browsers -->
-  <set-property name="user.agent" value="ie10,gecko1_8,safari" />
+    <!-- Only support recent browsers -->
+    <set-property name="user.agent" value="ie10,gecko1_8,safari"/>
 </module>

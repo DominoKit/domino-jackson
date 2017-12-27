@@ -16,5 +16,5 @@
   -->
 
 <module>
-  <source path="JsonDeserialize.java" />
+    <source path="JsonDeserialize.java"/>
 </module>

@@ -35,15 +35,15 @@ public final class EnumMapJsonDeserializer<E extends Enum<E>, V> extends BaseMap
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link EnumKeyDeserializer} used to deserialize the enum keys.
+     * @param keyDeserializer   {@link EnumKeyDeserializer} used to deserialize the enum keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <V> Type of the values inside the {@link EnumMap}
+     * @param <V>               Type of the values inside the {@link EnumMap}
+     * @param <E>               a E object.
      * @return a new instance of {@link EnumMapJsonDeserializer}
-     * @param <E> a E object.
      */
-    public static <E extends Enum<E>, V> EnumMapJsonDeserializer<E, V> newInstance( EnumKeyDeserializer<E> keyDeserializer,
-                                                                                    JsonDeserializer<V> valueDeserializer ) {
-        return new EnumMapJsonDeserializer<E, V>( keyDeserializer, valueDeserializer );
+    public static <E extends Enum<E>, V> EnumMapJsonDeserializer<E, V> newInstance(EnumKeyDeserializer<E> keyDeserializer,
+                                                                                   JsonDeserializer<V> valueDeserializer) {
+        return new EnumMapJsonDeserializer<E, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
@@ -52,17 +52,19 @@ public final class EnumMapJsonDeserializer<E extends Enum<E>, V> extends BaseMap
     private final Class<E> enumClass;
 
     /**
-     * @param keyDeserializer {@link EnumKeyDeserializer} used to deserialize the enum keys.
+     * @param keyDeserializer   {@link EnumKeyDeserializer} used to deserialize the enum keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private EnumMapJsonDeserializer( EnumKeyDeserializer<E> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private EnumMapJsonDeserializer(EnumKeyDeserializer<E> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
         this.enumClass = keyDeserializer.getEnumClass();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected EnumMap<E, V> newMap() {
-        return new EnumMap<E, V>( enumClass );
+        return new EnumMap<E, V>(enumClass);
     }
 }

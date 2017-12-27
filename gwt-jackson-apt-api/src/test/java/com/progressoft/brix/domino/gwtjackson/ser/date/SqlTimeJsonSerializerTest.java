@@ -32,7 +32,7 @@ public class SqlTimeJsonSerializerTest extends AbstractJsonSerializerTest<Time> 
     }
 
     public void testSerializeValue() {
-        Time time = new Time( getUTCTime( 2012, 8, 18, 12, 45, 56, 543 ) );
-        assertSerialization( "\"" + time.toString() + "\"", time );
+        Time time = new Time(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+        assertSerialization("\"" + time.toString() + "\"", time);
     }
 }

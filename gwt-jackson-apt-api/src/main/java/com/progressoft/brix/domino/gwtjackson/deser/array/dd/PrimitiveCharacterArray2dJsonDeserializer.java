@@ -45,39 +45,42 @@ public class PrimitiveCharacterArray2dJsonDeserializer extends AbstractArray2dJs
         return INSTANCE;
     }
 
-    private PrimitiveCharacterArray2dJsonDeserializer() { }
+    private PrimitiveCharacterArray2dJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public char[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public char[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 
         char[][] result;
 
         reader.beginArray();
         JsonToken token = reader.peek();
 
-        if ( JsonToken.END_ARRAY == token ) {
+        if (JsonToken.END_ARRAY == token) {
 
             // empty array
             result = new char[0][0];
 
-        } else if ( JsonToken.STRING == token ) {
+        } else if (JsonToken.STRING == token) {
 
             // char[] are encoded as String
 
             List<char[]> list = new ArrayList<char[]>();
             int size = 0;
-            while ( JsonToken.END_ARRAY != token ) {
+            while (JsonToken.END_ARRAY != token) {
                 char[] decoded = reader.nextString().toCharArray();
-                size = Math.max( size, decoded.length );
-                list.add( decoded );
+                size = Math.max(size, decoded.length);
+                list.add(decoded);
                 token = reader.peek();
             }
 
             result = new char[list.size()][size];
             int i = 0;
-            for ( char[] value : list ) {
-                if ( null != value ) {
+            for (char[] value : list) {
+                if (null != value) {
                     result[i] = value;
                 }
                 i++;
@@ -85,10 +88,10 @@ public class PrimitiveCharacterArray2dJsonDeserializer extends AbstractArray2dJs
 
         } else {
 
-            List<List<Character>> list = doDeserializeIntoList( reader, ctx, CharacterJsonDeserializer.getInstance(), params, token );
+            List<List<Character>> list = doDeserializeIntoList(reader, ctx, CharacterJsonDeserializer.getInstance(), params, token);
 
-            List<Character> firstList = list.get( 0 );
-            if ( firstList.isEmpty() ) {
+            List<Character> firstList = list.get(0);
+            if (firstList.isEmpty()) {
 
                 result = new char[list.size()][0];
 
@@ -98,10 +101,10 @@ public class PrimitiveCharacterArray2dJsonDeserializer extends AbstractArray2dJs
 
                 int i = 0;
                 int j;
-                for ( List<Character> innerList : list ) {
+                for (List<Character> innerList : list) {
                     j = 0;
-                    for ( Character value : innerList ) {
-                        if ( null != value ) {
+                    for (Character value : innerList) {
+                        if (null != value) {
                             result[i][j] = value;
                         }
                         j++;

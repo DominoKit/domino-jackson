@@ -26,6 +26,6 @@ public class DefaultJsonWriterTest extends AbstractJsonWriterTest {
 
     @Override
     public JsonWriter newJsonWriter() {
-        return new DefaultJsonWriter( new StringBuilder() );
+        return new DefaultJsonWriter(new StringBuilder());
     }
 }

@@ -40,11 +40,14 @@ public class VoidJsonDeserializer extends JsonDeserializer<Void> {
         return INSTANCE;
     }
 
-    private VoidJsonDeserializer() { }
+    private VoidJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Void doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
+    public Void doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         // we should never be here, the null value is already handled and it's the only possible value for Void
         reader.skipValue();
         return null;

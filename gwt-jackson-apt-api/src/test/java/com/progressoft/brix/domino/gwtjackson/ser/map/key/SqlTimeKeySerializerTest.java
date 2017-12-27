@@ -31,8 +31,8 @@ public class SqlTimeKeySerializerTest extends AbstractKeySerializerTest<Time> {
     }
 
     public void testSerializeValue() {
-        Time time = new Time( getUTCTime( 2012, 8, 18, 12, 45, 56, 543 ) );
-        String expected = DateFormat.format( time );
-        assertSerialization( expected, time );
+        Time time = new Time(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+        String expected = DateFormat.format(time);
+        assertSerialization(expected, time);
     }
 }

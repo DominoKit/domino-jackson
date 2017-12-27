@@ -36,26 +36,28 @@ public final class MapJsonDeserializer<K, V> extends BaseMapJsonDeserializer<Map
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link Map}
-     * @param <V> Type of the values inside the {@link Map}
+     * @param <K>               Type of the keys inside the {@link Map}
+     * @param <V>               Type of the values inside the {@link Map}
      * @return a new instance of {@link MapJsonDeserializer}
      */
-    public static <K, V> MapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                JsonDeserializer<V> valueDeserializer ) {
-        return new MapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> MapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                               JsonDeserializer<V> valueDeserializer) {
+        return new MapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private MapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private MapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Map<K, V> newMap() {
         return new LinkedHashMap<K, V>();

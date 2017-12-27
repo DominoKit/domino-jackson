@@ -56,7 +56,7 @@ public interface ObjectReader<T> {
      * Reads a JSON input into an object.
      *
      * @param input JSON input to read
-     * @param ctx Context for the full reading process
+     * @param ctx   Context for the full reading process
      * @return the read object
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException if an exception occurs while reading the input
      */

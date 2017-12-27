@@ -40,32 +40,37 @@ public class PrimitiveCharacterArray2dJsonSerializer extends JsonSerializer<char
         return INSTANCE;
     }
 
-    private PrimitiveCharacterArray2dJsonSerializer() { }
+    private PrimitiveCharacterArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( char[][] value ) {
+    protected boolean isEmpty(char[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, char[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, char[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( char[] array : values ) {
-            if ( ctx.isWriteCharArraysAsJsonArrays() ) {
+        for (char[] array : values) {
+            if (ctx.isWriteCharArraysAsJsonArrays()) {
                 writer.beginArray();
-                for ( char value : array ) {
-                    writer.value( Character.toString( value ) );
+                for (char value : array) {
+                    writer.value(Character.toString(value));
                 }
                 writer.endArray();
             } else {
-                writer.value( new String( array ) );
+                writer.value(new String(array));
             }
         }
         writer.endArray();

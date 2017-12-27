@@ -34,11 +34,11 @@ public class ArrayJsonSerializer<T> extends JsonSerializer<T[]> {
      * <p>newInstance</p>
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the array.
-     * @param <T> Type of the elements inside the array
+     * @param <T>        Type of the elements inside the array
      * @return a new instance of {@link ArrayJsonSerializer}
      */
-    public static <T> ArrayJsonSerializer<T> newInstance( JsonSerializer<T> serializer ) {
-        return new ArrayJsonSerializer<T>( serializer );
+    public static <T> ArrayJsonSerializer<T> newInstance(JsonSerializer<T> serializer) {
+        return new ArrayJsonSerializer<T>(serializer);
     }
 
     private final JsonSerializer<T> serializer;
@@ -48,33 +48,37 @@ public class ArrayJsonSerializer<T> extends JsonSerializer<T[]> {
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the array.
      */
-    protected ArrayJsonSerializer( JsonSerializer<T> serializer ) {
-        if ( null == serializer ) {
-            throw new IllegalArgumentException( "serializer cannot be null" );
+    protected ArrayJsonSerializer(JsonSerializer<T> serializer) {
+        if (null == serializer) {
+            throw new IllegalArgumentException("serializer cannot be null");
         }
         this.serializer = serializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( T[] value ) {
+    protected boolean isEmpty(T[] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, T[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, T[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1 ) {
-            serializer.serialize( writer, values[0], ctx, params );
+        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+            serializer.serialize(writer, values[0], ctx, params);
         } else {
             writer.beginArray();
-            for ( T value : values ) {
-                serializer.serialize( writer, value, ctx, params );
+            for (T value : values) {
+                serializer.serialize(writer, value, ctx, params);
             }
             writer.endArray();
         }

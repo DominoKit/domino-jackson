@@ -43,19 +43,22 @@ public class PrimitiveDoubleArray2dJsonDeserializer extends AbstractArray2dJsonD
         return INSTANCE;
     }
 
-    private PrimitiveDoubleArray2dJsonDeserializer() { }
+    private PrimitiveDoubleArray2dJsonDeserializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        List<List<Double>> list = deserializeIntoList( reader, ctx, DoubleJsonDeserializer.getInstance(), params );
+    public double[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        List<List<Double>> list = deserializeIntoList(reader, ctx, DoubleJsonDeserializer.getInstance(), params);
 
-        if ( list.isEmpty() ) {
+        if (list.isEmpty()) {
             return new double[0][0];
         }
 
-        List<Double> firstList = list.get( 0 );
-        if ( firstList.isEmpty() ) {
+        List<Double> firstList = list.get(0);
+        if (firstList.isEmpty()) {
             return new double[list.size()][0];
         }
 
@@ -63,10 +66,10 @@ public class PrimitiveDoubleArray2dJsonDeserializer extends AbstractArray2dJsonD
 
         int i = 0;
         int j;
-        for ( List<Double> innerList : list ) {
+        for (List<Double> innerList : list) {
             j = 0;
-            for ( Double value : innerList ) {
-                if ( null != value ) {
+            for (Double value : innerList) {
+                if (null != value) {
                     array[i][j] = value;
                 }
                 j++;

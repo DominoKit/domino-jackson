@@ -18,5 +18,6 @@ package com.progressoft.brix.domino.gwtjackson.deser.bean;
 public interface MapLike<T> {
 
     T get(String key);
+
     void put(String key, T value);
 }

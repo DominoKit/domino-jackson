@@ -40,28 +40,33 @@ public class PrimitiveFloatArrayJsonSerializer extends JsonSerializer<float[]> {
         return INSTANCE;
     }
 
-    private PrimitiveFloatArrayJsonSerializer() { }
+    private PrimitiveFloatArrayJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( float[] value ) {
+    protected boolean isEmpty(float[] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, float[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, float[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1 ) {
-            writer.value( values[0] );
+        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+            writer.value(values[0]);
         } else {
             writer.beginArray();
-            for ( float value : values ) {
-                writer.value( value );
+            for (float value : values) {
+                writer.value(value);
             }
             writer.endArray();
         }

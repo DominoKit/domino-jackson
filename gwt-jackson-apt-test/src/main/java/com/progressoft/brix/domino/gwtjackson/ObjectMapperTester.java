@@ -19,4 +19,5 @@ package com.progressoft.brix.domino.gwtjackson;
 /**
  * @author Nicolas Morel
  */
-public interface ObjectMapperTester<T> extends ObjectReaderTester<T>, ObjectWriterTester<T> {}
+public interface ObjectMapperTester<T> extends ObjectReaderTester<T>, ObjectWriterTester<T> {
+}

@@ -27,9 +27,9 @@ public class LongKeySerializerTest extends AbstractKeySerializerTest<Long> {
     }
 
     public void testSerializeValue() {
-        assertSerialization( "3441764551145441542", 3441764551145441542l );
-        assertSerialization( "-3441764551145441542", -3441764551145441542l );
-        assertSerialization( "-9223372036854775808", Long.MIN_VALUE );
-        assertSerialization( "9223372036854775807", Long.MAX_VALUE );
+        assertSerialization("3441764551145441542", 3441764551145441542l);
+        assertSerialization("-3441764551145441542", -3441764551145441542l);
+        assertSerialization("-9223372036854775808", Long.MIN_VALUE);
+        assertSerialization("9223372036854775807", Long.MAX_VALUE);
     }
 }

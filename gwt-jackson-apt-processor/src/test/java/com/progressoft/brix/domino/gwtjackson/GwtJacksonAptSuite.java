@@ -21,7 +21,7 @@ import com.progressoft.brix.domino.gwtjackson.processor.SerializerInstanceBuilde
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class GwtJacksonAptSuite extends GWTTestSuite{
+public class GwtJacksonAptSuite extends GWTTestSuite {
     public static Test suite() {
         TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
         suite.addTestSuite(DeserializerInstanceBuilderTest.class);

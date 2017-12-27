@@ -34,6 +34,6 @@ public class UUIDJsonDeserializerTest extends AbstractJsonDeserializerTest<UUID>
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( UUID.fromString( uuid ), "\"" + uuid + "\"" );
+        assertDeserialization(UUID.fromString(uuid), "\"" + uuid + "\"");
     }
 }

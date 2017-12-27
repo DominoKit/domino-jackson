@@ -33,7 +33,7 @@ public class SqlTimestampJsonSerializerTest extends AbstractJsonSerializerTest<T
 
     public void testSerializeValue() {
         // don't know how to deal with the timezone so we just use the same date
-        Timestamp date = new Timestamp( getUTCTime( 2012, 8, 18, 12, 45, 56, 543 ) );
-        assertSerialization( "" + date.getTime(), date );
+        Timestamp date = new Timestamp(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+        assertSerialization("" + date.getTime(), date);
     }
 }

@@ -44,10 +44,10 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>Constructor for TypeDeserializationInfo.</p>
      *
-     * @param include a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
+     * @param include      a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
      * @param propertyName a {@link String} object.
      */
-    public TypeDeserializationInfo( As include, String propertyName ) {
+    public TypeDeserializationInfo(As include, String propertyName) {
         this.include = include;
         this.propertyName = propertyName;
         this.typeInfoToClass = new HashMap<String, Class<? extends T>>();
@@ -56,13 +56,13 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>addTypeInfo</p>
      *
-     * @param clazz a {@link Class} object.
+     * @param clazz    a {@link Class} object.
      * @param typeInfo a {@link String} object.
-     * @param <S> the type
+     * @param <S>      the type
      * @return a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo} object.
      */
-    public <S extends T> TypeDeserializationInfo<T> addTypeInfo( Class<S> clazz, String typeInfo ) {
-        typeInfoToClass.put( typeInfo, clazz );
+    public <S extends T> TypeDeserializationInfo<T> addTypeInfo(Class<S> clazz, String typeInfo) {
+        typeInfoToClass.put(typeInfo, clazz);
         return this;
     }
 
@@ -90,7 +90,7 @@ public class TypeDeserializationInfo<T> {
      * @param typeInfo a {@link String} object.
      * @return a {@link Class} object.
      */
-    public Class<? extends T> getTypeClass( String typeInfo ) {
-        return typeInfoToClass.get( typeInfo );
+    public Class<? extends T> getTypeClass(String typeInfo) {
+        return typeInfoToClass.get(typeInfo);
     }
 }

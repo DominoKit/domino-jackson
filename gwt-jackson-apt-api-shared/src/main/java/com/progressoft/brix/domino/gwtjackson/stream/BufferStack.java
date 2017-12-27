@@ -17,5 +17,6 @@ package com.progressoft.brix.domino.gwtjackson.stream;
 
 public interface BufferStack<T> {
     T getAt(int index);
+
     void setAt(int index, T value);
 }

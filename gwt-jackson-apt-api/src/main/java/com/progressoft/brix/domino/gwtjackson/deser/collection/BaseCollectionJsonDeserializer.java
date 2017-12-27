@@ -39,36 +39,38 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Collection}.
      */
-    public BaseCollectionJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    public BaseCollectionJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public C doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params ) {
-        if ( JsonToken.BEGIN_ARRAY == reader.peek() ) {
+    public C doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+        if (JsonToken.BEGIN_ARRAY == reader.peek()) {
 
             C result = newCollection();
 
             reader.beginArray();
-            while ( JsonToken.END_ARRAY != reader.peek() ) {
-                T element = deserializer.deserialize( reader, ctx, params );
-                if ( isNullValueAllowed() || null != element ) {
-                    result.add( element );
+            while (JsonToken.END_ARRAY != reader.peek()) {
+                T element = deserializer.deserialize(reader, ctx, params);
+                if (isNullValueAllowed() || null != element) {
+                    result.add(element);
                 }
             }
             reader.endArray();
 
             return result;
 
-        } else if ( ctx.isAcceptSingleValueAsArray() ) {
+        } else if (ctx.isAcceptSingleValueAsArray()) {
 
             C result = newCollection();
-            result.add( deserializer.deserialize( reader, ctx, params ) );
+            result.add(deserializer.deserialize(reader, ctx, params));
             return result;
 
         } else {
-            throw ctx.traceError( "Cannot deserialize a java.util.Collection out of " + reader.peek() + " token", reader );
+            throw ctx.traceError("Cannot deserialize a java.util.Collection out of " + reader.peek() + " token", reader);
         }
     }
 
@@ -88,12 +90,14 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setBackReference( String referenceName, Object reference, C value, JsonDeserializationContext ctx ) {
-        if ( null != value && !value.isEmpty() ) {
-            for ( T val : value ) {
-                deserializer.setBackReference( referenceName, reference, val, ctx );
+    public void setBackReference(String referenceName, Object reference, C value, JsonDeserializationContext ctx) {
+        if (null != value && !value.isEmpty()) {
+            for (T val : value) {
+                deserializer.setBackReference(referenceName, reference, val, ctx);
             }
         }
     }

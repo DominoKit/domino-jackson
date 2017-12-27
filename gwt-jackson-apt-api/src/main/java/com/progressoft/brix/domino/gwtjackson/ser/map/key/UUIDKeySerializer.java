@@ -35,22 +35,27 @@ public final class UUIDKeySerializer extends KeySerializer<UUID> {
      *
      * @return an instance of {@link UUIDKeySerializer}
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static UUIDKeySerializer getInstance() {
         return INSTANCE;
     }
 
-    private UUIDKeySerializer() { }
+    private UUIDKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( UUID value, JsonSerializationContext ctx ) {
+    protected String doSerialize(UUID value, JsonSerializationContext ctx) {
         return value.toString();
     }
 }

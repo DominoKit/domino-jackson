@@ -33,13 +33,13 @@ public class SetJsonSerializerTest extends AbstractJsonSerializerTest<Set<String
 
     @Override
     protected JsonSerializer<Set<String>> createSerializer() {
-        return (JsonSerializer) IterableJsonSerializer.newInstance( StringJsonSerializer.getInstance() );
+        return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
     }
 
     public void testSerializeValue() {
         // can't predict the order so we just serialize one element
-        assertSerialization( "[\"Hello\"]", new HashSet<String>( Arrays.asList( "Hello", "Hello" ) ) );
-        assertSerialization( "[]", Collections.<String>emptySet() );
+        assertSerialization("[\"Hello\"]", new HashSet<String>(Arrays.asList("Hello", "Hello")));
+        assertSerialization("[]", Collections.<String>emptySet());
     }
 
 }

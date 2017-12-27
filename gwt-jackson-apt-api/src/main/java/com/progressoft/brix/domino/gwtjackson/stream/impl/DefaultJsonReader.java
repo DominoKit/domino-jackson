@@ -27,9 +27,6 @@ import java.util.logging.Logger;
 
 import static elemental2.core.Global.JSON;
 
-//import com.google.gwt.core.client.JavaScriptObject;
-//import com.google.gwt.core.client.JsonUtils;
-
 /**
  * Reads a JSON (<a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>)
  * encoded value as a stream of tokens. This stream includes both literal
@@ -1698,41 +1695,4 @@ public class DefaultJsonReader implements com.progressoft.brix.domino.gwtjackson
         peeked = PEEKED_NONE;
         return result;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object nextObject(boolean useSafeEval) {
-        int p = peeked;
-        if (p == PEEKED_NONE) {
-            p = doPeek();
-        }
-
-        switch (p) {
-            case PEEKED_BEGIN_OBJECT:
-            case PEEKED_BEGIN_ARRAY:
-                Object result;
-                int peekStack = stack.getAt(stackSize - 1);
-                if (peekStack == JsonScope.NONEMPTY_DOCUMENT) {
-                    // start of the document
-                    String toEval = in.getInput();
-                    result = JSON.parse(toEval);
-//                    result = useSafeEval ? JsonUtils.safeEval(toEval) : JsonUtils.unsafeEval(toEval);
-                    // we read everything, we move the pointer to the end of the document
-                    pos = toEval.length();
-                    limit = toEval.length();
-                    peeked = PEEKED_NONE;
-                } else {
-                    String toEval = nextValue();
-//                    result = useSafeEval ? JsonUtils.safeEval(toEval) : JsonUtils.unsafeEval(toEval);
-                    result = JSON.parse(toEval);
-                }
-                return result;
-            default:
-                throw new IllegalStateException("Expected an array or object to evaluate a JsObject but was " + peek()
-                        + " at line " + getLineNumber() + " column " + getColumnNumber());
-        }
-    }
 }
-//@formatter:on

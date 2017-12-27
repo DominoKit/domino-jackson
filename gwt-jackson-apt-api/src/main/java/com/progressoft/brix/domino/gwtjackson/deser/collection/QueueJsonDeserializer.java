@@ -34,21 +34,23 @@ public final class QueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<Qu
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Queue}.
-     * @param <T> Type of the elements inside the {@link Queue}
+     * @param <T>          Type of the elements inside the {@link Queue}
      * @return a new instance of {@link QueueJsonDeserializer}
      */
-    public static <T> QueueJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new QueueJsonDeserializer<T>( deserializer );
+    public static <T> QueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new QueueJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Queue}.
      */
-    private QueueJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private QueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Queue<T> newCollection() {
         return new LinkedList<T>();

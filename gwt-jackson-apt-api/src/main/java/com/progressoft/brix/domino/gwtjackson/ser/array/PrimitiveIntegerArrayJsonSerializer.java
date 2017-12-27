@@ -40,28 +40,33 @@ public class PrimitiveIntegerArrayJsonSerializer extends JsonSerializer<int[]> {
         return INSTANCE;
     }
 
-    private PrimitiveIntegerArrayJsonSerializer() { }
+    private PrimitiveIntegerArrayJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( int[] value ) {
+    protected boolean isEmpty(int[] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, int[] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, int[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1 ) {
-            writer.value( values[0] );
+        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+            writer.value(values[0]);
         } else {
             writer.beginArray();
-            for ( int value : values ) {
-                writer.value( value );
+            for (int value : values) {
+                writer.value(value);
             }
             writer.endArray();
         }

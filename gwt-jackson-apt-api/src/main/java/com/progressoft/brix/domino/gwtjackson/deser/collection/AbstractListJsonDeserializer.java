@@ -34,21 +34,23 @@ public class AbstractListJsonDeserializer<T> extends BaseListJsonDeserializer<Ab
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractList}.
-     * @param <T> Type of the elements inside the {@link AbstractList}
+     * @param <T>          Type of the elements inside the {@link AbstractList}
      * @return a new instance of {@link AbstractListJsonDeserializer}
      */
-    public static <T> AbstractListJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new AbstractListJsonDeserializer<T>( deserializer );
+    public static <T> AbstractListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new AbstractListJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractList}.
      */
-    private AbstractListJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private AbstractListJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected AbstractList<T> newCollection() {
         return new ArrayList<T>();

@@ -37,11 +37,14 @@ public final class ToStringKeySerializer extends KeySerializer<Object> {
         return INSTANCE;
     }
 
-    private ToStringKeySerializer() { }
+    private ToStringKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( Object value, JsonSerializationContext ctx ) {
+    protected String doSerialize(Object value, JsonSerializationContext ctx) {
         return value.toString();
     }
 }

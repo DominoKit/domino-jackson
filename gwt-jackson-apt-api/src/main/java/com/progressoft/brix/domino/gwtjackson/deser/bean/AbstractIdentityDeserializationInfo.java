@@ -34,37 +34,45 @@ public abstract class AbstractIdentityDeserializationInfo<T, V> extends HasDeser
      * <p>Constructor for AbstractIdentityDeserializationInfo.</p>
      *
      * @param propertyName a {@link String} object.
-     * @param type a {@link Class} object.
-     * @param scope a {@link Class} object.
+     * @param type         a {@link Class} object.
+     * @param scope        a {@link Class} object.
      */
-    protected AbstractIdentityDeserializationInfo( String propertyName, Class<?> type, Class<?> scope ) {
+    protected AbstractIdentityDeserializationInfo(String propertyName, Class<?> type, Class<?> scope) {
         this.propertyName = propertyName;
         this.type = type;
         this.scope = scope;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final String getPropertyName() {
         return propertyName;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final boolean isProperty() {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public IdKey newIdKey( Object id ) {
-        return new IdKey( type, scope, id );
+    public IdKey newIdKey(Object id) {
+        return new IdKey(type, scope, id);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final Object readId(JsonReader reader, JsonDeserializationContext ctx ) {
-        return getDeserializer().deserialize( reader, ctx );
+    public final Object readId(JsonReader reader, JsonDeserializationContext ctx) {
+        return getDeserializer().deserialize(reader, ctx);
     }
 
 }

@@ -34,11 +34,11 @@ public class EnumSetJsonDeserializer<E extends Enum<E>> extends BaseSetJsonDeser
      * <p>newInstance</p>
      *
      * @param deserializer {@link EnumJsonDeserializer} used to deserialize the enums inside the {@link EnumSet}.
+     * @param <E>          a E object.
      * @return a new instance of {@link EnumSetJsonDeserializer}
-     * @param <E> a E object.
      */
-    public static <E extends Enum<E>> EnumSetJsonDeserializer<E> newInstance( EnumJsonDeserializer<E> deserializer ) {
-        return new EnumSetJsonDeserializer<E>( deserializer );
+    public static <E extends Enum<E>> EnumSetJsonDeserializer<E> newInstance(EnumJsonDeserializer<E> deserializer) {
+        return new EnumSetJsonDeserializer<E>(deserializer);
     }
 
     private final Class<E> enumClass;
@@ -46,18 +46,22 @@ public class EnumSetJsonDeserializer<E extends Enum<E>> extends BaseSetJsonDeser
     /**
      * @param deserializer {@link EnumJsonDeserializer} used to deserialize the enums inside the {@link EnumSet}.
      */
-    private EnumSetJsonDeserializer( EnumJsonDeserializer<E> deserializer ) {
-        super( deserializer );
+    private EnumSetJsonDeserializer(EnumJsonDeserializer<E> deserializer) {
+        super(deserializer);
         this.enumClass = deserializer.getEnumClass();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected EnumSet<E> newCollection() {
-        return EnumSet.noneOf( enumClass );
+        return EnumSet.noneOf(enumClass);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isNullValueAllowed() {
         return false;

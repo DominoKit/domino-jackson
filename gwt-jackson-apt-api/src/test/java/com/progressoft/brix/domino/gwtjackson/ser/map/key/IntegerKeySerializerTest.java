@@ -27,9 +27,9 @@ public class IntegerKeySerializerTest extends AbstractKeySerializerTest<Integer>
     }
 
     public void testSerializeValue() {
-        assertSerialization( "34", 34 );
-        assertSerialization( "-1", -1 );
-        assertSerialization( "-2147483648", Integer.MIN_VALUE );
-        assertSerialization( "2147483647", Integer.MAX_VALUE );
+        assertSerialization("34", 34);
+        assertSerialization("-1", -1);
+        assertSerialization("-2147483648", Integer.MIN_VALUE);
+        assertSerialization("2147483647", Integer.MAX_VALUE);
     }
 }

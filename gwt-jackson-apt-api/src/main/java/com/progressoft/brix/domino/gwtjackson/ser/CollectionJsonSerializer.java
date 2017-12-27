@@ -36,11 +36,11 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
      * <p>newInstance</p>
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Collection}.
+     * @param <C>        a C object.
      * @return a new instance of {@link CollectionJsonSerializer}
-     * @param <C> a C object.
      */
-    public static <C extends Collection<?>> CollectionJsonSerializer<C, ?> newInstance( JsonSerializer<?> serializer ) {
-        return new CollectionJsonSerializer( serializer );
+    public static <C extends Collection<?>> CollectionJsonSerializer<C, ?> newInstance(JsonSerializer<?> serializer) {
+        return new CollectionJsonSerializer(serializer);
     }
 
     protected final JsonSerializer<T> serializer;
@@ -50,24 +50,28 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
      *
      * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Collection}.
      */
-    protected CollectionJsonSerializer( JsonSerializer<T> serializer ) {
-        if ( null == serializer ) {
-            throw new IllegalArgumentException( "serializer cannot be null" );
+    protected CollectionJsonSerializer(JsonSerializer<T> serializer) {
+        if (null == serializer) {
+            throw new IllegalArgumentException("serializer cannot be null");
         }
         this.serializer = serializer;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( C value ) {
+    protected boolean isEmpty(C value) {
         return null == value || value.isEmpty();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, C values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( values.isEmpty() ) {
-            if ( ctx.isWriteEmptyJsonArrays() ) {
+    public void doSerialize(JsonWriter writer, C values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (values.isEmpty()) {
+            if (ctx.isWriteEmptyJsonArrays()) {
                 writer.beginArray();
                 writer.endArray();
             } else {
@@ -76,13 +80,13 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
             return;
         }
 
-        if ( ctx.isWriteSingleElemArraysUnwrapped() && values.size() == 1 ) {
+        if (ctx.isWriteSingleElemArraysUnwrapped() && values.size() == 1) {
             // there is only one element, we write it directly
-            serializer.serialize( writer, values.iterator().next(), ctx, params );
+            serializer.serialize(writer, values.iterator().next(), ctx, params);
         } else {
             writer.beginArray();
-            for ( T value : values ) {
-                serializer.serialize( writer, value, ctx, params );
+            for (T value : values) {
+                serializer.serialize(writer, value, ctx, params);
             }
             writer.endArray();
         }

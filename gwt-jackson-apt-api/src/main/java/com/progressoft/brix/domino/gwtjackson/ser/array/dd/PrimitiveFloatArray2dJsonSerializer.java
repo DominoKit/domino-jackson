@@ -40,27 +40,32 @@ public class PrimitiveFloatArray2dJsonSerializer extends JsonSerializer<float[][
         return INSTANCE;
     }
 
-    private PrimitiveFloatArray2dJsonSerializer() { }
+    private PrimitiveFloatArray2dJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected boolean isEmpty( float[][] value ) {
+    protected boolean isEmpty(float[][] value) {
         return null == value || value.length == 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void doSerialize(JsonWriter writer, float[][] values, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        if ( !ctx.isWriteEmptyJsonArrays() && values.length == 0 ) {
+    public void doSerialize(JsonWriter writer, float[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
             writer.cancelName();
             return;
         }
 
         writer.beginArray();
-        for ( float[] array : values ) {
+        for (float[] array : values) {
             writer.beginArray();
-            for ( float value : array ) {
-                writer.value( value );
+            for (float value : array) {
+                writer.value(value);
             }
             writer.endArray();
         }

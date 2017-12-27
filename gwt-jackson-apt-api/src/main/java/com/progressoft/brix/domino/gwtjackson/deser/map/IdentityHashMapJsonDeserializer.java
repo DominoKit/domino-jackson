@@ -35,26 +35,28 @@ public final class IdentityHashMapJsonDeserializer<K, V> extends BaseMapJsonDese
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K> Type of the keys inside the {@link IdentityHashMap}
-     * @param <V> Type of the values inside the {@link IdentityHashMap}
+     * @param <K>               Type of the keys inside the {@link IdentityHashMap}
+     * @param <V>               Type of the values inside the {@link IdentityHashMap}
      * @return a new instance of {@link IdentityHashMapJsonDeserializer}
      */
-    public static <K, V> IdentityHashMapJsonDeserializer<K, V> newInstance( KeyDeserializer<K> keyDeserializer,
-                                                                            JsonDeserializer<V> valueDeserializer ) {
-        return new IdentityHashMapJsonDeserializer<K, V>( keyDeserializer, valueDeserializer );
+    public static <K, V> IdentityHashMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
+                                                                           JsonDeserializer<V> valueDeserializer) {
+        return new IdentityHashMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
     }
 
     /**
-     * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
      * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
      */
-    private IdentityHashMapJsonDeserializer( KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer ) {
-        super( keyDeserializer, valueDeserializer );
+    private IdentityHashMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+        super(keyDeserializer, valueDeserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected IdentityHashMap<K, V> newMap() {
         return new IdentityHashMap<K, V>();

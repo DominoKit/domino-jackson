@@ -33,10 +33,10 @@ public class Instance<T> {
     /**
      * <p>Constructor for Instance.</p>
      *
-     * @param instance a T object.
+     * @param instance           a T object.
      * @param bufferedProperties a {@link Map} object.
      */
-    public Instance( T instance, Map<String, String> bufferedProperties ) {
+    public Instance(T instance, Map<String, String> bufferedProperties) {
         this.instance = instance;
         this.bufferedProperties = bufferedProperties;
     }

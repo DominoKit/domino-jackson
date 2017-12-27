@@ -35,7 +35,7 @@ public abstract class BaseSetJsonDeserializer<S extends Set<T>, T> extends BaseC
      *
      * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Set}.
      */
-    public BaseSetJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    public BaseSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 }

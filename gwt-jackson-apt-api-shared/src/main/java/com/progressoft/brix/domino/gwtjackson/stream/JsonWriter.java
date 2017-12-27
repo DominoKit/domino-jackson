@@ -16,8 +16,6 @@
 
 package com.progressoft.brix.domino.gwtjackson.stream;
 
-//import com.google.gwt.core.client.JavaScriptObject;
-
 /**
  * <p>JsonWriter interface.</p>
  *
@@ -42,10 +40,10 @@ public interface JsonWriter {
      * href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>. Setting the writer
      * to lenient permits the following:
      * <ul>
-     *   <li>Top-level values of any type. With strict writing, the top-level
-     *       value must be an object or an array.
-     *   <li>Numbers may be {@link Double#isNaN() NaNs} or {@link
-     *       Double#isInfinite() infinities}.
+     * <li>Top-level values of any type. With strict writing, the top-level
+     * value must be an object or an array.
+     * <li>Numbers may be {@link Double#isNaN() NaNs} or {@link
+     * Double#isInfinite() infinities}.
      * </ul>
      *
      * @param lenient a boolean.
@@ -146,8 +144,8 @@ public interface JsonWriter {
     /**
      * Encodes {@code value}.
      *
-     * @return this writer.
      * @param value a boolean.
+     * @return this writer.
      */
     JsonWriter value(boolean value);
 
@@ -155,7 +153,7 @@ public interface JsonWriter {
      * Encodes {@code value}.
      *
      * @param value a finite value. May not be {@link Double#isNaN() NaNs} or
-     *     {@link Double#isInfinite() infinities}.
+     *              {@link Double#isInfinite() infinities}.
      * @return this writer.
      */
     JsonWriter value(double value);
@@ -163,8 +161,8 @@ public interface JsonWriter {
     /**
      * Encodes {@code value}.
      *
-     * @return this writer.
      * @param value a long.
+     * @return this writer.
      */
     JsonWriter value(long value);
 
@@ -172,7 +170,7 @@ public interface JsonWriter {
      * Encodes {@code value}.
      *
      * @param value a finite value. May not be {@link Double#isNaN() NaNs} or
-     *     {@link Double#isInfinite() infinities}.
+     *              {@link Double#isInfinite() infinities}.
      * @return this writer.
      */
     JsonWriter value(Number value);

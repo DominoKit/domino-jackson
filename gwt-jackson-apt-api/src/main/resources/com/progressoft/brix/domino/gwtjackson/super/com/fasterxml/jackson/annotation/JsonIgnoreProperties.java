@@ -9,20 +9,20 @@ import java.util.*;
 /**
  * Super source for {@link com.fasterxml.jackson.annotation.JsonIgnoreProperties} to remove the use of
  * {@link java.lang.String#format(String, Object...)}
- *
+ * <p>
  * Annotation that can be used to either suppress serialization of
  * properties (during serialization), or ignore processing of
  * JSON properties read (during deserialization).
- *<p>
+ * <p>
  * Example:
- *<pre>
+ * <pre>
  * // to prevent specified fields from being serialized or deserialized
  * // (i.e. not include in JSON output; or being set even if they were included)
  * &#064;JsonIgnoreProperties({ "internalId", "secretKey" })
  * // To ignore any unknown properties in JSON input without exception:
  * &#064;JsonIgnoreProperties(ignoreUnknown=true)
- *</pre>
- *<p>
+ * </pre>
+ * <p>
  * Annotation can be applied both to classes and
  * to properties. If used for both, actual set will be union of all
  * ignorals: that is, you can only add properties to ignore, not remove
@@ -30,15 +30,14 @@ import java.util.*;
  * per-property annotation.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
-    ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+        ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-public @interface JsonIgnoreProperties
-{
+public @interface JsonIgnoreProperties {
     /**
      * Names of properties to ignore.
      */
-    public String[] value() default { };
+    public String[] value() default {};
 
     /**
      * Property that defines whether it is ok to just ignore any
@@ -48,7 +47,7 @@ public @interface JsonIgnoreProperties
      * ignored without warnings (although handlers for unknown
      * properties, if any, will still be called) without
      * exception.
-     *<p>
+     * <p>
      * Does not have any effect on serialization.
      */
     public boolean ignoreUnknown() default false;
@@ -61,7 +60,7 @@ public @interface JsonIgnoreProperties
      * properties should be ignored for deserialization but NOT serialization.
      * Another way to think about this setting is that setting it to `true`
      * will "disable" ignoring of getters.
-     *<p>
+     * <p>
      * Default value is `false`, which means that getters with matching names
      * will be ignored.
      *
@@ -77,7 +76,7 @@ public @interface JsonIgnoreProperties
      * deserialization.
      * Another way to think about this setting is that setting it to `true`
      * will "disable" ignoring of setters.
-     *<p>
+     * <p>
      * Default value is `false`, which means that setters with matching names
      * will be ignored.
      *
@@ -98,9 +97,8 @@ public @interface JsonIgnoreProperties
      * @since 2.8
      */
     public static class Value
-        implements JacksonAnnotationValue<JsonIgnoreProperties>,
-            java.io.Serializable
-    {
+            implements JacksonAnnotationValue<JsonIgnoreProperties>,
+            java.io.Serializable {
         private static final long serialVersionUID = 1L;
 
         /**
@@ -123,9 +121,8 @@ public @interface JsonIgnoreProperties
         protected final boolean _merge;
 
         protected Value(Set<String> ignored, boolean ignoreUnknown,
-                boolean allowGetters, boolean allowSetters,
-                boolean merge)
-        {
+                        boolean allowGetters, boolean allowSetters,
+                        boolean merge) {
             if (ignored == null) {
                 _ignored = Collections.emptySet();
             } else {
@@ -143,9 +140,9 @@ public @interface JsonIgnoreProperties
             }
             return construct(_asSet(src.value()),
                     src.ignoreUnknown(), src.allowGetters(), src.allowSetters(),
-                // 27-Apr-2016, tatu: No matching property in annotation because
-                //   we don't know how to merge (so no point in pretending it's there)
-                //   so choice is arbitrary. Probably will default to `false` fwtw:
+                    // 27-Apr-2016, tatu: No matching property in annotation because
+                    //   we don't know how to merge (so no point in pretending it's there)
+                    //   so choice is arbitrary. Probably will default to `false` fwtw:
                     false);
         }
 
@@ -157,8 +154,8 @@ public @interface JsonIgnoreProperties
          * are added in {@link JsonIgnoreProperties} annotation.
          */
         public static Value construct(Set<String> ignored, boolean ignoreUnknown,
-                boolean allowGetters, boolean allowSetters,
-                boolean merge) {
+                                      boolean allowGetters, boolean allowSetters,
+                                      boolean merge) {
             if (_empty(ignored, ignoreUnknown, allowGetters, allowSetters, merge)) {
                 return EMPTY;
             }
@@ -170,18 +167,18 @@ public @interface JsonIgnoreProperties
 
         /**
          * Accessor for default instances which has "empty" settings; that is:
-         *<ul>
+         * <ul>
          * <li>No explicitly defined fields to ignore
-         *  </li>
+         * </li>
          * <li>Does not ignore unknown fields
-         *  </li>
+         * </li>
          * <li>Does not "allow" getters if property ignored (that is, ignorals apply to both setter and getter)
-         *  </li>
+         * </li>
          * <li>Does not "allow" setters if property ignored (that is, ignorals apply to both setter and getter)
-         *  </li>
+         * </li>
          * <li>Does use merge when combining overrides to base settings, such that `true` settings
-         *   for any of the properties results in `true`, and names of fields are combined (union)
-         *  </li>
+         * for any of the properties results in `true`, and names of fields are combined (union)
+         * </li>
          * </ul>
          */
         public static Value empty() {
@@ -197,8 +194,7 @@ public @interface JsonIgnoreProperties
          * Note that one or both of value instances may be `null`, directly;
          * if both are `null`, result will also be `null`; otherwise never null.
          */
-        public static Value merge(Value base, Value overrides)
-        {
+        public static Value merge(Value base, Value overrides) {
             return (base == null) ? overrides
                     : base.withOverrides(overrides);
         }
@@ -206,12 +202,11 @@ public @interface JsonIgnoreProperties
         /**
          * @since 2.8
          */
-        public static Value mergeAll(Value... values)
-        {
+        public static Value mergeAll(Value... values) {
             Value result = null;
             for (Value curr : values) {
                 if (curr != null) {
-                    result = (result == null)  ? curr : result.withOverrides(curr);
+                    result = (result == null) ? curr : result.withOverrides(curr);
                 }
             }
             return result;
@@ -276,39 +271,42 @@ public @interface JsonIgnoreProperties
 
         public Value withIgnoreUnknown() {
             return _ignoreUnknown ? this :
-                construct(_ignored, true, _allowGetters, _allowSetters, _merge);
+                    construct(_ignored, true, _allowGetters, _allowSetters, _merge);
         }
+
         public Value withoutIgnoreUnknown() {
             return !_ignoreUnknown ? this :
-                construct(_ignored, false, _allowGetters, _allowSetters, _merge);
+                    construct(_ignored, false, _allowGetters, _allowSetters, _merge);
         }
 
         public Value withAllowGetters() {
             return _allowGetters ? this :
-                construct(_ignored, _ignoreUnknown, true, _allowSetters, _merge);
+                    construct(_ignored, _ignoreUnknown, true, _allowSetters, _merge);
         }
+
         public Value withoutAllowGetters() {
             return !_allowGetters ? this :
-                construct(_ignored, _ignoreUnknown, false, _allowSetters, _merge);
+                    construct(_ignored, _ignoreUnknown, false, _allowSetters, _merge);
         }
 
         public Value withAllowSetters() {
             return _allowSetters ? this :
-                construct(_ignored, _ignoreUnknown, _allowGetters, true, _merge);
+                    construct(_ignored, _ignoreUnknown, _allowGetters, true, _merge);
         }
+
         public Value withoutAllowSetters() {
             return !_allowSetters ? this :
-                construct(_ignored, _ignoreUnknown, _allowGetters, false, _merge);
+                    construct(_ignored, _ignoreUnknown, _allowGetters, false, _merge);
         }
 
         public Value withMerge() {
             return _merge ? this :
-                construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, true);
+                    construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, true);
         }
 
         public Value withoutMerge() {
             return !_merge ? this :
-                construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, false);
+                    construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, false);
         }
 
         @Override
@@ -390,7 +388,7 @@ public @interface JsonIgnoreProperties
                     + (_allowGetters ? 3 : -7)
                     + (_allowSetters ? 7 : -11)
                     + (_merge ? 11 : -13)
-                            ;
+                    ;
         }
 
         @Override
@@ -401,8 +399,7 @@ public @interface JsonIgnoreProperties
                     && _equals(this, (Value) o);
         }
 
-        private static boolean _equals(Value a, Value b)
-        {
+        private static boolean _equals(Value a, Value b) {
             return (a._ignoreUnknown == b._ignoreUnknown)
                     && (a._merge == b._merge)
                     && (a._allowGetters == b._allowGetters)
@@ -423,8 +420,7 @@ public @interface JsonIgnoreProperties
             return s;
         }
 
-        private static Set<String> _merge(Set<String> s1, Set<String> s2)
-        {
+        private static Set<String> _merge(Set<String> s1, Set<String> s2) {
             if (s1.isEmpty()) {
                 return s2;
             } else if (s2.isEmpty()) {
@@ -437,8 +433,7 @@ public @interface JsonIgnoreProperties
         }
 
         private static boolean _empty(Set<String> ignored, boolean ignoreUnknown,
-                boolean allowGetters, boolean allowSetters, boolean merge)
-        {
+                                      boolean allowGetters, boolean allowSetters, boolean merge) {
             if ((ignoreUnknown == EMPTY._ignoreUnknown)
                     && (allowGetters == EMPTY._allowGetters)
                     && (allowSetters == EMPTY._allowSetters)

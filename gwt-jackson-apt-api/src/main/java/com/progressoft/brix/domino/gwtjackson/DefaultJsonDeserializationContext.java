@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.impl.NonBufferedJsonReader;
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +67,8 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * @deprecated Use {@link DefaultJsonDeserializationContext#builder()} instead. This constructor will be made protected in v1.0.
          */
         @Deprecated
-        public Builder() { }
+        public Builder() {
+        }
 
         /**
          * Determines whether encountering of unknown
@@ -87,10 +86,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * </p>
          *
          * @param failOnUnknownProperties true if should fail on unknown properties
-         *
          * @return the builder
          */
-        public Builder failOnUnknownProperties( boolean failOnUnknownProperties ) {
+        public Builder failOnUnknownProperties(boolean failOnUnknownProperties) {
             this.failOnUnknownProperties = failOnUnknownProperties;
             return this;
         }
@@ -107,10 +105,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * </p>
          *
          * @param unwrapRootValue true if should unwrapRootValue
-         *
          * @return the builder
          */
-        public Builder unwrapRootValue( boolean unwrapRootValue ) {
+        public Builder unwrapRootValue(boolean unwrapRootValue) {
             this.unwrapRootValue = unwrapRootValue;
             return this;
         }
@@ -128,10 +125,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * </p>
          *
          * @param acceptSingleValueAsArray true if should acceptSingleValueAsArray
-         *
          * @return the builder
          */
-        public Builder acceptSingleValueAsArray( boolean acceptSingleValueAsArray ) {
+        public Builder acceptSingleValueAsArray(boolean acceptSingleValueAsArray) {
             this.acceptSingleValueAsArray = acceptSingleValueAsArray;
             return this;
         }
@@ -151,26 +147,22 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * Feature is enabled by default.
          *
          * @param wrapExceptions true if should wrapExceptions
-         *
          * @return the builder
          */
-        public Builder wrapExceptions( boolean wrapExceptions ) {
+        public Builder wrapExceptions(boolean wrapExceptions) {
             this.wrapExceptions = wrapExceptions;
             return this;
         }
 
         /**
-         * Feature that determines whether gwt-jackson should use {@link JsonUtils#safeEval(String)} or {@link JsonUtils#unsafeEval(String)}
-         * to deserialize {@link JavaScriptObject}
+         * to deserialize JsType
          * <br>
          * <br>
-         * {@link JsonUtils#safeEval(String)} is used by default.
          *
          * @param useSafeEval true if should useSafeEval
-         *
          * @return the builder
          */
-        public Builder useSafeEval( boolean useSafeEval ) {
+        public Builder useSafeEval(boolean useSafeEval) {
             this.useSafeEval = useSafeEval;
             return this;
         }
@@ -180,10 +172,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * Default is false which will throw {@link IllegalArgumentException} when unknown enum value is found.
          *
          * @param readUnknownEnumValuesAsNull true if should readUnknownEnumValuesAsNull
-         *
          * @return the builder
          */
-        public Builder readUnknownEnumValuesAsNull( boolean readUnknownEnumValuesAsNull ) {
+        public Builder readUnknownEnumValuesAsNull(boolean readUnknownEnumValuesAsNull) {
             this.readUnknownEnumValuesAsNull = readUnknownEnumValuesAsNull;
             return this;
         }
@@ -193,23 +184,23 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
          * are interpreted using the browser timezone or being relative to UTC (the default).
          *
          * @param useBrowserTimezone true if should use browser timezone
-         *
          * @return the builder
          */
-        public Builder useBrowserTimezone( boolean useBrowserTimezone ) {
+        public Builder useBrowserTimezone(boolean useBrowserTimezone) {
             this.useBrowserTimezone = useBrowserTimezone;
             return this;
         }
 
         public final JsonDeserializationContext build() {
-            return new DefaultJsonDeserializationContext( failOnUnknownProperties, unwrapRootValue, acceptSingleValueAsArray, wrapExceptions,
-                    useSafeEval, readUnknownEnumValuesAsNull, useBrowserTimezone );
+            return new DefaultJsonDeserializationContext(failOnUnknownProperties, unwrapRootValue, acceptSingleValueAsArray, wrapExceptions,
+                    useSafeEval, readUnknownEnumValuesAsNull, useBrowserTimezone);
         }
     }
 
     public static class DefaultBuilder extends Builder {
 
-        private DefaultBuilder() {}
+        private DefaultBuilder() {
+        }
 
     }
 
@@ -222,7 +213,7 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
         return new DefaultBuilder();
     }
 
-    private static final Logger logger = Logger.getLogger( "JsonDeserialization" );
+    private static final Logger logger = Logger.getLogger("JsonDeserialization");
 
     private Map<IdKey, Object> idToObject;
 
@@ -245,7 +236,7 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
 
     private DefaultJsonDeserializationContext(boolean failOnUnknownProperties, boolean unwrapRootValue, boolean acceptSingleValueAsArray,
                                               boolean wrapExceptions, boolean useSafeEval, boolean readUnknownEnumValuesAsNull,
-                                              boolean useBrowserTimezone ) {
+                                              boolean useBrowserTimezone) {
         this.failOnUnknownProperties = failOnUnknownProperties;
         this.unwrapRootValue = unwrapRootValue;
         this.acceptSingleValueAsArray = acceptSingleValueAsArray;
@@ -333,13 +324,12 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
      * <p>newJsonReader</p>
      *
      * @param input a {@link String} object.
-     *
      * @return a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
      */
     @Override
     public JsonReader newJsonReader(String input) {
-        JsonReader reader = new NonBufferedJsonReader( input );
-        reader.setLenient( true );
+        JsonReader reader = new NonBufferedJsonReader(input);
+        reader.setLenient(true);
         return reader;
     }
 
@@ -347,41 +337,38 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
      * Trace an error with current reader state and returns a corresponding exception.
      *
      * @param message error message
-     *
      * @return a {@link JsonDeserializationException} with the given message
      */
     @Override
     public JsonDeserializationException traceError(String message) {
-        return traceError( message, null );
+        return traceError(message, null);
     }
 
     /**
      * Trace an error with current reader state and returns a corresponding exception.
      *
      * @param message error message
-     * @param reader current reader
-     *
+     * @param reader  current reader
      * @return a {@link JsonDeserializationException} with the given message
      */
     @Override
     public JsonDeserializationException traceError(String message, JsonReader reader) {
-        getLogger().log( Level.SEVERE, message );
-        traceReaderInfo( reader );
-        return new JsonDeserializationException( message );
+        getLogger().log(Level.SEVERE, message);
+        traceReaderInfo(reader);
+        return new JsonDeserializationException(message);
     }
 
     /**
      * Trace an error and returns a corresponding exception.
      *
      * @param cause cause of the error
-     *
      * @return a {@link JsonDeserializationException} if we wrap the exceptions, the cause otherwise
      */
     @Override
     public RuntimeException traceError(RuntimeException cause) {
-        getLogger().log( Level.SEVERE, "Error during deserialization", cause );
-        if ( wrapExceptions ) {
-            return new JsonDeserializationException( cause );
+        getLogger().log(Level.SEVERE, "Error during deserialization", cause);
+        if (wrapExceptions) {
+            return new JsonDeserializationException(cause);
         } else {
             return cause;
         }
@@ -390,53 +377,51 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     /**
      * Trace an error with current reader state and returns a corresponding exception.
      *
-     * @param cause cause of the error
+     * @param cause  cause of the error
      * @param reader current reader
-     *
      * @return a {@link JsonDeserializationException} if we wrap the exceptions, the cause otherwise
      */
     @Override
     public RuntimeException traceError(RuntimeException cause, JsonReader reader) {
-        RuntimeException exception = traceError( cause );
-        traceReaderInfo( reader );
+        RuntimeException exception = traceError(cause);
+        traceReaderInfo(reader);
         return exception;
     }
 
     /**
      * Trace the current reader state
      */
-    private void traceReaderInfo( JsonReader reader ) {
-        if ( null != reader && getLogger().isLoggable( Level.INFO ) ) {
-            getLogger().log( Level.INFO, "Error at line " + reader.getLineNumber() + " and column " + reader
-                    .getColumnNumber() + " of input <" + reader.getInput() + ">" );
+    private void traceReaderInfo(JsonReader reader) {
+        if (null != reader && getLogger().isLoggable(Level.INFO)) {
+            getLogger().log(Level.INFO, "Error at line " + reader.getLineNumber() + " and column " + reader
+                    .getColumnNumber() + " of input <" + reader.getInput() + ">");
         }
     }
 
     /**
      * <p>addObjectId</p>
      *
-     * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
+     * @param id       a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
      * @param instance a {@link Object} object.
      */
     @Override
     public void addObjectId(IdKey id, Object instance) {
-        if ( null == idToObject ) {
+        if (null == idToObject) {
             idToObject = new HashMap<IdKey, Object>();
         }
-        idToObject.put( id, instance );
+        idToObject.put(id, instance);
     }
 
     /**
      * <p>getObjectWithId</p>
      *
      * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
-     *
      * @return a {@link Object} object.
      */
     @Override
     public Object getObjectWithId(IdKey id) {
-        if ( null != idToObject ) {
-            return idToObject.get( id );
+        if (null != idToObject) {
+            return idToObject.get(id);
         }
         return null;
     }

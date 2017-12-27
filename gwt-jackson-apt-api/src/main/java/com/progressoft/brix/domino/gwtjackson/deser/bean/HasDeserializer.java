@@ -34,7 +34,7 @@ public abstract class HasDeserializer<V, S extends JsonDeserializer<V>> {
      * @return a S object.
      */
     public S getDeserializer() {
-        if ( null == deserializer ) {
+        if (null == deserializer) {
             deserializer = (S) newDeserializer();
         }
         return deserializer;

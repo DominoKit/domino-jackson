@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 
-public interface JsonDeserializationContext extends JsonMappingContext{
+public interface JsonDeserializationContext extends JsonMappingContext {
     boolean isFailOnUnknownProperties();
 
     boolean isUnwrapRootValue();

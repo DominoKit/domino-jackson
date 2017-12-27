@@ -33,22 +33,27 @@ public final class BooleanKeySerializer extends KeySerializer<Boolean> {
      *
      * @return an instance of {@link BooleanKeySerializer}
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static BooleanKeySerializer getInstance() {
         return INSTANCE;
     }
 
-    private BooleanKeySerializer() { }
+    private BooleanKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( Boolean value, JsonSerializationContext ctx ) {
+    protected String doSerialize(Boolean value, JsonSerializationContext ctx) {
         return value.toString();
     }
 }

@@ -33,21 +33,23 @@ public class VectorJsonDeserializer<T> extends BaseListJsonDeserializer<Vector<T
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Vector}.
-     * @param <T> Type of the elements inside the {@link Vector}
+     * @param <T>          Type of the elements inside the {@link Vector}
      * @return a new instance of {@link VectorJsonDeserializer}
      */
-    public static <T> VectorJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new VectorJsonDeserializer<T>( deserializer );
+    public static <T> VectorJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new VectorJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Vector}.
      */
-    private VectorJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private VectorJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Vector<T> newCollection() {
         return new Vector<T>();

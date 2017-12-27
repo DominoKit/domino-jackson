@@ -34,10 +34,10 @@ public interface InstanceBuilder<T> {
     /**
      * <p>newInstance</p>
      *
-     * @param reader a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
-     * @param ctx a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
-     * @param bufferedProperties a {@link Map} object.
+     * @param reader                   a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonReader} object.
+     * @param ctx                      a {@link JsonDeserializationContext} object.
+     * @param params                   a {@link JsonDeserializerParameters} object.
+     * @param bufferedProperties       a {@link Map} object.
      * @param bufferedPropertiesValues a {@link Map} object.
      * @param bufferedPropertiesValues a {@link Map} object.
      * @return a {@link com.progressoft.brix.domino.gwtjackson.deser.bean.Instance} object.

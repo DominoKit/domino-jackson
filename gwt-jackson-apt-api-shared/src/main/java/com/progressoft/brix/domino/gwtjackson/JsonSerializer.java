@@ -35,90 +35,88 @@ public abstract class JsonSerializer<T> {
      * Serializes an object into JSON output.
      *
      * @param writer {@link JsonWriter} used to write the serialized JSON
-     * @param value Object to serialize
-     * @param ctx Context for the full serialization process
-     *
+     * @param value  Object to serialize
+     * @param ctx    Context for the full serialization process
      * @throws JsonSerializationException if an error occurs during the serialization
      */
-    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx ) throws JsonSerializationException {
-        serialize( writer, value, ctx, ctx.defaultParameters() );
+    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx) throws JsonSerializationException {
+        serialize(writer, value, ctx, ctx.defaultParameters());
     }
 
     /**
      * Serializes an object into JSON output.
      *
      * @param writer {@link JsonWriter} used to write the serialized JSON
-     * @param value Object to serialize
-     * @param ctx Context for the full serialization process
+     * @param value  Object to serialize
+     * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization
-     *
      * @throws JsonSerializationException if an error occurs during the serialization
      */
-    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params ) throws
+    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params) throws
             JsonSerializationException {
-        serialize( writer, value, ctx, params, false );
+        serialize(writer, value, ctx, params, false);
     }
 
     /**
      * Serializes an object into JSON output.
      *
-     * @param writer {@link JsonWriter} used to write the serialized JSON
-     * @param value Object to serialize
-     * @param ctx Context for the full serialization process
-     * @param params Parameters for this serialization
+     * @param writer     {@link JsonWriter} used to write the serialized JSON
+     * @param value      Object to serialize
+     * @param ctx        Context for the full serialization process
+     * @param params     Parameters for this serialization
      * @param isMapValue indicate if you're serializing a Map value
      * @throws JsonSerializationException if an error occurs during the serialization
      */
-    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params, boolean isMapValue ) throws
+    public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params, boolean isMapValue) throws
             JsonSerializationException {
-        if ( null != params.getInclude() && !isMapValue ) {
-            switch ( params.getInclude() ) {
+        if (null != params.getInclude() && !isMapValue) {
+            switch (params.getInclude()) {
                 case ALWAYS:
-                    if ( null == value ) {
-                        serializeNullValue( writer, ctx, params );
+                    if (null == value) {
+                        serializeNullValue(writer, ctx, params);
                     } else {
-                        doSerialize( writer, value, ctx, params );
+                        doSerialize(writer, value, ctx, params);
                     }
                     return;
                 case NON_DEFAULT:
-                    if ( isDefault( value ) ) {
+                    if (isDefault(value)) {
                         writer.cancelName();
                     } else {
-                        doSerialize( writer, value, ctx, params );
+                        doSerialize(writer, value, ctx, params);
                     }
                     return;
                 case NON_EMPTY:
-                    if ( isEmpty( value ) ) {
+                    if (isEmpty(value)) {
                         writer.cancelName();
                     } else {
-                        doSerialize( writer, value, ctx, params );
+                        doSerialize(writer, value, ctx, params);
                     }
                     return;
                 case NON_NULL:
-                    if ( null == value ) {
+                    if (null == value) {
                         writer.cancelName();
                     } else {
-                        doSerialize( writer, value, ctx, params );
+                        doSerialize(writer, value, ctx, params);
                     }
                     return;
                 case NON_ABSENT:
-                    if ( isAbsent( value ) ) {
+                    if (isAbsent(value)) {
                         writer.cancelName();
                     } else {
-                        doSerialize( writer, value, ctx, params );
+                        doSerialize(writer, value, ctx, params);
                     }
                     return;
             }
         }
 
-        if ( null == value ) {
-            if ( ctx.isSerializeNulls() || ( isMapValue && ctx.isWriteNullMapValues() ) ) {
-                serializeNullValue( writer, ctx, params );
+        if (null == value) {
+            if (ctx.isSerializeNulls() || (isMapValue && ctx.isWriteNullMapValues())) {
+                serializeNullValue(writer, ctx, params);
             } else {
                 writer.cancelName();
             }
         } else {
-            doSerialize( writer, value, ctx, params );
+            doSerialize(writer, value, ctx, params);
         }
     }
 
@@ -126,10 +124,10 @@ public abstract class JsonSerializer<T> {
      * Serialize the null value. This method allows children to override the default behaviour.
      *
      * @param writer {@link JsonWriter} used to write the serialized JSON
-     * @param ctx Context for the full serialization process
+     * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization
      */
-    protected void serializeNullValue( JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params ) {
+    protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.nullValue();
     }
 
@@ -137,15 +135,15 @@ public abstract class JsonSerializer<T> {
      * @param value the value
      * @return true if the value corresponds to the default one
      */
-    protected boolean isDefault( T value ) {
-        return isEmpty( value );
+    protected boolean isDefault(T value) {
+        return isEmpty(value);
     }
 
     /**
      * @param value the value
      * @return true if the value is empty
      */
-    protected boolean isEmpty( T value ) {
+    protected boolean isEmpty(T value) {
         return null == value;
     }
 
@@ -153,7 +151,7 @@ public abstract class JsonSerializer<T> {
      * @param value the value
      * @return true if the value is absent
      */
-    protected boolean isAbsent( T value ) {
+    protected boolean isAbsent(T value) {
         return null == value;
     }
 
@@ -161,10 +159,10 @@ public abstract class JsonSerializer<T> {
      * Serializes a non-null object into JSON output.
      *
      * @param writer {@link JsonWriter} used to write the serialized JSON
-     * @param value Object to serialize
-     * @param ctx Context for the full serialization process
+     * @param value  Object to serialize
+     * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization
      */
     protected abstract void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters
-            params );
+            params);
 }

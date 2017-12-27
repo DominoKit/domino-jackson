@@ -33,17 +33,17 @@ import java.util.stream.Stream;
 
 public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
-    private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf( Object.class );
+    private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
 
 
     public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
-        super( beanType, filer);
+        super(beanType, filer);
     }
 
     @Override
     protected TypeName superClass() {
-        return ParameterizedTypeName.get( ClassName.get( AbstractBeanJsonDeserializer.class ),
-                ClassName.get( beanType ) );
+        return ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonDeserializer.class),
+                ClassName.get(beanType));
     }
 
     @Override
@@ -58,88 +58,88 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
     @Override
     protected MethodSpec initMethod() {
-        return buildInitDeserializersMethod( beanType );
+        return buildInitDeserializersMethod(beanType);
     }
 
     @Override
     protected Set<MethodSpec> moreMethods() {
-        return Stream.of( buildInitInstanceBuilderMethod( beanType, ParameterizedTypeName
-                .get( ClassName.get( MapLike.class ), ClassName
-                        .get( HasDeserializerAndParameters.class ) ) ) ).collect( Collectors.toSet() );
+        return Stream.of(buildInitInstanceBuilderMethod(beanType, ParameterizedTypeName
+                .get(ClassName.get(MapLike.class), ClassName
+                        .get(HasDeserializerAndParameters.class)))).collect(Collectors.toSet());
     }
 
-    private MethodSpec buildInitInstanceBuilderMethod( TypeMirror beanType, ParameterizedTypeName parameterizedTypeName ) {
-        return MethodSpec.methodBuilder( "initInstanceBuilder" )
-                .addModifiers( Modifier.PROTECTED )
-                .returns( ParameterizedTypeName.get( ClassName.get( InstanceBuilder.class ), ClassName.get( beanType ) ) )
-                .addStatement( "final $T deserializers = null", parameterizedTypeName )
-                .addStatement( "return $L", instanceBuilderReturnType() )
-                .addAnnotation( Override.class )
+    private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType, ParameterizedTypeName parameterizedTypeName) {
+        return MethodSpec.methodBuilder("initInstanceBuilder")
+                .addModifiers(Modifier.PROTECTED)
+                .returns(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class), ClassName.get(beanType)))
+                .addStatement("final $T deserializers = null", parameterizedTypeName)
+                .addStatement("return $L", instanceBuilderReturnType())
+                .addAnnotation(Override.class)
                 .build();
     }
 
     private TypeSpec instanceBuilderReturnType() {
 
-        final MethodSpec createMethod = MethodSpec.methodBuilder( "create" )
-                .addModifiers( Modifier.PRIVATE )
-                .returns( ClassName.get( beanType ) )
-                .addStatement( "return new $T()", TypeName.get( beanType ) )
+        final MethodSpec createMethod = MethodSpec.methodBuilder("create")
+                .addModifiers(Modifier.PRIVATE)
+                .returns(ClassName.get(beanType))
+                .addStatement("return new $T()", TypeName.get(beanType))
                 .build();
 
-        return TypeSpec.anonymousClassBuilder( "" )
-                .addSuperinterface( ParameterizedTypeName.get( ClassName.get( InstanceBuilder.class ),
-                        ClassName.get( beanType ) ) )
-                .addMethod( newInstanceMethod( beanType, createMethod ) )
-                .addMethod( getDeserializerMethod( beanType ) )
-                .addMethod( createMethod ).build();
+        return TypeSpec.anonymousClassBuilder("")
+                .addSuperinterface(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class),
+                        ClassName.get(beanType)))
+                .addMethod(newInstanceMethod(beanType, createMethod))
+                .addMethod(getDeserializerMethod(beanType))
+                .addMethod(createMethod).build();
     }
 
-    private MethodSpec newInstanceMethod( TypeMirror beanType, MethodSpec createMethod ) {
-        return MethodSpec.methodBuilder( "newInstance" )
-                .addModifiers( Modifier.PUBLIC )
-                .addAnnotation( Override.class )
-                .returns( ParameterizedTypeName.get( ClassName.get( Instance.class ), ClassName.get( beanType ) ) )
-                .addParameter( JsonReader.class, "reader" )
-                .addParameter(JsonDeserializationContext.class, "ctx" )
-                .addParameter( JsonDeserializerParameters.class, "params" )
-                .addParameter( ParameterizedTypeName.get( Map.class, String.class, String.class ), "bufferedProperties" )
-                .addParameter( ParameterizedTypeName.get( Map.class, String.class, Object.class ), "bufferedPropertiesValues" )
-                .addStatement( "return new $T($N(), bufferedProperties)",
-                        ParameterizedTypeName.get( ClassName.get( Instance.class ), ClassName.get( beanType ) ),
-                        createMethod )
-                .build();
-    }
-
-    private MethodSpec getDeserializerMethod( TypeMirror beanType ) {
-        return MethodSpec.methodBuilder( "getParametersDeserializer" )
-                .addModifiers( Modifier.PUBLIC )
-                .addAnnotation( Override.class )
-                .addStatement( "return deserializers" )
-                .returns( ParameterizedTypeName.get( ClassName.get( MapLike.class ),
-                        ClassName.get( HasDeserializerAndParameters.class ) ) )
+    private MethodSpec newInstanceMethod(TypeMirror beanType, MethodSpec createMethod) {
+        return MethodSpec.methodBuilder("newInstance")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)))
+                .addParameter(JsonReader.class, "reader")
+                .addParameter(JsonDeserializationContext.class, "ctx")
+                .addParameter(JsonDeserializerParameters.class, "params")
+                .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "bufferedProperties")
+                .addParameter(ParameterizedTypeName.get(Map.class, String.class, Object.class), "bufferedPropertiesValues")
+                .addStatement("return new $T($N(), bufferedProperties)",
+                        ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
+                        createMethod)
                 .build();
     }
 
-    private MethodSpec buildInitDeserializersMethod( TypeMirror beanType ) {
+    private MethodSpec getDeserializerMethod(TypeMirror beanType) {
+        return MethodSpec.methodBuilder("getParametersDeserializer")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .addStatement("return deserializers")
+                .returns(ParameterizedTypeName.get(ClassName.get(MapLike.class),
+                        ClassName.get(HasDeserializerAndParameters.class)))
+                .build();
+    }
 
-        TypeName resultType = ParameterizedTypeName.get( ClassName.get( MapLike.class ),
-                ParameterizedTypeName.get( ClassName.get( BeanPropertyDeserializer.class ),
-                        TypeName.get( beanType ), DEFAULT_WILDCARD ) );
+    private MethodSpec buildInitDeserializersMethod(TypeMirror beanType) {
 
-        MethodSpec.Builder builder = MethodSpec.methodBuilder( "initDeserializers" )
-                .addModifiers( Modifier.PROTECTED )
-                .addAnnotation( Override.class )
-                .returns( resultType )
-                .addStatement( "$T map = new $T<>()", resultType, JsMapLike.class );
+        TypeName resultType = ParameterizedTypeName.get(ClassName.get(MapLike.class),
+                ParameterizedTypeName.get(ClassName.get(BeanPropertyDeserializer.class),
+                        TypeName.get(beanType), DEFAULT_WILDCARD));
 
-        orderedFields().forEach( field -> {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("initDeserializers")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .returns(resultType)
+                .addStatement("$T map = new $T<>()", resultType, JsMapLike.class);
 
-                builder.addStatement( "map.put($S, $L)",
-                        field.getSimpleName(), new DeserializerBuilder(beanType, field).buildDeserializer() );
+        orderedFields().forEach(field -> {
 
-        } );
+            builder.addStatement("map.put($S, $L)",
+                    field.getSimpleName(), new DeserializerBuilder(beanType, field).buildDeserializer());
 
-        builder.addStatement( "return map" );
+        });
+
+        builder.addStatement("return map");
         return builder.build();
     }
 

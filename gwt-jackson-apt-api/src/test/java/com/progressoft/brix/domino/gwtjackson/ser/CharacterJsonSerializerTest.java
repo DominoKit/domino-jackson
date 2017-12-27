@@ -27,7 +27,7 @@ public class CharacterJsonSerializerTest extends AbstractJsonSerializerTest<Char
     }
 
     public void testSerializeValue() {
-        assertSerialization( "\"e\"", 'e' );
-        assertSerialization( "\"\\u0000\"", '\u0000' );
+        assertSerialization("\"e\"", 'e');
+        assertSerialization("\"\\u0000\"", '\u0000');
     }
 }

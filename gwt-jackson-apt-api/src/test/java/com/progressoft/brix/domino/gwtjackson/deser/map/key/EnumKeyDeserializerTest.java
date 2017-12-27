@@ -31,20 +31,20 @@ public class EnumKeyDeserializerTest extends AbstractKeyDeserializerTest<EnumTes
 
     @Override
     protected EnumKeyDeserializer<EnumTest> createDeserializer() {
-        return EnumKeyDeserializer.newInstance( EnumTest.class );
+        return EnumKeyDeserializer.newInstance(EnumTest.class);
     }
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( EnumTest.ONE, "ONE" );
-        assertDeserialization( EnumTest.TWO, "TWO" );
-        assertDeserialization( EnumTest.THREE, "THREE" );
-        assertDeserialization( EnumTest.FOUR, "FOUR" );
+        assertDeserialization(EnumTest.ONE, "ONE");
+        assertDeserialization(EnumTest.TWO, "TWO");
+        assertDeserialization(EnumTest.THREE, "THREE");
+        assertDeserialization(EnumTest.FOUR, "FOUR");
         try {
-            assertDeserialization( null, "UNKNOWN" );
-            fail( "IllegalArgumentException should be thrown!" );
-        } catch ( IllegalArgumentException ex ) {
+            assertDeserialization(null, "UNKNOWN");
+            fail("IllegalArgumentException should be thrown!");
+        } catch (IllegalArgumentException ex) {
         }
-        assertDeserialization( DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull( true ).build(), null, "UNKNOWN" );
+        assertDeserialization(DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull(true).build(), null, "UNKNOWN");
     }
 }

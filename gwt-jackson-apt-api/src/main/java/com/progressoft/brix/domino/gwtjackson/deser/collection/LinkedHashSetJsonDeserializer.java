@@ -33,21 +33,23 @@ public class LinkedHashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<Li
      * <p>newInstance</p>
      *
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedHashSet}.
-     * @param <T> Type of the elements inside the {@link LinkedHashSet}
+     * @param <T>          Type of the elements inside the {@link LinkedHashSet}
      * @return a new instance of {@link LinkedHashSetJsonDeserializer}
      */
-    public static <T> LinkedHashSetJsonDeserializer<T> newInstance( JsonDeserializer<T> deserializer ) {
-        return new LinkedHashSetJsonDeserializer<T>( deserializer );
+    public static <T> LinkedHashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+        return new LinkedHashSetJsonDeserializer<T>(deserializer);
     }
 
     /**
      * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedHashSet}.
      */
-    private LinkedHashSetJsonDeserializer( JsonDeserializer<T> deserializer ) {
-        super( deserializer );
+    private LinkedHashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+        super(deserializer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LinkedHashSet<T> newCollection() {
         return new LinkedHashSet<T>();

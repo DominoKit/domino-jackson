@@ -30,9 +30,9 @@ public class IntegerKeyDeserializerTest extends AbstractKeyDeserializerTest<Inte
 
     @Override
     public void testDeserializeValue() {
-        assertDeserialization( 34, "34" );
-        assertDeserialization( -1, "-1" );
-        assertDeserialization( Integer.MIN_VALUE, "-2147483648" );
-        assertDeserialization( Integer.MAX_VALUE, "2147483647" );
+        assertDeserialization(34, "34");
+        assertDeserialization(-1, "-1");
+        assertDeserialization(Integer.MIN_VALUE, "-2147483648");
+        assertDeserialization(Integer.MAX_VALUE, "2147483647");
     }
 }

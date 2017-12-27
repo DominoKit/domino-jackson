@@ -8,14 +8,14 @@ import java.lang.annotation.Target;
 /**
  * Super source for {@link com.fasterxml.jackson.annotation.JsonInclude} to remove the use of
  * {@link java.lang.String#format(String, Object...)}
- *
+ * <p>
  * Annotation used to indicate when value of the annotated property (when
  * used for a field, method or constructor parameter), or all
  * properties of the annotated class, is to be serialized.
  * Without annotation property values are always included, but by using
  * this annotation one can specify simple exclusion rules to reduce
  * amount of properties to write out.
- *<p>
+ * <p>
  * Note that the main inclusion criteria (one annotated with {@link #value})
  * is checked on <b>Java object level</b>, for the annotated type,
  * and <b>NOT</b> on JSON output -- so even with {@link Include#NON_NULL}
@@ -23,19 +23,19 @@ import java.lang.annotation.Target;
  * in question is not `null`. An example is {@link java.util.concurrent.atomic.AtomicReference}
  * instance constructed to reference <code>null</code> value: such a value
  * would be serialized as JSON null, and not filtered out.
- *<p>
+ * <p>
  * To base inclusion on value of contained value(s), you will typically also need
  * to specify {@link #content()} annotation; for example, specifying only
  * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.List} would
  * exclude <code>List</code>s with no Java elements, but would include <code>List</code>s
  * with `null` elements. To exclude Lists with only nulls, you would use both
  * annotations like so:
- *<pre>
- *public class Bean {
+ * <pre>
+ * public class Bean {
  *   @JsonInclude(value=Include.NON_EMPTY, content=Include.NON_NULL)
  *   public List&lt;String> entries;
- *}
- *</pre>
+ * }
+ * </pre>
  * Similarly you could further exclude Lists, Maps or arrays that only contain
  * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
  * {@link Include#NON_DEFAULT} for more details).
@@ -43,11 +43,10 @@ import java.lang.annotation.Target;
  * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
-    ElementType.TYPE, ElementType.PARAMETER})
+        ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-public @interface JsonInclude
-{
+public @interface JsonInclude {
     /**
      * Inclusion rule to use for instances (values) of types (Classes) or
      * properties annotated.
@@ -73,8 +72,7 @@ public @interface JsonInclude
      * to define which properties
      * of Java Beans are to be included in serialization.
      */
-    public enum Include
-    {
+    public enum Include {
         /**
          * Value that indicates that property is to be always included,
          * independent of value of the property.
@@ -90,11 +88,11 @@ public @interface JsonInclude
         /**
          * Value that indicates that properties are included unless their value
          * is:
-         *<ul>
-         *  <li>null</li>
-         *  <li>"absent" value of a referential type (like Java 8 `Optional`, or
-         *     {link java.utl.concurrent.atomic.AtomicReference}); that is, something
-         *     that would not deference to a non-null value.
+         * <ul>
+         * <li>null</li>
+         * <li>"absent" value of a referential type (like Java 8 `Optional`, or
+         * {link java.utl.concurrent.atomic.AtomicReference}); that is, something
+         * that would not deference to a non-null value.
          * </ul>
          * This option is mostly used to work with "Optional"s (Java 8, Guava).
          *
@@ -107,43 +105,43 @@ public @interface JsonInclude
          * or what is considered empty, are not to be included.
          * Definition of emptiness is data type specific; see below
          * for details on actual handling.
-         *<p>
+         * <p>
          * Default emptiness for all types includes:
-         *<ul>
+         * <ul>
          * <li><code>Null</code> values.</li>
          * <li>"Absent" values (see {@link #NON_ABSENT})</li>
-         *</ul>
+         * </ul>
          * so that as baseline, "empty" set includes values that would be
          * excluded by both {@link #NON_NULL} and {@link #NON_ABSENT}.
          * <br />
          * Additionally following types have additional empty values:
-         *<ul>
+         * <ul>
          * <li>For {@link java.util.Collection}s and {@link java.util.Map}s,
-         *    method <code>isEmpty()</code> is called;
-         *   </li>
+         * method <code>isEmpty()</code> is called;
+         * </li>
          * <li>For Java arrays, empty arrays are ones with length of 0
-         *   </li>
+         * </li>
          * <li>For Java {@link java.lang.String}s, <code>length()</code> is called,
-         *   and return value of 0 indicates empty String (note that <code>String.isEmpty()</code>
-         *   was added in Java 1.6 and as such can not be used by Jackson
-         *   </li>
+         * and return value of 0 indicates empty String (note that <code>String.isEmpty()</code>
+         * was added in Java 1.6 and as such can not be used by Jackson
+         * </li>
          * </ul>
-         *  and for other types, null values are excluded but other exclusions (if any).
-         *<p>
+         * and for other types, null values are excluded but other exclusions (if any).
+         * <p>
          * Note that this default handling can be overridden by custom
          * <code>JsonSerializer</code> implementation: if method <code>isEmpty()</code>
          * is overridden, it will be called to see if non-null values are
          * considered empty (null is always considered empty).
-         *<p>
+         * <p>
          * Compatibility note: Jackson 2.6 included a wider range of "empty" values than
          * either earlier (up to 2.5) or later (2.7 and beyond) types; specifically:
-         *<ul>
+         * <ul>
          * <li>Default values of primitive types (like <code>0</code> for `int`/`java.lang.Integer`
-         *  and `false` for `bool`/`Boolean`)
-         *  </li>
+         * and `false` for `bool`/`Boolean`)
+         * </li>
          * <li>Timestamp 0 for date/time types
-         *  </li>
-         *</ul>
+         * </li>
+         * </ul>
          * With 2.7, definition has been tightened back to only containing types explained
          * above (null, absent, empty String, empty containers), and now
          * extended definition may be specified using {@link #NON_DEFAULT}.
@@ -154,21 +152,21 @@ public @interface JsonInclude
          * Meaning of this setting depends on context: whether annotation is
          * specified for POJO type (class), or not. In latter case annotation
          * is either used as the global default, or as property override.
-         *<p>
+         * <p>
          * When used for a POJO, definition is that only values that differ from
          * the default values of POJO properties are included. This is done
          * by creating an instance of POJO using zero-argument constructor,
          * and accessing property values: value is used as the default value
          * by using <code>equals()</code> method, except for the case where property
          * has `null` value in which straight null check is used.
-         *<p>
+         * <p>
          * When NOT used for a POJO (that is, as a global default, or as property
          * override), definition is such that:
-         *<ul>
+         * <ul>
          * <li>All values considered "empty" (as per {@link #NON_EMPTY}) are excluded</li>
          * <li>Primitive/wrapper default values are excluded</li>
          * <li>Date/time values that have timestamp (`long` value of milliseconds since
-         *   epoch, see {@link java.util.Date}) of `0L` are excluded</li>
+         * epoch, see {@link java.util.Date}) of `0L` are excluded</li>
          * </ul>
          */
         NON_DEFAULT,
@@ -182,9 +180,7 @@ public @interface JsonInclude
          *
          * @since 2.6
          */
-        USE_DEFAULTS
-
-        ;
+        USE_DEFAULTS;
     }
 
     /*
@@ -200,9 +196,8 @@ public @interface JsonInclude
      * @since 2.6
      */
     public static class Value
-        implements JacksonAnnotationValue<JsonInclude>, // since 2.6
-            java.io.Serializable
-    {
+            implements JacksonAnnotationValue<JsonInclude>, // since 2.6
+            java.io.Serializable {
         private static final long serialVersionUID = 1L;
 
         protected final static Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS);

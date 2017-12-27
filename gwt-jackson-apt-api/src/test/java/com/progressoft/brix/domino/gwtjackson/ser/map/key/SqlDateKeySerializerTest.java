@@ -31,8 +31,8 @@ public class SqlDateKeySerializerTest extends AbstractKeySerializerTest<Date> {
     }
 
     public void testSerializeValue() {
-        Date date = new Date( getUTCTime( 2012, 8, 18, 12, 45, 56, 543 ) );
-        String expected = DateFormat.format( date );
-        assertSerialization( expected, date );
+        Date date = new Date(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+        String expected = DateFormat.format(date);
+        assertSerialization(expected, date);
     }
 }

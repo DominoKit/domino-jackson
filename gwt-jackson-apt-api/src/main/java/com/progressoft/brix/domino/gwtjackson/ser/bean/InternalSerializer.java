@@ -30,12 +30,12 @@ interface InternalSerializer<T> {
     /**
      * <p>serializeInternally</p>
      *
-     * @param writer a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
-     * @param value a T object.
-     * @param ctx a {@link JsonSerializationContext} object.
-     * @param params a {@link JsonSerializerParameters} object.
+     * @param writer              a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
+     * @param value               a T object.
+     * @param ctx                 a {@link JsonSerializationContext} object.
+     * @param params              a {@link JsonSerializerParameters} object.
      * @param defaultIdentityInfo a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.IdentitySerializationInfo} object.
-     * @param defaultTypeInfo a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo} object.
+     * @param defaultTypeInfo     a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo} object.
      */
     void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
                              IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo);

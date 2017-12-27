@@ -39,38 +39,42 @@ public abstract class AbstractObjectBeanJsonDeserializer extends AbstractBeanJso
 
     private LinkedHashMapJsonDeserializer<String, Object> mapJsonDeserializer;
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean canDeserialize() {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation ) {
-        switch ( reader.peek() ) {
+                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
+        switch (reader.peek()) {
             case NUMBER:
-                return NumberJsonDeserializer.getInstance().doDeserialize( reader, ctx, params );
+                return NumberJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
             case STRING:
-                return StringJsonDeserializer.getInstance().doDeserialize( reader, ctx, params );
+                return StringJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
             case BOOLEAN:
-                return BooleanJsonDeserializer.getInstance().doDeserialize( reader, ctx, params );
+                return BooleanJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
             case BEGIN_ARRAY:
-                if ( null == listJsonDeserializer ) {
-                    listJsonDeserializer = ArrayListJsonDeserializer.newInstance( this );
+                if (null == listJsonDeserializer) {
+                    listJsonDeserializer = ArrayListJsonDeserializer.newInstance(this);
                 }
-                return listJsonDeserializer.doDeserialize( reader, ctx, params );
+                return listJsonDeserializer.doDeserialize(reader, ctx, params);
             case BEGIN_OBJECT:
-                if ( null == mapJsonDeserializer ) {
-                    mapJsonDeserializer = LinkedHashMapJsonDeserializer.newInstance( StringKeyDeserializer.getInstance(), this );
+                if (null == mapJsonDeserializer) {
+                    mapJsonDeserializer = LinkedHashMapJsonDeserializer.newInstance(StringKeyDeserializer.getInstance(), this);
                 }
-                return mapJsonDeserializer.doDeserialize( reader, ctx, params );
+                return mapJsonDeserializer.doDeserialize(reader, ctx, params);
             case NULL:
                 reader.nextNull();
                 return null;
             default:
-                throw ctx.traceError( "Unexpected token " + reader.peek() + " for java.lang.Object deserialization", reader );
+                throw ctx.traceError("Unexpected token " + reader.peek() + " for java.lang.Object deserialization", reader);
         }
     }
 

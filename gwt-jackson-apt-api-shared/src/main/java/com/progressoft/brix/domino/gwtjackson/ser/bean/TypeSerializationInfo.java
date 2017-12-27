@@ -44,10 +44,10 @@ public class TypeSerializationInfo<T> {
     /**
      * <p>Constructor for TypeSerializationInfo.</p>
      *
-     * @param include a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
+     * @param include      a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
      * @param propertyName a {@link String} object.
      */
-    public TypeSerializationInfo( As include, String propertyName ) {
+    public TypeSerializationInfo(As include, String propertyName) {
         this.include = include;
         this.propertyName = propertyName;
         this.typeClassToInfo = new HashMap<Class<? extends T>, String>();
@@ -56,13 +56,13 @@ public class TypeSerializationInfo<T> {
     /**
      * <p>addTypeInfo</p>
      *
-     * @param clazz a {@link Class} object.
+     * @param clazz    a {@link Class} object.
      * @param typeInfo a {@link String} object.
-     * @param <S> the type
+     * @param <S>      the type
      * @return a {@link com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo} object.
      */
-    public <S extends T> TypeSerializationInfo<T> addTypeInfo( Class<S> clazz, String typeInfo ) {
-        typeClassToInfo.put( clazz, typeInfo );
+    public <S extends T> TypeSerializationInfo<T> addTypeInfo(Class<S> clazz, String typeInfo) {
+        typeClassToInfo.put(clazz, typeInfo);
         return this;
     }
 
@@ -90,7 +90,7 @@ public class TypeSerializationInfo<T> {
      * @param aClass a {@link Class} object.
      * @return a {@link String} object.
      */
-    public String getTypeInfo( Class aClass ) {
-        return typeClassToInfo.get( aClass );
+    public String getTypeInfo(Class aClass) {
+        return typeClassToInfo.get(aClass);
     }
 }

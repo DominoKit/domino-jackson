@@ -36,10 +36,10 @@ public class ObjectIdSerializer<I> {
     /**
      * <p>Constructor for ObjectIdSerializer.</p>
      *
-     * @param id a I object.
+     * @param id         a I object.
      * @param serializer a {@link com.progressoft.brix.domino.gwtjackson.JsonSerializer} object.
      */
-    public ObjectIdSerializer( I id, JsonSerializer<I> serializer ) {
+    public ObjectIdSerializer(I id, JsonSerializer<I> serializer) {
         this.id = id;
         this.serializer = serializer;
     }
@@ -48,9 +48,9 @@ public class ObjectIdSerializer<I> {
      * <p>serializeId</p>
      *
      * @param writer a {@link com.progressoft.brix.domino.gwtjackson.stream.JsonWriter} object.
-     * @param ctx a {@link JsonSerializationContext} object.
+     * @param ctx    a {@link JsonSerializationContext} object.
      */
-    public void serializeId(JsonWriter writer, JsonSerializationContext ctx ) {
-        serializer.serialize( writer, id, ctx );
+    public void serializeId(JsonWriter writer, JsonSerializationContext ctx) {
+        serializer.serialize(writer, id, ctx);
     }
 }

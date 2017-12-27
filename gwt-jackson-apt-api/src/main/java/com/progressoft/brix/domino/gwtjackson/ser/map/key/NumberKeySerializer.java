@@ -33,22 +33,27 @@ public final class NumberKeySerializer extends KeySerializer<Number> {
      *
      * @return an instance of {@link NumberKeySerializer}
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static NumberKeySerializer getInstance() {
         return INSTANCE;
     }
 
-    private NumberKeySerializer() { }
+    private NumberKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mustBeEscaped( JsonSerializationContext ctx ) {
+    public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( Number value, JsonSerializationContext ctx ) {
+    protected String doSerialize(Number value, JsonSerializationContext ctx) {
         return value.toString();
     }
 }

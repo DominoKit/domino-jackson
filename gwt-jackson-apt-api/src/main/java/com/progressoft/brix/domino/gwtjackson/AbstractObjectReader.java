@@ -30,13 +30,15 @@ public abstract class AbstractObjectReader<T> extends AbstractObjectMapper<T> im
      *
      * @param rootName a {@link String} object.
      */
-    public AbstractObjectReader( String rootName ) {
-        super( rootName );
+    public AbstractObjectReader(String rootName) {
+        super(rootName);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final JsonSerializer<?> newSerializer() {
-        throw new UnsupportedOperationException( "ObjectReader doesn't support serialization" );
+        throw new UnsupportedOperationException("ObjectReader doesn't support serialization");
     }
 }

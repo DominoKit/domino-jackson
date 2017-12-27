@@ -26,20 +26,20 @@ import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationExcep
  * @author nicolasmorel
  * @version $Id: $
  */
-public final class MalformedJsonException extends JsonDeserializationException
-{
-  private static final long serialVersionUID = 1L;
+public final class MalformedJsonException extends JsonDeserializationException {
+    private static final long serialVersionUID = 1L;
 
-  private MalformedJsonException(){}
+    private MalformedJsonException() {
+    }
 
-  /**
-   * <p>Constructor for MalformedJsonException.</p>
-   *
-   * @param msg a {@link String} object.
-   */
-  public MalformedJsonException(String msg) {
-    super(msg);
-  }
+    /**
+     * <p>Constructor for MalformedJsonException.</p>
+     *
+     * @param msg a {@link String} object.
+     */
+    public MalformedJsonException(String msg) {
+        super(msg);
+    }
 
 }
 //@formatter:on

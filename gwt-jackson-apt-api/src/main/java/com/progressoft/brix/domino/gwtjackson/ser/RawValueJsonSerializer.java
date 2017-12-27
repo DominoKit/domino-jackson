@@ -34,19 +34,22 @@ public class RawValueJsonSerializer<T> extends JsonSerializer<T> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link RawValueJsonSerializer}
      * @param <T> a T object.
+     * @return an instance of {@link RawValueJsonSerializer}
      */
     @SuppressWarnings("unchecked")
     public static <T> RawValueJsonSerializer<T> getInstance() {
         return (RawValueJsonSerializer<T>) INSTANCE;
     }
 
-    private RawValueJsonSerializer() { }
+    private RawValueJsonSerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void doSerialize(JsonWriter writer, Object value, JsonSerializationContext ctx, JsonSerializerParameters params ) {
-        writer.rawValue( value );
+    protected void doSerialize(JsonWriter writer, Object value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+        writer.rawValue(value);
     }
 }

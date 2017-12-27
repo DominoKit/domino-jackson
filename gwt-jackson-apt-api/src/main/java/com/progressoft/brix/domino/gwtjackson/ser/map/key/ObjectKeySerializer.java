@@ -39,15 +39,18 @@ public final class ObjectKeySerializer extends KeySerializer<Object> {
         return INSTANCE;
     }
 
-    private ObjectKeySerializer() { }
+    private ObjectKeySerializer() {
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected String doSerialize( Object value, JsonSerializationContext ctx ) {
-        if ( value instanceof Date ) {
-            return DateKeySerializer.getInstance().doSerialize( (Date) value, ctx );
+    protected String doSerialize(Object value, JsonSerializationContext ctx) {
+        if (value instanceof Date) {
+            return DateKeySerializer.getInstance().doSerialize((Date) value, ctx);
         } else {
-            return ToStringKeySerializer.getInstance().doSerialize( value, ctx );
+            return ToStringKeySerializer.getInstance().doSerialize(value, ctx);
         }
     }
 }
