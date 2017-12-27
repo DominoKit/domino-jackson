@@ -17,11 +17,9 @@
 package com.progressoft.brix.domino.gwtjackson;
 
 import com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException;
-import com.google.gwt.core.client.GWT;
 
 /**
  * Writes an object to JSON.
- * <p>To generate an implementation, use {@link GWT#create(Class)}.</p>
  * <p>Example : </p>
  * <pre>
  * public class Person {
@@ -34,7 +32,7 @@ import com.google.gwt.core.client.GWT;
  *
  * public interface PersonWriter extends ObjectWriter&lt;Person&gt; {}
  *
- * PersonWriter writer = GWT.create(PersonWriter.class);
+ * PersonWriter writer = new PersonWriterImpl();
  * String json = writer.write(new Person("Nicolas", "Morel"));
  *
  * json ==&gt; {"firstName":"Nicolas","lastName":"Morel"}

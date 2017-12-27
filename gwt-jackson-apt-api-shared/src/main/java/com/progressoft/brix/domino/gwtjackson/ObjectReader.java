@@ -17,11 +17,9 @@
 package com.progressoft.brix.domino.gwtjackson;
 
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
-import com.google.gwt.core.client.GWT;
 
 /**
  * Reads a JSON input and return an object
- * <p>To generate an implementation, use {@link GWT#create(Class)}.</p>
  * <p>Example : </p>
  * <pre>
  * public class Person {
@@ -30,7 +28,7 @@ import com.google.gwt.core.client.GWT;
  *
  * public interface PersonReader extends ObjectReader&lt;Person&gt; {}
  *
- * PersonReader reader = GWT.create(PersonReader.class);
+ * PersonReader reader = new PersonReaderMapperImpl();
  * Person person = reader.read("{\"firstName\":\"Nicolas\",\"lastName\":\"Morel\"}");
  *
  * person.firstName ==&gt; "Nicolas"

@@ -16,10 +16,9 @@
 
 package com.progressoft.brix.domino.gwtjackson.utils;
 
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
-import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
 
 import java.util.Date;
 import java.util.HashMap;

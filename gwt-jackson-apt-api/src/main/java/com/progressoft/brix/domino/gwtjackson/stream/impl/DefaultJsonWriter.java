@@ -18,7 +18,6 @@
 package com.progressoft.brix.domino.gwtjackson.stream.impl;
 
 import com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException;
-import com.google.gwt.core.client.JsArrayInteger;
 import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
 
 import java.util.logging.Level;
@@ -167,7 +166,7 @@ public class DefaultJsonWriter implements JsonWriter {
      */
     private final StringBuilder out;
 
-    private JsArrayInteger stack = JsArrayInteger.createArray().cast();
+    private IntegerStack stack = new IntegerStack();
     private int stackSize = 0;
 
     {
@@ -322,7 +321,7 @@ public class DefaultJsonWriter implements JsonWriter {
     }
 
     private void push(int newTop) {
-        stack.set(stackSize++, newTop);
+        stack.setAt(stackSize++, newTop);
     }
 
     /**
@@ -332,14 +331,14 @@ public class DefaultJsonWriter implements JsonWriter {
         if (stackSize == 0) {
             throw new IllegalStateException("JsonWriter is closed.");
         }
-        return stack.get(stackSize - 1);
+        return stack.getAt(stackSize - 1);
     }
 
     /**
      * Replace the value on the top of the stack with the given value.
      */
     private void replaceTop(int topOfStack) {
-        stack.set(stackSize - 1, topOfStack);
+        stack.setAt(stackSize - 1, topOfStack);
     }
 
     /**
@@ -552,7 +551,7 @@ public class DefaultJsonWriter implements JsonWriter {
     @Override
     public void close() {
         int size = stackSize;
-        if (size > 1 || size == 1 && stack.get(size - 1) != JsonScope.NONEMPTY_DOCUMENT) {
+        if (size > 1 || size == 1 && stack.getAt(size - 1) != JsonScope.NONEMPTY_DOCUMENT) {
             logger.log(Level.SEVERE, "Incomplete document");
             throw new JsonSerializationException("Incomplete document");
         }

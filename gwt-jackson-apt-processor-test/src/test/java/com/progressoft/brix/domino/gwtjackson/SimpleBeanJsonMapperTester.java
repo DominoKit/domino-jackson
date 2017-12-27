@@ -16,8 +16,6 @@
 
 package com.progressoft.brix.domino.gwtjackson;
 
-import com.google.gwt.core.client.GWT;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Time;
@@ -259,7 +257,7 @@ public final class SimpleBeanJsonMapperTester extends AbstractTester {
     }
 
     public void testWriteWithNullProperties(ObjectWriterTester<SimpleBean> writer) {
-        String doubleAndFloatZeroString = GWT.isProdMode() ? "0" : "0.0";
+        String doubleAndFloatZeroString = !System.getProperty("superdevmode").equals("on") ? "0" : "0.0";
 
         String expected = "{\"bytePrimitive\":0," +
                 "\"shortPrimitive\":0," +

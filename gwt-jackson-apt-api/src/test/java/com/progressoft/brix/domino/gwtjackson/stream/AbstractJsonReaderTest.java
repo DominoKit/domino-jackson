@@ -16,15 +16,10 @@
 
 package com.progressoft.brix.domino.gwtjackson.stream;
 
-import com.google.gwt.core.client.JsArrayMixed;
-import com.google.gwt.core.client.JsArrayString;
 import com.progressoft.brix.domino.gwtjackson.JacksonTestCase;
 import com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException;
-import com.progressoft.brix.domino.gwtjackson.stream.impl.DefaultJsonReader;
 import com.progressoft.brix.domino.gwtjackson.stream.impl.MalformedJsonException;
 import com.progressoft.brix.domino.gwtjackson.stream.impl.StringReader;
-import elemental2.core.Global;
-import jsinterop.base.Js;
 
 import java.math.BigInteger;
 import java.util.Arrays;
