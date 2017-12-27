@@ -36,12 +36,6 @@ Add the following dependecies to your project pom file
 </dependency>
 <dependency>
     <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-    <artifactId>gwt-jackson-apt-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <classifier>sources</classifier>
-</dependency>
-<dependency>
-    <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
     <artifactId>gwt-jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
