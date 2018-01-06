@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>gwt-jackson-apt-api-shared</artifactId>
-    <packaging>gwt-lib</packaging>
+    <packaging>jar</packaging>
 
     <name>gwt-jackson-apt-api-shared</name>
     <url>https://github.com/vegegoku/gwt-jackson-apt</url>
@@ -24,14 +24,14 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.gwt</groupId>-->
+            <!--<artifactId>gwt-user</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.google.gwt</groupId>-->
+            <!--<artifactId>gwt-dev</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -84,14 +84,14 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>net.ltgt.gwt.maven</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <configuration>
-                    <moduleName>com.progressoft.brix.domino.gwtjackson.GwtJacksonApt</moduleName>
-                    <moduleShortName>gwtjacksonapt</moduleShortName>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>net.ltgt.gwt.maven</groupId>-->
+                <!--<artifactId>gwt-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<moduleName>com.progressoft.brix.domino.gwtjackson.GwtJacksonApt</moduleName>-->
+                    <!--<moduleShortName>gwtjacksonapt</moduleShortName>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>

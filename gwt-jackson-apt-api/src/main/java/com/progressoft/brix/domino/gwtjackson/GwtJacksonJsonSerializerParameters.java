@@ -19,7 +19,6 @@ package com.progressoft.brix.domino.gwtjackson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.progressoft.brix.domino.gwtjackson.ser.IterableJsonSerializer;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.IdentitySerializationInfo;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo;
 import com.google.gwt.i18n.client.TimeZone;
@@ -30,9 +29,6 @@ import java.util.Set;
 /**
  * This class includes parameters defined through properties annotations like {@link JsonFormat}. They are specific to one
  * {@link JsonSerializer} and that's why they are not contained inside {@link JsonSerializationContext}.
- * <p>
- * For container serializers like {@link IterableJsonSerializer}, these parameters are passed to the value serializer.
- * </p>
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -178,8 +174,8 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
      * @return a {@link JsonSerializerParameters} object.
      */
     @Override
-    public JsonSerializerParameters setTimezone(TimeZone timezone) {
-        this.timezone = timezone;
+    public JsonSerializerParameters setTimezone(Object timezone) {
+        this.timezone = (TimeZone) timezone;
         return this;
     }
 

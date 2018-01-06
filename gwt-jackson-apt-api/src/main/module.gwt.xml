@@ -3,7 +3,10 @@
     <!-- GWT modules -->
     <inherits name="com.google.gwt.core.Core"/>
     <inherits name="com.google.gwt.i18n.I18N"/>
+    <!--<inherits name="com.progressoft.brix.domino.i18n.I18n"/>-->
     <inherits name="elemental2.core.Core"/>
+
+    <entry-point class="com.progressoft.brix.domino.gwtjackson.JacksonAptEntryPoint"/>
 
     <!-- Jackson annotations -->
     <inherits name="com.fasterxml.jackson.annotation.JacksonAnnotation"/>

@@ -176,14 +176,6 @@ public interface JsonWriter {
     JsonWriter value(Number value);
 
     /**
-     * Encodes {@code value}.
-     *
-     * @param value a value .
-     * @return this writer.
-     */
-    JsonWriter value(Object value);
-
-    /**
      * Encodes {@code value}.toString() as is.
      *
      * @param value a value .

@@ -1,0 +1,158 @@
+/*
+ * Copyright 2013 Nicolas Morel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.progressoft.brix.domino.gwtjackson.ser;
+
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.progressoft.brix.domino.gwtjackson.JacksonContextProvider;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializationContext;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializer;
+import com.progressoft.brix.domino.gwtjackson.JsonSerializerParameters;
+import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+
+/**
+ * Base implementation of {@link JsonSerializer} for dates.
+ *
+ * @author Nicolas Morel
+ * @version $Id: $
+ */
+public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSerializer<D> {
+
+    /**
+     * Default implementation of {@link BaseDateJsonSerializer} for {@link Date}
+     */
+    public static final class DateJsonSerializer extends BaseDateJsonSerializer<Date> {
+
+        private static final DateJsonSerializer INSTANCE = new DateJsonSerializer();
+
+        /**
+         * @return an instance of {@link DateJsonSerializer}
+         */
+        public static DateJsonSerializer getInstance() {
+            return INSTANCE;
+        }
+
+        private DateJsonSerializer() {
+        }
+
+        @Override
+        protected void doSerialize(JsonWriter writer, Date value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+            if ((ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric()) && params.getShape() != Shape.STRING) {
+                writer.value(value.getTime());
+            } else {
+                String date = JacksonContextProvider.get().dateFormat().format(params, value);
+                if (null == params.getPattern()) {
+                    writer.unescapeValue(date);
+                } else {
+                    writer.value(date);
+                }
+            }
+        }
+    }
+
+    /**
+     * Default implementation of {@link BaseDateJsonSerializer} for {@link java.sql.Date}
+     */
+    public static final class SqlDateJsonSerializer extends BaseDateJsonSerializer<java.sql.Date> {
+
+        private static final SqlDateJsonSerializer INSTANCE = new SqlDateJsonSerializer();
+
+        /**
+         * @return an instance of {@link SqlDateJsonSerializer}
+         */
+        public static SqlDateJsonSerializer getInstance() {
+            return INSTANCE;
+        }
+
+        private SqlDateJsonSerializer() {
+        }
+
+        @Override
+        protected void doSerialize(JsonWriter writer, java.sql.Date value, JsonSerializationContext ctx,
+                                   JsonSerializerParameters params) {
+            writer.unescapeValue(value.toString());
+        }
+    }
+
+    /**
+     * Default implementation of {@link BaseDateJsonSerializer} for {@link Date}
+     */
+    public static final class SqlTimeJsonSerializer extends BaseDateJsonSerializer<Time> {
+
+        private static final SqlTimeJsonSerializer INSTANCE = new SqlTimeJsonSerializer();
+
+        /**
+         * @return an instance of {@link SqlTimeJsonSerializer}
+         */
+        public static SqlTimeJsonSerializer getInstance() {
+            return INSTANCE;
+        }
+
+        private SqlTimeJsonSerializer() {
+        }
+
+        @Override
+        protected void doSerialize(JsonWriter writer, Time value, JsonSerializationContext ctx, JsonSerializerParameters params
+        ) {
+            writer.unescapeValue(value.toString());
+        }
+    }
+
+    /**
+     * Default implementation of {@link BaseDateJsonSerializer} for {@link Timestamp}
+     */
+    public static final class SqlTimestampJsonSerializer extends BaseDateJsonSerializer<Timestamp> {
+
+        private static final SqlTimestampJsonSerializer INSTANCE = new SqlTimestampJsonSerializer();
+
+        /**
+         * @return an instance of {@link SqlTimestampJsonSerializer}
+         */
+        public static SqlTimestampJsonSerializer getInstance() {
+            return INSTANCE;
+        }
+
+        private SqlTimestampJsonSerializer() {
+        }
+
+        @Override
+        protected void doSerialize(JsonWriter writer, Timestamp value, JsonSerializationContext ctx, JsonSerializerParameters
+                params) {
+            if (ctx.isWriteDatesAsTimestamps() || params.getShape().isNumeric()) {
+                writer.value(value.getTime());
+            } else {
+                String date = JacksonContextProvider.get().dateFormat().format(params, value);
+                if (null == params.getPattern()) {
+                    writer.unescapeValue(date);
+                } else {
+                    writer.value(date);
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean isEmpty(D value) {
+        return null == value || value.getTime() == 0l;
+    }
+}

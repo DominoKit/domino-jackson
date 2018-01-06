@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.IdentityDeserializationInfo;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.TypeDeserializationInfo;
-import com.progressoft.brix.domino.gwtjackson.deser.collection.ListJsonDeserializer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,9 +27,6 @@ import java.util.Set;
 /**
  * This class includes parameters defined through properties annotations like {@link JsonIgnoreProperties}. They are specific to one
  * {@link JsonDeserializer} and that's why they are not contained inside {@link JsonDeserializationContext}.
- * <p>
- * For container deserializers like {@link ListJsonDeserializer}, these parameters are passed to the value deserializer.
- * </p>
  *
  * @author Nicolas Morel
  * @version $Id: $

@@ -15,6 +15,7 @@
  */
 package com.progressoft.brix.domino.gwtjackson.processor.deserialization;
 
+import com.progressoft.brix.domino.gwtjackson.JacksonContextProvider;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 import com.progressoft.brix.domino.gwtjackson.JsonDeserializerParameters;
 import com.progressoft.brix.domino.gwtjackson.deser.bean.*;
@@ -24,6 +25,7 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonReader;
 import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import java.util.Map;
@@ -130,14 +132,10 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .returns(resultType)
-                .addStatement("$T map = new $T<>()", resultType, JsMapLike.class);
+                .addStatement("$T map = $T.get().mapLikeFactory().make()", resultType, JacksonContextProvider.class);
 
-        orderedFields().forEach(field -> {
-
-            builder.addStatement("map.put($S, $L)",
-                    field.getSimpleName(), new DeserializerBuilder(beanType, field).buildDeserializer());
-
-        });
+        orderedFields().stream().filter(this::isNotStatic).forEach(field -> builder.addStatement("map.put($S, $L)",
+                field.getSimpleName(), new DeserializerBuilder(beanType, field).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();

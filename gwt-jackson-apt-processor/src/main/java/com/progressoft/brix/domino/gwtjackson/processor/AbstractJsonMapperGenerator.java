@@ -112,4 +112,8 @@ public abstract class AbstractJsonMapperGenerator {
             this.accessor = accessor;
         }
     }
+
+    protected boolean isNotStatic(Element field) {
+        return !field.getModifiers().contains(Modifier.STATIC);
+    }
 }

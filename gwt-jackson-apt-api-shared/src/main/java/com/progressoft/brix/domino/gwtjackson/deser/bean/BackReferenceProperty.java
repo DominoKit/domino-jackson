@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package com.progressoft.brix.domino.gwtjackson.ser.map.key;
+package com.progressoft.brix.domino.gwtjackson.deser.bean;
 
-import com.progressoft.brix.domino.gwtjackson.utils.JsDateFormat;
-
-import java.sql.Date;
+import com.progressoft.brix.domino.gwtjackson.JsonDeserializationContext;
 
 /**
+ * <p>BackReferenceProperty interface.</p>
+ *
  * @author Nicolas Morel
+ * @version $Id: $
  */
-public class SqlDateKeySerializerTest extends AbstractKeySerializerTest<Date> {
+public interface BackReferenceProperty<T, R> {
 
-    @Override
-    protected DateKeySerializer createSerializer() {
-        return DateKeySerializer.getInstance();
-    }
-
-    public void testSerializeValue() {
-        Date date = new Date(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
-        String expected = JsDateFormat.format(date);
-        assertSerialization(expected, date);
-    }
+    /**
+     * <p>setBackReference</p>
+     *
+     * @param value     a T object.
+     * @param reference a R object.
+     * @param ctx       a {@link JsonDeserializationContext} object.
+     */
+    void setBackReference(T value, R reference, JsonDeserializationContext ctx);
 }

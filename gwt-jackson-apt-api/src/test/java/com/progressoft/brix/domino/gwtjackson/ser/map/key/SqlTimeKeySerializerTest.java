@@ -16,7 +16,7 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.map.key;
 
-import com.progressoft.brix.domino.gwtjackson.utils.DateFormat;
+import com.progressoft.brix.domino.gwtjackson.utils.JsDateFormat;
 
 import java.sql.Time;
 
@@ -32,7 +32,7 @@ public class SqlTimeKeySerializerTest extends AbstractKeySerializerTest<Time> {
 
     public void testSerializeValue() {
         Time time = new Time(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
-        String expected = DateFormat.format(time);
+        String expected = JsDateFormat.format(time);
         assertSerialization(expected, time);
     }
 }

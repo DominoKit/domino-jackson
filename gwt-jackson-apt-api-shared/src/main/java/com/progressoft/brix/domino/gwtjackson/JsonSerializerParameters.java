@@ -2,7 +2,6 @@ package com.progressoft.brix.domino.gwtjackson;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.google.gwt.i18n.client.TimeZone;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.IdentitySerializationInfo;
 import com.progressoft.brix.domino.gwtjackson.ser.bean.TypeSerializationInfo;
 
@@ -21,9 +20,9 @@ public interface JsonSerializerParameters {
 
     JsonSerializerParameters setLocale(String locale);
 
-    TimeZone getTimezone();
+    Object getTimezone();
 
-    JsonSerializerParameters setTimezone(TimeZone timezone);
+    JsonSerializerParameters setTimezone(Object timezone);
 
     Set<String> getIgnoredProperties();
 

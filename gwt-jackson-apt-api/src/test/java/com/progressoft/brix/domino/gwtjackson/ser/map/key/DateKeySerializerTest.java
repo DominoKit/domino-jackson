@@ -16,7 +16,7 @@
 
 package com.progressoft.brix.domino.gwtjackson.ser.map.key;
 
-import com.progressoft.brix.domino.gwtjackson.utils.DateFormat;
+import com.progressoft.brix.domino.gwtjackson.utils.JsDateFormat;
 
 import java.util.Date;
 
@@ -32,7 +32,7 @@ public class DateKeySerializerTest extends AbstractKeySerializerTest<Date> {
 
     public void testSerializeValue() {
         Date date = getUTCDate(2012, 8, 18, 12, 45, 56, 543);
-        String expected = DateFormat.format(date);
+        String expected = JsDateFormat.format(date);
         assertSerialization(expected, date);
     }
 }

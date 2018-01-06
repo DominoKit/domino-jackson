@@ -20,6 +20,9 @@ package com.progressoft.brix.domino.gwtjackson;
  * @author Nicolas Morel
  */
 public abstract class JacksonTestCase extends GwtJacksonTestCase {
+    static {
+        JacksonContextProvider.jacksonContext=new JsJacksonContext();
+    }
 
     @Override
     public String getModuleName() {
