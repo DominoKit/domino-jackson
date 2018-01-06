@@ -24,15 +24,6 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.google.gwt</groupId>-->
-            <!--<artifactId>gwt-user</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.google.gwt</groupId>-->
-            <!--<artifactId>gwt-dev</artifactId>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -84,14 +75,6 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>net.ltgt.gwt.maven</groupId>-->
-                <!--<artifactId>gwt-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<moduleName>com.progressoft.brix.domino.gwtjackson.GwtJacksonApt</moduleName>-->
-                    <!--<moduleShortName>gwtjacksonapt</moduleShortName>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 </project>
