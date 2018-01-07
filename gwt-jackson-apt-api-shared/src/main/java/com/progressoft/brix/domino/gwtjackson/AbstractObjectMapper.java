@@ -28,7 +28,7 @@ import com.progressoft.brix.domino.gwtjackson.stream.JsonWriter;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, ObjectWriter<T> {
+public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
 
     private final String rootName;
 
@@ -98,6 +98,7 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      *
      * @return the {@link JsonDeserializer} used by this mapper
      */
+    @Override
     public JsonDeserializer<T> getDeserializer() {
         if (null == deserializer) {
             deserializer = newDeserializer();
@@ -148,6 +149,7 @@ public abstract class AbstractObjectMapper<T> implements ObjectReader<T>, Object
      *
      * @return the {@link JsonSerializer} used by this mapper
      */
+    @Override
     public JsonSerializer<T> getSerializer() {
         if (null == serializer) {
             serializer = (JsonSerializer<T>) newSerializer();

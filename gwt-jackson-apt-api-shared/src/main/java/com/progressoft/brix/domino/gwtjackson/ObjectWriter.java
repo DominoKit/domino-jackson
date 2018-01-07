@@ -62,4 +62,6 @@ public interface ObjectWriter<T> {
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonSerializationException if an exception occurs while writing the output
      */
     String write(T value, JsonSerializationContext ctx) throws JsonSerializationException;
+
+    JsonSerializer<T> getSerializer();
 }

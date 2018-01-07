@@ -59,4 +59,6 @@ public interface ObjectReader<T> {
      * @throws com.progressoft.brix.domino.gwtjackson.exception.JsonDeserializationException if an exception occurs while reading the input
      */
     T read(String input, JsonDeserializationContext ctx) throws JsonDeserializationException;
+
+    JsonDeserializer<T> getDeserializer();
 }
