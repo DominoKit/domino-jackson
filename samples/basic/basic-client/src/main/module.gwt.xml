@@ -4,7 +4,7 @@
     <inherits name="com.google.gwt.user.theme.clean.Clean"/>
     <inherits name="elemental2.core.Core"/>
     <inherits name="elemental2.dom.Dom"/>
-    <inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>
+    <inherits name="com.progressoft.brix.domino.jacksonapt.GwtJacksonApt"/>
 
     <source path=""/>
 

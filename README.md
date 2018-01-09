@@ -30,13 +30,13 @@ Add the following dependecies to your project pom file
 
 ```xml
 <dependency>
-    <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-    <artifactId>gwt-jackson-apt-api</artifactId>
+    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <artifactId>gwt-jackson-apt</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 <dependency>
-    <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-    <artifactId>gwt-jackson-apt-processor</artifactId>
+    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <artifactId>jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
@@ -45,7 +45,7 @@ Add the following dependecies to your project pom file
 
 ### Usage
 
-Add `<inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>` to your module descriptor XML file.
+Add `<inherits name="com.progressoft.brix.domino.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
 
 Then just create an interface extending `ObjectReader`, `ObjectWriter` or `ObjectMapper` and annotate it with `JSONReader`, `JSONWriter` or `JSONMapper` respectively if you want to read JSON, write an object to JSON or both.
 

@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-    <artifactId>gwt-jackson-apt</artifactId>
+    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <artifactId>jackson-apt</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -210,10 +210,11 @@
         </pluginManagement>
     </build>
     <modules>
-        <module>gwt-jackson-apt-api</module>
-        <module>gwt-jackson-apt-api-shared</module>
+        <module>gwt-jackson-apt</module>
+        <module>jackson-apt-server</module>
+        <module>jackson-apt-shared</module>
         <module>gwt-jackson-apt-test</module>
-        <module>gwt-jackson-apt-processor</module>
+        <module>jackson-apt-processor</module>
         <module>gwt-jackson-apt-processor-test</module>
     </modules>
 </project>

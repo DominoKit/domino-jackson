@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-        <artifactId>gwt-jackson-apt</artifactId>
+        <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+        <artifactId>jackson-apt</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -55,13 +55,13 @@
             <classifier>sources</classifier>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-            <artifactId>gwt-jackson-apt-api-shared</artifactId>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.gwtjackson</groupId>
-            <artifactId>gwt-jackson-apt-api-shared</artifactId>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
             <classifier>sources</classifier>
         </dependency>
@@ -78,7 +78,7 @@
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
-                    <moduleName>com.progressoft.brix.domino.gwtjackson.GwtJacksonAptTest</moduleName>
+                    <moduleName>com.progressoft.brix.domino.jacksonapt.GwtJacksonAptTest</moduleName>
                     <moduleShortName>gwtjacksonapttest</moduleShortName>
                 </configuration>
             </plugin>

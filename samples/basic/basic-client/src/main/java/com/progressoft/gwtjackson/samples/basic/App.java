@@ -1,8 +1,8 @@
 package com.progressoft.gwtjackson.samples.basic;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.progressoft.brix.domino.gwtjackson.ObjectMapper;
-import com.progressoft.brix.domino.gwtjackson.annotation.JSONMapper;
+import com.progressoft.brix.domino.jacksonapt.ObjectMapper;
+import com.progressoft.brix.domino.jacksonapt.annotation.JSONMapper;
 import elemental2.dom.DomGlobal;
 
 /**

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module>
-    <inherits name="com.progressoft.brix.domino.gwtjackson.GwtJacksonApt"/>
-    <inherits name="com.fasterxml.jackson.annotation.JacksonAnnotation"/>
-    <inherits name="com.fasterxml.jackson.databind.annotation.JacksonDatabindAnnotation"/>
-    <source path=""/>
-</module>
