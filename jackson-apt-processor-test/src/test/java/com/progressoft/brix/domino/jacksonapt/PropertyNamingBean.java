@@ -17,10 +17,12 @@
 package com.progressoft.brix.domino.jacksonapt;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.progressoft.brix.domino.jacksonapt.annotation.JSONMapper;
 
 import java.util.List;
 
 @JsonPropertyOrder(alphabetic = true)
+@JSONMapper
 public class PropertyNamingBean {
 
     private String simpleName;

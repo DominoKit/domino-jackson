@@ -17,6 +17,7 @@
 package com.progressoft.brix.domino.jacksonapt;
 
 
+import com.progressoft.brix.domino.jacksonapt.annotation.JSONMapper;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 

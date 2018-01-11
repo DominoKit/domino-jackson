@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ServerJacksonAptProcessorTest extends JacksonTestCase {
 
     private SimpleBeanJsonMapperTester tester = SimpleBeanJsonMapperTester.INSTANCE;
+    private PropertyNamingBean_MapperImpl PROPERTY_NAMING_MAPPER = new PropertyNamingBean_MapperImpl();
 
     @JSONMapper
     public interface SimpleBeanMapper extends ObjectReader<SimpleBean>, ObjectReaderTester<SimpleBean>,
@@ -50,11 +51,11 @@ public class ServerJacksonAptProcessorTest extends JacksonTestCase {
     public interface BeanWithCollectionsTypeMapper extends ObjectReader<BeanWithCollectionsType>, ObjectWriter<BeanWithCollectionsType> {
         BeanWithCollectionsTypeMapper INSTANCE = new ServerJacksonAptProcessorTest_BeanWithCollectionsTypeMapperImpl();
     }
-
-    @JSONMapper
-    public interface PropertyNamingBeanMapper extends ObjectReaderTester<PropertyNamingBean>, ObjectWriterTester<PropertyNamingBean>, ObjectMapper<PropertyNamingBean> {
-        PropertyNamingBeanMapper INSTANCE = new ServerJacksonAptProcessorTest_PropertyNamingBeanMapperImpl();
-    }
+//
+//    @JSONMapper
+//    public interface PropertyNamingBeanMapper extends ObjectReaderTester<PropertyNamingBean>, ObjectWriterTester<PropertyNamingBean>, ObjectMapper<PropertyNamingBean> {
+//
+//    }
 
     @JSONMapper
     public interface BeanWithMapsTypeMapper extends ObjectReader<BeanWithMapsType>, ObjectWriter<BeanWithMapsType> {
@@ -75,7 +76,7 @@ public class ServerJacksonAptProcessorTest extends JacksonTestCase {
 
     @Test
     public void testValue() {
-        final ObjectMapperTester<PropertyNamingBean> mapper = createMapper(PropertyNamingBeanMapper.INSTANCE);
+        final ObjectMapperTester<PropertyNamingBean> mapper = createMapper(PROPERTY_NAMING_MAPPER);
         PropertyNamingTester.INSTANCE.testValue(mapper);
         PropertyNamingTester.INSTANCE.testRead(mapper);
     }

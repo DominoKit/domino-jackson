@@ -20,7 +20,6 @@ public class JacksonContextProvider {
         return jacksonContext;
     }
 
-    @GwtIncompatible
     private static void initContext() {
         ServiceLoader<Initializer> load = ServiceLoader.load(Initializer.class);
         if(load.iterator().hasNext())

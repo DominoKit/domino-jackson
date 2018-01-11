@@ -3,9 +3,12 @@
 
 gwt-jackson-apt
 =====
-gwt-jackson-apt is an APT bases JSON parser for [GWT](http://www.gwtproject.org/) based on [gwt-jackson](https://github.com/nmorel/gwt-jackson) the original thanks goes to [Nicolas Morel](https://github.com/nmorel) for building gwt-jackson library.
+jackson-apt is an APT bases JSON parser for [GWT](http://www.gwtproject.org/) based on [gwt-jackson](https://github.com/nmorel/gwt-jackson) the original thanks goes to [Nicolas Morel](https://github.com/nmorel) for building gwt-jackson library.
 
 this library provides limited support to what gwt-jackson provides, but this will change as more support for features will be added gradually.
+
+unlike the gwt-jackson, jackson-apt allow the use of the same Mapper class on both client side and server side, which means that the mappers can be defined and generated into the shared module instead of the client module, it is even possible to use the mapper in a pure server side application e.g: Android Apps.
+ 
 
 Quick start
 -------------
@@ -26,7 +29,11 @@ Quick start
 </repository>
 ```
 
-Add the following dependecies to your project pom file
+Add the following dependencies to your project pom file
+
+#### Client side dependencies
+
+if you want to use the jackson-apt in the client side add the following dependency to your client module
 
 ```xml
 <dependency>
@@ -34,18 +41,65 @@ Add the following dependecies to your project pom file
     <artifactId>gwt-jackson-apt</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
+```
+
+you will also need to add `<inherits name="com.progressoft.brix.domino.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
+
+if you want to generate mappers into your client side module you will need to add the processor dependency.
+
+```xml
 <dependency>
     <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
     <artifactId>jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
-
 ```
 
-### Usage
+#### Server side dependencies
 
-Add `<inherits name="com.progressoft.brix.domino.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
+if you want to use jackson-apt in the server side add the following dependency to your server module
+
+```xml
+<dependency>
+    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <artifactId>jackson-apt-server</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+if you want to generate mappers into your server side module you will need to add the processor dependency.
+
+```xml
+<dependency>
+    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <artifactId>jackson-apt-processor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+#### Shared side dependencies
+
+if you want the Mappers to be generated into the shared module and make them available for both client and server add the following dependencies to your shared module
+
+```xml
+<dependency>
+  <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+  <artifactId>jackson-apt-shared</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+  <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+  <artifactId>jackson-apt-processor</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <scope>provided</scope>
+</dependency>
+```
+
+
+
+### Usage
 
 Then just create an interface extending `ObjectReader`, `ObjectWriter` or `ObjectMapper` and annotate it with `JSONReader`, `JSONWriter` or `JSONMapper` respectively if you want to read JSON, write an object to JSON or both.
 
@@ -90,6 +144,44 @@ public class TestEntryPoint implements EntryPoint {
         Person person = PersonMapper.INSTANCE.read( json );
         GWT.log( person.getFirstName() + " " + person.getLastName() ); // > John Doe
     }
+}
+```
+
+if you have a data object in your shared module and want to generate a mapper that can be used for both client and server you can annotate the data object class, or create the interface as the sample above:
+
+```java
+@JSONMapper
+public class GreetingResponse{
+
+	public static GreetingResponse_MapperImpl MAPPER=new GreetingResponse_MapperImpl();
+
+	private String greeting;
+	private String serverInfo;
+	private String userAgent;
+
+	public String getGreeting() {
+		return greeting;
+	}
+
+	public void setGreeting(String greeting) {
+		this.greeting = greeting;
+	}
+
+	public String getServerInfo() {
+		return serverInfo;
+	}
+
+	public void setServerInfo(String serverInfo) {
+		this.serverInfo = serverInfo;
+	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
 }
 ```
 
@@ -228,6 +320,8 @@ public class TestBean {
     public Map<Short, Time> map;
     public SortedMap<String, Short> sortedMap;
     public TreeMap<String, BigInteger> treeMap;
+    
+    public AnotherBean anotherBean;
 }
 
 ```
@@ -235,9 +329,9 @@ public class TestBean {
 ### Road map
 
 More features from the original GWT-Jackson will be supported, starting from the most basic and important ones
-- Remove all JSNI, _JSNI is partially removed but still used in the serializers and deserializers_ 
+- ~~Remove all JSNI~~, _done_ only need to replace the dependency on Gwt i18n 
 - ~~Support nested beans~~ _done_.
-- Support JsTypes
+- Support JsTypes _Partially done_
 - Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
 - Support Inheritance
 - Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
