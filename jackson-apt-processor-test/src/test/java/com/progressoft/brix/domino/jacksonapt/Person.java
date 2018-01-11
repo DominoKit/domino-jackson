@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Nicolas Morel
+ * Copyright 2015 Nicolas Morel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,21 @@
 
 package com.progressoft.brix.domino.jacksonapt;
 
+
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
+
 /**
  * @author Nicolas Morel
  */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
+@JsType
+public class Person {
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
-
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+    @JsProperty(name = "firstName")
+    public String firstName;
+    @JsProperty(name = "lastName")
+    public String lastName;
+    @JsProperty(name = "bio")
+    public String bio;
 }
+

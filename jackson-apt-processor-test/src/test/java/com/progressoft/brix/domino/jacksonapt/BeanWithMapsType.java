@@ -16,18 +16,24 @@
 
 package com.progressoft.brix.domino.jacksonapt;
 
-/**
- * @author Nicolas Morel
- */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
+import java.util.*;
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
+public class BeanWithMapsType {
 
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+    public AbstractMap<String, Integer> abstractMap;
+
+    public EnumMap<AnEnum, Integer> enumMap;
+
+    public HashMap<String, Integer> hashMap;
+
+    public IdentityHashMap<String, Integer> identityHashMap;
+
+    public LinkedHashMap<String, Integer> linkedHashMap;
+
+    public Map<String, Integer> map;
+
+    public SortedMap<String, Integer> sortedMap;
+
+    public TreeMap<String, Integer> treeMap;
+
 }

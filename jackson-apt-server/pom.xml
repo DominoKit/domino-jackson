@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>jackson-apt-server</artifactId>
-    <packaging>gwt-lib</packaging>
+    <packaging>jar</packaging>
 
     <name>jackson-apt-server</name>
     <url>https://github.com/vegegoku/gwt-jackson-apt</url>
@@ -29,44 +29,18 @@
             <artifactId>gwt-user</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <classifier>sources</classifier>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.google.elemental2</groupId>
-            <artifactId>elemental2-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
-            <artifactId>jackson-apt-shared</artifactId>
-            <version>${project.version}</version>
-            <classifier>sources</classifier>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -79,19 +53,11 @@
             <version>3.9.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
-            <artifactId>gwt-jackson-apt-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
-            <artifactId>gwt-jackson-apt-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-            <scope>test</scope>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0-rc4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -120,14 +86,6 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>net.ltgt.gwt.maven</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <configuration>
-                    <moduleName>com.progressoft.brix.domino.jacksonapt.GwtJacksonApt</moduleName>
-                    <moduleShortName>gwtjacksonapt</moduleShortName>
-                </configuration>
             </plugin>
         </plugins>
     </build>

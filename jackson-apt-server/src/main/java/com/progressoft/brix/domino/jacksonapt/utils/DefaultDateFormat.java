@@ -27,6 +27,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,7 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
      * to ISO-8601 date formatting standard, when it includes basic undecorated
      * timezone definition
      */
-    public static final DateTimeFormatter DATE_FORMAT_STR_ISO8601 = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+    public static final DateTimeFormatter DATE_FORMAT_STR_ISO8601 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 //    public static final DateTimeFormatter DATE_FORMAT_STR_ISO8601 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     /**
@@ -167,7 +168,11 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
      */
     public Date parse(boolean useBrowserTimezone, String pattern, Boolean hasTz, String date) {
         if (null == pattern) {
+            try {
                 return parse(DefaultDateFormat.DATE_FORMAT_STR_ISO8601, date);
+            }catch (DateTimeParseException e){
+                return parse(DefaultDateFormat.DATE_FORMAT_STR_ISO8601_Z, date);
+            }
         } else {
             String patternCacheKey = pattern + useBrowserTimezone;
             DateParser parser = CACHE_PARSERS.get(patternCacheKey);

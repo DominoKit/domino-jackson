@@ -19,15 +19,5 @@ package com.progressoft.brix.domino.jacksonapt;
 /**
  * @author Nicolas Morel
  */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
-
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
-
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+public interface ObjectMapperTester<T> extends ObjectReaderTester<T>, ObjectWriterTester<T> {
 }

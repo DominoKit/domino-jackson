@@ -412,10 +412,7 @@ public class FastJsonWriter implements JsonWriter {
     }
 
     private void string(String value) {
-        out.append("\"");
         out.append(JacksonContextProvider.get().stringifier().stringify(value));
-        out.append("\"");
-
     }
 
     private void newline() {

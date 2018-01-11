@@ -19,7 +19,10 @@ package com.progressoft.brix.domino.jacksonapt;
 /**
  * @author Nicolas Morel
  */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
+public abstract class JacksonTestCase extends ServerJacksonTestCase {
+    static {
+        JacksonContextProvider.jacksonContext=new ServerJacksonContext();
+    }
 
     @Override
     protected JsonDeserializationContext newDefaultDeserializationContext() {

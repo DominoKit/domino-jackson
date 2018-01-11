@@ -107,6 +107,11 @@
             <classifier>sources</classifier>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-apt-server</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

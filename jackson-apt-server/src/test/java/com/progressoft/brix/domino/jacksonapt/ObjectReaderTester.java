@@ -19,15 +19,7 @@ package com.progressoft.brix.domino.jacksonapt;
 /**
  * @author Nicolas Morel
  */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
+public interface ObjectReaderTester<T> {
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
-
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+    T read(String input);
 }

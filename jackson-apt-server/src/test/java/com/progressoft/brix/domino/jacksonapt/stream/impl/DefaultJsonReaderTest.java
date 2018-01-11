@@ -19,7 +19,7 @@ public class DefaultJsonReaderTest extends AbstractJsonReaderTest {
     }
 
     @Test
-	public void testStrictVeryLongNumber() {
+    public void testStrictVeryLongNumber() {
         JsonReader reader = newJsonReader("[0." + repeat('9', 8192) + "]");
         reader.beginArray();
         try {
@@ -30,7 +30,7 @@ public class DefaultJsonReaderTest extends AbstractJsonReaderTest {
     }
 
     @Test
-	public void testLenientVeryLongNumber() {
+    public void testLenientVeryLongNumber() {
         JsonReader reader = newJsonReader("[0." + repeat('9', 8192) + "]");
         reader.setLenient(true);
         reader.beginArray();

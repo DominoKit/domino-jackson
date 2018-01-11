@@ -1,5 +1,6 @@
 package com.progressoft.brix.domino.jacksonapt;
 
+import com.google.auto.service.AutoService;
 import com.progressoft.brix.domino.jacksonapt.deser.array.cast.DefaultDoubleArrayReader;
 import com.progressoft.brix.domino.jacksonapt.deser.array.cast.DefaultIntegerArrayReader;
 import com.progressoft.brix.domino.jacksonapt.deser.array.cast.DefaultShortArrayReader;
@@ -8,7 +9,11 @@ import com.progressoft.brix.domino.jacksonapt.deser.bean.DefaultMapLike;
 import com.progressoft.brix.domino.jacksonapt.stream.impl.DefaultIntegerStack;
 import com.progressoft.brix.domino.jacksonapt.utils.DefaultDateFormat;
 
-public class ServerJacksonContext implements JacksonContext{
+import java.lang.instrument.Instrumentation;
+import java.util.function.Supplier;
+
+@AutoService(JacksonContextProvider.Initializer.class)
+public class ServerJacksonContext implements JacksonContext, JacksonContextProvider.Initializer {
 
     private static final ValueStringifier VALUE_STRINGIFIER=new ServerValueStringifier();
 
@@ -60,5 +65,10 @@ public class ServerJacksonContext implements JacksonContext{
     @Override
     public JsonDeserializerParameters defaultDeserializerParameters() {
         return ServerJacksonJsonDeserializerParameters.DEFAULT;
+    }
+
+    @Override
+    public void init() {
+        JacksonContextProvider.jacksonContext=new ServerJacksonContext();
     }
 }

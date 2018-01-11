@@ -1,11 +1,14 @@
 package com.progressoft.brix.domino.jacksonapt;
 
+import com.google.gwt.core.shared.GwtIncompatible;
+import com.google.web.bindery.requestfactory.server.ServiceLayer;
 import com.progressoft.brix.domino.jacksonapt.deser.bean.MapLike;
 import com.progressoft.brix.domino.jacksonapt.deser.map.key.DateKeyParser;
 import com.progressoft.brix.domino.jacksonapt.stream.JsonReader;
 import com.progressoft.brix.domino.jacksonapt.stream.Stack;
 
 import java.util.Date;
+import java.util.ServiceLoader;
 
 public interface JacksonContext {
 
@@ -19,7 +22,6 @@ public interface JacksonContext {
     DoubleArrayReader doubleArrayReader();
     JsonSerializerParameters defaultSerializerParameters();
     JsonDeserializerParameters defaultDeserializerParameters();
-
 
     interface DateFormat{
         String format(Date date);
@@ -55,7 +57,5 @@ public interface JacksonContext {
     interface DoubleArrayReader {
         double[] readArray(JsonReader reader);
     }
-
-
 
 }

@@ -216,5 +216,6 @@
         <module>gwt-jackson-apt-test</module>
         <module>jackson-apt-processor</module>
         <module>gwt-jackson-apt-processor-test</module>
+        <module>jackson-apt-processor-test</module>
     </modules>
 </project>

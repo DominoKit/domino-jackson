@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Nicolas Morel
+ * Copyright 2017 Ahmad Bawaneh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.progressoft.brix.domino.jacksonapt;
 
-/**
- * @author Nicolas Morel
- */
-public abstract class JacksonTestCase extends BaseJacksonTestCase {
+import com.google.gwt.junit.tools.GWTTestSuite;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
-
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({ServerJacksonAptProcessorTest.class})
+public class ServerJacksonAptProcessorSuite extends TestSuite {
 }
