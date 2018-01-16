@@ -6,8 +6,6 @@
     <!--<inherits name="com.progressoft.brix.domino.i18n.I18n"/>-->
     <inherits name="elemental2.core.Core"/>
 
-    <entry-point class="com.progressoft.brix.domino.jacksonapt.JacksonAptEntryPoint"/>
-
     <!-- Jackson annotations -->
     <inherits name="com.fasterxml.jackson.annotation.JacksonAnnotation"/>
     <inherits name="com.fasterxml.jackson.databind.annotation.JacksonDatabindAnnotation"/>

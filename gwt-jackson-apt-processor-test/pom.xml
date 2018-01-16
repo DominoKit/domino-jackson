@@ -14,7 +14,7 @@
 
     <name>gwt-jackson-processor-test</name>
     <url>https://github.com/vegegoku/gwt-jackson-apt</url>
-    <description>Apt based gwt-jackson</description>
+    <description>Apt based jackson</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,28 +34,16 @@
             <artifactId>gwt-dev</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <scope>test</scope>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-super</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-super</artifactId>
+            <version>${project.version}</version>
             <classifier>sources</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <classifier>sources</classifier>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.elemental2</groupId>
@@ -85,7 +73,7 @@
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>jackson-apt-processor</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -97,20 +85,20 @@
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <classifier>sources</classifier>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>jackson-apt-server</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

@@ -92,7 +92,6 @@ public abstract class JsonDeserializer<T> {
      * @param reference     reference to set
      * @param value         value to set the reference to.
      * @param ctx           Context for the full deserialization process
-     * @see com.fasterxml.jackson.annotation.JsonBackReference
      */
     public void setBackReference(String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
         throw new JsonDeserializationException("Cannot set a back reference to the type managed by this deserializer");

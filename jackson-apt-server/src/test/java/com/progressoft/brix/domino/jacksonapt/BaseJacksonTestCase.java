@@ -16,7 +16,6 @@
 
 package com.progressoft.brix.domino.jacksonapt;
 
-import com.google.gwt.junit.client.GWTTestCase;
 
 import java.util.Date;
 

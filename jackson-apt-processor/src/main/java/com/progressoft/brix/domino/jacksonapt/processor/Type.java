@@ -15,10 +15,8 @@
  */
 package com.progressoft.brix.domino.jacksonapt.processor;
 
-import com.progressoft.brix.domino.jacksonapt.processor.serialization.AptSerializerBuilder;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
-import jsinterop.annotations.JsType;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Name;
@@ -26,15 +24,12 @@ import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.Diagnostic;
 import java.util.Collection;
 import java.util.Map;
 
 import static com.progressoft.brix.domino.jacksonapt.processor.ObjectMapperProcessor.elementUtils;
-import static com.progressoft.brix.domino.jacksonapt.processor.ObjectMapperProcessor.messager;
 import static com.progressoft.brix.domino.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 public class Type {
 

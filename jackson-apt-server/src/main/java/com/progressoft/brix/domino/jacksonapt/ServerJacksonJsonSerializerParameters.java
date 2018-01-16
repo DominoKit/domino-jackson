@@ -160,7 +160,7 @@ public final class ServerJacksonJsonSerializerParameters implements JsonSerializ
     /**
      * <p>Getter for the field <code>timezone</code>.</p>
      *
-     * @return a {@link com.google.gwt.i18n.client.TimeZone} object.
+     * @return a {@link ZoneId} object.
      */
     @Override
     public ZoneId getTimezone() {
@@ -170,7 +170,7 @@ public final class ServerJacksonJsonSerializerParameters implements JsonSerializ
     /**
      * <p>Setter for the field <code>timezone</code>.</p>
      *
-     * @param timezone a {@link com.google.gwt.i18n.client.TimeZone} object.
+     * @param timezone a {@link ZoneId} object.
      * @return a {@link JsonSerializerParameters} object.
      */
     @Override

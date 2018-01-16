@@ -16,7 +16,6 @@
 
 package com.progressoft.brix.domino.jacksonapt.stream;
 
-
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 

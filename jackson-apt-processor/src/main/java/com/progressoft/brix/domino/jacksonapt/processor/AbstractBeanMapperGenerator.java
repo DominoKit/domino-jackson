@@ -37,7 +37,6 @@ public abstract class AbstractBeanMapperGenerator {
     }
 
     private String enclosingName(Element element, String postfix) {
-        messager.printMessage(Diagnostic.Kind.WARNING, element.getSimpleName()+" : "+notEnclosed(element) +" : "+element.getEnclosingElement().getSimpleName().toString()+" : "+element.getEnclosingElement().getKind().toString());
         if (useInterface(element)) {
             return element.getEnclosingElement().getSimpleName().toString() + postfix;
 

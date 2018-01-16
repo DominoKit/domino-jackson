@@ -15,7 +15,7 @@
 
     <name>gwt-jackson-apt-test</name>
     <url>https://github.com/vegegoku/gwt-jackson-apt</url>
-    <description>Apt based gwt-jackson</description>
+    <description>Apt based jackson</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,24 +37,6 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
@@ -62,6 +44,17 @@
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>jackson-apt-shared</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-super</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-super</artifactId>
             <version>${project.version}</version>
             <classifier>sources</classifier>
         </dependency>

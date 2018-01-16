@@ -66,28 +66,6 @@
                 <version>4.12</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-                <classifier>sources</classifier>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-                <classifier>sources</classifier>
-            </dependency>
-            <dependency>
                 <groupId>com.google.elemental2</groupId>
                 <artifactId>elemental2-core</artifactId>
                 <version>1.0.0-RC1</version>
@@ -148,11 +126,13 @@
                         <sourceLevel>1.8</sourceLevel>
                         <failOnError>true</failOnError>
                         <useCompilerArgsForTests>true</useCompilerArgsForTests>
+
                         <codeserverArgs>
                             <arg>-generateJsInteropExports</arg>
                         </codeserverArgs>
                         <compilerArgs>
                             <compilerArg>-generateJsInteropExports</compilerArg>
+                            <!--<compilerArg>-strict</compilerArg>-->
                         </compilerArgs>
                     </configuration>
                 </plugin>
@@ -180,7 +160,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
+                    <version>3.0.0</version>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
@@ -217,5 +197,6 @@
         <module>jackson-apt-processor</module>
         <module>gwt-jackson-apt-processor-test</module>
         <module>jackson-apt-processor-test</module>
+        <module>jackson-super</module>
     </modules>
 </project>

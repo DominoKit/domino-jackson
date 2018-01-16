@@ -52,6 +52,10 @@
         <configuration>
           <moduleName>com.progressoft.brix.domino.jacksonapt.samples.App</moduleName>
           <moduleShortName>app</moduleShortName>
+          <compilerArgs>
+            <compilerArg>-gen</compilerArg>
+            <compilerArg>/mnt/CODE/TEMP</compilerArg>
+          </compilerArgs>
         </configuration>
       </plugin>
     </plugins>

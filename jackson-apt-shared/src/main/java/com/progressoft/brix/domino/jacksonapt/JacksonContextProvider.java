@@ -1,7 +1,5 @@
 package com.progressoft.brix.domino.jacksonapt;
 
-import com.google.gwt.core.shared.GwtIncompatible;
-
 import java.util.ServiceLoader;
 
 import static java.util.Objects.isNull;

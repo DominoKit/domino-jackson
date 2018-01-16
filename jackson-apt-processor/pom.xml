@@ -14,7 +14,7 @@
 
     <name>jackson-apt-processor</name>
     <url>https://github.com/vegegoku/gwt-jackson-apt</url>
-    <description>Apt based gwt-jackson</description>
+    <description>Apt based jackson</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,26 +26,28 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-super</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <artifactId>jackson-apt-shared</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.squareup</groupId>
@@ -78,7 +80,7 @@
         <dependency>
             <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

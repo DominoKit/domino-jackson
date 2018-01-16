@@ -1,5 +1,7 @@
 package com.progressoft.brix.domino.jacksonapt;
 
+import com.google.gwt.core.shared.GwtIncompatible;
+
 import static java.util.Objects.isNull;
 
 public class JacksonContextProvider {
