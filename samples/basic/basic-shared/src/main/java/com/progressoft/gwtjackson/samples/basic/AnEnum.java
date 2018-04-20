@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.progressoft.gwtjackson.samples.basic;
+package org.dominokit.gwtjackson.samples.basic;
 
 /**
  * @author Nicolas Morel

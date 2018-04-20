@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+        <groupId>org.dominokit.jacksonapt</groupId>
         <artifactId>jackson-apt</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -26,10 +26,6 @@
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
         </dependency>
         <dependency>
@@ -37,12 +33,12 @@
             <artifactId>elemental2-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>jackson-apt-shared</artifactId>
             <version>${project.version}</version>
             <classifier>sources</classifier>
@@ -54,13 +50,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt-test</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>gwt-jackson-apt-test</artifactId>
             <version>${project.version}</version>
             <classifier>sources</classifier>
@@ -68,14 +64,36 @@
         </dependency>
 
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>jackson-super</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+            <groupId>org.dominokit.jacksonapt</groupId>
             <artifactId>jackson-super</artifactId>
             <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject.i18n</groupId>
+            <artifactId>gwt-cldr</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject.i18n</groupId>
+            <artifactId>gwt-cldr</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject.i18n</groupId>
+            <artifactId>gwt-datetimeformat</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject.i18n</groupId>
+            <artifactId>gwt-datetimeformat</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <classifier>sources</classifier>
         </dependency>
     </dependencies>
@@ -110,7 +128,7 @@
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
-                    <moduleName>com.progressoft.brix.domino.jacksonapt.GwtJacksonApt</moduleName>
+                    <moduleName>org.dominokit.jacksonapt.GwtJacksonApt</moduleName>
                     <moduleShortName>gwtjacksonapt</moduleShortName>
                 </configuration>
             </plugin>

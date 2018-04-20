@@ -1,4 +1,4 @@
-package com.progressoft.brix.domino.jacksonapt.samples;
+package org.dominokit.jacksonapt.samples;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

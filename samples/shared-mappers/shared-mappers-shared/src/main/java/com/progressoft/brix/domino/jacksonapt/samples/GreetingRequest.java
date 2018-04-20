@@ -1,6 +1,6 @@
-package com.progressoft.brix.domino.jacksonapt.samples;
+package org.dominokit.jacksonapt.samples;
 
-import com.progressoft.brix.domino.jacksonapt.annotation.JSONMapper;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
 
 @JSONMapper
 public class GreetingRequest {

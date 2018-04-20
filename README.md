@@ -38,19 +38,19 @@ if you want to use the jackson-apt in the client side add the following dependen
 
 ```xml
 <dependency>
-    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <groupId>org.dominokit.jacksonapt</groupId>
     <artifactId>gwt-jackson-apt</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
-you will also need to add `<inherits name="com.progressoft.brix.domino.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
+you will also need to add `<inherits name="org.dominokit.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
 
 if you want to generate mappers into your client side module you will need to add the processor dependency.
 
 ```xml
 <dependency>
-    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <groupId>org.dominokit.jacksonapt</groupId>
     <artifactId>jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
@@ -63,7 +63,7 @@ if you want to use jackson-apt in the server side add the following dependency t
 
 ```xml
 <dependency>
-    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <groupId>org.dominokit.jacksonapt</groupId>
     <artifactId>jackson-apt-server</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
@@ -73,7 +73,7 @@ if you want to generate mappers into your server side module you will need to ad
 
 ```xml
 <dependency>
-    <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+    <groupId>org.dominokit.jacksonapt</groupId>
     <artifactId>jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
@@ -86,12 +86,12 @@ if you want the Mappers to be generated into the shared module and make them ava
 
 ```xml
 <dependency>
-  <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+  <groupId>org.dominokit.jacksonapt</groupId>
   <artifactId>jackson-apt-shared</artifactId>
   <version>1.0-SNAPSHOT</version>
 </dependency>
 <dependency>
-  <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+  <groupId>org.dominokit.jacksonapt</groupId>
   <artifactId>jackson-apt-processor</artifactId>
   <version>1.0-SNAPSHOT</version>
   <scope>provided</scope>

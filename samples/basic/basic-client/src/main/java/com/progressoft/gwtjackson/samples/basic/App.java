@@ -1,9 +1,9 @@
-package com.progressoft.gwtjackson.samples.basic;
+package org.dominokit.gwtjackson.samples.basic;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.progressoft.brix.domino.jacksonapt.ObjectMapper;
-import com.progressoft.brix.domino.jacksonapt.annotation.JSONMapper;
 import elemental2.dom.DomGlobal;
+import org.dominokit.jacksonapt.ObjectMapper;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.progressoft.brix.domino.jacksonapt.samples</groupId>
+    <groupId>org.dominokit.jacksonapt.samples</groupId>
     <artifactId>shared-mappers</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -17,12 +17,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+      <groupId>org.dominokit.jacksonapt</groupId>
       <artifactId>jackson-apt-shared</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.progressoft.brix.domino.jacksonapt</groupId>
+      <groupId>org.dominokit.jacksonapt</groupId>
       <artifactId>jackson-apt-processor</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
