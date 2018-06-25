@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>jackson-apt-shared</name>
-    <url>https://github.com/vegegoku/gwt-jackson-apt</url>
+    <url>https://github.com/DominoKit/gwt-jackson-apt</url>
     <description>Apt based jackson</description>
 
     <properties>
