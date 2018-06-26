@@ -4,21 +4,6 @@ addons:
     packages:
       - oracle-java8-installer
 language: java
-jdk:
-- oraclejdk8
-cache:
-  directories:
-  - $HOME/.m2
-install: true
-script:
-- mvn clean install -DdryRun=true
-
-sudo: false
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-language: java
 jdk: oraclejdk8
 branches:
 only:
