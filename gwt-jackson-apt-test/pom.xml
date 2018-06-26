@@ -14,7 +14,7 @@
     <packaging>gwt-lib</packaging>
 
     <name>gwt-jackson-apt-test</name>
-    <url>https://github.com/vegegoku/gwt-jackson-apt</url>
+    <url>https://github.com/DominoKit/gwt-jackson-apt</url>
     <description>Apt based jackson</description>
 
     <properties>
