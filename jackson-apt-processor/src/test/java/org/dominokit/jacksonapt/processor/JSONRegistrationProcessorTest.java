@@ -1,5 +1,8 @@
-package org.dominokit.jacksonapt;
+package org.dominokit.jacksonapt.processor;
 
+import org.dominokit.jacksonapt.ObjectMapper;
+import org.dominokit.jacksonapt.ObjectReader;
+import org.dominokit.jacksonapt.ObjectWriter;
 import org.dominokit.jacksonapt.annotation.JSONMapper;
 import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONWriter;

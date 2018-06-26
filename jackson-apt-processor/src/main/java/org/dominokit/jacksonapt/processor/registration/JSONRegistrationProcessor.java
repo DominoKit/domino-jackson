@@ -1,4 +1,4 @@
-package org.dominokit.jacksonapt.registration.processor;
+package org.dominokit.jacksonapt.processor.registration;
 
 import com.google.auto.common.MoreTypes;
 import com.google.auto.service.AutoService;
@@ -6,57 +6,36 @@ import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.ObjectMapper;
 import org.dominokit.jacksonapt.ObjectReader;
 import org.dominokit.jacksonapt.ObjectWriter;
-import org.dominokit.jacksonapt.annotation.JSONMapper;
-import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONRegistration;
-import org.dominokit.jacksonapt.annotation.JSONWriter;
+import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
 import org.dominokit.jacksonapt.registration.JsonRegistry;
 
 import javax.annotation.Generated;
-import javax.annotation.processing.*;
-import javax.lang.model.SourceVersion;
+import javax.annotation.processing.Processor;
+import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 @AutoService(Processor.class)
-public class JSONRegistrationProcessor extends AbstractProcessor {
+public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
     private static final String WRITERS = "WRITERS";
     private static final String READERS = "READERS";
     private static final String MAPPERS = "MAPPERS";
-    private Messager messager;
-    private Types typeUtils;
-    private Filer filer;
-    private Elements elementUtils;
 
     @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-        filer = processingEnv.getFiler();
-        messager = processingEnv.getMessager();
-        typeUtils = processingEnv.getTypeUtils();
-        elementUtils = processingEnv.getElementUtils();
-    }
-
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         roundEnv.getElementsAnnotatedWith(JSONRegistration.class)
-                .forEach(configuration -> register(roundEnv, configuration));
+                .forEach(this::register);
         return false;
     }
 
-    private void register(RoundEnvironment roundEnv, Element element) {
+    private void register(Element element) {
         FieldSpec mappersMap = createConstantMap(MAPPERS, ObjectMapper.class);
         FieldSpec readersMap = createConstantMap(READERS, ObjectReader.class);
         FieldSpec writersMap = createConstantMap(WRITERS, ObjectWriter.class);
@@ -64,13 +43,10 @@ public class JSONRegistrationProcessor extends AbstractProcessor {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC);
 
-        Set<? extends Element> mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
         mappers.stream().map(this::registerMapperLine).forEach(constructorBuilder::addCode);
 
-        Set<? extends Element> readers = roundEnv.getElementsAnnotatedWith(JSONReader.class);
         readers.stream().map(this::registerReaderLine).forEach(constructorBuilder::addCode);
 
-        Set<? extends Element> writers = roundEnv.getElementsAnnotatedWith(JSONWriter.class);
         writers.stream().map(this::registerWriterLine).forEach(constructorBuilder::addCode);
 
 
@@ -184,12 +160,7 @@ public class JSONRegistrationProcessor extends AbstractProcessor {
     }
 
     @Override
-    public Set<String> getSupportedAnnotationTypes() {
-        return Stream.of(JSONRegistration.class).map(Class::getCanonicalName).collect(Collectors.toSet());
-    }
-
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
+    protected List<Class> supportedAnnotations() {
+        return Collections.singletonList(JSONRegistration.class);
     }
 }
