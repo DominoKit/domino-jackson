@@ -17,7 +17,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.*;
 
@@ -74,7 +73,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         try {
             JavaFile.builder(packageOf(element), jacksonConfigurator).build().writeTo(filer);
         } catch (IOException e) {
-            messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            handleError(e);
         }
     }
 
