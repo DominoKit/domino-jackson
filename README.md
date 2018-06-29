@@ -32,72 +32,27 @@ Quick start
 
 Add the following dependencies to your project pom file
 
-#### Client side dependencies
-
-if you want to use the jackson-apt in the client side add the following dependency to your client module
+#### Dependencies
 
 ```xml
 <dependency>
-    <groupId>org.dominokit.jacksonapt</groupId>
-    <artifactId>gwt-jackson-apt</artifactId>
+    <groupId>org.dominokit.jackson</groupId>
+    <artifactId>jackson-apt</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
-```
-
-you will also need to add `<inherits name="org.dominokit.jacksonapt.GwtJacksonApt"/>` to your module descriptor XML file.
-
-if you want to generate mappers into your client side module you will need to add the processor dependency.
-
-```xml
 <dependency>
-    <groupId>org.dominokit.jacksonapt</groupId>
+    <groupId>org.dominokit.jackson</groupId>
     <artifactId>jackson-apt-processor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
 
-#### Server side dependencies
+To use the lib with GWT you will also need to inherit the module:
 
-if you want to use jackson-apt in the server side add the following dependency to your server module
+`<inherits name="org.dominokit.jacksonapt.GwtJacksonApt"/>`
 
-```xml
-<dependency>
-    <groupId>org.dominokit.jacksonapt</groupId>
-    <artifactId>jackson-apt-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</dependency>
-```
-
-if you want to generate mappers into your server side module you will need to add the processor dependency.
-
-```xml
-<dependency>
-    <groupId>org.dominokit.jacksonapt</groupId>
-    <artifactId>jackson-apt-processor</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <scope>provided</scope>
-</dependency>
-```
-
-#### Shared side dependencies
-
-if you want the Mappers to be generated into the shared module and make them available for both client and server add the following dependencies to your shared module
-
-```xml
-<dependency>
-  <groupId>org.dominokit.jacksonapt</groupId>
-  <artifactId>jackson-apt-shared</artifactId>
-  <version>1.0-SNAPSHOT</version>
-</dependency>
-<dependency>
-  <groupId>org.dominokit.jacksonapt</groupId>
-  <artifactId>jackson-apt-processor</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <scope>provided</scope>
-</dependency>
-```
-
+> With GWT project Mappers generated in the client or server or shared can be used in the client side.
 
 
 ### Usage
@@ -330,14 +285,14 @@ public class TestBean {
 ### Road map
 
 More features from the original GWT-Jackson will be supported, starting from the most basic and important ones
-- ~~Remove all JSNI~~, _done_ only need to replace the dependency on Gwt i18n 
-- ~~Support nested beans~~ _done_.
-- Support JsTypes _Partially done_
-- Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
-- Support Inheritance
-- Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
-- Support Guava extension.
-- Support [Mix-in annotations](https://github.com/nmorel/gwt-jackson/wiki/Mix-in-annotations)
+- [x] Remove all JSNI.
+- [x] Support nested beans.
+- [x] Support JsTypes. _Partially done_
+- [ ] Support [Jackson annotations](https://github.com/nmorel/gwt-jackson/wiki/Jackson-annotations-support)
+- [ ] Support Inheritance
+- [ ] Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
+- [ ] Support Guava extension.
+- [ ] Support [Mix-in annotations](https://github.com/nmorel/gwt-jackson/wiki/Mix-in-annotations)
  
 
 

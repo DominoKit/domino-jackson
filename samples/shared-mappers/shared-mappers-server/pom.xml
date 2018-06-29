@@ -27,7 +27,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.dominokit.jacksonapt</groupId>
+      <groupId>org.dominokit.jackson</groupId>
       <artifactId>jackson-apt-server</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>

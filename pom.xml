@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.dominokit.jacksonapt</groupId>
-    <artifactId>jackson-apt</artifactId>
+    <groupId>org.dominokit.jackson</groupId>
+    <artifactId>domino-jackson</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>https://github.com/DominoKit/gwt-jackson-apt</url>
-    <description>Apt based gwt-jackson</description>
+    <description>APT Based Jackson JSON Mappers</description>
 
     <licenses>
         <license>
@@ -26,13 +26,13 @@
     </developers>
 
     <issueManagement>
-        <url>https://github.com/vegegoku/gwt-jackson-apt/issues</url>
+        <url>https://github.com/DominoKit/gwt-jackson-apt/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:https://github.com/vegegoku/gwt-jackson-apt.git</connection>
-        <developerConnection>scm:git:git@github.com:vegegoku/gwt-jackson-apt.git</developerConnection>
+        <connection>scm:git:https://github.com/DominoKit/gwt-jackson-apt.git</connection>
+        <developerConnection>scm:git:git@github.com:DominoKit/gwt-jackson-apt.git</developerConnection>
         <url>https://github.com/DominoKit/gwt-jackson-apt</url>
     </scm>
 
@@ -198,13 +198,8 @@
         </pluginManagement>
     </build>
     <modules>
-        <module>gwt-jackson-apt</module>
-        <module>jackson-apt-server</module>
-        <module>jackson-apt-shared</module>
-        <module>gwt-jackson-apt-test</module>
+        <module>jackson-apt</module>
         <module>jackson-apt-processor</module>
-        <module>gwt-jackson-apt-processor-test</module>
-        <module>jackson-apt-processor-test</module>
         <module>jackson-super</module>
     </modules>
 </project>

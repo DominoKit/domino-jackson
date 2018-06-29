@@ -15,8 +15,6 @@
  */
 package org.dominokit.jacksonapt.processor;
 
-//import org.dominokit.jacksonapt.deser.JsTypeJsonDeserializer;
-
 import com.squareup.javapoet.ClassName;
 import org.dominokit.jacksonapt.processor.serialization.FieldSerializerChainBuilder;
 import org.dominokit.jacksonapt.ser.*;
