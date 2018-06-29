@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Collection}. The deserialization process returns an {@link ArrayList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Collection}. The deserialization process returns an {@link java.util.ArrayList}.
  *
- * @param <T> Type of the elements inside the {@link Collection}
+ * @param <T> Type of the elements inside the {@link java.util.Collection}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,9 +33,9 @@ public class CollectionJsonDeserializer<T> extends BaseCollectionJsonDeserialize
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Collection}.
-     * @param <T>          Type of the elements inside the {@link Collection}
-     * @return a new instance of {@link CollectionJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.Collection}.
+     * @param <T>          Type of the elements inside the {@link java.util.Collection}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.CollectionJsonDeserializer}
      */
     public static <T> CollectionJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new CollectionJsonDeserializer<T>(deserializer);
@@ -48,9 +48,7 @@ public class CollectionJsonDeserializer<T> extends BaseCollectionJsonDeserialize
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected Collection<T> newCollection() {
         return new ArrayList<T>();

@@ -6,15 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Simple implementation of {@link ObjectIdResolver}
- * 
+ * Simple implementation of {@link com.fasterxml.jackson.annotation.ObjectIdResolver}
+ *
  * @author Pascal Gélinas
+ * @version $Id: $Id
  */
 public class SimpleObjectIdResolver implements ObjectIdResolver {
     protected Map<IdKey,Object> _items;
 
+    /**
+     * <p>Constructor for SimpleObjectIdResolver.</p>
+     */
     public SimpleObjectIdResolver() { }
 
+    /** {@inheritDoc} */
     @Override
     public void bindItem(IdKey id, Object ob)
     {
@@ -27,16 +32,19 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
         _items.put(id, ob);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object resolveId(IdKey id) {
         return (_items == null) ? null : _items.get(id);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean canUseFor(ObjectIdResolver resolverType) {
         return resolverType.getClass() == getClass();
     }
 
+    /** {@inheritDoc} */
     @Override
     public ObjectIdResolver newForDeserialization(Object context) {
         // 19-Dec-2014, tatu: Important: must re-create without existing mapping; otherwise bindings leak

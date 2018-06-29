@@ -119,7 +119,7 @@ public class Base64Utils {
     /**
      * Decode a base64 string into a long value.
      *
-     * @param value a {@link String} object.
+     * @param value a {@link java.lang.String} object.
      * @return a long.
      */
     public static long longFromBase64(String value) {
@@ -187,7 +187,7 @@ public class Base64Utils {
      * value.  Leading groups of all zero bits are omitted.
      *
      * @param value a long.
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String toBase64(long value) {
         // Convert to ints early to avoid need for long ops

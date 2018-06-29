@@ -27,17 +27,36 @@ import java.util.stream.Collectors;
 
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 
+/**
+ * <p>Abstract AbstractJsonMapperGenerator class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public abstract class AbstractJsonMapperGenerator {
 
     protected final TypeMirror beanType;
 
     private final Filer filer;
 
+    /**
+     * <p>Constructor for AbstractJsonMapperGenerator.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param filer a {@link javax.annotation.processing.Filer} object.
+     */
     public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
         this.beanType = beanType;
         this.filer = filer;
     }
 
+    /**
+     * <p>generate.</p>
+     *
+     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @param packageName a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     protected void generate(Name beanName, String packageName) throws IOException {
         MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
@@ -63,18 +82,48 @@ public abstract class AbstractJsonMapperGenerator {
                 .build();
     }
 
+    /**
+     * <p>superClass.</p>
+     *
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     protected abstract TypeName superClass();
 
+    /**
+     * <p>namePostfix.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     protected abstract String namePostfix();
 
+    /**
+     * <p>targetTypeMethodName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     protected abstract String targetTypeMethodName();
 
+    /**
+     * <p>moreMethods.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     protected Set<MethodSpec> moreMethods() {
         return Collections.emptySet();
     }
 
+    /**
+     * <p>initMethod.</p>
+     *
+     * @return a {@link com.squareup.javapoet.MethodSpec} object.
+     */
     protected abstract MethodSpec initMethod();
 
+    /**
+     * <p>orderedFields.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     protected List<Element> orderedFields() {
         TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
 
@@ -113,6 +162,12 @@ public abstract class AbstractJsonMapperGenerator {
         }
     }
 
+    /**
+     * <p>isNotStatic.</p>
+     *
+     * @param field a {@link javax.lang.model.element.Element} object.
+     * @return a boolean.
+     */
     protected boolean isNotStatic(Element field) {
         return !field.getModifiers().contains(Modifier.STATIC);
     }

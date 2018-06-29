@@ -32,36 +32,53 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * <p>AptDeserializerBuilder class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
     private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
 
 
+    /**
+     * <p>Constructor for AptDeserializerBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param filer a {@link javax.annotation.processing.Filer} object.
+     */
     public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
         super(beanType, filer);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected TypeName superClass() {
         return ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonDeserializer.class),
                 ClassName.get(beanType));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String namePostfix() {
         return Type.BEAN_JSON_DESERIALIZER_IMPL;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String targetTypeMethodName() {
         return "getDeserializedType";
     }
 
+    /** {@inheritDoc} */
     @Override
     protected MethodSpec initMethod() {
         return buildInitDeserializersMethod(beanType);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Set<MethodSpec> moreMethods() {
         return Stream.of(buildInitInstanceBuilderMethod(beanType, ParameterizedTypeName

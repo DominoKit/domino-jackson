@@ -19,6 +19,18 @@ import com.squareup.javapoet.CodeBlock;
 
 import javax.lang.model.element.Element;
 
+/**
+ * <p>MappersChainBuilder interface.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public interface MappersChainBuilder {
+    /**
+     * <p>getInstance.</p>
+     *
+     * @param field a {@link javax.lang.model.element.Element} object.
+     * @return a {@link com.squareup.javapoet.CodeBlock} object.
+     */
     CodeBlock getInstance(Element field);
 }

@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.deser.map.key;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
 /**
- * Default {@link KeyDeserializer} implementation for {@link String}.
+ * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link java.lang.String}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -31,7 +31,7 @@ public final class StringKeyDeserializer extends KeyDeserializer<String> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link StringKeyDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer}
      */
     public static StringKeyDeserializer getInstance() {
         return INSTANCE;
@@ -40,9 +40,7 @@ public final class StringKeyDeserializer extends KeyDeserializer<String> {
     private StringKeyDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doDeserialize(String key, JsonDeserializationContext ctx) {
         return key;

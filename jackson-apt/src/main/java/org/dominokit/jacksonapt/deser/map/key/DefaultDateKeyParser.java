@@ -10,6 +10,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
+/**
+ * <p>DefaultDateKeyParser class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @GwtIncompatible
 public class DefaultDateKeyParser<D extends Date> implements DateKeyParser<D> {
 
@@ -17,6 +23,7 @@ public class DefaultDateKeyParser<D extends Date> implements DateKeyParser<D> {
     private static final SimpleDateFormat RFC_2822_FORMAT = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
 
 
+    /** {@inheritDoc} */
     @Override
     public D parse(String keyValue, DateDeserializer<D> deserializer) {
         try {

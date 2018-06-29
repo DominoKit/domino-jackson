@@ -50,6 +50,12 @@ import java.util.*;
 import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 
+/**
+ * <p>TypeRegistry class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public final class TypeRegistry {
 
     private static Map<String, ClassMapper> simpleTypes = new HashMap<>();
@@ -664,14 +670,31 @@ public final class TypeRegistry {
         mapDeserializers.put(TreeMap.class.getName(), TreeMapJsonDeserializer.class);
     }
 
+    /**
+     * <p>register.</p>
+     *
+     * @param mapper a {@link org.dominokit.jacksonapt.processor.TypeRegistry.ClassMapper} object.
+     */
     public static void register(ClassMapper mapper) {
         mapper.register(simpleTypes);
     }
 
+    /**
+     * <p>isBasicType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isBasicType(String type) {
         return simpleTypes.containsKey(type);
     }
 
+    /**
+     * <p>registerSerializer.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param serializer a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static void registerSerializer(String type, TypeName serializer) {
         if (customMappers.containsKey(type)) {
             customMappers.get(type).serializer = serializer;
@@ -682,6 +705,12 @@ public final class TypeRegistry {
         }
     }
 
+    /**
+     * <p>registerDeserializer.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param deserializer a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static void registerDeserializer(String type, TypeName deserializer) {
         if (customMappers.containsKey(type)) {
             customMappers.get(type).deserializer = deserializer;
@@ -692,10 +721,22 @@ public final class TypeRegistry {
         }
     }
 
+    /**
+     * <p>getCustomSerializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getCustomSerializer(TypeMirror typeMirror) {
         return getCustomSerializer(typeMirror.toString());
     }
 
+    /**
+     * <p>getCustomSerializer.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getCustomSerializer(String type) {
         if (containsSerializer(type))
             return customMappers.get(type).serializer;
@@ -703,20 +744,44 @@ public final class TypeRegistry {
     }
 
 
+    /**
+     * <p>getCustomDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getCustomDeserializer(TypeMirror typeMirror) {
         return getCustomDeserializer(typeMirror.toString());
     }
 
+    /**
+     * <p>getCustomDeserializer.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getCustomDeserializer(String type) {
         if (containsDeserializer(type))
             return customMappers.get(type).deserializer;
         throw new TypeDeserializerNotFoundException(type);
     }
 
+    /**
+     * <p>get.</p>
+     *
+     * @param typeName a {@link java.lang.String} object.
+     * @return a {@link org.dominokit.jacksonapt.processor.TypeRegistry.ClassMapper} object.
+     */
     public static ClassMapper get(String typeName) {
         return simpleTypes.get(typeName);
     }
 
+    /**
+     * <p>getSerializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getSerializer(TypeMirror typeMirror) {
         return getSerializer(typeUtils.erasure(typeMirror).toString());
     }
@@ -727,18 +792,36 @@ public final class TypeRegistry {
         throw new TypeSerializerNotFoundException(typeName);
     }
 
+    /**
+     * <p>getKeySerializer.</p>
+     *
+     * @param typeName a {@link java.lang.String} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getKeySerializer(String typeName) {
         if (keysMappers.containsKey(typeName))
             return keysMappers.get(typeName).serializer;
         throw new TypeSerializerNotFoundException(typeName);
     }
 
+    /**
+     * <p>getKeyDeserializer.</p>
+     *
+     * @param typeName a {@link java.lang.String} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getKeyDeserializer(String typeName) {
         if (keysMappers.containsKey(typeName))
             return keysMappers.get(typeName).deserializer;
         throw new TypeDeserializerNotFoundException(typeName);
     }
 
+    /**
+     * <p>getDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName getDeserializer(TypeMirror typeMirror) {
         return getDeserializer(typeUtils.erasure(typeMirror).toString());
     }
@@ -749,6 +832,12 @@ public final class TypeRegistry {
         throw new TypeDeserializerNotFoundException(typeName);
     }
 
+    /**
+     * <p>getCollectionDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.Class} object.
+     */
     public static Class<?> getCollectionDeserializer(TypeMirror typeMirror) {
         return getCollectionDeserializer(asNoneGeneric(typeMirror));
     }
@@ -763,6 +852,12 @@ public final class TypeRegistry {
         throw new TypeDeserializerNotFoundException(collectionType);
     }
 
+    /**
+     * <p>getMapDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.Class} object.
+     */
     public static Class<?> getMapDeserializer(TypeMirror typeMirror) {
         return getMapDeserializer(asNoneGeneric(typeMirror));
     }
@@ -774,18 +869,42 @@ public final class TypeRegistry {
         throw new TypeDeserializerNotFoundException(mapType);
     }
 
+    /**
+     * <p>containsDeserializer.</p>
+     *
+     * @param typeName a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean containsDeserializer(String typeName) {
         return nonNull(customMappers.get(typeName)) && nonNull(customMappers.get(typeName).deserializer);
     }
 
+    /**
+     * <p>containsSerializer.</p>
+     *
+     * @param typeName a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean containsSerializer(String typeName) {
         return nonNull(customMappers.get(typeName)) && nonNull(customMappers.get(typeName).serializer);
     }
 
+    /**
+     * <p>containsSerializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean containsSerializer(TypeMirror typeMirror) {
         return containsSerializer(typeMirror.toString());
     }
 
+    /**
+     * <p>containsDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean containsDeserializer(TypeMirror typeMirror) {
         return containsDeserializer(typeMirror.toString());
     }

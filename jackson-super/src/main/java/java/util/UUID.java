@@ -3,7 +3,10 @@ package java.util;
 import java.io.Serializable;
 
 /**
+ * <p>UUID class.</p>
+ *
  * @author senk.christian@gmail.com
+ * @version $Id: $Id
  */
 public class UUID implements Serializable, Comparable<UUID> {
 
@@ -19,8 +22,10 @@ public class UUID implements Serializable, Comparable<UUID> {
     }
 
     /**
-     * @param uuidString
-     * @return
+     * <p>fromString.</p>
+     *
+     * @param uuidString a {@link java.lang.String} object.
+     * @return a {@link java.util.UUID} object.
      */
     public static UUID fromString(String uuidString) {
         //TODO: Validation
@@ -32,7 +37,9 @@ public class UUID implements Serializable, Comparable<UUID> {
     }
 
     /**
-     * @return
+     * <p>randomUUID.</p>
+     *
+     * @return a {@link java.util.UUID} object.
      */
     public static UUID randomUUID() {
         return fromString(generateUUIDString());
@@ -64,6 +71,7 @@ public class UUID implements Serializable, Comparable<UUID> {
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
+    /** {@inheritDoc} */
     @Override
     public int compareTo(UUID arg0) {
         return value.compareTo(arg0.value);
@@ -72,6 +80,7 @@ public class UUID implements Serializable, Comparable<UUID> {
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -83,6 +92,7 @@ public class UUID implements Serializable, Comparable<UUID> {
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -103,6 +113,7 @@ public class UUID implements Serializable, Comparable<UUID> {
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return value;

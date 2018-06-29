@@ -23,11 +23,11 @@ import java.util.AbstractMap;
 import java.util.LinkedHashMap;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link AbstractMap}. The deserialization process returns a {@link LinkedHashMap}.
- * <p>Cannot be overriden. Use {@link BaseMapJsonDeserializer}.</p>
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.AbstractMap}. The deserialization process returns a {@link java.util.LinkedHashMap}.
+ * <p>Cannot be overriden. Use {@link org.dominokit.jacksonapt.deser.map.BaseMapJsonDeserializer}.</p>
  *
- * @param <K> Type of the keys inside the {@link AbstractMap}
- * @param <V> Type of the values inside the {@link AbstractMap}
+ * @param <K> Type of the keys inside the {@link java.util.AbstractMap}
+ * @param <V> Type of the values inside the {@link java.util.AbstractMap}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -36,11 +36,11 @@ public final class AbstractMapJsonDeserializer<K, V> extends BaseMapJsonDeserial
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K>               Type of the keys inside the {@link AbstractMap}
-     * @param <V>               Type of the values inside the {@link AbstractMap}
-     * @return a new instance of {@link AbstractMapJsonDeserializer}
+     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to deserialize the keys.
+     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
+     * @param <K>               Type of the keys inside the {@link java.util.AbstractMap}
+     * @param <V>               Type of the values inside the {@link java.util.AbstractMap}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.AbstractMapJsonDeserializer}
      */
     public static <K, V> AbstractMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
                                                                        JsonDeserializer<V> valueDeserializer) {
@@ -55,9 +55,7 @@ public final class AbstractMapJsonDeserializer<K, V> extends BaseMapJsonDeserial
         super(keyDeserializer, valueDeserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected AbstractMap<K, V> newMap() {
         return new LinkedHashMap<K, V>();

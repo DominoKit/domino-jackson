@@ -33,7 +33,7 @@ public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySeriali
     /**
      * <p>newSerializer</p>
      *
-     * @return a {@link MapJsonSerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer} object.
      */
     protected abstract MapJsonSerializer newSerializer();
 
@@ -44,9 +44,7 @@ public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySeriali
         super(null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx) {
         // no-op
     }

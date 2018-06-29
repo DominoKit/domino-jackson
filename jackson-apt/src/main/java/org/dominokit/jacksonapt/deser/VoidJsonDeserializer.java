@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Void}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Void}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class VoidJsonDeserializer extends JsonDeserializer<Void> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link VoidJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.VoidJsonDeserializer}
      */
     public static VoidJsonDeserializer getInstance() {
         return INSTANCE;
@@ -43,9 +43,7 @@ public class VoidJsonDeserializer extends JsonDeserializer<Void> {
     private VoidJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Void doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         // we should never be here, the null value is already handled and it's the only possible value for Void

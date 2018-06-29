@@ -20,6 +20,12 @@ import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * <p>JSONRegistrationProcessor class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @AutoService(Processor.class)
 public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
@@ -27,6 +33,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     private static final String READERS = "READERS";
     private static final String MAPPERS = "MAPPERS";
 
+    /** {@inheritDoc} */
     @Override
     protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         roundEnv.getElementsAnnotatedWith(JSONRegistration.class)
@@ -158,6 +165,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<Class> supportedAnnotations() {
         return Collections.singletonList(JSONRegistration.class);

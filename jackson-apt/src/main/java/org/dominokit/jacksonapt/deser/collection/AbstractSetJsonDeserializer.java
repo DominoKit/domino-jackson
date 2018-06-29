@@ -20,12 +20,11 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 
 import java.util.AbstractSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Set}. The deserialization process returns a {@link LinkedHashSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Set}. The deserialization process returns a {@link java.util.LinkedHashSet}.
  *
- * @param <T> Type of the elements inside the {@link AbstractSet}
+ * @param <T> Type of the elements inside the {@link java.util.AbstractSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -34,9 +33,9 @@ public final class AbstractSetJsonDeserializer<T> extends BaseSetJsonDeserialize
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSet}.
-     * @param <T>          Type of the elements inside the {@link AbstractSet}
-     * @return a new instance of {@link AbstractSetJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.AbstractSet}.
+     * @param <T>          Type of the elements inside the {@link java.util.AbstractSet}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.AbstractSetJsonDeserializer}
      */
     public static <T> AbstractSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new AbstractSetJsonDeserializer<T>(deserializer);
@@ -49,9 +48,7 @@ public final class AbstractSetJsonDeserializer<T> extends BaseSetJsonDeserialize
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected AbstractSet<T> newCollection() {
         return new LinkedHashSet<T>();

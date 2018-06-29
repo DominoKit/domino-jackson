@@ -17,8 +17,8 @@
 package org.dominokit.jacksonapt;
 
 /**
- * Base implementation of {@link ObjectReader}. Extends {@link AbstractObjectMapper} to avoid code duplication, trying to write with this
- * reader will result in an {@link UnsupportedOperationException}.
+ * Base implementation of {@link org.dominokit.jacksonapt.ObjectReader}. Extends {@link org.dominokit.jacksonapt.AbstractObjectMapper} to avoid code duplication, trying to write with this
+ * reader will result in an {@link java.lang.UnsupportedOperationException}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -28,15 +28,13 @@ public abstract class AbstractObjectReader<T> extends AbstractObjectMapper<T> im
     /**
      * <p>Constructor for AbstractObjectReader.</p>
      *
-     * @param rootName a {@link String} object.
+     * @param rootName a {@link java.lang.String} object.
      */
     public AbstractObjectReader(String rootName) {
         super(rootName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected final JsonSerializer<?> newSerializer() {
         throw new UnsupportedOperationException("ObjectReader doesn't support serialization");

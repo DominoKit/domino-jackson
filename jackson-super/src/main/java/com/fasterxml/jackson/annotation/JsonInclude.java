@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  * <p>
  * Note that the main inclusion criteria (one annotated with {@link #value})
  * is checked on <b>Java object level</b>, for the annotated type,
- * and <b>NOT</b> on JSON output -- so even with {@link Include#NON_NULL}
+ * and <b>NOT</b> on JSON output -- so even with {@link com.fasterxml.jackson.annotation.JsonInclude.Include#NON_NULL}
  * it is possible that JSON null values are output, if object reference
  * in question is not `null`. An example is {@link java.util.concurrent.atomic.AtomicReference}
  * instance constructed to reference <code>null</code> value: such a value
@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * <p>
  * To base inclusion on value of contained value(s), you will typically also need
  * to specify {@link #content()} annotation; for example, specifying only
- * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.List} would
+ * {@link #value} as {@link com.fasterxml.jackson.annotation.JsonInclude.Include#NON_EMPTY} for a {link java.util.List} would
  * exclude <code>List</code>s with no Java elements, but would include <code>List</code>s
  * with `null` elements. To exclude Lists with only nulls, you would use both
  * annotations like so:
@@ -37,10 +37,12 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  * Similarly you could further exclude Lists, Maps or arrays that only contain
- * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
- * {@link Include#NON_DEFAULT} for more details).
+ * "empty" elements, or "non-default" values (see {@link com.fasterxml.jackson.annotation.JsonInclude.Include#NON_EMPTY} and
+ * {@link com.fasterxml.jackson.annotation.JsonInclude.Include#NON_DEFAULT} for more details).
  *
  * @since 2.0
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
         ElementType.TYPE, ElementType.PARAMETER})
@@ -50,14 +52,17 @@ public @interface JsonInclude {
     /**
      * Inclusion rule to use for instances (values) of types (Classes) or
      * properties annotated.
+     *
+     * @return a {@link com.fasterxml.jackson.annotation.JsonInclude.Include} object.
      */
     public Include value() default Include.ALWAYS;
 
     /**
      * Inclusion rule to use for entries ("content") of annotated
-     * {@link java.util.Map}s; defaults to {@link Include#ALWAYS}.
+     * {@link java.util.Map}s; defaults to {@link com.fasterxml.jackson.annotation.JsonInclude.Include#ALWAYS}.
      *
      * @since 2.5
+     * @return a {@link com.fasterxml.jackson.annotation.JsonInclude.Include} object.
      */
     public Include content() default Include.ALWAYS;
 

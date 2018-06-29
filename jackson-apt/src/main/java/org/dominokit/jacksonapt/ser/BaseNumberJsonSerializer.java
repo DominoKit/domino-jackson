@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * Base implementation of {@link JsonSerializer} for {@link Number}.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for {@link java.lang.Number}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -255,9 +255,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.value(value);

@@ -21,7 +21,7 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import java.util.UUID;
 
 /**
- * Default {@link KeyDeserializer} implementation for {@link UUID}.
+ * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link java.util.UUID}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -33,7 +33,7 @@ public final class UUIDKeyDeserializer extends KeyDeserializer<UUID> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link UUIDKeyDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.UUIDKeyDeserializer}
      */
     public static UUIDKeyDeserializer getInstance() {
         return INSTANCE;
@@ -42,9 +42,7 @@ public final class UUIDKeyDeserializer extends KeyDeserializer<UUID> {
     private UUIDKeyDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected UUID doDeserialize(String key, JsonDeserializationContext ctx) {
         return UUID.fromString(key);

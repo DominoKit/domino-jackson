@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for array.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array.
  *
  * @param <T> Type of the elements inside the array
  * @author Nicolas Morel
@@ -33,9 +33,9 @@ public class ArrayJsonSerializer<T> extends JsonSerializer<T[]> {
     /**
      * <p>newInstance</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the array.
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the array.
      * @param <T>        Type of the elements inside the array
-     * @return a new instance of {@link ArrayJsonSerializer}
+     * @return a new instance of {@link org.dominokit.jacksonapt.ser.array.ArrayJsonSerializer}
      */
     public static <T> ArrayJsonSerializer<T> newInstance(JsonSerializer<T> serializer) {
         return new ArrayJsonSerializer<T>(serializer);
@@ -46,7 +46,7 @@ public class ArrayJsonSerializer<T> extends JsonSerializer<T[]> {
     /**
      * <p>Constructor for ArrayJsonSerializer.</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the array.
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the array.
      */
     protected ArrayJsonSerializer(JsonSerializer<T> serializer) {
         if (null == serializer) {
@@ -55,17 +55,13 @@ public class ArrayJsonSerializer<T> extends JsonSerializer<T[]> {
         this.serializer = serializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(T[] value) {
         return null == value || value.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, T[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {

@@ -74,25 +74,25 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
 
     private static final Map<String, DateParser> CACHE_PARSERS = new HashMap<String, DateParser>();
 
+    /**
+     * <p>Constructor for DefaultDateFormat.</p>
+     */
     public DefaultDateFormat() {
     }
 
     /**
-     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
+     * {@inheritDoc}
      *
-     * @param date date to format
-     * @return the formatted date
+     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
      */
     public String format(Date date) {
         return format(DefaultDateFormat.DATE_FORMAT_STR_ISO8601, DefaultDateFormat.UTC_TIMEZONE, date);
     }
 
     /**
-     * Format a date using {@link JsonSerializerParameters} or default values : {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
+     * {@inheritDoc}
      *
-     * @param date   date to format
-     * @param params a {@link JsonSerializerParameters} object.
-     * @return the formatted date
+     * Format a date using {@link JsonSerializerParameters} or default values : {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
      */
     public String format(JsonSerializerParameters params, Date date) {
         DateTimeFormatter format;
@@ -113,29 +113,25 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Format a date using the {@link DateTimeFormatter} given in parameter and {@link #UTC_TIMEZONE}.
+     * {@inheritDoc}
      *
-     * @param format format to use
-     * @param date   date to format
-     * @return the formatted date
+     * Format a date using the {@link DateTimeFormatter} given in parameter and {@link #UTC_TIMEZONE}.
      */
     public String format(DateTimeFormatter format, Date date) {
         return format(format, UTC_TIMEZONE, date);
     }
 
     /**
-     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link ZoneId} given in parameter
+     * {@inheritDoc}
      *
-     * @param timeZone timezone to use
-     * @param date     date to format
-     * @return the formatted date
+     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link ZoneId} given in parameter
      */
     public String format(ZoneId timeZone, Date date) {
         return DefaultDateFormat.DATE_FORMAT_STR_ISO8601.withZone(timeZone).format(date.toInstant());
     }
 
     /**
-     * Format a date using the {@link DateTimeFormatter} and {@link ZoneId} given in
+     * Format a date using the {@link java.time.format.DateTimeFormatter} and {@link java.time.ZoneId} given in
      * parameters
      *
      * @param format   format to use
@@ -160,13 +156,9 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Parse a date using the pattern given in parameter or {@link #DATE_FORMAT_STR_ISO8601} and the browser timezone.
+     * {@inheritDoc}
      *
-     * @param useBrowserTimezone when the date doesn't include timezone information use browser default or UTC.
-     * @param pattern            pattern to use. If null, {@link #DATE_FORMAT_STR_ISO8601} will be used.
-     * @param hasTz              whether the pattern includes timezone information. when null the pattern will be parsed to search it.
-     * @param date               date to parse
-     * @return the parsed date
+     * Parse a date using the pattern given in parameter or {@link #DATE_FORMAT_STR_ISO8601} and the browser timezone.
      */
     public Date parse(boolean useBrowserTimezone, String pattern, Boolean hasTz, String date) {
         if (null == pattern) {
@@ -236,7 +228,7 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Parse a date using the {@link DateTimeFormatter} given in
+     * Parse a date using the {@link java.time.format.DateTimeFormatter} given in
      * parameter and the browser timezone.
      *
      * @param format format to use
@@ -248,7 +240,7 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Parse a date using the {@link DateTimeFormatter} given in
+     * Parse a date using the {@link java.time.format.DateTimeFormatter} given in
      * parameter and the browser timezone.
      *
      * @param format format to use
@@ -263,6 +255,7 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public <D extends Date> DateKeyParser<D> makeDateKeyParser() {
         return new DefaultDateKeyParser<>();

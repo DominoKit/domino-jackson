@@ -23,6 +23,9 @@ import java.lang.annotation.Target;
  *  )
  * </pre>
  * <p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

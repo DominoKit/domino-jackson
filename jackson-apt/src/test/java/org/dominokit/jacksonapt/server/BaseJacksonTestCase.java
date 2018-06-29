@@ -18,6 +18,10 @@ package org.dominokit.jacksonapt.server;
 
 
 import org.dominokit.jacksonapt.*;
+import org.dominokit.jacksonapt.shared.AbstractTester;
+import org.dominokit.jacksonapt.shared.ObjectMapperTester;
+import org.dominokit.jacksonapt.shared.ObjectReaderTester;
+import org.dominokit.jacksonapt.shared.ObjectWriterTester;
 
 import java.util.Date;
 

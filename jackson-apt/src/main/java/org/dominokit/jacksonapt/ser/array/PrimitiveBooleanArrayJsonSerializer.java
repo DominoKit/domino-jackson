@@ -23,7 +23,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for array of boolean.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of boolean.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ public class PrimitiveBooleanArrayJsonSerializer extends JsonSerializer<boolean[
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveBooleanArrayJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveBooleanArrayJsonSerializer}
      */
     public static PrimitiveBooleanArrayJsonSerializer getInstance() {
         return INSTANCE;
@@ -44,17 +44,13 @@ public class PrimitiveBooleanArrayJsonSerializer extends JsonSerializer<boolean[
     private PrimitiveBooleanArrayJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(boolean[] value) {
         return null == value || value.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, boolean[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {

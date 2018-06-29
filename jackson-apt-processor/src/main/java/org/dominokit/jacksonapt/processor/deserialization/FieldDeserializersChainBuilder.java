@@ -31,6 +31,12 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * <p>FieldDeserializersChainBuilder class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private static final String GET_INSTANCE = "$T.getInstance()";
     private static final String NEW_INSTANCE = "$T.newInstance(";
@@ -39,10 +45,16 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private Deque<TypeName> deserializers = new LinkedList<>();
     private TypeMirror beanType;
 
+    /**
+     * <p>Constructor for FieldDeserializersChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     */
     public FieldDeserializersChainBuilder(TypeMirror beanType) {
         this.beanType = beanType;
     }
 
+    /** {@inheritDoc} */
     @Override
     public CodeBlock getInstance(Element field) {
         return builder.add(getFieldDeserializer(field.asType()), asClassesArray()).build();

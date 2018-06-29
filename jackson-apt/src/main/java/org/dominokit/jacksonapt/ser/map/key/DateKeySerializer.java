@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import java.util.Date;
 
 /**
- * Default implementation of {@link KeySerializer} for dates.
+ * Default implementation of {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} for dates.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class DateKeySerializer<D extends Date> extends KeySerializer<D> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link DateKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.DateKeySerializer}
      */
     public static DateKeySerializer getInstance() {
         return INSTANCE;
@@ -43,17 +43,13 @@ public class DateKeySerializer<D extends Date> extends KeySerializer<D> {
     private DateKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(Date value, JsonSerializationContext ctx) {
         if (ctx.isWriteDateKeysAsTimestamps()) {

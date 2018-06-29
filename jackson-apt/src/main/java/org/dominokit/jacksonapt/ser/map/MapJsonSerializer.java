@@ -28,11 +28,11 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Map}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.util.Map}.
  *
- * @param <M> Type of the {@link Map}
- * @param <K> Type of the keys inside the {@link Map}
- * @param <V> Type of the values inside the {@link Map}
+ * @param <M> Type of the {@link java.util.Map}
+ * @param <K> Type of the keys inside the {@link java.util.Map}
+ * @param <V> Type of the values inside the {@link java.util.Map}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -41,10 +41,10 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
     /**
      * <p>newInstance</p>
      *
-     * @param keySerializer   {@link KeySerializer} used to serialize the keys.
-     * @param valueSerializer {@link JsonSerializer} used to serialize the values.
-     * @param <M>             a M object.
-     * @return a new instance of {@link MapJsonSerializer}
+     * @param keySerializer   {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to serialize the keys.
+     * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the values.
+     * @param <M> Type of the {@link java.util.Map}
+     * @return a new instance of {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer}
      */
     public static <M extends Map<?, ?>> MapJsonSerializer<M, ?, ?> newInstance(KeySerializer<?> keySerializer, JsonSerializer<?>
             valueSerializer) {
@@ -58,8 +58,8 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
     /**
      * <p>Constructor for MapJsonSerializer.</p>
      *
-     * @param keySerializer   {@link KeySerializer} used to serialize the keys.
-     * @param valueSerializer {@link JsonSerializer} used to serialize the values.
+     * @param keySerializer   {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to serialize the keys.
+     * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the values.
      */
     protected MapJsonSerializer(KeySerializer<K> keySerializer, JsonSerializer<V> valueSerializer) {
         if (null == keySerializer) {
@@ -72,17 +72,13 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
         this.valueSerializer = valueSerializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(M value) {
         return null == value || value.isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.beginObject();
@@ -97,8 +93,8 @@ public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer
      *
      * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
      * @param values a M object.
-     * @param ctx    a {@link JsonSerializationContext} object.
-     * @param params a {@link JsonSerializerParameters} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
      */
     public void serializeValues(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!values.isEmpty()) {

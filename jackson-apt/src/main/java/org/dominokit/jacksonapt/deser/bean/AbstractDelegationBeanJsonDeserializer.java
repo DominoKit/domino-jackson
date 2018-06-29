@@ -29,9 +29,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 @SuppressWarnings("UnusedDeclaration")
 public abstract class AbstractDelegationBeanJsonDeserializer<T> extends AbstractBeanJsonDeserializer<T> {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
                                 IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {

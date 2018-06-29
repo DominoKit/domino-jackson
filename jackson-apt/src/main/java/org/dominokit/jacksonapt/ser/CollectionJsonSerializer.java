@@ -24,9 +24,9 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 import java.util.Collection;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Collection}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.util.Collection}.
  *
- * @param <T> Type of the elements inside the {@link Collection}
+ * @param <T> Type of the elements inside the {@link java.util.Collection}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -35,9 +35,9 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
     /**
      * <p>newInstance</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Collection}.
-     * @param <C>        a C object.
-     * @return a new instance of {@link CollectionJsonSerializer}
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.util.Collection}.
+     * @param <C> Type of the {@link Collection}
+     * @return a new instance of {@link org.dominokit.jacksonapt.ser.CollectionJsonSerializer}
      */
     public static <C extends Collection<?>> CollectionJsonSerializer<C, ?> newInstance(JsonSerializer<?> serializer) {
         return new CollectionJsonSerializer(serializer);
@@ -48,7 +48,7 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
     /**
      * <p>Constructor for CollectionJsonSerializer.</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Collection}.
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.util.Collection}.
      */
     protected CollectionJsonSerializer(JsonSerializer<T> serializer) {
         if (null == serializer) {
@@ -57,17 +57,13 @@ public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSe
         this.serializer = serializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(C value) {
         return null == value || value.isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, C values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (values.isEmpty()) {

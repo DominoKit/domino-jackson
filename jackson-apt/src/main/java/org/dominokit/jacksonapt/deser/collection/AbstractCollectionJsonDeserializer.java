@@ -22,9 +22,9 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link AbstractCollection}. The deserialization process returns an {@link ArrayList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.AbstractCollection}. The deserialization process returns an {@link java.util.ArrayList}.
  *
- * @param <T> Type of the elements inside the {@link AbstractCollection}
+ * @param <T> Type of the elements inside the {@link java.util.AbstractCollection}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,9 +33,9 @@ public class AbstractCollectionJsonDeserializer<T> extends BaseCollectionJsonDes
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractCollection}.
-     * @param <T>          Type of the elements inside the {@link AbstractCollection}
-     * @return a new instance of {@link AbstractCollectionJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.AbstractCollection}.
+     * @param <T>          Type of the elements inside the {@link java.util.AbstractCollection}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.AbstractCollectionJsonDeserializer}
      */
     public static <T> AbstractCollectionJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new AbstractCollectionJsonDeserializer<T>(deserializer);
@@ -48,9 +48,7 @@ public class AbstractCollectionJsonDeserializer<T> extends BaseCollectionJsonDes
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected AbstractCollection<T> newCollection() {
         return new ArrayList<T>();

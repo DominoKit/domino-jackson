@@ -24,9 +24,9 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 import java.util.Iterator;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Iterable}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Iterable}.
  *
- * @param <T> Type of the elements inside the {@link Iterable}
+ * @param <T> Type of the elements inside the {@link java.lang.Iterable}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -35,9 +35,9 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
     /**
      * <p>newInstance</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Iterable}.
-     * @param <I>        the type
-     * @return a new instance of {@link IterableJsonSerializer}
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.lang.Iterable}
+     * @param  <I> Type of the {@link Iterable}
+     * @return a new instance of {@link org.dominokit.jacksonapt.ser.IterableJsonSerializer}
      */
     public static <I extends Iterable<?>> IterableJsonSerializer<I, ?> newInstance(JsonSerializer<?> serializer) {
         return new IterableJsonSerializer(serializer);
@@ -48,7 +48,7 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
     /**
      * <p>Constructor for IterableJsonSerializer.</p>
      *
-     * @param serializer {@link JsonSerializer} used to serialize the objects inside the {@link Iterable}.
+     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.lang.Iterable}.
      */
     protected IterableJsonSerializer(JsonSerializer<T> serializer) {
         if (null == serializer) {
@@ -57,17 +57,13 @@ public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerial
         this.serializer = serializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(I value) {
         return null == value || !value.iterator().hasNext();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         Iterator<T> iterator = values.iterator();

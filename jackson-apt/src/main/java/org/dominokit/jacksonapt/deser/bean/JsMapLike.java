@@ -19,15 +19,23 @@ import elemental2.core.JsObject;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 
+/**
+ * <p>JsMapLike class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class JsMapLike<T> implements MapLike<T> {
 
     private JsPropertyMap<T> map = (JsPropertyMap<T>) Js.asAny(JsObject.create(null)).asPropertyMap();
 
+    /** {@inheritDoc} */
     @Override
     public T get(String key) {
         return map.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void put(String key, T value) {
         map.set(key, value);

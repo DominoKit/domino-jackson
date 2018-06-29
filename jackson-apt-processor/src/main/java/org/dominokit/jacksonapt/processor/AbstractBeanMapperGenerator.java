@@ -11,6 +11,12 @@ import java.io.IOException;
 import static java.util.Objects.isNull;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.*;
 
+/**
+ * <p>Abstract AbstractBeanMapperGenerator class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public abstract class AbstractBeanMapperGenerator {
 
     void generate(Element element) throws IOException {
@@ -93,9 +99,28 @@ public abstract class AbstractBeanMapperGenerator {
                 .build();
     }
 
+    /**
+     * <p>getSuperClass.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     protected abstract Class<?> getSuperClass();
 
+    /**
+     * <p>getMapperMethods.</p>
+     *
+     * @param element a {@link javax.lang.model.element.Element} object.
+     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @return a {@link java.lang.Iterable} object.
+     */
     protected abstract Iterable<MethodSpec> getMapperMethods(Element element, Name beanName);
 
+    /**
+     * <p>generateJsonMappers.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
+     * @param beanName a {@link javax.lang.model.element.Name} object.
+     */
     protected abstract void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName);
 }

@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -25,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of long.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of long.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeseria
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveLongArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveLongArrayJsonDeserializer}
      */
     public static PrimitiveLongArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -46,9 +45,7 @@ public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeseria
     private PrimitiveLongArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public long[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Long> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance(), params);
@@ -64,9 +61,7 @@ public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected long[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new long[]{BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

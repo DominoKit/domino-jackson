@@ -36,7 +36,7 @@ public class ObjectIdSerializer<I> {
      * <p>Constructor for ObjectIdSerializer.</p>
      *
      * @param id         a I object.
-     * @param serializer a {@link JsonSerializer} object.
+     * @param serializer a {@link org.dominokit.jacksonapt.JsonSerializer} object.
      */
     public ObjectIdSerializer(I id, JsonSerializer<I> serializer) {
         this.id = id;
@@ -47,7 +47,7 @@ public class ObjectIdSerializer<I> {
      * <p>serializeId</p>
      *
      * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
-     * @param ctx    a {@link JsonSerializationContext} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
      */
     public void serializeId(JsonWriter writer, JsonSerializationContext ctx) {
         serializer.serialize(writer, id, ctx);

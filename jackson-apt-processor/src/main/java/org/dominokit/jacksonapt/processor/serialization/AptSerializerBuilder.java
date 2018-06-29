@@ -27,28 +27,44 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import java.util.List;
 
+/**
+ * <p>AptSerializerBuilder class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
+    /**
+     * <p>Constructor for AptSerializerBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param filer a {@link javax.annotation.processing.Filer} object.
+     */
     public AptSerializerBuilder(TypeMirror beanType, Filer filer) {
         super(beanType, filer);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected TypeName superClass() {
         return ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonSerializer.class),
                 ClassName.get(beanType));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String namePostfix() {
         return Type.BEAN_JSON_SERIALIZER_IMPL;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String targetTypeMethodName() {
         return "getSerializedType";
     }
 
+    /** {@inheritDoc} */
     @Override
     protected MethodSpec initMethod() {
         return buildInitSerializersMethod(beanType);

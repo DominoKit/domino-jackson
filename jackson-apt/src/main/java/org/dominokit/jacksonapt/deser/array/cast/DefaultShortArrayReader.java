@@ -7,8 +7,15 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 
 import java.util.Stack;
 
+/**
+ * <p>DefaultShortArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @GwtIncompatible
 public class DefaultShortArrayReader implements JacksonContext.ShortArrayReader {
+    /** {@inheritDoc} */
     @Override
     public short[] readArray(JsonReader reader) {
         Stack<Short> shortStack = new Stack<>();

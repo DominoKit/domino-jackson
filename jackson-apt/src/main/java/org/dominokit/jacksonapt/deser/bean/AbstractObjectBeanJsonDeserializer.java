@@ -39,17 +39,13 @@ public abstract class AbstractObjectBeanJsonDeserializer extends AbstractBeanJso
 
     private LinkedHashMapJsonDeserializer<String, Object> mapJsonDeserializer;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean canDeserialize() {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
                                      IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {

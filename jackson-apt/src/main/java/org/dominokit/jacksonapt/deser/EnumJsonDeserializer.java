@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Enum}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Enum}.
  *
  * @param <E> Type of the enum
  * @author Nicolas Morel
@@ -34,8 +34,7 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
      * <p>newInstance</p>
      *
      * @param enumClass class of the enumeration
-     * @param <E>       a E object.
-     * @return a new instance of {@link EnumJsonDeserializer}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer}
      */
     public static <E extends Enum<E>> EnumJsonDeserializer<E> newInstance(Class<E> enumClass) {
         return new EnumJsonDeserializer<E>(enumClass);
@@ -55,9 +54,7 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
         this.enumClass = enumClass;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public E doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         try {
@@ -73,7 +70,7 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
     /**
      * <p>Getter for the field <code>enumClass</code>.</p>
      *
-     * @return a {@link Class} object.
+     * @return a {@link java.lang.Class} object.
      */
     public Class<E> getEnumClass() {
         return enumClass;

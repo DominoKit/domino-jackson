@@ -19,10 +19,8 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.exception.JsonSerializationException;
 
-import java.util.Map;
-
 /**
- * Base class for all the {@link Map} key serializer. It handles null values and exceptions. The rest is delegated to implementations.
+ * Base class for all the {@link java.util.Map} key serializer. It handles null values and exceptions. The rest is delegated to implementations.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -40,12 +38,12 @@ public abstract class KeySerializer<T> {
     }
 
     /**
-     * Serializes an object into a {@link String} to use as map's key.
+     * Serializes an object into a {@link java.lang.String} to use as map's key.
      *
      * @param value Object to serialize
      * @param ctx   Context for the full serialization process
      * @return the key
-     * @throws JsonSerializationException if an error occurs during the serialization
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an error occurs during the serialization
      */
     public String serialize(T value, JsonSerializationContext ctx) throws JsonSerializationException {
         if (null == value) {
@@ -55,7 +53,7 @@ public abstract class KeySerializer<T> {
     }
 
     /**
-     * Serializes a non-null object into a {@link String} to use as map's key.
+     * Serializes a non-null object into a {@link java.lang.String} to use as map's key.
      *
      * @param value Object to serialize
      * @param ctx   Context for the full serialization process

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marker annotation similar to
- * {@link javax.xml.bind.annotation.XmlValue} 
+ * {@link javax.xml.bind.annotation.XmlValue}
  * that indicates that results of the annotated "getter" method
  * (which means signature must be that of getters; non-void return
  * type, no args) is to be used as the single value to serialize
@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * A typical usage is that of annotating <code>toString()</code>
  * method so that returned String value is used as the JSON serialization;
  * and if deserialization is needed, there is matching constructor
- * or factory method annotated with {@link JsonCreator} annotation.
+ * or factory method annotated with {@link com.fasterxml.jackson.annotation.JsonCreator} annotation.
  *<p>
  * Boolean argument is only used so that sub-classes can "disable"
  * annotation if necessary.
@@ -38,6 +38,8 @@ import java.lang.annotation.Target;
  * this is not used for POJO deserialization.
  *
  * @see JsonCreator
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

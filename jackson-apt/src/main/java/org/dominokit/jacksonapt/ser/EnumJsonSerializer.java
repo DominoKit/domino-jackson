@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Enum}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Enum}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class EnumJsonSerializer<E extends Enum<E>> extends JsonSerializer<E> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link EnumJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.EnumJsonSerializer}
      */
     @SuppressWarnings("unchecked")
     public static JsonSerializer getInstance() {
@@ -44,9 +44,7 @@ public class EnumJsonSerializer<E extends Enum<E>> extends JsonSerializer<E> {
     private EnumJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, E value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.unescapeValue(value.name());

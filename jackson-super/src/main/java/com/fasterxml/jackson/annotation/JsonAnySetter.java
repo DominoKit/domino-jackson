@@ -16,6 +16,9 @@ import java.lang.annotation.Target;
  *<p>
  * If used, all otherwise unmapped key-value pairs from JSON Object values
  * are added to the property (of type Map or bean).
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

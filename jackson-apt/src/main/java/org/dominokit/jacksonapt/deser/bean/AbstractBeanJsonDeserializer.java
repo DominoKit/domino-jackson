@@ -16,15 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.bean;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
-import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
@@ -32,7 +28,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * Base implementation of {@link JsonDeserializer} for beans.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for beans.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -74,7 +70,7 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     }
 
     /**
-     * Initialize the {@link InstanceBuilder}. Returns null if the class isn't instantiable.
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.InstanceBuilder}. Returns null if the class isn't instantiable.
      *
      * @return a {@link org.dominokit.jacksonapt.deser.bean.InstanceBuilder} object.
      */
@@ -83,10 +79,10 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     }
 
     /**
-     * Initialize the {@link MapLike} containing the property deserializers. Returns an empty map if there are no properties to
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.MapLike} containing the property deserializers. Returns an empty map if there are no properties to
      * deserialize.
      *
-     * @return a {@link MapLike} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.MapLike} object.
      */
     protected MapLike<BeanPropertyDeserializer<T, ?>> initDeserializers() {
         //Change by Ahmad Bawaneh, replace JSNI types with IsInterop types
@@ -94,44 +90,44 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     }
 
     /**
-     * Initialize the {@link MapLike} containing the back reference deserializers. Returns an empty map if there are no back
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.MapLike} containing the back reference deserializers. Returns an empty map if there are no back
      * reference on the bean.
      *
-     * @return a {@link MapLike} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.MapLike} object.
      */
     protected MapLike<BackReferenceProperty<T, ?>> initBackReferenceDeserializers() {
         return JacksonContextProvider.get().mapLikeFactory().make();
     }
 
     /**
-     * Initialize the {@link Set} containing the ignored property names. Returns an empty set if there are no ignored properties.
+     * Initialize the {@link java.util.Set} containing the ignored property names. Returns an empty set if there are no ignored properties.
      *
-     * @return a {@link Set} object.
+     * @return a {@link java.util.Set} object.
      */
     protected Set<String> initIgnoredProperties() {
         return Collections.emptySet();
     }
 
     /**
-     * Initialize the {@link Set} containing the required property names. Returns an empty set if there are no required properties.
+     * Initialize the {@link java.util.Set} containing the required property names. Returns an empty set if there are no required properties.
      *
-     * @return a {@link Set} object.
+     * @return a {@link java.util.Set} object.
      */
     protected Set<String> initRequiredProperties() {
         return Collections.emptySet();
     }
 
     /**
-     * Initialize the {@link IdentityDeserializationInfo}. Returns null if there is no {@link JsonIdentityInfo} annotation on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo}. Returns null if there is no {@link com.fasterxml.jackson.annotation.JsonIdentityInfo} annotation on bean.
      *
-     * @return a {@link IdentityDeserializationInfo} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo} object.
      */
     protected IdentityDeserializationInfo<T> initIdentityInfo() {
         return null;
     }
 
     /**
-     * Initialize the {@link TypeDeserializationInfo}. Returns null if there is no {@link JsonTypeInfo} annotation on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo}. Returns null if there is no {@link com.fasterxml.jackson.annotation.JsonTypeInfo} annotation on bean.
      *
      * @return a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      */
@@ -140,16 +136,16 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     }
 
     /**
-     * Initialize the {@link Map} containing the {@link SubtypeDeserializer}. Returns an empty map if the bean has no subtypes.
+     * Initialize the {@link java.util.Map} containing the {@link org.dominokit.jacksonapt.deser.bean.SubtypeDeserializer}. Returns an empty map if the bean has no subtypes.
      *
-     * @return a {@link Map} object.
+     * @return a {@link java.util.Map} object.
      */
     protected Map<Class, SubtypeDeserializer> initMapSubtypeClassToDeserializer() {
         return Collections.emptyMap();
     }
 
     /**
-     * Initialize the {@link AnySetterDeserializer}. Returns null if there is no method annoted with {@link JsonAnySetter} on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.deser.bean.AnySetterDeserializer}. Returns null if there is no method annoted with {@link com.fasterxml.jackson.annotation.JsonAnySetter} on bean.
      *
      * @return a {@link org.dominokit.jacksonapt.deser.bean.AnySetterDeserializer} object.
      */
@@ -160,7 +156,7 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     /**
      * Whether encountering of unknown
      * properties should result in a failure (by throwing a
-     * {@link JsonDeserializationException}) or not.
+     * {@link org.dominokit.jacksonapt.exception.JsonDeserializationException}) or not.
      *
      * @return a boolean.
      */
@@ -171,13 +167,11 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
     /**
      * <p>getDeserializedType</p>
      *
-     * @return a {@link Class} object.
+     * @return a {@link java.lang.Class} object.
      */
     public abstract Class getDeserializedType();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 
@@ -287,9 +281,7 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
         return null != instanceBuilder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
                                 IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
@@ -489,17 +481,13 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
         return deserializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public AbstractBeanJsonDeserializer<T> getDeserializer() {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
         if (null == value) {

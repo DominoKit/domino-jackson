@@ -21,9 +21,9 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.LinkedList;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link LinkedList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.LinkedList}.
  *
- * @param <T> Type of the elements inside the {@link LinkedList}
+ * @param <T> Type of the elements inside the {@link java.util.LinkedList}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -32,9 +32,9 @@ public class LinkedListJsonDeserializer<T> extends BaseListJsonDeserializer<Link
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedList}.
-     * @param <T>          Type of the elements inside the {@link LinkedList}
-     * @return a new instance of {@link LinkedListJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.LinkedList}.
+     * @param <T>          Type of the elements inside the {@link java.util.LinkedList}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.LinkedListJsonDeserializer}
      */
     public static <T> LinkedListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new LinkedListJsonDeserializer<T>(deserializer);
@@ -47,9 +47,7 @@ public class LinkedListJsonDeserializer<T> extends BaseListJsonDeserializer<Link
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected LinkedList<T> newCollection() {
         return new LinkedList<T>();

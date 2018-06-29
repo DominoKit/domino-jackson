@@ -37,7 +37,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>Constructor for BeanPropertySerializer.</p>
      *
-     * @param propertyName a {@link String} object.
+     * @param propertyName a {@link java.lang.String} object.
      */
     protected BeanPropertySerializer(String propertyName) {
         this.propertyName = propertyName;
@@ -46,7 +46,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>Getter for the field <code>parameters</code>.</p>
      *
-     * @return a {@link JsonSerializerParameters} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
      */
     protected JsonSerializerParameters getParameters() {
         if (null == parameters) {
@@ -58,7 +58,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>newParameters</p>
      *
-     * @return a {@link JsonSerializerParameters} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
      */
     protected JsonSerializerParameters newParameters() {
         return JacksonContextProvider.get().defaultSerializerParameters();
@@ -67,7 +67,7 @@ public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, Json
     /**
      * <p>Getter for the field <code>propertyName</code>.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getPropertyName() {
         return propertyName;

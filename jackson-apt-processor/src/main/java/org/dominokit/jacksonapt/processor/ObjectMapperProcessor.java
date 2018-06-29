@@ -29,11 +29,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <p>ObjectMapperProcessor class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @AutoService(Processor.class)
 public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
+    /** Constant <code>DEFAULT_WILDCARD</code> */
     public static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
 
+    /** {@inheritDoc} */
     @Override
     protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         mappers.forEach(this::generateMappers);
@@ -66,6 +74,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<Class> supportedAnnotations() {
         return Arrays.asList(JSONReader.class, JSONWriter.class, JSONMapper.class);

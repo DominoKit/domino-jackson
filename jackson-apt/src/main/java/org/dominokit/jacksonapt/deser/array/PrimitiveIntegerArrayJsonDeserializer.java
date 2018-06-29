@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -25,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of int.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of int.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDese
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveIntegerArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveIntegerArrayJsonDeserializer}
      */
     public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -46,9 +45,7 @@ public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDese
     private PrimitiveIntegerArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Integer> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance(), params);
@@ -64,9 +61,7 @@ public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDese
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected int[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new int[]{BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

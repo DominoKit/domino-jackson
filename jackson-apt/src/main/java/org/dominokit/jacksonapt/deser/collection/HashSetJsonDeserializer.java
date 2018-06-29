@@ -21,9 +21,9 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.HashSet;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link HashSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.HashSet}.
  *
- * @param <T> Type of the elements inside the {@link HashSet}
+ * @param <T> Type of the elements inside the {@link java.util.HashSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -32,9 +32,9 @@ public class HashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<HashSet<
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link HashSet}.
-     * @param <T>          Type of the elements inside the {@link HashSet}
-     * @return a new instance of {@link HashSetJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.HashSet}.
+     * @param <T>          Type of the elements inside the {@link java.util.HashSet}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.HashSetJsonDeserializer}
      */
     public static <T> HashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new HashSetJsonDeserializer<T>(deserializer);
@@ -47,9 +47,7 @@ public class HashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<HashSet<
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected HashSet<T> newCollection() {
         return new HashSet<T>();

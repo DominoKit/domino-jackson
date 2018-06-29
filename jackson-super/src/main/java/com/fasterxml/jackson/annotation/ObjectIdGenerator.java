@@ -5,11 +5,13 @@ package com.fasterxml.jackson.annotation;
  * {@link java.lang.String#format(String, Object...)}
  * <p>
  * Definition of API used for constructing Object Identifiers
- * (as annotated using {@link JsonIdentityInfo}).
+ * (as annotated using {@link com.fasterxml.jackson.annotation.JsonIdentityInfo}).
  * Also defines factory methods used for creating instances
  * for serialization, deserialization.
  *
  * @param <T> Type of Object Identifiers produced.
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @SuppressWarnings("serial")
 public abstract class ObjectIdGenerator<T>
@@ -20,6 +22,11 @@ public abstract class ObjectIdGenerator<T>
     /**********************************************************
      */
 
+    /**
+     * <p>getScope.</p>
+     *
+     * @return a {@link java.lang.Class} object.
+     */
     public abstract Class<?> getScope();
 
     /**
@@ -30,6 +37,7 @@ public abstract class ObjectIdGenerator<T>
      * instances are created (using {@link #newForSerialization}).
      *
      * @return True if this instance can be used as-is; false if not
+     * @param gen a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
 
@@ -46,6 +54,7 @@ public abstract class ObjectIdGenerator<T>
      * by Object-producing generators.
      *
      * @since 2.5
+     * @return a boolean.
      */
     public boolean maySerializeAsObject() {
         return false;
@@ -60,6 +69,7 @@ public abstract class ObjectIdGenerator<T>
      *               further verification (note: untyped, because <code>JsonParser</code> is defined
      *               in `jackson-core`, and this package does not depend on it).
      * @since 2.5
+     * @return a boolean.
      */
     public boolean isValidReferencePropertyName(String name, Object parser) {
         return false;
@@ -74,6 +84,9 @@ public abstract class ObjectIdGenerator<T>
     /**
      * Factory method to create a blueprint instance for specified
      * scope. Generators that do not use scope may return 'this'.
+     *
+     * @param scope a {@link java.lang.Class} object.
+     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     public abstract ObjectIdGenerator<T> forScope(Class<?> scope);
 
@@ -91,11 +104,15 @@ public abstract class ObjectIdGenerator<T>
      *                <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
      *                may be needed by more complex generators to access contextual
      *                information such as configuration.
+     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     public abstract ObjectIdGenerator<T> newForSerialization(Object context);
 
     /**
      * Method for constructing key to use for ObjectId-to-POJO maps.
+     *
+     * @param key a {@link java.lang.Object} object.
+     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
      */
     public abstract IdKey key(Object key);
 

@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.deser.bean;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Lazy initialize a {@link JsonDeserializer}
+ * Lazy initialize a {@link org.dominokit.jacksonapt.JsonDeserializer}
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -43,7 +43,7 @@ public abstract class HasDeserializer<V, S extends JsonDeserializer<V>> {
     /**
      * <p>newDeserializer</p>
      *
-     * @return a {@link JsonDeserializer} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
      */
     protected abstract JsonDeserializer<?> newDeserializer();
 }

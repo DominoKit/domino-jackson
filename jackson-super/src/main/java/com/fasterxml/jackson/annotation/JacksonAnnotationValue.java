@@ -11,12 +11,16 @@ import java.lang.annotation.Annotation;
  * from sources other than annotations.
  *
  * @since 2.6
+ * @author vegegoku
+ * @version $Id: $Id
  */
 public interface JacksonAnnotationValue<A extends Annotation>
 {
     /**
      * Introspection method that may be used to find actual annotation that may be used
      * as the source for value instance.
+     *
+     * @return a {@link java.lang.Class} object.
      */
     public Class<A> valueFor();
 }

@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BooleanJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -25,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of boolean.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of boolean.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDese
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveBooleanArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveBooleanArrayJsonDeserializer}
      */
     public static PrimitiveBooleanArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -46,9 +45,7 @@ public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDese
     private PrimitiveBooleanArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Boolean> list = deserializeIntoList(reader, ctx, BooleanJsonDeserializer.getInstance(), params);
@@ -64,9 +61,7 @@ public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDese
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new boolean[]{BooleanJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

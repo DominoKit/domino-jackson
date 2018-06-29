@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * Default {@link KeySerializer} implementation for {@link Boolean}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Boolean}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -31,7 +31,7 @@ public final class BooleanKeySerializer extends KeySerializer<Boolean> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link BooleanKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.BooleanKeySerializer}
      */
     @SuppressWarnings("unchecked")
     public static BooleanKeySerializer getInstance() {
@@ -41,17 +41,13 @@ public final class BooleanKeySerializer extends KeySerializer<Boolean> {
     private BooleanKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(Boolean value, JsonSerializationContext ctx) {
         return value.toString();

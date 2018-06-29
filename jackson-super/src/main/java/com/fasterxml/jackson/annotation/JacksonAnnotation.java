@@ -11,6 +11,9 @@ import java.lang.annotation.Target;
  * part of Jackson package. Can be used for recognizing all
  * Jackson annotations generically, and in future also for
  * passing other generic annotation configuration.
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)

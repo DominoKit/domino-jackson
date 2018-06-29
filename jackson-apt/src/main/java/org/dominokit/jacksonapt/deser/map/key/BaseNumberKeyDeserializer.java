@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * Base implementation of {@link KeyDeserializer} for {@link Number}s.
+ * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for {@link java.lang.Number}s.
  *
  * @author Nicolas Morel
  * @version $Id: $

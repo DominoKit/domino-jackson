@@ -23,7 +23,7 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Base implementation of {@link ObjectMapper}. It delegates the serialization/deserialization to a serializer/deserializer.
+ * Base implementation of {@link org.dominokit.jacksonapt.ObjectMapper}. It delegates the serialization/deserialization to a serializer/deserializer.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -39,23 +39,19 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
     /**
      * <p>Constructor for AbstractObjectMapper.</p>
      *
-     * @param rootName a {@link String} object.
+     * @param rootName a {@link java.lang.String} object.
      */
     protected AbstractObjectMapper(String rootName) {
         this.rootName = rootName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T read(String in) throws JsonDeserializationException {
         return read(in, DefaultJsonDeserializationContext.builder().build());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public T read(String in, JsonDeserializationContext ctx) throws JsonDeserializationException {
         JsonReader reader = ctx.newJsonReader(in);
 
@@ -94,9 +90,9 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
     }
 
     /**
-     * <p>Getter for the field <code>deserializer</code>.</p>
+     * {@inheritDoc}
      *
-     * @return the {@link JsonDeserializer} used by this mapper
+     * <p>Getter for the field <code>deserializer</code>.</p>
      */
     @Override
     public JsonDeserializer<T> getDeserializer() {
@@ -113,17 +109,13 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
      */
     protected abstract JsonDeserializer<T> newDeserializer();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String write(T value) throws JsonSerializationException {
         return write(value, DefaultJsonSerializationContext.builder().build());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String write(T value, JsonSerializationContext ctx) throws JsonSerializationException {
         JsonWriter writer = ctx.newJsonWriter();
         try {
@@ -145,9 +137,9 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
     }
 
     /**
-     * <p>Getter for the field <code>serializer</code>.</p>
+     * {@inheritDoc}
      *
-     * @return the {@link JsonSerializer} used by this mapper
+     * <p>Getter for the field <code>serializer</code>.</p>
      */
     @Override
     public JsonSerializer<T> getSerializer() {

@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * Default {@link KeySerializer} implementation for {@link Number}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Number}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -31,7 +31,7 @@ public final class NumberKeySerializer extends KeySerializer<Number> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link NumberKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.NumberKeySerializer}
      */
     @SuppressWarnings("unchecked")
     public static NumberKeySerializer getInstance() {
@@ -41,17 +41,13 @@ public final class NumberKeySerializer extends KeySerializer<Number> {
     private NumberKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(Number value, JsonSerializationContext ctx) {
         return value.toString();

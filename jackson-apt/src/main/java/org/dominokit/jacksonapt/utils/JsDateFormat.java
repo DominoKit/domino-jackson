@@ -67,25 +67,25 @@ public final class JsDateFormat implements JacksonContext.DateFormat {
 
     private static final Map<String, DateParser> CACHE_PARSERS = new HashMap<String, DateParser>();
 
+    /**
+     * <p>Constructor for JsDateFormat.</p>
+     */
     public JsDateFormat() {
     }
 
     /**
-     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
+     * {@inheritDoc}
      *
-     * @param date date to format
-     * @return the formatted date
+     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
      */
     public String format(Date date) {
         return format(JsDateFormat.DATE_FORMAT_STR_ISO8601, JsDateFormat.UTC_TIMEZONE, date);
     }
 
     /**
-     * Format a date using {@link JsonSerializerParameters} or default values : {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
+     * {@inheritDoc}
      *
-     * @param date   date to format
-     * @param params a {@link JsonSerializerParameters} object.
-     * @return the formatted date
+     * Format a date using {@link JsonSerializerParameters} or default values : {@link #DATE_FORMAT_STR_ISO8601} and {@link #UTC_TIMEZONE}
      */
     public String format(JsonSerializerParameters params, Date date) {
         DateTimeFormat format;
@@ -106,29 +106,25 @@ public final class JsDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Format a date using the {@link DateTimeFormat} given in parameter and {@link #UTC_TIMEZONE}.
+     * {@inheritDoc}
      *
-     * @param format format to use
-     * @param date   date to format
-     * @return the formatted date
+     * Format a date using the {@link DateTimeFormat} given in parameter and {@link #UTC_TIMEZONE}.
      */
     public String format(DateTimeFormat format, Date date) {
         return format(format, UTC_TIMEZONE, date);
     }
 
     /**
-     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link TimeZone} given in parameter
+     * {@inheritDoc}
      *
-     * @param timeZone timezone to use
-     * @param date     date to format
-     * @return the formatted date
+     * Format a date using {@link #DATE_FORMAT_STR_ISO8601} and {@link TimeZone} given in parameter
      */
     public String format(TimeZone timeZone, Date date) {
         return format(JsDateFormat.DATE_FORMAT_STR_ISO8601, timeZone, date);
     }
 
     /**
-     * Format a date using the {@link DateTimeFormat} and {@link TimeZone} given in
+     * Format a date using the {@link org.gwtproject.i18n.shared.DateTimeFormat} and {@link org.gwtproject.i18n.client.TimeZone} given in
      * parameters
      *
      * @param format   format to use
@@ -151,13 +147,9 @@ public final class JsDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Parse a date using the pattern given in parameter or {@link #DATE_FORMAT_STR_ISO8601} and the browser timezone.
+     * {@inheritDoc}
      *
-     * @param useBrowserTimezone when the date doesn't include timezone information use browser default or UTC.
-     * @param pattern            pattern to use. If null, {@link #DATE_FORMAT_STR_ISO8601} will be used.
-     * @param hasTz              whether the pattern includes timezone information. when null the pattern will be parsed to search it.
-     * @param date               date to parse
-     * @return the parsed date
+     * Parse a date using the pattern given in parameter or {@link #DATE_FORMAT_STR_ISO8601} and the browser timezone.
      */
     public Date parse(boolean useBrowserTimezone, String pattern, Boolean hasTz, String date) {
         if (null == pattern) {
@@ -223,7 +215,7 @@ public final class JsDateFormat implements JacksonContext.DateFormat {
     }
 
     /**
-     * Parse a date using the {@link DateTimeFormat} given in
+     * Parse a date using the {@link org.gwtproject.i18n.shared.DateTimeFormat} given in
      * parameter and the browser timezone.
      *
      * @param format format to use
@@ -234,6 +226,7 @@ public final class JsDateFormat implements JacksonContext.DateFormat {
         return format.parseStrict(date);
     }
 
+    /** {@inheritDoc} */
     @Override
     public <D extends Date> DateKeyParser<D> makeDateKeyParser() {
         return new JsDateKeyParser<>();

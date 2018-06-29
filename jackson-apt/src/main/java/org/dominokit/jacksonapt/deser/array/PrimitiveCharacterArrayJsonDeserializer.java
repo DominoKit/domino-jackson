@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.CharacterJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -26,7 +25,7 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of char.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of char.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -38,7 +37,7 @@ public class PrimitiveCharacterArrayJsonDeserializer extends AbstractArrayJsonDe
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveCharacterArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveCharacterArrayJsonDeserializer}
      */
     public static PrimitiveCharacterArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -47,9 +46,7 @@ public class PrimitiveCharacterArrayJsonDeserializer extends AbstractArrayJsonDe
     private PrimitiveCharacterArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public char[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Character> list = deserializeIntoList(reader, ctx, CharacterJsonDeserializer.getInstance(), params);
@@ -65,9 +62,7 @@ public class PrimitiveCharacterArrayJsonDeserializer extends AbstractArrayJsonDe
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected char[] doDeserializeNonArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.STRING == reader.peek()) {
@@ -79,9 +74,7 @@ public class PrimitiveCharacterArrayJsonDeserializer extends AbstractArrayJsonDe
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected char[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new char[]{CharacterJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

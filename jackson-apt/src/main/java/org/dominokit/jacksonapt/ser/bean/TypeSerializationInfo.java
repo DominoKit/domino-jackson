@@ -45,7 +45,7 @@ public class TypeSerializationInfo<T> {
      * <p>Constructor for TypeSerializationInfo.</p>
      *
      * @param include      a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
-     * @param propertyName a {@link String} object.
+     * @param propertyName a {@link java.lang.String} object.
      */
     public TypeSerializationInfo(As include, String propertyName) {
         this.include = include;
@@ -56,9 +56,9 @@ public class TypeSerializationInfo<T> {
     /**
      * <p>addTypeInfo</p>
      *
-     * @param clazz    a {@link Class} object.
-     * @param typeInfo a {@link String} object.
-     * @param <S>      the type
+     * @param <S> type of the {@link Class}
+     * @param clazz    a {@link java.lang.Class} object.
+     * @param typeInfo a {@link java.lang.String} object.
      * @return a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo} object.
      */
     public <S extends T> TypeSerializationInfo<T> addTypeInfo(Class<S> clazz, String typeInfo) {
@@ -78,7 +78,7 @@ public class TypeSerializationInfo<T> {
     /**
      * <p>Getter for the field <code>propertyName</code>.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getPropertyName() {
         return propertyName;
@@ -87,8 +87,8 @@ public class TypeSerializationInfo<T> {
     /**
      * <p>getTypeInfo</p>
      *
-     * @param aClass a {@link Class} object.
-     * @return a {@link String} object.
+     * @param aClass a {@link java.lang.Class} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getTypeInfo(Class aClass) {
         return typeClassToInfo.get(aClass);

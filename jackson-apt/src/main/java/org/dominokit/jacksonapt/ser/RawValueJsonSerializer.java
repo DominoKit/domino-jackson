@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Dummy {@link JsonSerializer} that will just output raw values by calling toString() on value to serialize.
+ * Dummy {@link org.dominokit.jacksonapt.JsonSerializer} that will just output raw values by calling toString() on value to serialize.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ public class RawValueJsonSerializer<T> extends JsonSerializer<T> {
      * <p>getInstance</p>
      *
      * @param <T> a T object.
-     * @return an instance of {@link RawValueJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.RawValueJsonSerializer}
      */
     @SuppressWarnings("unchecked")
     public static <T> RawValueJsonSerializer<T> getInstance() {
@@ -45,9 +45,7 @@ public class RawValueJsonSerializer<T> extends JsonSerializer<T> {
     private RawValueJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void doSerialize(JsonWriter writer, Object value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.rawValue(value);

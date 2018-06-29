@@ -31,10 +31,10 @@ public abstract class JsonDeserializer<T> {
     /**
      * Deserializes a JSON input into an object.
      *
-     * @param reader {@link JsonReader} used to read the JSON input
+     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
      * @param ctx    Context for the full deserialization process
      * @return the deserialized object
-     * @throws JsonDeserializationException if an error occurs during the deserialization
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs during the deserialization
      */
     public T deserialize(JsonReader reader, JsonDeserializationContext ctx) throws JsonDeserializationException {
         return deserialize(reader, ctx, ctx.defaultParameters());
@@ -43,11 +43,11 @@ public abstract class JsonDeserializer<T> {
     /**
      * Deserializes a JSON input into an object.
      *
-     * @param reader {@link JsonReader} used to read the JSON input
+     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
      * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
-     * @throws JsonDeserializationException if an error occurs during the deserialization
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs during the deserialization
      */
     public T deserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) throws
             JsonDeserializationException {
@@ -60,7 +60,7 @@ public abstract class JsonDeserializer<T> {
     /**
      * Deserialize the null value. This method allows children to override the default behaviour.
      *
-     * @param reader {@link JsonReader} used to read the JSON input
+     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
      * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
@@ -73,7 +73,7 @@ public abstract class JsonDeserializer<T> {
     /**
      * Deserializes a non-null JSON input into an object.
      *
-     * @param reader {@link JsonReader} used to read the JSON input
+     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
      * @param ctx    Context for the full deserialization process
      * @param params Parameters for this deserialization
      * @return the deserialized object
@@ -83,6 +83,42 @@ public abstract class JsonDeserializer<T> {
     /**
      * Set the back reference.
      *
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
+     * @param referenceName name of the reference
      * @param referenceName name of the reference
      * @param referenceName name of the reference
      * @param referenceName name of the reference

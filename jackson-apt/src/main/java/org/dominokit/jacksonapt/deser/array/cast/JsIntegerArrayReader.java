@@ -6,7 +6,14 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
+/**
+ * <p>JsIntegerArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class JsIntegerArrayReader extends BaseJsNumberArrayReader implements JacksonContext.IntegerArrayReader {
+    /** {@inheritDoc} */
     @Override
     public int[] readArray(JsonReader reader) {
         return reinterpretCast(super.readNumberArray(reader));

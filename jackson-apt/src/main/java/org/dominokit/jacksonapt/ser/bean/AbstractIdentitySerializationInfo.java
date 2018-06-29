@@ -42,40 +42,32 @@ public abstract class AbstractIdentitySerializationInfo<T, I> extends HasSeriali
      * <p>Constructor for AbstractIdentitySerializationInfo.</p>
      *
      * @param alwaysAsId   a boolean.
-     * @param propertyName a {@link String} object.
+     * @param propertyName a {@link java.lang.String} object.
      */
     protected AbstractIdentitySerializationInfo(boolean alwaysAsId, String propertyName) {
         this.alwaysAsId = alwaysAsId;
         this.propertyName = propertyName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isAlwaysAsId() {
         return alwaysAsId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isProperty() {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getPropertyName() {
         return propertyName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public abstract ObjectIdSerializer<I> getObjectId(T bean, JsonSerializationContext ctx);
 }

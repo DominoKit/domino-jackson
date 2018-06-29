@@ -33,7 +33,7 @@ public class JsonSerializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonSerializationException.</p>
      *
-     * @param message a {@link String} object.
+     * @param message a {@link java.lang.String} object.
      */
     public JsonSerializationException(String message) {
         super(message);
@@ -42,8 +42,8 @@ public class JsonSerializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonSerializationException.</p>
      *
-     * @param message a {@link String} object.
-     * @param cause   a {@link Throwable} object.
+     * @param message a {@link java.lang.String} object.
+     * @param cause   a {@link java.lang.Throwable} object.
      */
     public JsonSerializationException(String message, Throwable cause) {
         super(message, cause);
@@ -52,7 +52,7 @@ public class JsonSerializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonSerializationException.</p>
      *
-     * @param cause a {@link Throwable} object.
+     * @param cause a {@link java.lang.Throwable} object.
      */
     public JsonSerializationException(Throwable cause) {
         super(cause);

@@ -9,8 +9,22 @@ import java.io.IOException;
 
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.filer;
 
+/**
+ * <p>DeserializerGenerator class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class DeserializerGenerator {
 
+    /**
+     * <p>generate.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
+     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String generate(TypeMirror beanType, String packageName, Name beanName) {
         String generatedClassName = Type.deserializerName(packageName, beanName.toString());
         if (!TypeRegistry.containsDeserializer(beanType.toString())) {

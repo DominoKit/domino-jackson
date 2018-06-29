@@ -16,7 +16,6 @@
 
 package org.dominokit.jacksonapt;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo;
@@ -27,8 +26,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class includes parameters defined through properties annotations like {@link JsonFormat}. They are specific to one
- * {@link JsonSerializer} and that's why they are not contained inside {@link JsonSerializationContext}.
+ * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonFormat}. They are specific to one
+ * {@link org.dominokit.jacksonapt.JsonSerializer} and that's why they are not contained inside {@link org.dominokit.jacksonapt.JsonSerializationContext}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -92,9 +91,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     private boolean unwrapped = false;
 
     /**
-     * <p>Getter for the field <code>pattern</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link String} object.
+     * <p>Getter for the field <code>pattern</code>.</p>
      */
     @Override
     public String getPattern() {
@@ -102,10 +101,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>pattern</code>.</p>
+     * {@inheritDoc}
      *
-     * @param pattern a {@link String} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>pattern</code>.</p>
      */
     @Override
     public JsonSerializerParameters setPattern(String pattern) {
@@ -114,9 +112,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>shape</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
+     * <p>Getter for the field <code>shape</code>.</p>
      */
     @Override
     public Shape getShape() {
@@ -124,10 +122,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>shape</code>.</p>
+     * {@inheritDoc}
      *
-     * @param shape a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>shape</code>.</p>
      */
     @Override
     public JsonSerializerParameters setShape(Shape shape) {
@@ -136,9 +133,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>locale</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link String} object.
+     * <p>Getter for the field <code>locale</code>.</p>
      */
     @Override
     public String getLocale() {
@@ -146,10 +143,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>locale</code>.</p>
+     * {@inheritDoc}
      *
-     * @param locale a {@link String} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>locale</code>.</p>
      */
     @Override
     public JsonSerializerParameters setLocale(String locale) {
@@ -158,9 +154,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>timezone</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.gwtproject.i18n.client.TimeZone} object.
+     * <p>Getter for the field <code>timezone</code>.</p>
      */
     @Override
     public TimeZone getTimezone() {
@@ -168,10 +164,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>timezone</code>.</p>
+     * {@inheritDoc}
      *
-     * @param timezone a {@link org.gwtproject.i18n.client.TimeZone} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>timezone</code>.</p>
      */
     @Override
     public JsonSerializerParameters setTimezone(Object timezone) {
@@ -180,9 +175,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>ignoredProperties</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link Set} object.
+     * <p>Getter for the field <code>ignoredProperties</code>.</p>
      */
     @Override
     public Set<String> getIgnoredProperties() {
@@ -190,10 +185,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>addIgnoredProperty</p>
+     * {@inheritDoc}
      *
-     * @param ignoredProperty a {@link String} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>addIgnoredProperty</p>
      */
     @Override
     public JsonSerializerParameters addIgnoredProperty(String ignoredProperty) {
@@ -205,9 +199,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>include</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link com.fasterxml.jackson.annotation.JsonInclude.Include} object.
+     * <p>Getter for the field <code>include</code>.</p>
      */
     @Override
     public Include getInclude() {
@@ -215,10 +209,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>include</code>.</p>
+     * {@inheritDoc}
      *
-     * @param include a {@link com.fasterxml.jackson.annotation.JsonInclude.Include} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>include</code>.</p>
      */
     @Override
     public JsonSerializerParameters setInclude(Include include) {
@@ -227,9 +220,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>identityInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo} object.
+     * <p>Getter for the field <code>identityInfo</code>.</p>
      */
     @Override
     public IdentitySerializationInfo getIdentityInfo() {
@@ -237,10 +230,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>identityInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @param identityInfo a {@link org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>identityInfo</code>.</p>
      */
     @Override
     public JsonSerializerParameters setIdentityInfo(IdentitySerializationInfo identityInfo) {
@@ -249,9 +241,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Getter for the field <code>typeInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo} object.
+     * <p>Getter for the field <code>typeInfo</code>.</p>
      */
     @Override
     public TypeSerializationInfo getTypeInfo() {
@@ -259,10 +251,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>typeInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @param typeInfo a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo} object.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>typeInfo</code>.</p>
      */
     @Override
     public JsonSerializerParameters setTypeInfo(TypeSerializationInfo typeInfo) {
@@ -271,9 +262,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>isUnwrapped</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isUnwrapped</p>
      */
     @Override
     public boolean isUnwrapped() {
@@ -281,10 +272,9 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
     }
 
     /**
-     * <p>Setter for the field <code>unwrapped</code>.</p>
+     * {@inheritDoc}
      *
-     * @param unwrapped a boolean.
-     * @return a {@link JsonSerializerParameters} object.
+     * <p>Setter for the field <code>unwrapped</code>.</p>
      */
     @Override
     public JsonSerializerParameters setUnwrapped(boolean unwrapped) {

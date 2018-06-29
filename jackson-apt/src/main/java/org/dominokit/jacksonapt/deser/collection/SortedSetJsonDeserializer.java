@@ -22,9 +22,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link SortedSet}. The deserialization process returns a {@link TreeSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.SortedSet}. The deserialization process returns a {@link java.util.TreeSet}.
  *
- * @param <T> Type of the elements inside the {@link SortedSet}
+ * @param <T> Type of the elements inside the {@link java.util.SortedSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,9 +33,9 @@ public final class SortedSetJsonDeserializer<T> extends BaseSortedSetJsonDeseria
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link SortedSet}.
-     * @param <T>          Type of the elements inside the {@link SortedSet}
-     * @return a new instance of {@link SortedSetJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.SortedSet}.
+     * @param <T>          Type of the elements inside the {@link java.util.SortedSet}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.SortedSetJsonDeserializer}
      */
     public static <T> SortedSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new SortedSetJsonDeserializer<T>(deserializer);
@@ -48,9 +48,7 @@ public final class SortedSetJsonDeserializer<T> extends BaseSortedSetJsonDeseria
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected SortedSet<T> newCollection() {
         return new TreeSet<T>();

@@ -45,12 +45,12 @@ import java.util.logging.Logger;
  * need a method for each object type and for each array type.
  * <ul>
  * <li>Within <strong>array handling</strong> methods, first call {@link
- * #beginArray} to consume the array's opening bracket. Then create a
+ *#beginArray} to consume the array's opening bracket. Then create a
  * while loop that accumulates values, terminating when {@link #hasNext}
  * is false. Finally, read the array's closing bracket by calling {@link
- * #endArray}.
+ *#endArray}.
  * <li>Within <strong>object handling</strong> methods, first call {@link
- * #beginObject} to consume the object's opening brace. Then create a
+ *#beginObject} to consume the object's opening brace. Then create a
  * while loop that assigns values to local variables based on their name.
  * This loop should terminate when {@link #hasNext} is false. Finally,
  * read the object's closing brace by calling {@link #endObject}.
@@ -64,7 +64,7 @@ import java.util.logging.Logger;
  * <p>
  * <p>If a value may be null, you should first check using {@link #peek()}.
  * Null literals can be consumed using either {@link #nextNull()} or {@link
- * #skipValue()}.
+ *#skipValue()}.
  * <p>
  * <h3>Example</h3>
  * Suppose we'd like to parse a stream of messages such as the following: <pre> {@code
@@ -295,7 +295,7 @@ public class NonBufferedJsonReader implements JsonReader {
     /**
      * Creates a new instance that reads a JSON-encoded stream from {@code in}.
      *
-     * @param in a {@link String} object.
+     * @param in a {@link java.lang.String} object.
      */
     public NonBufferedJsonReader(String in) {
         if (in == null) {
@@ -353,9 +353,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return lenient;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void beginArray() {
         int p = peeked;
@@ -371,9 +369,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void endArray() {
         int p = peeked;
@@ -389,9 +385,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void beginObject() {
         int p = peeked;
@@ -407,9 +401,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void endObject() {
         int p = peeked;
@@ -425,9 +417,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasNext() {
         int p = peeked;
@@ -437,9 +427,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return p != PEEKED_END_OBJECT && p != PEEKED_END_ARRAY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public JsonToken peek() {
         int p = peeked;
@@ -780,9 +768,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String nextName() {
         int p = peeked;
@@ -804,9 +790,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String nextString() {
         int p = peeked;
@@ -836,9 +820,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean nextBoolean() {
         int p = peeked;
@@ -856,9 +838,7 @@ public class NonBufferedJsonReader implements JsonReader {
                 + " at line " + getLineNumber() + " column " + getColumnNumber());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void nextNull() {
         int p = peeked;
@@ -873,9 +853,7 @@ public class NonBufferedJsonReader implements JsonReader {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public double nextDouble() {
         int p = peeked;
@@ -910,9 +888,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public long nextLong() {
         int p = peeked;
@@ -1078,9 +1054,7 @@ public class NonBufferedJsonReader implements JsonReader {
         pos += i;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int nextInt() {
         int p = peeked;
@@ -1128,9 +1102,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void close() {
         peeked = PEEKED_NONE;
@@ -1138,9 +1110,7 @@ public class NonBufferedJsonReader implements JsonReader {
         stackSize = 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void skipValue() {
         int count = 0;
@@ -1179,17 +1149,13 @@ public class NonBufferedJsonReader implements JsonReader {
         stack.setAt(stackSize++, newTop);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLineNumber() {
         return lineNumber + 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getColumnNumber() {
         return pos - lineStart + 1;
@@ -1323,9 +1289,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "JsonReader at line " + getLineNumber() + " column " + getColumnNumber();
@@ -1429,17 +1393,13 @@ public class NonBufferedJsonReader implements JsonReader {
         pos += NON_EXECUTE_PREFIX.length;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getInput() {
         return in;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String nextValue() {
         int p = peeked;
@@ -1513,9 +1473,7 @@ public class NonBufferedJsonReader implements JsonReader {
         return writer.getOutput();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Number nextNumber() {
         // TODO needs better handling for BigInteger and BigDecimal.

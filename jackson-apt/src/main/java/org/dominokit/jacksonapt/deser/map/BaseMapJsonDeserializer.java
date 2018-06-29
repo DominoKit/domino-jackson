@@ -26,11 +26,11 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 import java.util.Map;
 
 /**
- * Base {@link JsonDeserializer} implementation for {@link Map}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Map}.
  *
- * @param <M> Type of the {@link Map}
- * @param <K> Type of the keys inside the {@link Map}
- * @param <V> Type of the values inside the {@link Map}
+ * @param <M> Type of the {@link java.util.Map}
+ * @param <K> Type of the keys inside the {@link java.util.Map}
+ * @param <V> Type of the values inside the {@link java.util.Map}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -49,8 +49,8 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
     /**
      * <p>Constructor for BaseMapJsonDeserializer.</p>
      *
-     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
+     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to deserialize the keys.
+     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
      */
     protected BaseMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
         if (null == keyDeserializer) {
@@ -63,9 +63,7 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
         this.valueDeserializer = valueDeserializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public M doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         M result = newMap();
@@ -89,9 +87,7 @@ public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends
      */
     protected abstract M newMap();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, M value, JsonDeserializationContext ctx) {
         if (null != value) {

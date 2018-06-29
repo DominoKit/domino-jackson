@@ -16,15 +16,14 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.EnumJsonDeserializer;
 
 import java.util.EnumSet;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link EnumSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.EnumSet}.
  *
- * @param <E> Type of the enumeration inside the {@link EnumSet}
+ * @param <E> Type of the enumeration inside the {@link java.util.EnumSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,9 +32,8 @@ public class EnumSetJsonDeserializer<E extends Enum<E>> extends BaseSetJsonDeser
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link EnumJsonDeserializer} used to deserialize the enums inside the {@link EnumSet}.
-     * @param <E>          a E object.
-     * @return a new instance of {@link EnumSetJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer} used to deserialize the enums inside the {@link java.util.EnumSet}.
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.EnumSetJsonDeserializer}
      */
     public static <E extends Enum<E>> EnumSetJsonDeserializer<E> newInstance(EnumJsonDeserializer<E> deserializer) {
         return new EnumSetJsonDeserializer<E>(deserializer);
@@ -51,17 +49,13 @@ public class EnumSetJsonDeserializer<E extends Enum<E>> extends BaseSetJsonDeser
         this.enumClass = deserializer.getEnumClass();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected EnumSet<E> newCollection() {
         return EnumSet.noneOf(enumClass);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isNullValueAllowed() {
         return false;

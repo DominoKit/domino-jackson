@@ -7,7 +7,14 @@ import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
+/**
+ * <p>JsStringArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class JsStringArrayReader implements JacksonContext.StringArrayReader {
+    /** {@inheritDoc} */
     @Override
     public String[] readArray(JsonReader reader) {
         JsArray<JsString> jsArray = new JsArray<>();

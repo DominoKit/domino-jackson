@@ -46,7 +46,7 @@ public interface IdentityDeserializationInfo<T> {
      * <p>newIdKey</p>
      *
      * @param id Identifier
-     * @return a new {@link IdKey}
+     * @return a new {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey}
      */
     IdKey newIdKey(Object id);
 

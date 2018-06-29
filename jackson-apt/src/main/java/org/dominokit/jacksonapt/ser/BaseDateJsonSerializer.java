@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * Base implementation of {@link JsonSerializer} for dates.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for dates.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -148,9 +148,7 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(D value) {
         return null == value || value.getTime() == 0l;

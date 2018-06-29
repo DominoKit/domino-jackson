@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -27,7 +26,7 @@ import org.dominokit.jacksonapt.utils.Base64Utils;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of byte.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of byte.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -39,7 +38,7 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveByteArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveByteArrayJsonDeserializer}
      */
     public static PrimitiveByteArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -48,9 +47,7 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
     private PrimitiveByteArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public byte[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Byte> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.ByteJsonDeserializer.getInstance(), params);
@@ -66,9 +63,7 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected byte[] doDeserializeNonArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.STRING == reader.peek()) {
@@ -80,9 +75,7 @@ public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeseria
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected byte[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new byte[]{BaseNumberJsonDeserializer.ByteJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

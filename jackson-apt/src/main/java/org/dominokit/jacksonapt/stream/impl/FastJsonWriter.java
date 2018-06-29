@@ -26,6 +26,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * <p>FastJsonWriter class.</p>
+ *
  * @author nicolasmorel
  * @version $Id: $
  */
@@ -68,7 +70,7 @@ public class FastJsonWriter implements JsonWriter {
     /**
      * Creates a new instance that writes a JSON-encoded stream to {@code out}.
      *
-     * @param out a {@link StringBuilder} object.
+     * @param out a {@link java.lang.StringBuilder} object.
      */
     public FastJsonWriter(StringBuilder out) {
         if (out == null) {
@@ -77,9 +79,7 @@ public class FastJsonWriter implements JsonWriter {
         this.out = out;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setIndent(String indent) {
         if (indent.length() == 0) {
@@ -91,9 +91,7 @@ public class FastJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setLenient(boolean lenient) {
         this.lenient = lenient;
@@ -108,9 +106,7 @@ public class FastJsonWriter implements JsonWriter {
         return lenient;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setSerializeNulls(boolean serializeNulls) {
         this.serializeNulls = serializeNulls;
@@ -127,35 +123,27 @@ public class FastJsonWriter implements JsonWriter {
         return serializeNulls;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter beginArray() {
         writeDeferredName();
         return open(JsonScope.EMPTY_ARRAY, "[");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter endArray() {
         return close(JsonScope.EMPTY_ARRAY, JsonScope.NONEMPTY_ARRAY, "]");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter beginObject() {
         writeDeferredName();
         return open(JsonScope.EMPTY_OBJECT, "{");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter endObject() {
         return close(JsonScope.EMPTY_OBJECT, JsonScope.NONEMPTY_OBJECT, "}");
@@ -214,9 +202,7 @@ public class FastJsonWriter implements JsonWriter {
         stack.setAt(stackSize - 1, topOfStack);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter name(String name) {
         checkName(name);
@@ -224,9 +210,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter unescapeName(String name) {
         checkName(name);
@@ -258,9 +242,7 @@ public class FastJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter value(String value) {
         if (value == null) {
@@ -272,9 +254,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter unescapeValue(String value) {
         if (value == null) {
@@ -286,9 +266,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter nullValue() {
         if (deferredUnescapeName != null || deferredName != null) {
@@ -305,9 +283,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter cancelName() {
         if (deferredUnescapeName != null) {
@@ -318,9 +294,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter value(boolean value) {
         writeDeferredName();
@@ -329,9 +303,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter value(double value) {
         if (Double.isNaN(value) || Double.isInfinite(value)) {
@@ -343,9 +315,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter value(long value) {
         writeDeferredName();
@@ -354,9 +324,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter value(Number value) {
         if (value == null) {
@@ -374,9 +342,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public FastJsonWriter rawValue(Object value) {
         if (value == null) {
@@ -388,9 +354,7 @@ public class FastJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void flush() {
         if (stackSize == 0) {
@@ -398,9 +362,7 @@ public class FastJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void close() {
         int size = stackSize;
@@ -486,9 +448,7 @@ public class FastJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutput() {
         return out.toString();

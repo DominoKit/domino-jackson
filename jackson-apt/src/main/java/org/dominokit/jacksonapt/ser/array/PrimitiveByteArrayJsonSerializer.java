@@ -23,16 +23,19 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.utils.Base64Utils;
 
 /**
- * Default {@link JsonSerializer} implementation for array of byte.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of byte.
  *
  * @author Nicolas Morel
+ * @version $Id: $Id
  */
 public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
 
     private static final PrimitiveByteArrayJsonSerializer INSTANCE = new PrimitiveByteArrayJsonSerializer();
 
     /**
-     * @return an instance of {@link PrimitiveByteArrayJsonSerializer}
+     * <p>getInstance.</p>
+     *
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveByteArrayJsonSerializer}
      */
     public static PrimitiveByteArrayJsonSerializer getInstance() {
         return INSTANCE;
@@ -41,11 +44,13 @@ public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
     private PrimitiveByteArrayJsonSerializer() {
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(byte[] value) {
         return null == value || value.length == 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {

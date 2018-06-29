@@ -21,7 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import java.util.Date;
 
 /**
- * Default {@link KeySerializer} implementation for {@link Object}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Object}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -33,7 +33,7 @@ public final class ObjectKeySerializer extends KeySerializer<Object> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link ObjectKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.ObjectKeySerializer}
      */
     public static ObjectKeySerializer getInstance() {
         return INSTANCE;
@@ -42,9 +42,7 @@ public final class ObjectKeySerializer extends KeySerializer<Object> {
     private ObjectKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(Object value, JsonSerializationContext ctx) {
         if (value instanceof Date) {

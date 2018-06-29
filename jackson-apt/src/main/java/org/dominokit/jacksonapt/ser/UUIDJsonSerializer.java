@@ -24,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 import java.util.UUID;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link UUID}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.util.UUID}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -36,7 +36,7 @@ public class UUIDJsonSerializer extends JsonSerializer<UUID> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link UUIDJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.UUIDJsonSerializer}
      */
     public static UUIDJsonSerializer getInstance() {
         return INSTANCE;
@@ -45,9 +45,7 @@ public class UUIDJsonSerializer extends JsonSerializer<UUID> {
     private UUIDJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, UUID value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.unescapeValue(value.toString());

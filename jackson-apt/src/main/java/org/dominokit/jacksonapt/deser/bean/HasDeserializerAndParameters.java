@@ -23,7 +23,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Lazy initialize a {@link JsonDeserializer}
+ * Lazy initialize a {@link org.dominokit.jacksonapt.JsonDeserializer}
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
     /**
      * <p>Getter for the field <code>parameters</code>.</p>
      *
-     * @return a {@link JsonDeserializerParameters} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      */
     protected JsonDeserializerParameters getParameters() {
         if (null == parameters) {
@@ -47,7 +47,7 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
     /**
      * <p>newParameters</p>
      *
-     * @return a {@link JsonDeserializerParameters} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      */
     protected JsonDeserializerParameters newParameters() {
         return JacksonContextProvider.get().defaultDeserializerParameters();

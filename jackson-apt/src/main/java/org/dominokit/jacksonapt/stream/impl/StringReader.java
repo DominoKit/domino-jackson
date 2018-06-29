@@ -33,7 +33,7 @@ public class StringReader {
     /**
      * <p>Constructor for StringReader.</p>
      *
-     * @param in a {@link String} object.
+     * @param in a {@link java.lang.String} object.
      */
     public StringReader(String in) {
         if (in == null) {
@@ -47,7 +47,7 @@ public class StringReader {
     /**
      * <p>getInput</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getInput() {
         return in;

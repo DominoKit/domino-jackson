@@ -35,8 +35,8 @@ public interface IdentitySerializationInfo<T> {
      * <p>getObjectId</p>
      *
      * @param bean a T object.
-     * @param ctx  a {@link JsonSerializationContext} object.
-     * @return a {@link ObjectIdSerializer} object.
+     * @param ctx  a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+     * @return a {@link org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer} object.
      */
     ObjectIdSerializer<?> getObjectId(T bean, JsonSerializationContext ctx);
 }

@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Base implementation of {@link JsonDeserializer} for array.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ import java.util.List;
 public abstract class AbstractArray2dJsonDeserializer<T> extends JsonDeserializer<T> {
 
     /**
-     * Deserializes the array into a {@link List}. We need the length of the array before creating it.
+     * Deserializes the array into a {@link java.util.List}. We need the length of the array before creating it.
      *
      * @param reader       reader
      * @param ctx          context of the deserialization process
@@ -70,12 +70,12 @@ public abstract class AbstractArray2dJsonDeserializer<T> extends JsonDeserialize
      * <p>doDeserializeIntoList</p>
      *
      * @param reader       a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx          a {@link JsonDeserializationContext} object.
-     * @param deserializer a {@link JsonDeserializer} object.
-     * @param params       a {@link JsonDeserializerParameters} object.
+     * @param ctx          a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param deserializer a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+     * @param params       a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @param token        a {@link org.dominokit.jacksonapt.stream.JsonToken} object.
      * @param <C>          a C object.
-     * @return a {@link List} object.
+     * @return a {@link java.util.List} object.
      */
     protected <C> List<List<C>> doDeserializeIntoList(JsonReader reader, JsonDeserializationContext ctx,
                                                       JsonDeserializer<C> deserializer, JsonDeserializerParameters params,

@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for 2D array of long.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of long.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class PrimitiveLongArray2dJsonSerializer extends JsonSerializer<long[][]>
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveLongArray2dJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveLongArray2dJsonSerializer}
      */
     public static PrimitiveLongArray2dJsonSerializer getInstance() {
         return INSTANCE;
@@ -43,17 +43,13 @@ public class PrimitiveLongArray2dJsonSerializer extends JsonSerializer<long[][]>
     private PrimitiveLongArray2dJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(long[][] value) {
         return null == value || value.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, long[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {

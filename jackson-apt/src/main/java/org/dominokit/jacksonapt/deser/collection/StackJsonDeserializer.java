@@ -21,9 +21,9 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.Stack;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Stack}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Stack}.
  *
- * @param <T> Type of the elements inside the {@link Stack}
+ * @param <T> Type of the elements inside the {@link java.util.Stack}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -32,9 +32,9 @@ public class StackJsonDeserializer<T> extends BaseListJsonDeserializer<Stack<T>,
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Stack}.
-     * @param <T>          Type of the elements inside the {@link Stack}
-     * @return a new instance of {@link StackJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.Stack}.
+     * @param <T>          Type of the elements inside the {@link java.util.Stack}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.StackJsonDeserializer}
      */
     public static <T> StackJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new StackJsonDeserializer<T>(deserializer);
@@ -47,9 +47,7 @@ public class StackJsonDeserializer<T> extends BaseListJsonDeserializer<Stack<T>,
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected Stack<T> newCollection() {
         return new Stack<T>();

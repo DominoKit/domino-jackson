@@ -7,8 +7,15 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 
 import java.util.Stack;
 
+/**
+ * <p>DefaultDoubleArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @GwtIncompatible
 public class DefaultDoubleArrayReader implements JacksonContext.DoubleArrayReader {
+    /** {@inheritDoc} */
     @Override
     public double[] readArray(JsonReader reader) {
         Stack<Double> doubleStack = new Stack<>();

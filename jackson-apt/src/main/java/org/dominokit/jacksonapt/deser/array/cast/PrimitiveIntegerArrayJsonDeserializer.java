@@ -18,14 +18,13 @@ package org.dominokit.jacksonapt.deser.array.cast;
 
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.deser.array.AbstractArrayJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of int.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of int.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDese
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveIntegerArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.PrimitiveIntegerArrayJsonDeserializer}
      */
     public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -47,18 +46,14 @@ public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDese
     private PrimitiveIntegerArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return JacksonContextProvider.get().integerArrayReader().readArray(reader);
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected int[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new int[]{BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

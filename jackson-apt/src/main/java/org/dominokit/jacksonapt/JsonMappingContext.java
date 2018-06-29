@@ -29,7 +29,7 @@ public interface JsonMappingContext {
     /**
      * <p>getLogger</p>
      *
-     * @return a {@link Logger} object.
+     * @return a {@link java.util.logging.Logger} object.
      */
     Logger getLogger();
 

@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * {@link KeySerializer} implementation that uses {@link Object#toString()} method.
+ * {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation that uses {@link java.lang.Object#toString()} method.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -31,7 +31,7 @@ public final class ToStringKeySerializer extends KeySerializer<Object> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link ToStringKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer}
      */
     public static ToStringKeySerializer getInstance() {
         return INSTANCE;
@@ -40,9 +40,7 @@ public final class ToStringKeySerializer extends KeySerializer<Object> {
     private ToStringKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(Object value, JsonSerializationContext ctx) {
         return value.toString();

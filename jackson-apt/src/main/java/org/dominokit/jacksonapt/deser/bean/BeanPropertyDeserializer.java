@@ -44,7 +44,7 @@ public abstract class BeanPropertyDeserializer<T, V> extends HasDeserializerAndP
      *
      * @param bean  a T object.
      * @param value a V object.
-     * @param ctx   a {@link JsonDeserializationContext} object.
+     * @param ctx   a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
      */
     public abstract void setValue(T bean, V value, JsonDeserializationContext ctx);
 }

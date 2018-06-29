@@ -23,31 +23,33 @@ import java.lang.annotation.Target;
  * <p>
  * As of Jackson 2.6, known special handling includes:
  * <ul>
- * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ * <li>{@link java.util.Date}: Shape can  be {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#STRING} or {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#NUMBER};
  * pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
  * </li>
  * <li>Can be used on Classes (types) as well, for modified default behavior, possibly
  * overridden by per-property annotation
  * </li>
- * <li>{@link java.lang.Enum}s: Shapes {@link Shape#STRING} and {@link Shape#NUMBER} can be
+ * <li>{@link java.lang.Enum}s: Shapes {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#STRING} and {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#NUMBER} can be
  * used to change between numeric (index) and textual (name or <code>toString()</code>);
- * but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
+ * but it is also possible to use {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} to serialize (but not deserialize)
  * {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
  * as JSON Object only works with class annotation;
  * will not work as per-property annotation.
  * </li>
  * <li>{@link java.util.Collection}s can be serialized as (and deserialized from) JSON Objects,
- * if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
+ * if {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
  * will not work as per-property annotation.
  * </li>
  * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
- * {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
+ * {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
  * scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
  * will not work as per-property annotation.
  * </li>
  * </ul>
  *
  * @since 2.0
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
         ElementType.TYPE})
@@ -73,6 +75,8 @@ public @interface JsonFormat {
      * to further refine formatting aspects. This may, for example, determine
      * low-level format String used for {@link java.util.Date} serialization;
      * however, exact use is determined by specific <code>JsonSerializer</code>
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String pattern() default "";
 
@@ -81,6 +85,8 @@ public @interface JsonFormat {
      * but usually has straight-forward counterpart in data format (JSON).
      * Note that commonly only a subset of shapes is available; and if 'invalid' value
      * is chosen, defaults are usually used.
+     *
+     * @return a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
      */
     public Shape shape() default Shape.ANY;
 
@@ -91,6 +97,8 @@ public @interface JsonFormat {
      * by the serialization context, which in turn defaults to system
      * defaults ({@link java.util.Locale#getDefault()}) unless explicitly
      * set to another locale.
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String locale() default DEFAULT_LOCALE;
 
@@ -101,24 +109,28 @@ public @interface JsonFormat {
      * by the serialization context, which in turn defaults to system
      * defaults ({@link java.util.TimeZone#getDefault()}) unless explicitly
      * set to another locale.
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String timezone() default DEFAULT_TIMEZONE;
 
     /**
-     * Set of {@link JsonFormat.Feature}s to explicitly enable with respect
+     * Set of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature}s to explicitly enable with respect
      * to handling of annotated property. This will have precedence over possible
      * global configuration.
      *
      * @since 2.6
+     * @return an array of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature} objects.
      */
     public JsonFormat.Feature[] with() default {};
 
     /**
-     * Set of {@link JsonFormat.Feature}s to explicitly disable with respect
+     * Set of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature}s to explicitly disable with respect
      * to handling of annotated property. This will have precedence over possible
      * global configuration.
      *
      * @since 2.6
+     * @return an array of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature} objects.
      */
     public JsonFormat.Feature[] without() default {};
 

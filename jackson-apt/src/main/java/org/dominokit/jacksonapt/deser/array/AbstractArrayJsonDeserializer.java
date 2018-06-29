@@ -27,16 +27,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Base implementation of {@link JsonDeserializer} for array.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<T> {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.BEGIN_ARRAY == reader.peek()) {
@@ -50,8 +48,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeArray</p>
      *
      * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx    a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected abstract T doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
@@ -60,8 +58,8 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeNonArray</p>
      *
      * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx    a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected T doDeserializeNonArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
@@ -76,14 +74,14 @@ public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<
      * <p>doDeserializeSingleArray</p>
      *
      * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx    a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @return a T object.
      */
     protected abstract T doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 
     /**
-     * Deserializes the array into a {@link List}. We need the length of the array before creating it.
+     * Deserializes the array into a {@link java.util.List}. We need the length of the array before creating it.
      *
      * @param reader       reader
      * @param ctx          context of the deserialization process

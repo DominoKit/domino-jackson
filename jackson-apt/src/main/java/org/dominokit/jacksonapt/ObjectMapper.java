@@ -17,7 +17,7 @@
 package org.dominokit.jacksonapt;
 
 /**
- * Interface combining {@link ObjectReader} and {@link ObjectWriter}
+ * Interface combining {@link org.dominokit.jacksonapt.ObjectReader} and {@link org.dominokit.jacksonapt.ObjectWriter}
  *
  * @param <T> Type of the mapped object
  * @author Nicolas Morel

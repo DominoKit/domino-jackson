@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Iterable}. The deserialization process returns an {@link ArrayList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Iterable}. The deserialization process returns an {@link java.util.ArrayList}.
  *
- * @param <T> Type of the elements inside the {@link Iterable}
+ * @param <T> Type of the elements inside the {@link java.lang.Iterable}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -37,9 +37,9 @@ public class IterableJsonDeserializer<T> extends BaseIterableJsonDeserializer<It
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Iterable}.
-     * @param <T>          Type of the elements inside the {@link Iterable}
-     * @return a new instance of {@link IterableJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.lang.Iterable}.
+     * @param <T>          Type of the elements inside the {@link java.lang.Iterable}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.IterableJsonDeserializer}
      */
     public static <T> IterableJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new IterableJsonDeserializer<T>(deserializer);
@@ -52,9 +52,7 @@ public class IterableJsonDeserializer<T> extends BaseIterableJsonDeserializer<It
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Iterable<T> doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.BEGIN_ARRAY == reader.peek()) {

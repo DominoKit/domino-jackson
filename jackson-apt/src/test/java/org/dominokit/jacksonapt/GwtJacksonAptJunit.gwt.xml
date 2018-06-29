@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <inherits name="org.dominokit.jacksonapt.GwtJacksonApt"/>
+    <inherits name="com.fasterxml.jackson.annotation.JacksonAnnotation"/>
+    <inherits name="com.fasterxml.jackson.databind.annotation.JacksonDatabindAnnotation"/>
+    <source path="client"/>
+    <source path="shared"/>
+</module>

@@ -44,8 +44,8 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>Constructor for TypeDeserializationInfo.</p>
      *
-     * @param include      a {@link As} object.
-     * @param propertyName a {@link String} object.
+     * @param include      a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
+     * @param propertyName a {@link java.lang.String} object.
      */
     public TypeDeserializationInfo(As include, String propertyName) {
         this.include = include;
@@ -56,10 +56,9 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>addTypeInfo</p>
      *
-     * @param clazz    a {@link Class} object.
-     * @param typeInfo a {@link String} object.
-     * @param <S>      the type
-     * @return a {@link TypeDeserializationInfo} object.
+     * @param clazz    a {@link java.lang.Class} object.
+     * @param typeInfo a {@link java.lang.String} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      */
     public <S extends T> TypeDeserializationInfo<T> addTypeInfo(Class<S> clazz, String typeInfo) {
         typeInfoToClass.put(typeInfo, clazz);
@@ -69,7 +68,7 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>Getter for the field <code>include</code>.</p>
      *
-     * @return a {@link As} object.
+     * @return a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
      */
     public As getInclude() {
         return include;
@@ -78,7 +77,7 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>Getter for the field <code>propertyName</code>.</p>
      *
-     * @return a {@link String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getPropertyName() {
         return propertyName;
@@ -87,8 +86,8 @@ public class TypeDeserializationInfo<T> {
     /**
      * <p>getTypeClass</p>
      *
-     * @param typeInfo a {@link String} object.
-     * @return a {@link Class} object.
+     * @param typeInfo a {@link java.lang.String} object.
+     * @return a {@link java.lang.Class} object.
      */
     public Class<? extends T> getTypeClass(String typeInfo) {
         return typeInfoToClass.get(typeInfo);

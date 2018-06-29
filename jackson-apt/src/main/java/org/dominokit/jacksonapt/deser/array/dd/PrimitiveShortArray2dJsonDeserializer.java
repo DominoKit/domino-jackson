@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array.dd;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -25,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for 2D array of short.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of short.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveShortArray2dJsonDeserializer extends AbstractArray2dJsonDe
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveShortArray2dJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.dd.PrimitiveShortArray2dJsonDeserializer}
      */
     public static PrimitiveShortArray2dJsonDeserializer getInstance() {
         return INSTANCE;
@@ -46,9 +45,7 @@ public class PrimitiveShortArray2dJsonDeserializer extends AbstractArray2dJsonDe
     private PrimitiveShortArray2dJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public short[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<List<Short>> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.ShortJsonDeserializer.getInstance(), params);

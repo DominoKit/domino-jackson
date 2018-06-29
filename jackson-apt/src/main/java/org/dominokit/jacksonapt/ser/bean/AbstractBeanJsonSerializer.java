@@ -16,9 +16,6 @@
 
 package org.dominokit.jacksonapt.ser.bean;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
@@ -30,7 +27,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 /**
- * Base implementation of {@link JsonSerializer} for beans.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for beans.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -59,17 +56,17 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
     }
 
     /**
-     * Initialize the {@link Map} containing the property serializers. Returns an empty map if there are no properties to
+     * Initialize the {@link java.util.Map} containing the property serializers. Returns an empty map if there are no properties to
      * serialize.
      *
-     * @return an array of {@link BeanPropertySerializer} objects.
+     * @return an array of {@link org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer} objects.
      */
     protected BeanPropertySerializer[] initSerializers() {
         return new BeanPropertySerializer[0];
     }
 
     /**
-     * Initialize the {@link IdentitySerializationInfo}. Returns null if there is no {@link JsonIdentityInfo} annotation on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo}. Returns null if there is no {@link com.fasterxml.jackson.annotation.JsonIdentityInfo} annotation on bean.
      *
      * @return a {@link org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo} object.
      */
@@ -78,27 +75,27 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
     }
 
     /**
-     * Initialize the {@link TypeSerializationInfo}. Returns null if there is no {@link JsonTypeInfo} annotation on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo}. Returns null if there is no {@link com.fasterxml.jackson.annotation.JsonTypeInfo} annotation on bean.
      *
-     * @return a {@link TypeSerializationInfo} object.
+     * @return a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo} object.
      */
     protected TypeSerializationInfo<T> initTypeInfo() {
         return null;
     }
 
     /**
-     * Initialize the {@link Map} containing the {@link SubtypeSerializer}. Returns an empty map if the bean has no subtypes.
+     * Initialize the {@link java.util.Map} containing the {@link org.dominokit.jacksonapt.ser.bean.SubtypeSerializer}. Returns an empty map if the bean has no subtypes.
      *
-     * @return a {@link Map} object.
+     * @return a {@link java.util.Map} object.
      */
     protected Map<Class, SubtypeSerializer> initMapSubtypeClassToSerializer() {
         return Collections.emptyMap();
     }
 
     /**
-     * Initialize the {@link AnyGetterPropertySerializer}. Returns null if there is no method annoted with {@link JsonAnyGetter} on bean.
+     * Initialize the {@link org.dominokit.jacksonapt.ser.bean.AnyGetterPropertySerializer}. Returns null if there is no method annoted with {@link com.fasterxml.jackson.annotation.JsonAnyGetter} on bean.
      *
-     * @return a {@link AnyGetterPropertySerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.ser.bean.AnyGetterPropertySerializer} object.
      */
     protected AnyGetterPropertySerializer<T> initAnyGetterPropertySerializer() {
         return null;
@@ -107,13 +104,11 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
     /**
      * <p>getSerializedType</p>
      *
-     * @return a {@link Class} object.
+     * @return a {@link java.lang.Class} object.
      */
     public abstract Class getSerializedType();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         getSerializer(writer, value, ctx).serializeInternally(writer, value, ctx, params, defaultIdentityInfo, defaultTypeInfo);
@@ -134,9 +129,7 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T> im
         return subtypeSerializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
                                     IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo) {
 

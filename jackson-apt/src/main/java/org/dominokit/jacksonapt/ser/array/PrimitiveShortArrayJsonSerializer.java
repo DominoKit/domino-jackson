@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for array of short.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of short.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class PrimitiveShortArrayJsonSerializer extends JsonSerializer<short[]> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveShortArrayJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveShortArrayJsonSerializer}
      */
     public static PrimitiveShortArrayJsonSerializer getInstance() {
         return INSTANCE;
@@ -43,17 +43,13 @@ public class PrimitiveShortArrayJsonSerializer extends JsonSerializer<short[]> {
     private PrimitiveShortArrayJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(short[] value) {
         return null == value || value.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, short[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {

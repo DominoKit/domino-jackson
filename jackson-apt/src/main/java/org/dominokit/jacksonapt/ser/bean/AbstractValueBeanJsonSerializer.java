@@ -42,13 +42,11 @@ public abstract class AbstractValueBeanJsonSerializer<T> extends AbstractBeanJso
     /**
      * <p>initValueSerializer</p>
      *
-     * @return a {@link BeanPropertySerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer} object.
      */
     protected abstract BeanPropertySerializer<T, ?> initValueSerializer();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
                                    IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String

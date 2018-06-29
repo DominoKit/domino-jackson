@@ -118,7 +118,7 @@ import java.util.logging.Logger;
  * <p>
  * <p>Each {@code JsonWriter} may be used to write a single JSON stream.
  * Instances of this class are not thread safe. Calls that would result in a
- * malformed JSON string will fail with an {@link IllegalStateException}.
+ * malformed JSON string will fail with an {@link java.lang.IllegalStateException}.
  *
  * @author Jesse Wilson
  * @version $Id: $
@@ -196,7 +196,7 @@ public class DefaultJsonWriter implements JsonWriter {
     /**
      * Creates a new instance that writes a JSON-encoded stream to {@code out}.
      *
-     * @param out a {@link StringBuilder} object.
+     * @param out a {@link java.lang.StringBuilder} object.
      */
     public DefaultJsonWriter(StringBuilder out) {
         if (out == null) {
@@ -205,9 +205,7 @@ public class DefaultJsonWriter implements JsonWriter {
         this.out = out;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setIndent(String indent) {
         if (indent.length() == 0) {
@@ -219,9 +217,7 @@ public class DefaultJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setLenient(boolean lenient) {
         this.lenient = lenient;
@@ -236,9 +232,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return lenient;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final void setSerializeNulls(boolean serializeNulls) {
         this.serializeNulls = serializeNulls;
@@ -255,35 +249,27 @@ public class DefaultJsonWriter implements JsonWriter {
         return serializeNulls;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter beginArray() {
         writeDeferredName();
         return open(JsonScope.EMPTY_ARRAY, "[");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter endArray() {
         return close(JsonScope.EMPTY_ARRAY, JsonScope.NONEMPTY_ARRAY, "]");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter beginObject() {
         writeDeferredName();
         return open(JsonScope.EMPTY_OBJECT, "{");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter endObject() {
         return close(JsonScope.EMPTY_OBJECT, JsonScope.NONEMPTY_OBJECT, "}");
@@ -342,9 +328,7 @@ public class DefaultJsonWriter implements JsonWriter {
         stack.setAt(stackSize - 1, topOfStack);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter name(String name) {
         checkName(name);
@@ -352,9 +336,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter unescapeName(String name) {
         checkName(name);
@@ -386,9 +368,7 @@ public class DefaultJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter value(String value) {
         if (value == null) {
@@ -400,9 +380,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter unescapeValue(String value) {
         if (value == null) {
@@ -414,9 +392,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter nullValue() {
         if (deferredUnescapeName != null || deferredName != null) {
@@ -433,9 +409,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter cancelName() {
         if (deferredUnescapeName != null) {
@@ -446,9 +420,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter value(boolean value) {
         writeDeferredName();
@@ -457,9 +429,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter value(double value) {
         if (Double.isNaN(value) || Double.isInfinite(value)) {
@@ -471,9 +441,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter value(long value) {
         writeDeferredName();
@@ -482,9 +450,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter value(Number value) {
         if (value == null) {
@@ -505,9 +471,7 @@ public class DefaultJsonWriter implements JsonWriter {
 
 
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public DefaultJsonWriter rawValue(Object value) {
         if (value == null) {
@@ -519,9 +483,7 @@ public class DefaultJsonWriter implements JsonWriter {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void flush() {
         if (stackSize == 0) {
@@ -529,9 +491,7 @@ public class DefaultJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void close() {
         int size = stackSize;
@@ -548,6 +508,12 @@ public class DefaultJsonWriter implements JsonWriter {
         out.append("\"");
     }
 
+    /**
+     * <p>encodeString.</p>
+     *
+     * @param value a {@link java.lang.String} object.
+     * @param out a {@link java.lang.StringBuilder} object.
+     */
     public static void encodeString(final String value, final StringBuilder out) {
         String[] replacements = REPLACEMENT_CHARS;
         int last = 0;
@@ -581,8 +547,8 @@ public class DefaultJsonWriter implements JsonWriter {
     /**
      * <p>encodeString</p>
      *
-     * @param value a {@link String} object.
-     * @return a {@link String} object.
+     * @param value a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String encodeString(final String value) {
         StringBuilder out = new StringBuilder();
@@ -661,9 +627,7 @@ public class DefaultJsonWriter implements JsonWriter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutput() {
         return out.toString();

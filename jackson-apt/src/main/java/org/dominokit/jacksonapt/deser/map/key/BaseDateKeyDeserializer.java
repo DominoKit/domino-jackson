@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * Base implementation of {@link KeyDeserializer} for dates. It uses both ISO-8601 and RFC-2822 for string-based key and milliseconds
+ * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for dates. It uses both ISO-8601 and RFC-2822 for string-based key and milliseconds
  * for number-based key.
  *
  * @author Nicolas Morel
@@ -145,9 +145,7 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected D doDeserialize(String key, JsonDeserializationContext ctx) {
         return ((DateKeyParser<D>)JacksonContextProvider.get().dateFormat().makeDateKeyParser()).parse(key, this);

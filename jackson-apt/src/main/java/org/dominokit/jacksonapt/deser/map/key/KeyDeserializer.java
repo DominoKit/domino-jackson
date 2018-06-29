@@ -33,7 +33,7 @@ public abstract class KeyDeserializer<T> {
      * @param key key to deserialize
      * @param ctx Context for the full deserialization process
      * @return the deserialized object
-     * @throws JsonDeserializationException if an error occurs during the deserialization
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs during the deserialization
      */
     public T deserialize(String key, JsonDeserializationContext ctx) throws JsonDeserializationException {
         if (null == key) {

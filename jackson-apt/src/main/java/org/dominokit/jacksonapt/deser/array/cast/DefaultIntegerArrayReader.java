@@ -7,8 +7,15 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 
 import java.util.Stack;
 
+/**
+ * <p>DefaultIntegerArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @GwtIncompatible
 public class DefaultIntegerArrayReader implements JacksonContext.IntegerArrayReader {
+    /** {@inheritDoc} */
     @Override
     public int[] readArray(JsonReader reader) {
         Stack<Integer> intStack = new Stack<>();

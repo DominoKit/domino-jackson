@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * Base implementation of {@link JsonDeserializer} for dates.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for dates.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -149,9 +149,7 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public D doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (params.getShape().isNumeric() || JsonToken.NUMBER.equals(reader.peek())) {
@@ -165,7 +163,7 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
      * <p>deserializeNumber</p>
      *
      * @param millis a long.
-     * @param params a {@link JsonDeserializerParameters} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @return a D object.
      */
     protected abstract D deserializeNumber(long millis, JsonDeserializerParameters params);
@@ -173,9 +171,9 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
     /**
      * <p>deserializeString</p>
      *
-     * @param date   a {@link String} object.
-     * @param ctx    a {@link JsonDeserializationContext} object.
-     * @param params a {@link JsonDeserializerParameters} object.
+     * @param date   a {@link java.lang.String} object.
+     * @param ctx    a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      * @return a D object.
      */
     protected abstract D deserializeString(String date, JsonDeserializationContext ctx, JsonDeserializerParameters params);

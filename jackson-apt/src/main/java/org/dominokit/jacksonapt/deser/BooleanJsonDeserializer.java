@@ -23,7 +23,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Boolean}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Boolean}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ public class BooleanJsonDeserializer extends JsonDeserializer<Boolean> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link BooleanJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.BooleanJsonDeserializer}
      */
     public static BooleanJsonDeserializer getInstance() {
         return INSTANCE;
@@ -44,9 +44,7 @@ public class BooleanJsonDeserializer extends JsonDeserializer<Boolean> {
     private BooleanJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Boolean doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         JsonToken token = reader.peek();

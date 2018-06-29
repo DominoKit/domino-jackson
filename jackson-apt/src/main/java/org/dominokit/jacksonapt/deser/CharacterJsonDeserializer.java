@@ -23,7 +23,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link Character}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Character}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -35,7 +35,7 @@ public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link CharacterJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.CharacterJsonDeserializer}
      */
     public static CharacterJsonDeserializer getInstance() {
         return INSTANCE;
@@ -44,9 +44,7 @@ public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
     private CharacterJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Character doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.NUMBER.equals(reader.peek())) {

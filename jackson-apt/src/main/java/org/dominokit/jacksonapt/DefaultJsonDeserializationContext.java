@@ -207,7 +207,7 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     /**
      * <p>builder</p>
      *
-     * @return a {@link DefaultJsonDeserializationContext.Builder} object.
+     * @return a {@link org.dominokit.jacksonapt.DefaultJsonDeserializationContext.Builder} object.
      */
     public static Builder builder() {
         return new DefaultBuilder();
@@ -246,18 +246,16 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
         this.useBrowserTimezone = useBrowserTimezone;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Logger getLogger() {
         return logger;
     }
 
     /**
-     * <p>isFailOnUnknownProperties</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isFailOnUnknownProperties</p>
      * @see Builder#failOnUnknownProperties(boolean)
      */
     @Override
@@ -266,9 +264,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>isUnwrapRootValue</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isUnwrapRootValue</p>
      * @see Builder#unwrapRootValue(boolean)
      */
     @Override
@@ -277,9 +275,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>isAcceptSingleValueAsArray</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isAcceptSingleValueAsArray</p>
      * @see Builder#acceptSingleValueAsArray(boolean)
      */
     @Override
@@ -288,9 +286,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>isUseSafeEval</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isUseSafeEval</p>
      * @see Builder#useSafeEval(boolean)
      */
     @Override
@@ -299,9 +297,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>isReadUnknownEnumValuesAsNull</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isReadUnknownEnumValuesAsNull</p>
      * @see Builder#readUnknownEnumValuesAsNull(boolean)
      */
     @Override
@@ -310,9 +308,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>isUseBrowserTimezone</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isUseBrowserTimezone</p>
      * @see Builder#isUseBrowserTimezone()
      */
     @Override
@@ -321,10 +319,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>newJsonReader</p>
+     * {@inheritDoc}
      *
-     * @param input a {@link String} object.
-     * @return a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+     * <p>newJsonReader</p>
      */
     @Override
     public JsonReader newJsonReader(String input) {
@@ -334,10 +331,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * Trace an error with current reader state and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param message error message
-     * @return a {@link JsonDeserializationException} with the given message
+     * Trace an error with current reader state and returns a corresponding exception.
      */
     @Override
     public JsonDeserializationException traceError(String message) {
@@ -345,11 +341,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * Trace an error with current reader state and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param message error message
-     * @param reader  current reader
-     * @return a {@link JsonDeserializationException} with the given message
+     * Trace an error with current reader state and returns a corresponding exception.
      */
     @Override
     public JsonDeserializationException traceError(String message, JsonReader reader) {
@@ -359,10 +353,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * Trace an error and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param cause cause of the error
-     * @return a {@link JsonDeserializationException} if we wrap the exceptions, the cause otherwise
+     * Trace an error and returns a corresponding exception.
      */
     @Override
     public RuntimeException traceError(RuntimeException cause) {
@@ -375,11 +368,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * Trace an error with current reader state and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param cause  cause of the error
-     * @param reader current reader
-     * @return a {@link JsonDeserializationException} if we wrap the exceptions, the cause otherwise
+     * Trace an error with current reader state and returns a corresponding exception.
      */
     @Override
     public RuntimeException traceError(RuntimeException cause, JsonReader reader) {
@@ -399,10 +390,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>addObjectId</p>
+     * {@inheritDoc}
      *
-     * @param id       a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
-     * @param instance a {@link Object} object.
+     * <p>addObjectId</p>
      */
     @Override
     public void addObjectId(IdKey id, Object instance) {
@@ -413,10 +403,9 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
     }
 
     /**
-     * <p>getObjectWithId</p>
+     * {@inheritDoc}
      *
-     * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
-     * @return a {@link Object} object.
+     * <p>getObjectWithId</p>
      */
     @Override
     public Object getObjectWithId(IdKey id) {
@@ -426,6 +415,7 @@ public class DefaultJsonDeserializationContext implements JsonDeserializationCon
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public JsonDeserializerParameters defaultParameters() {
         return JacksonContextProvider.get().defaultDeserializerParameters();

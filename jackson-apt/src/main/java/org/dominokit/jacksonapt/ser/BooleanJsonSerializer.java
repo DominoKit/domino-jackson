@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Boolean}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Boolean}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link BooleanJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.BooleanJsonSerializer}
      */
     public static BooleanJsonSerializer getInstance() {
         return INSTANCE;
@@ -43,17 +43,13 @@ public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
     private BooleanJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Boolean value) {
         return null == value || !value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.value(value);

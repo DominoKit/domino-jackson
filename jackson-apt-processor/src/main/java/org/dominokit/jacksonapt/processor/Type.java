@@ -29,13 +29,27 @@ import java.util.Map;
 
 import static java.util.Objects.isNull;
 
+/**
+ * <p>Type class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class Type {
 
     private static final int FIRST_ARGUMENT = 0;
     private static final int SECOND_ARGUMENT = 1;
+    /** Constant <code>BEAN_JSON_SERIALIZER_IMPL="BeanJsonSerializerImpl"</code> */
     public static final String BEAN_JSON_SERIALIZER_IMPL = "BeanJsonSerializerImpl";
+    /** Constant <code>BEAN_JSON_DESERIALIZER_IMPL="BeanJsonDeserializerImpl"</code> */
     public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
 
+    /**
+     * <p>wrapperType.</p>
+     *
+     * @param type a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.TypeName} object.
+     */
     public static TypeName wrapperType(TypeMirror type) {
         if (isPrimitive(type)) {
             if ("boolean".equals(type.toString())) {
@@ -66,6 +80,12 @@ public class Type {
         return typeMirror.getKind().isPrimitive();
     }
 
+    /**
+     * <p>isPrimitiveArray.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isPrimitiveArray(TypeMirror typeMirror) {
         return (isArray(typeMirror) && isPrimitive(arrayComponentType(typeMirror))) || isPrimitive2dArray(typeMirror);
     }
@@ -74,23 +94,53 @@ public class Type {
         return is2dArray(typeMirror) && isPrimitiveArray(arrayComponentType(typeMirror));
     }
 
+    /**
+     * <p>isArray.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isArray(TypeMirror typeMirror) {
         return TypeKind.ARRAY.compareTo(typeMirror.getKind()) == 0;
     }
 
+    /**
+     * <p>is2dArray.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean is2dArray(TypeMirror typeMirror) {
         return isArray(typeMirror) && isArray(arrayComponentType(typeMirror));
     }
 
+    /**
+     * <p>arrayComponentType.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link javax.lang.model.type.TypeMirror} object.
+     */
     public static TypeMirror arrayComponentType(TypeMirror typeMirror) {
         return ((ArrayType) typeMirror).getComponentType();
     }
 
+    /**
+     * <p>deepArrayComponentType.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link javax.lang.model.type.TypeMirror} object.
+     */
     public static TypeMirror deepArrayComponentType(TypeMirror typeMirror) {
         TypeMirror type = ((ArrayType) typeMirror).getComponentType();
         return isArray(type) ? arrayComponentType(type) : type;
     }
 
+    /**
+     * <p>isEnum.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isEnum(TypeMirror typeMirror) {
         return !isNull(ObjectMapperProcessor.typeUtils.asElement(typeMirror))
                 && !Type.isPrimitive(typeMirror)
@@ -98,65 +148,158 @@ public class Type {
                 && ElementKind.ENUM.compareTo(ObjectMapperProcessor.typeUtils.asElement(typeMirror).getKind()) == 0;
     }
 
+    /**
+     * <p>isCollection.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isCollection(TypeMirror typeMirror) {
         return !Type.isPrimitive(typeMirror) && isAssignableFrom(typeMirror, Collection.class);
     }
 
+    /**
+     * <p>isIterable.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isIterable(TypeMirror typeMirror) {
         return !Type.isPrimitive(typeMirror) && isAssignableFrom(typeMirror, Iterable.class);
     }
 
+    /**
+     * <p>isAssignableFrom.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @param targetClass a {@link java.lang.Class} object.
+     * @return a boolean.
+     */
     public static boolean isAssignableFrom(TypeMirror typeMirror, Class<?> targetClass) {
         return ObjectMapperProcessor.typeUtils.isAssignable(typeMirror, ObjectMapperProcessor.typeUtils.getDeclaredType(ObjectMapperProcessor.elementUtils.getTypeElement(targetClass.getName())));
     }
 
+    /**
+     * <p>isMap.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isMap(TypeMirror typeMirror) {
         return !Type.isPrimitive(typeMirror) && isAssignableFrom(typeMirror, Map.class);
     }
 
+    /**
+     * <p>firstTypeArgument.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link javax.lang.model.type.TypeMirror} object.
+     */
     public static TypeMirror firstTypeArgument(TypeMirror typeMirror) {
         return ((DeclaredType) typeMirror).getTypeArguments().get(FIRST_ARGUMENT);
     }
 
+    /**
+     * <p>secondTypeArgument.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link javax.lang.model.type.TypeMirror} object.
+     */
     public static TypeMirror secondTypeArgument(TypeMirror typeMirror) {
         return ((DeclaredType) typeMirror).getTypeArguments().get(SECOND_ARGUMENT);
     }
 
+    /**
+     * <p>isBasicType.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a boolean.
+     */
     public static boolean isBasicType(TypeMirror typeMirror) {
         return TypeRegistry.isBasicType(typeMirror.toString());
     }
 
+    /**
+     * <p>getPackage.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getPackage(TypeMirror typeMirror) {
         return ObjectMapperProcessor.elementUtils.getPackageOf(ObjectMapperProcessor.typeUtils.asElement(typeMirror)).getSimpleName().toString();
     }
 
+    /**
+     * <p>simpleName.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link javax.lang.model.element.Name} object.
+     */
     public static Name simpleName(TypeMirror typeMirror) {
         return ObjectMapperProcessor.typeUtils.asElement(typeMirror).getSimpleName();
     }
 
+    /**
+     * <p>serializerName.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String serializerName(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
         return serializerName(type.packageName(), type.simpleName());
     }
 
+    /**
+     * <p>serializerName.</p>
+     *
+     * @param packageName a {@link java.lang.String} object.
+     * @param beanName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String serializerName(String packageName, String beanName) {
         return packageName + "." + beanName + BEAN_JSON_SERIALIZER_IMPL;
     }
 
+    /**
+     * <p>deserializerName.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String deserializerName(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
         return deserializerName(type.packageName(), type.simpleName());
     }
 
+    /**
+     * <p>deserializerName.</p>
+     *
+     * @param packageName a {@link java.lang.String} object.
+     * @param beanName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String deserializerName(String packageName, String beanName) {
         return packageName + "." + beanName + BEAN_JSON_DESERIALIZER_IMPL;
     }
 
+    /**
+     * <p>generateDeserializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String generateDeserializer(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
         return new DeserializerGenerator().generate(typeMirror, type.packageName(), Type.simpleName(typeMirror));
     }
 
+    /**
+     * <p>generateSerializer.</p>
+     *
+     * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String generateSerializer(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
         return new SerializerGenerator().generate(typeMirror, type.packageName(), Type.simpleName(typeMirror));

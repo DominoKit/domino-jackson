@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link String}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.String}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class StringJsonDeserializer extends JsonDeserializer<String> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link StringJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.StringJsonDeserializer}
      */
     public static StringJsonDeserializer getInstance() {
         return INSTANCE;
@@ -43,9 +43,7 @@ public class StringJsonDeserializer extends JsonDeserializer<String> {
     private StringJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return reader.nextString();

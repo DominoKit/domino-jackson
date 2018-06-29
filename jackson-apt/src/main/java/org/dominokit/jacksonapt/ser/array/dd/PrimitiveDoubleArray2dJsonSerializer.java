@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for 2D array of double.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of double.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveDoubleArray2dJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveDoubleArray2dJsonSerializer}
      */
     public static PrimitiveDoubleArray2dJsonSerializer getInstance() {
         return INSTANCE;
@@ -43,17 +43,13 @@ public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[
     private PrimitiveDoubleArray2dJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isEmpty(double[][] value) {
         return null == value || value.length == 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, double[][] values, JsonSerializationContext ctx,
                             JsonSerializerParameters params) {

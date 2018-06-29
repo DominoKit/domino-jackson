@@ -19,7 +19,7 @@ package org.dominokit.jacksonapt.ser.bean;
 import org.dominokit.jacksonapt.JsonSerializer;
 
 /**
- * Lazy initialize a {@link JsonSerializer}
+ * Lazy initialize a {@link org.dominokit.jacksonapt.JsonSerializer}
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -43,7 +43,7 @@ public abstract class HasSerializer<V, S extends JsonSerializer<V>> {
     /**
      * <p>newSerializer</p>
      *
-     * @return a {@link JsonSerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
      */
     protected abstract JsonSerializer<?> newSerializer();
 }

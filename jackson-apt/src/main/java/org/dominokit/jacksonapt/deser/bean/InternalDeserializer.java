@@ -42,12 +42,13 @@ interface InternalDeserializer<T, S extends JsonDeserializer<T>> {
      * <p>deserializeInline</p>
      *
      * @param reader             a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx                a {@link JsonDeserializationContext} object.
-     * @param params             a {@link JsonDeserializerParameters} object.
-     * @param identityInfo       a {@link IdentityDeserializationInfo} object.
+     * @param ctx                a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params             a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo       a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo} object.
      * @param typeInfo           a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
-     * @param typeInformation    a {@link String} object.
-     * @param bufferedProperties a {@link Map} object.
+     * @param typeInformation    a {@link java.lang.String} object.
+     * @param typeInformation    a {@link java.lang.String} object.
+     * @param bufferedProperties a {@link java.util.Map} object.
      * @return a T object.
      */
     T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
@@ -59,11 +60,12 @@ interface InternalDeserializer<T, S extends JsonDeserializer<T>> {
      * <p>deserializeWrapped</p>
      *
      * @param reader          a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx             a {@link JsonDeserializationContext} object.
-     * @param params          a {@link JsonDeserializerParameters} object.
-     * @param identityInfo    a {@link IdentityDeserializationInfo} object.
+     * @param ctx             a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params          a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo    a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo} object.
      * @param typeInfo        a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
-     * @param typeInformation a {@link String} object.
+     * @param typeInformation a {@link java.lang.String} object.
+     * @param typeInformation a {@link java.lang.String} object.
      * @return a T object.
      */
     T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,

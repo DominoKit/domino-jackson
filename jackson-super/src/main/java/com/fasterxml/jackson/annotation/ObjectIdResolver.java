@@ -4,16 +4,18 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 
 /**
  * Definition of API used for resolving actual Java object from
- * Object Identifiers (as annotated using {@link JsonIdentityInfo}).
+ * Object Identifiers (as annotated using {@link com.fasterxml.jackson.annotation.JsonIdentityInfo}).
  *
  * @since 2.4
+ * @author vegegoku
+ * @version $Id: $Id
  */
 public interface ObjectIdResolver {
     /**
      * Method called when a POJO is deserialized and has an Object Identifier.
      * Method exists so that implementation can keep track of existing object in
      * JSON stream that could be useful for further resolution.
-     * 
+     *
      * @param id The Object Identifer
      * @param pojo The POJO associated to that Identifier
      */
@@ -22,7 +24,7 @@ public interface ObjectIdResolver {
     /**
      * Method called when deserialization encounters the given Object Identifier
      * and requires the POJO associated with it.
-     * 
+     *
      * @param id The Object Identifier
      * @return The POJO, or null if unable to resolve.
      */
@@ -37,12 +39,13 @@ public interface ObjectIdResolver {
      * <code>com.fasterxml.jackson.databind.DeserializationContext</code>, but
      * can not be declared here as type itself (as well as call to this object)
      * comes from databind package.
-     * 
+     *
      * @param context
      *            Deserialization context object used (of type
      *            <code>com.fasterxml.jackson.databind.DeserializationContext</code>
      *            ; may be needed by more complex resolvers to access contextual
      *            information such as configuration.
+     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdResolver} object.
      */
     ObjectIdResolver newForDeserialization(Object context);
 
@@ -51,8 +54,9 @@ public interface ObjectIdResolver {
      * Object Ids of specific resolver type; determination is based by passing a
      * configured "blueprint" (prototype) instance; from which the actual
      * instances are created (using {@link #newForDeserialization}).
-     * 
+     *
      * @return True if this instance can be used as-is; false if not
+     * @param resolverType a {@link com.fasterxml.jackson.annotation.ObjectIdResolver} object.
      */
     boolean canUseFor(ObjectIdResolver resolverType);
 }

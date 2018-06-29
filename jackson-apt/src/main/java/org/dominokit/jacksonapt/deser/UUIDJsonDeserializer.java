@@ -24,16 +24,19 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.UUID;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link UUID}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.UUID}.
  *
  * @author Nicolas Morel
+ * @version $Id: $Id
  */
 public class UUIDJsonDeserializer extends JsonDeserializer<UUID> {
 
     private static final UUIDJsonDeserializer INSTANCE = new UUIDJsonDeserializer();
 
     /**
-     * @return an instance of {@link UUIDJsonDeserializer}
+     * <p>getInstance.</p>
+     *
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.UUIDJsonDeserializer}
      */
     public static UUIDJsonDeserializer getInstance() {
         return INSTANCE;
@@ -42,6 +45,7 @@ public class UUIDJsonDeserializer extends JsonDeserializer<UUID> {
     private UUIDJsonDeserializer() {
     }
 
+    /** {@inheritDoc} */
     @Override
     public UUID doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return UUID.fromString(reader.nextString());

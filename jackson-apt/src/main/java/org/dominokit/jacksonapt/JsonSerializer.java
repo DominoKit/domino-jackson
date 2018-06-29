@@ -24,16 +24,17 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  * Base class for all the serializer. It handles null values and exceptions. The rest is delegated to implementations.
  *
  * @author Nicolas Morel
+ * @version $Id: $Id
  */
 public abstract class JsonSerializer<T> {
 
     /**
      * Serializes an object into JSON output.
      *
-     * @param writer {@link JsonWriter} used to write the serialized JSON
+     * @param writer {@link org.dominokit.jacksonapt.stream.JsonWriter} used to write the serialized JSON
      * @param value  Object to serialize
      * @param ctx    Context for the full serialization process
-     * @throws JsonSerializationException if an error occurs during the serialization
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an error occurs during the serialization
      */
     public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx) throws JsonSerializationException {
         serialize(writer, value, ctx, ctx.defaultParameters());
@@ -42,11 +43,11 @@ public abstract class JsonSerializer<T> {
     /**
      * Serializes an object into JSON output.
      *
-     * @param writer {@link JsonWriter} used to write the serialized JSON
+     * @param writer {@link org.dominokit.jacksonapt.stream.JsonWriter} used to write the serialized JSON
      * @param value  Object to serialize
      * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization
-     * @throws JsonSerializationException if an error occurs during the serialization
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an error occurs during the serialization
      */
     public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params) throws
             JsonSerializationException {
@@ -56,12 +57,12 @@ public abstract class JsonSerializer<T> {
     /**
      * Serializes an object into JSON output.
      *
-     * @param writer     {@link JsonWriter} used to write the serialized JSON
+     * @param writer     {@link org.dominokit.jacksonapt.stream.JsonWriter} used to write the serialized JSON
      * @param value      Object to serialize
      * @param ctx        Context for the full serialization process
      * @param params     Parameters for this serialization
      * @param isMapValue indicate if you're serializing a Map value
-     * @throws JsonSerializationException if an error occurs during the serialization
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an error occurs during the serialization
      */
     public void serialize(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params, boolean isMapValue) throws
             JsonSerializationException {
@@ -119,7 +120,7 @@ public abstract class JsonSerializer<T> {
     /**
      * Serialize the null value. This method allows children to override the default behaviour.
      *
-     * @param writer {@link JsonWriter} used to write the serialized JSON
+     * @param writer {@link org.dominokit.jacksonapt.stream.JsonWriter} used to write the serialized JSON
      * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization
      */
@@ -128,6 +129,8 @@ public abstract class JsonSerializer<T> {
     }
 
     /**
+     * <p>isDefault.</p>
+     *
      * @param value the value
      * @return true if the value corresponds to the default one
      */
@@ -136,6 +139,8 @@ public abstract class JsonSerializer<T> {
     }
 
     /**
+     * <p>isEmpty.</p>
+     *
      * @param value the value
      * @return true if the value is empty
      */
@@ -144,6 +149,8 @@ public abstract class JsonSerializer<T> {
     }
 
     /**
+     * <p>isAbsent.</p>
+     *
      * @param value the value
      * @return true if the value is absent
      */
@@ -154,7 +161,7 @@ public abstract class JsonSerializer<T> {
     /**
      * Serializes a non-null object into JSON output.
      *
-     * @param writer {@link JsonWriter} used to write the serialized JSON
+     * @param writer {@link org.dominokit.jacksonapt.stream.JsonWriter} used to write the serialized JSON
      * @param value  Object to serialize
      * @param ctx    Context for the full serialization process
      * @param params Parameters for this serialization

@@ -42,7 +42,7 @@ public interface JsonWriter {
      * <ul>
      * <li>Top-level values of any type. With strict writing, the top-level
      * value must be an object or an array.
-     * <li>Numbers may be {@link Double#isNaN() NaNs} or {@link
+     * <li>Numbers may be {@link java.lang.Double#isNaN() NaNs} or {@link
      * Double#isInfinite() infinities}.
      * </ul>
      *
@@ -152,8 +152,8 @@ public interface JsonWriter {
     /**
      * Encodes {@code value}.
      *
-     * @param value a finite value. May not be {@link Double#isNaN() NaNs} or
-     *              {@link Double#isInfinite() infinities}.
+     * @param value a finite value. May not be {@link java.lang.Double#isNaN() NaNs} or
+     *              {@link java.lang.Double#isInfinite() infinities}.
      * @return this writer.
      */
     JsonWriter value(double value);
@@ -169,8 +169,8 @@ public interface JsonWriter {
     /**
      * Encodes {@code value}.
      *
-     * @param value a finite value. May not be {@link Double#isNaN() NaNs} or
-     *              {@link Double#isInfinite() infinities}.
+     * @param value a finite value. May not be {@link java.lang.Double#isNaN() NaNs} or
+     *              {@link java.lang.Double#isInfinite() infinities}.
      * @return this writer.
      */
     JsonWriter value(Number value);
@@ -184,13 +184,13 @@ public interface JsonWriter {
     JsonWriter rawValue(Object value);
 
     /**
-     * Ensures all buffered data is written to the underlying {@link StringBuilder}
+     * Ensures all buffered data is written to the underlying {@link java.lang.StringBuilder}
      * and flushes that writer.
      */
     void flush();
 
     /**
-     * Flushes and closes this writer and the underlying {@link StringBuilder}.
+     * Flushes and closes this writer and the underlying {@link java.lang.StringBuilder}.
      */
     void close();
 

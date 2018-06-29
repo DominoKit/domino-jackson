@@ -21,7 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import java.util.UUID;
 
 /**
- * Default {@link KeySerializer} implementation for {@link UUID}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.util.UUID}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -33,7 +33,7 @@ public final class UUIDKeySerializer extends KeySerializer<UUID> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link UUIDKeySerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.UUIDKeySerializer}
      */
     @SuppressWarnings("unchecked")
     public static UUIDKeySerializer getInstance() {
@@ -43,17 +43,13 @@ public final class UUIDKeySerializer extends KeySerializer<UUID> {
     private UUIDKeySerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean mustBeEscaped(JsonSerializationContext ctx) {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String doSerialize(UUID value, JsonSerializationContext ctx) {
         return value.toString();

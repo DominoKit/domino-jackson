@@ -46,7 +46,7 @@ public interface ObjectReader<T> {
      *
      * @param input JSON input to read
      * @return the read object
-     * @throws JsonDeserializationException if an exception occurs while reading the input
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
      */
     T read(String input) throws JsonDeserializationException;
 
@@ -56,9 +56,14 @@ public interface ObjectReader<T> {
      * @param input JSON input to read
      * @param ctx   Context for the full reading process
      * @return the read object
-     * @throws JsonDeserializationException if an exception occurs while reading the input
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
      */
     T read(String input, JsonDeserializationContext ctx) throws JsonDeserializationException;
 
+    /**
+     * <p>getDeserializer.</p>
+     *
+     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+     */
     JsonDeserializer<T> getDeserializer();
 }

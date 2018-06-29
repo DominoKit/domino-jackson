@@ -34,12 +34,16 @@ public interface InstanceBuilder<T> {
      * <p>newInstance</p>
      *
      * @param reader                   a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx                      a {@link JsonDeserializationContext} object.
-     * @param params                   a {@link JsonDeserializerParameters} object.
-     * @param bufferedProperties       a {@link Map} object.
-     * @param bufferedPropertiesValues a {@link Map} object.
-     * @param bufferedPropertiesValues a {@link Map} object.
-     * @return a {@link Instance} object.
+     * @param ctx                      a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params                   a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param bufferedProperties       a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @param bufferedPropertiesValues a {@link java.util.Map} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.Instance} object.
      */
     Instance<T> newInstance(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
                             Map<String, String> bufferedProperties,
@@ -48,7 +52,7 @@ public interface InstanceBuilder<T> {
     /**
      * <p>getParametersDeserializer</p>
      *
-     * @return a {@link MapLike} object.
+     * @return a {@link org.dominokit.jacksonapt.deser.bean.MapLike} object.
      */
     MapLike<HasDeserializerAndParameters> getParametersDeserializer();
 

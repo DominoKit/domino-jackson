@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Void}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Void}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link VoidJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.VoidJsonSerializer}
      */
     public static VoidJsonSerializer getInstance() {
         return INSTANCE;
@@ -43,9 +43,7 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
     private VoidJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params) {
         if (writer.getSerializeNulls()) {
@@ -57,9 +55,7 @@ public class VoidJsonSerializer extends JsonSerializer<Void> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         // we should never be here, the null value is already handled and it's the only possible value for Void

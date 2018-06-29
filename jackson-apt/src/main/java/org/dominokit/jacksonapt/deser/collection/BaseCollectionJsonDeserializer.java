@@ -25,10 +25,10 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 import java.util.Collection;
 
 /**
- * Base {@link JsonDeserializer} implementation for {@link Collection}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Collection}.
  *
- * @param <C> {@link Collection} type
- * @param <T> Type of the elements inside the {@link Collection}
+ * @param <C> {@link java.util.Collection} type
+ * @param <T> Type of the elements inside the {@link java.util.Collection}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -37,15 +37,13 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
     /**
      * <p>Constructor for BaseCollectionJsonDeserializer.</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Collection}.
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.util.Collection}.
      */
     public BaseCollectionJsonDeserializer(JsonDeserializer<T> deserializer) {
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public C doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         if (JsonToken.BEGIN_ARRAY == reader.peek()) {
@@ -90,9 +88,7 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, C value, JsonDeserializationContext ctx) {
         if (null != value && !value.isEmpty()) {

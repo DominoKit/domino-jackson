@@ -35,7 +35,7 @@ public final class MalformedJsonException extends JsonDeserializationException {
     /**
      * <p>Constructor for MalformedJsonException.</p>
      *
-     * @param msg a {@link String} object.
+     * @param msg a {@link java.lang.String} object.
      */
     public MalformedJsonException(String msg) {
         super(msg);

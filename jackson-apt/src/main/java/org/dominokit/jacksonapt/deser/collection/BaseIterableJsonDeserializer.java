@@ -20,10 +20,10 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Base {@link JsonDeserializer} implementation for {@link Iterable}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Iterable}.
  *
- * @param <I> {@link Iterable} type
- * @param <T> Type of the elements inside the {@link Iterable}
+ * @param <I> {@link java.lang.Iterable} type
+ * @param <T> Type of the elements inside the {@link java.lang.Iterable}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -34,7 +34,7 @@ public abstract class BaseIterableJsonDeserializer<I extends Iterable<T>, T> ext
     /**
      * <p>Constructor for BaseIterableJsonDeserializer.</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Iterable}.
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.lang.Iterable}.
      */
     public BaseIterableJsonDeserializer(JsonDeserializer<T> deserializer) {
         if (null == deserializer) {
@@ -43,9 +43,7 @@ public abstract class BaseIterableJsonDeserializer<I extends Iterable<T>, T> ext
         this.deserializer = deserializer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, I value, JsonDeserializationContext ctx) {
         if (null != value) {

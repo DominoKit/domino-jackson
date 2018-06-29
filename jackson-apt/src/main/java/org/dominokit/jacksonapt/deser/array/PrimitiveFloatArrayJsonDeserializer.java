@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -25,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of float.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of float.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -37,7 +36,7 @@ public class PrimitiveFloatArrayJsonDeserializer extends AbstractArrayJsonDeseri
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveFloatArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveFloatArrayJsonDeserializer}
      */
     public static PrimitiveFloatArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -46,9 +45,7 @@ public class PrimitiveFloatArrayJsonDeserializer extends AbstractArrayJsonDeseri
     private PrimitiveFloatArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public float[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<Float> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance(), params);
@@ -64,9 +61,7 @@ public class PrimitiveFloatArrayJsonDeserializer extends AbstractArrayJsonDeseri
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected float[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new float[]{BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance().deserialize(reader, ctx, params)};

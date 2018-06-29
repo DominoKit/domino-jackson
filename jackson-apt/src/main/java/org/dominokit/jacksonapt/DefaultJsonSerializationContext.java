@@ -307,7 +307,7 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     /**
      * <p>builder</p>
      *
-     * @return a {@link DefaultJsonSerializationContext.Builder} object.
+     * @return a {@link org.dominokit.jacksonapt.DefaultJsonSerializationContext.Builder} object.
      */
     public static Builder builder() {
         return new DefaultBuilder();
@@ -365,18 +365,16 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
         this.wrapExceptions = wrapExceptions;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Logger getLogger() {
         return logger;
     }
 
     /**
-     * <p>isSerializeNulls</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isSerializeNulls</p>
      * @see Builder#serializeNulls(boolean)
      */
     @Override
@@ -385,9 +383,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteDatesAsTimestamps</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteDatesAsTimestamps</p>
      * @see Builder#writeDatesAsTimestamps(boolean)
      */
     @Override
@@ -396,9 +394,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteDateKeysAsTimestamps</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteDateKeysAsTimestamps</p>
      * @see Builder#writeDateKeysAsTimestamps(boolean)
      */
     @Override
@@ -407,9 +405,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWrapRootValue</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWrapRootValue</p>
      * @see Builder#wrapRootValue(boolean)
      */
     @Override
@@ -418,9 +416,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteCharArraysAsJsonArrays</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteCharArraysAsJsonArrays</p>
      * @see Builder#writeCharArraysAsJsonArrays(boolean)
      */
     @Override
@@ -429,9 +427,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteNullMapValues</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteNullMapValues</p>
      * @see Builder#writeNullMapValues(boolean)
      */
     @Override
@@ -440,9 +438,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteEmptyJsonArrays</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteEmptyJsonArrays</p>
      * @see Builder#writeEmptyJsonArrays(boolean)
      */
     @Override
@@ -451,9 +449,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isOrderMapEntriesByKeys</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isOrderMapEntriesByKeys</p>
      * @see Builder#orderMapEntriesByKeys(boolean)
      */
     @Override
@@ -462,9 +460,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>isWriteSingleElemArraysUnwrapped</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isWriteSingleElemArraysUnwrapped</p>
      * @see Builder#writeSingleElemArraysUnwrapped(boolean)
      */
     @Override
@@ -473,9 +471,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>newJsonWriter</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
+     * <p>newJsonWriter</p>
      */
     @Override
     public JsonWriter newJsonWriter() {
@@ -488,11 +486,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Trace an error and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param value   current value
-     * @param message error message
-     * @return a {@link JsonSerializationException} with the given message
+     * Trace an error and returns a corresponding exception.
      */
     @Override
     public JsonSerializationException traceError(Object value, String message) {
@@ -501,12 +497,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Trace an error with current writer state and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param value   current value
-     * @param message error message
-     * @param writer  current writer
-     * @return a {@link JsonSerializationException} with the given message
+     * Trace an error with current writer state and returns a corresponding exception.
      */
     @Override
     public JsonSerializationException traceError(Object value, String message, JsonWriter writer) {
@@ -516,11 +509,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Trace an error and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param value current value
-     * @param cause cause of the error
-     * @return a {@link JsonSerializationException} if we wrap the exceptions, the cause otherwise
+     * Trace an error and returns a corresponding exception.
      */
     @Override
     public RuntimeException traceError(Object value, RuntimeException cause) {
@@ -533,12 +524,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Trace an error with current writer state and returns a corresponding exception.
+     * {@inheritDoc}
      *
-     * @param value  current value
-     * @param cause  cause of the error
-     * @param writer current writer
-     * @return a {@link JsonSerializationException} if we wrap the exceptions, the cause otherwise
+     * Trace an error with current writer state and returns a corresponding exception.
      */
     @Override
     public RuntimeException traceError(Object value, RuntimeException cause, JsonWriter writer) {
@@ -559,10 +547,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>addObjectId</p>
+     * {@inheritDoc}
      *
-     * @param object a {@link Object} object.
-     * @param id     a {@link org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer} object.
+     * <p>addObjectId</p>
      */
     @Override
     public void addObjectId(Object object, ObjectIdSerializer<?> id) {
@@ -577,10 +564,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * <p>getObjectId</p>
+     * {@inheritDoc}
      *
-     * @param object a {@link Object} object.
-     * @return a {@link org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer} object.
+     * <p>getObjectId</p>
      */
     @Override
     public ObjectIdSerializer<?> getObjectId(Object object) {
@@ -591,9 +577,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Used by generated {@link AbstractBeanJsonSerializer}
+     * {@inheritDoc}
      *
-     * @param generator instance of generator to add
+     * Used by generated {@link AbstractBeanJsonSerializer}
      */
     @Override
     @SuppressWarnings("UnusedDeclaration")
@@ -605,11 +591,9 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
     }
 
     /**
-     * Used by generated {@link AbstractBeanJsonSerializer}
+     * {@inheritDoc}
      *
-     * @param gen generator used to find equivalent generator
-     * @param <T> a T object.
-     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
+     * Used by generated {@link AbstractBeanJsonSerializer}
      */
     @Override
     @SuppressWarnings({"UnusedDeclaration", "unchecked"})
@@ -624,6 +608,7 @@ public class DefaultJsonSerializationContext implements JsonSerializationContext
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public JsonSerializerParameters defaultParameters() {
         return JacksonContextProvider.get().defaultSerializerParameters();

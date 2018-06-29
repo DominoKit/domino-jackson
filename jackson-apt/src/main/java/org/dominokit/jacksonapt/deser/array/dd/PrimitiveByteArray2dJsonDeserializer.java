@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt.deser.array.dd;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for 2D array of byte.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of byte.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -40,7 +39,7 @@ public class PrimitiveByteArray2dJsonDeserializer extends AbstractArray2dJsonDes
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link PrimitiveByteArray2dJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.dd.PrimitiveByteArray2dJsonDeserializer}
      */
     public static PrimitiveByteArray2dJsonDeserializer getInstance() {
         return INSTANCE;
@@ -49,9 +48,7 @@ public class PrimitiveByteArray2dJsonDeserializer extends AbstractArray2dJsonDes
     private PrimitiveByteArray2dJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public byte[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 

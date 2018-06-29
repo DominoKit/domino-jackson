@@ -21,16 +21,24 @@ import org.dominokit.jacksonapt.GwtIncompatible;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>DefaultMapLike class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 @GwtIncompatible
 public class DefaultMapLike<T> implements MapLike<T> {
 
     private Map<String, T> map = new HashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     public T get(String key) {
         return map.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void put(String key, T value) {
         map.put(key, value);

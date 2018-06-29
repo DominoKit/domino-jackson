@@ -49,7 +49,7 @@ public interface ObjectWriter<T> {
      *
      * @param value Object to write
      * @return the JSON output
-     * @throws JsonSerializationException if an exception occurs while writing the output
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs while writing the output
      */
     String write(T value) throws JsonSerializationException;
 
@@ -58,10 +58,15 @@ public interface ObjectWriter<T> {
      *
      * @param value Object to write
      * @param ctx   Context for the full writing process
-     * @return a {@link String} object.
-     * @throws JsonSerializationException if an exception occurs while writing the output
+     * @return a {@link java.lang.String} object.
+     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs while writing the output
      */
     String write(T value, JsonSerializationContext ctx) throws JsonSerializationException;
 
+    /**
+     * <p>getSerializer.</p>
+     *
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+     */
     JsonSerializer<T> getSerializer();
 }

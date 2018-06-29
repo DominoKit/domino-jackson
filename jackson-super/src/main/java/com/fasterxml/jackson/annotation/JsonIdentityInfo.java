@@ -24,8 +24,10 @@ import java.lang.annotation.Target;
  *<p>
  * indicates that no Object Id should be included or used: it is included
  * to allow suppressing Object Ids using mix-in annotations.
- * 
+ *
  * @since 2.0
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -42,26 +44,31 @@ public @interface JsonIdentityInfo
      * name as per Java Bean Introspection rules).
      *<p>
      * Default value is <code>@id</code>.
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String property() default "@id";
 
     /**
      * Generator to use for producing Object Identifier for objects:
      * either one of pre-defined generators from
-     * {@link ObjectIdGenerator}, or a custom generator.
+     * {@link com.fasterxml.jackson.annotation.ObjectIdGenerator}, or a custom generator.
      * Defined as class to instantiate.
      *<p>
      * Note that special type
      * can be used to disable inclusion of Object Ids.
+     *
+     * @return a {@link java.lang.Class} object.
      */
     public Class<? extends ObjectIdGenerator<?>> generator();
 
     /**
      * Resolver to use for producing POJO from Object Identifier.
      * <p>
-     * Default value is {@link SimpleObjectIdResolver}
-     * 
+     * Default value is {@link com.fasterxml.jackson.annotation.SimpleObjectIdResolver}
+     *
      * @since 2.4
+     * @return a {@link java.lang.Class} object.
      */
     public Class<? extends ObjectIdResolver> resolver() default SimpleObjectIdResolver.class;
 
@@ -76,6 +83,8 @@ public @interface JsonIdentityInfo
      * more than one scope is typically only needed if external Object Ids
      * have overlapping value domains (i.e. are only unique within some
      * limited scope)
+     *
+     * @return a {@link java.lang.Class} object.
      */
     public Class<?> scope() default Object.class;
 }

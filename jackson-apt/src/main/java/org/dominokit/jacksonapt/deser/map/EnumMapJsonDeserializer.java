@@ -22,11 +22,11 @@ import org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer;
 import java.util.EnumMap;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link EnumMap}.
- * <p>Cannot be overriden. Use {@link BaseMapJsonDeserializer}.</p>
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.EnumMap}.
+ * <p>Cannot be overriden. Use {@link org.dominokit.jacksonapt.deser.map.BaseMapJsonDeserializer}.</p>
  *
- * @param <E> Type of the enum keys inside the {@link EnumMap}
- * @param <V> Type of the values inside the {@link EnumMap}
+ * @param <E> Type of the enum keys inside the {@link java.util.EnumMap}
+ * @param <V> Type of the values inside the {@link java.util.EnumMap}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -35,11 +35,10 @@ public final class EnumMapJsonDeserializer<E extends Enum<E>, V> extends BaseMap
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer   {@link EnumKeyDeserializer} used to deserialize the enum keys.
-     * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <V>               Type of the values inside the {@link EnumMap}
-     * @param <E>               a E object.
-     * @return a new instance of {@link EnumMapJsonDeserializer}
+     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer} used to deserialize the enum keys.
+     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
+     * @param <V>               Type of the values inside the {@link java.util.EnumMap}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.EnumMapJsonDeserializer}
      */
     public static <E extends Enum<E>, V> EnumMapJsonDeserializer<E, V> newInstance(EnumKeyDeserializer<E> keyDeserializer,
                                                                                    JsonDeserializer<V> valueDeserializer) {
@@ -60,9 +59,7 @@ public final class EnumMapJsonDeserializer<E extends Enum<E>, V> extends BaseMap
         this.enumClass = keyDeserializer.getEnumClass();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected EnumMap<E, V> newMap() {
         return new EnumMap<E, V>(enumClass);

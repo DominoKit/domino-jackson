@@ -44,9 +44,9 @@ public abstract class AnySetterDeserializer<T, V> extends HasDeserializerAndPara
      * <p>setValue</p>
      *
      * @param bean         a T object.
-     * @param propertyName a {@link String} object.
+     * @param propertyName a {@link java.lang.String} object.
      * @param value        a V object.
-     * @param ctx          a {@link JsonDeserializationContext} object.
+     * @param ctx          a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
      */
     public abstract void setValue(T bean, String propertyName, V value, JsonDeserializationContext ctx);
 }

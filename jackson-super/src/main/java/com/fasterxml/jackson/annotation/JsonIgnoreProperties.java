@@ -30,6 +30,9 @@ import java.util.Set;
  * ignorals: that is, you can only add properties to ignore, not remove
  * or override. So you can not remove properties to ignore using
  * per-property annotation.
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
         ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
@@ -38,6 +41,8 @@ import java.util.Set;
 public @interface JsonIgnoreProperties {
     /**
      * Names of properties to ignore.
+     *
+     * @return an array of {@link java.lang.String} objects.
      */
     public String[] value() default {};
 
@@ -51,6 +56,8 @@ public @interface JsonIgnoreProperties {
      * exception.
      * <p>
      * Does not have any effect on serialization.
+     *
+     * @return a boolean.
      */
     public boolean ignoreUnknown() default false;
 
@@ -67,6 +74,7 @@ public @interface JsonIgnoreProperties {
      * will be ignored.
      *
      * @since 2.6
+     * @return a boolean.
      */
     public boolean allowGetters() default false;
 
@@ -83,6 +91,7 @@ public @interface JsonIgnoreProperties {
      * will be ignored.
      *
      * @since 2.6
+     * @return a boolean.
      */
     public boolean allowSetters() default false;
 

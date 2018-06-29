@@ -31,7 +31,7 @@ public interface BackReferenceProperty<T, R> {
      *
      * @param value     a T object.
      * @param reference a R object.
-     * @param ctx       a {@link JsonDeserializationContext} object.
+     * @param ctx       a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
      */
     void setBackReference(T value, R reference, JsonDeserializationContext ctx);
 }

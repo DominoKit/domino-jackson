@@ -6,7 +6,14 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
+/**
+ * <p>JsShortArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class JsShortArrayReader extends BaseJsNumberArrayReader implements JacksonContext.ShortArrayReader {
+    /** {@inheritDoc} */
     @Override
     public short[] readArray(JsonReader reader) {
         return reinterpretCast(super.readNumberArray(reader));

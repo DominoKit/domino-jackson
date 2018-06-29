@@ -33,7 +33,7 @@ public class JsonDeserializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonDeserializationException.</p>
      *
-     * @param message a {@link String} object.
+     * @param message a {@link java.lang.String} object.
      */
     public JsonDeserializationException(String message) {
         super(message);
@@ -42,8 +42,8 @@ public class JsonDeserializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonDeserializationException.</p>
      *
-     * @param message a {@link String} object.
-     * @param cause   a {@link Throwable} object.
+     * @param message a {@link java.lang.String} object.
+     * @param cause   a {@link java.lang.Throwable} object.
      */
     public JsonDeserializationException(String message, Throwable cause) {
         super(message, cause);
@@ -52,7 +52,7 @@ public class JsonDeserializationException extends JsonMappingException {
     /**
      * <p>Constructor for JsonDeserializationException.</p>
      *
-     * @param cause a {@link Throwable} object.
+     * @param cause a {@link java.lang.Throwable} object.
      */
     public JsonDeserializationException(Throwable cause) {
         super(cause);

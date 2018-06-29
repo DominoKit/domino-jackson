@@ -6,7 +6,14 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
+/**
+ * <p>JsDoubleArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public class JsDoubleArrayReader extends BaseJsNumberArrayReader implements JacksonContext.DoubleArrayReader {
+    /** {@inheritDoc} */
     @Override
     public double[] readArray(JsonReader reader) {
         return reinterpretCast(super.readNumberArray(reader));

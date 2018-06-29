@@ -18,13 +18,12 @@ package org.dominokit.jacksonapt.deser.array.cast;
 
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
-import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.array.AbstractArrayJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link JsonDeserializer} implementation for array of {@link String}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of {@link java.lang.String}.
  * <p>Not working in production mode, cast problem. Can maybe work with disableCastChecking</p>
  *
  * @author Nicolas Morel
@@ -37,7 +36,7 @@ public class StringArrayJsonDeserializer extends AbstractArrayJsonDeserializer<S
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link StringArrayJsonDeserializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.StringArrayJsonDeserializer}
      */
     public static StringArrayJsonDeserializer getInstance() {
         return INSTANCE;
@@ -48,18 +47,14 @@ public class StringArrayJsonDeserializer extends AbstractArrayJsonDeserializer<S
     private StringArrayJsonDeserializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return JacksonContextProvider.get().stringArrayReader().readArray(reader);
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected String[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         return new String[]{reader.nextString()};

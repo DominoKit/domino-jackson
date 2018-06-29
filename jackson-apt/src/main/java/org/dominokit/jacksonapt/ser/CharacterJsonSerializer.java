@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link JsonSerializer} implementation for {@link Character}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Character}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -34,7 +34,7 @@ public class CharacterJsonSerializer extends JsonSerializer<Character> {
     /**
      * <p>getInstance</p>
      *
-     * @return an instance of {@link CharacterJsonSerializer}
+     * @return an instance of {@link org.dominokit.jacksonapt.ser.CharacterJsonSerializer}
      */
     public static CharacterJsonSerializer getInstance() {
         return INSTANCE;
@@ -45,17 +45,13 @@ public class CharacterJsonSerializer extends JsonSerializer<Character> {
     private CharacterJsonSerializer() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Character value) {
         return null == value || value == defaultValue;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params) {
         writer.value(value.toString());

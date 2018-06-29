@@ -21,11 +21,10 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.AbstractCollection;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for array.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -40,10 +39,10 @@ public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]>
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the array.
-     * @param arrayCreator {@link ArrayCreator} used to create a new array
-     * @param <T>          Type of the elements inside the {@link AbstractCollection}
-     * @return a new instance of {@link ArrayJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
+     * @param arrayCreator {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a new array
+     * @param <T>          Type of the elements inside the {@link java.util.AbstractCollection}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer}
      */
     public static <T> ArrayJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
         return new ArrayJsonDeserializer<T>(deserializer, arrayCreator);
@@ -56,8 +55,8 @@ public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]>
     /**
      * <p>Constructor for ArrayJsonDeserializer.</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the array.
-     * @param arrayCreator {@link ArrayCreator} used to create a new array
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
+     * @param arrayCreator {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a new array
      */
     protected ArrayJsonDeserializer(JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
         if (null == deserializer) {
@@ -70,18 +69,14 @@ public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]>
         this.arrayCreator = arrayCreator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public T[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<T> list = deserializeIntoList(reader, ctx, deserializer, params);
         return list.toArray(arrayCreator.create(list.size()));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected T[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         T[] result = arrayCreator.create(1);
@@ -89,9 +84,7 @@ public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]>
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, T[] value, JsonDeserializationContext ctx) {
         if (null != value && value.length > 0) {

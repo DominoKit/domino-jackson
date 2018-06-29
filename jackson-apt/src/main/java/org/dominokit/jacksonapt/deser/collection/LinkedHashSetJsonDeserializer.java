@@ -21,9 +21,9 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.LinkedHashSet;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link LinkedHashSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.LinkedHashSet}.
  *
- * @param <T> Type of the elements inside the {@link LinkedHashSet}
+ * @param <T> Type of the elements inside the {@link java.util.LinkedHashSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -32,9 +32,9 @@ public class LinkedHashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<Li
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedHashSet}.
-     * @param <T>          Type of the elements inside the {@link LinkedHashSet}
-     * @return a new instance of {@link LinkedHashSetJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.LinkedHashSet}.
+     * @param <T>          Type of the elements inside the {@link java.util.LinkedHashSet}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.LinkedHashSetJsonDeserializer}
      */
     public static <T> LinkedHashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
         return new LinkedHashSetJsonDeserializer<T>(deserializer);
@@ -47,9 +47,7 @@ public class LinkedHashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<Li
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected LinkedHashSet<T> newCollection() {
         return new LinkedHashSet<T>();

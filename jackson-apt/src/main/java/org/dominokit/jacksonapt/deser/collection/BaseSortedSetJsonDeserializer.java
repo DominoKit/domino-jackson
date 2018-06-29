@@ -21,10 +21,10 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.SortedSet;
 
 /**
- * Base {@link JsonDeserializer} implementation for {@link SortedSet}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.SortedSet}.
  *
- * @param <S> {@link SortedSet} type
- * @param <T> Type of the elements inside the {@link SortedSet}
+ * @param <S> {@link java.util.SortedSet} type
+ * @param <T> Type of the elements inside the {@link java.util.SortedSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,15 +33,13 @@ public abstract class BaseSortedSetJsonDeserializer<S extends SortedSet<T>, T> e
     /**
      * <p>Constructor for BaseSortedSetJsonDeserializer.</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link SortedSet}.
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.util.SortedSet}.
      */
     public BaseSortedSetJsonDeserializer(JsonDeserializer<T> deserializer) {
         super(deserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected boolean isNullValueAllowed() {
         return false;

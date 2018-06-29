@@ -22,11 +22,11 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
 import java.util.LinkedHashMap;
 
 /**
- * Default {@link JsonDeserializer} implementation for {@link LinkedHashMap}.
- * <p>Cannot be overriden. Use {@link BaseMapJsonDeserializer}.</p>
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.LinkedHashMap}.
+ * <p>Cannot be overriden. Use {@link org.dominokit.jacksonapt.deser.map.BaseMapJsonDeserializer}.</p>
  *
- * @param <K> Type of the keys inside the {@link LinkedHashMap}
- * @param <V> Type of the values inside the {@link LinkedHashMap}
+ * @param <K> Type of the keys inside the {@link java.util.LinkedHashMap}
+ * @param <V> Type of the values inside the {@link java.util.LinkedHashMap}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -35,11 +35,11 @@ public final class LinkedHashMapJsonDeserializer<K, V> extends BaseMapJsonDeseri
     /**
      * <p>newInstance</p>
      *
-     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     * @param <K>               Type of the keys inside the {@link LinkedHashMap}
-     * @param <V>               Type of the values inside the {@link LinkedHashMap}
-     * @return a new instance of {@link LinkedHashMapJsonDeserializer}
+     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to deserialize the keys.
+     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
+     * @param <K>               Type of the keys inside the {@link java.util.LinkedHashMap}
+     * @param <V>               Type of the values inside the {@link java.util.LinkedHashMap}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.LinkedHashMapJsonDeserializer}
      */
     public static <K, V> LinkedHashMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
                                                                          JsonDeserializer<V> valueDeserializer) {
@@ -54,9 +54,7 @@ public final class LinkedHashMapJsonDeserializer<K, V> extends BaseMapJsonDeseri
         super(keyDeserializer, valueDeserializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected LinkedHashMap<K, V> newMap() {
         return new LinkedHashMap<K, V>();

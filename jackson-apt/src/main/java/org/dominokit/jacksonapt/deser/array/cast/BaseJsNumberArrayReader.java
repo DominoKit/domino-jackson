@@ -6,6 +6,12 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
+/**
+ * <p>Abstract BaseJsNumberArrayReader class.</p>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
+ */
 public abstract class BaseJsNumberArrayReader {
 
     JsArray<JsNumber> readNumberArray(JsonReader reader){

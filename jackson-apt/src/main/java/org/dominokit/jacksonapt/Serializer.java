@@ -52,7 +52,7 @@ public abstract class Serializer<T> {
     /**
      * <p>json</p>
      *
-     * @return a {@link JsonSerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
      */
     public JsonSerializer<T> json() {
         if (null == json) {
@@ -64,7 +64,7 @@ public abstract class Serializer<T> {
     /**
      * <p>createJsonSerializer</p>
      *
-     * @return a {@link JsonSerializer} object.
+     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
      */
     protected abstract JsonSerializer<T> createJsonSerializer();
 

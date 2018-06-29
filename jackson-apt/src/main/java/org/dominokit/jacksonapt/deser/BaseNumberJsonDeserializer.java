@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * Base implementation of {@link JsonDeserializer} for {@link Number}.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for {@link java.lang.Number}.
  *
  * @author Nicolas Morel
  * @version $Id: $

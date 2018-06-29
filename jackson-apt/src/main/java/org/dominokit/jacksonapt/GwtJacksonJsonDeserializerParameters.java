@@ -17,7 +17,6 @@
 package org.dominokit.jacksonapt;
 
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo;
 import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 
@@ -25,8 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class includes parameters defined through properties annotations like {@link JsonIgnoreProperties}. They are specific to one
- * {@link JsonDeserializer} and that's why they are not contained inside {@link JsonDeserializationContext}.
+ * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonIgnoreProperties}. They are specific to one
+ * {@link org.dominokit.jacksonapt.JsonDeserializer} and that's why they are not contained inside {@link org.dominokit.jacksonapt.JsonDeserializationContext}.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -86,9 +85,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     private TypeDeserializationInfo typeInfo;
 
     /**
-     * <p>Getter for the field <code>pattern</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link String} object.
+     * <p>Getter for the field <code>pattern</code>.</p>
      */
     @Override
     public String getPattern() {
@@ -96,10 +95,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>pattern</code>.</p>
+     * {@inheritDoc}
      *
-     * @param pattern a {@link String} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>pattern</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setPattern(String pattern) {
@@ -108,9 +106,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Getter for the field <code>shape</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
+     * <p>Getter for the field <code>shape</code>.</p>
      */
     @Override
     public Shape getShape() {
@@ -118,10 +116,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>shape</code>.</p>
+     * {@inheritDoc}
      *
-     * @param shape a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>shape</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setShape(Shape shape) {
@@ -130,9 +127,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Getter for the field <code>locale</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link String} object.
+     * <p>Getter for the field <code>locale</code>.</p>
      */
     @Override
     public String getLocale() {
@@ -140,10 +137,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>locale</code>.</p>
+     * {@inheritDoc}
      *
-     * @param locale a {@link String} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>locale</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setLocale(String locale) {
@@ -152,9 +148,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Getter for the field <code>ignoredProperties</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link Set} object.
+     * <p>Getter for the field <code>ignoredProperties</code>.</p>
      */
     @Override
     public Set<String> getIgnoredProperties() {
@@ -162,10 +158,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>addIgnoredProperty</p>
+     * {@inheritDoc}
      *
-     * @param ignoredProperty a {@link String} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>addIgnoredProperty</p>
      */
     @Override
     public JsonDeserializerParameters addIgnoredProperty(String ignoredProperty) {
@@ -177,9 +172,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>isIgnoreUnknown</p>
+     * {@inheritDoc}
      *
-     * @return a boolean.
+     * <p>isIgnoreUnknown</p>
      */
     @Override
     public boolean isIgnoreUnknown() {
@@ -187,10 +182,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>ignoreUnknown</code>.</p>
+     * {@inheritDoc}
      *
-     * @param ignoreUnknown a boolean.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>ignoreUnknown</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setIgnoreUnknown(boolean ignoreUnknown) {
@@ -199,9 +193,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Getter for the field <code>identityInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo} object.
+     * <p>Getter for the field <code>identityInfo</code>.</p>
      */
     @Override
     public IdentityDeserializationInfo getIdentityInfo() {
@@ -209,10 +203,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>identityInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @param identityInfo a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>identityInfo</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setIdentityInfo(IdentityDeserializationInfo identityInfo) {
@@ -221,9 +214,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Getter for the field <code>typeInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @return a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
+     * <p>Getter for the field <code>typeInfo</code>.</p>
      */
     @Override
     public TypeDeserializationInfo getTypeInfo() {
@@ -231,10 +224,9 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
     }
 
     /**
-     * <p>Setter for the field <code>typeInfo</code>.</p>
+     * {@inheritDoc}
      *
-     * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
-     * @return a {@link JsonDeserializerParameters} object.
+     * <p>Setter for the field <code>typeInfo</code>.</p>
      */
     @Override
     public JsonDeserializerParameters setTypeInfo(TypeDeserializationInfo typeInfo) {

@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Delegate the serialization of a subtype to a corresponding {@link JsonSerializer}
+ * Delegate the serialization of a subtype to a corresponding {@link org.dominokit.jacksonapt.JsonSerializer}
  *
  * @author Nicolas Morel
  * @version $Id: $

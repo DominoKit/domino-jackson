@@ -21,11 +21,10 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.AbstractCollection;
 import java.util.List;
 
 /**
- * Default {@link JsonDeserializer} implementation for 2D array.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array.
  *
  * @author Nicolas Morel
  * @version $Id: $
@@ -40,10 +39,10 @@ public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<
     /**
      * <p>newInstance</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the array.
-     * @param arrayCreator {@link Array2dCreator} used to create a new array
-     * @param <T>          Type of the elements inside the {@link AbstractCollection}
-     * @return a new instance of {@link Array2dJsonDeserializer}
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
+     * @param arrayCreator {@link org.dominokit.jacksonapt.deser.array.dd.Array2dJsonDeserializer.Array2dCreator} used to create a new array
+     * @param <T>          Type of the elements inside the {@link java.util.AbstractCollection}
+     * @return a new instance of {@link org.dominokit.jacksonapt.deser.array.dd.Array2dJsonDeserializer}
      */
     public static <T> Array2dJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer, Array2dCreator<T> arrayCreator) {
         return new Array2dJsonDeserializer<T>(deserializer, arrayCreator);
@@ -56,8 +55,8 @@ public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<
     /**
      * <p>Constructor for Array2dJsonDeserializer.</p>
      *
-     * @param deserializer   {@link JsonDeserializer} used to deserialize the objects inside the array.
-     * @param array2dCreator {@link Array2dCreator} used to create a new array
+     * @param deserializer   {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
+     * @param array2dCreator {@link org.dominokit.jacksonapt.deser.array.dd.Array2dJsonDeserializer.Array2dCreator} used to create a new array
      */
     protected Array2dJsonDeserializer(JsonDeserializer<T> deserializer, Array2dCreator<T> array2dCreator) {
         if (null == deserializer) {
@@ -70,9 +69,7 @@ public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<
         this.array2dCreator = array2dCreator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected T[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
         List<List<T>> list = deserializeIntoList(reader, ctx, deserializer, params);
@@ -96,9 +93,7 @@ public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<
         return array;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setBackReference(String referenceName, Object reference, T[][] value, JsonDeserializationContext ctx) {
         if (null != value && value.length > 0) {

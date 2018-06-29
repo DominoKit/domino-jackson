@@ -21,10 +21,10 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import java.util.Set;
 
 /**
- * Base {@link JsonDeserializer} implementation for {@link Set}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Set}.
  *
- * @param <S> {@link Set} type
- * @param <T> Type of the elements inside the {@link Set}
+ * @param <S> {@link java.util.Set} type
+ * @param <T> Type of the elements inside the {@link java.util.Set}
  * @author Nicolas Morel
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public abstract class BaseSetJsonDeserializer<S extends Set<T>, T> extends BaseC
     /**
      * <p>Constructor for BaseSetJsonDeserializer.</p>
      *
-     * @param deserializer {@link JsonDeserializer} used to map the objects inside the {@link Set}.
+     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.util.Set}.
      */
     public BaseSetJsonDeserializer(JsonDeserializer<T> deserializer) {
         super(deserializer);

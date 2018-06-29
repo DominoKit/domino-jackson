@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  *<pre>
  *  // Include Java class name ("com.myempl.ImplClass") as JSON property "class"
  *  &#064;JsonTypeInfo(use=Id.CLASS, include=As.PROPERTY, property="class")
- *  
+ *
  *  // Include logical type name (defined in impl classes) as wrapper; 2 annotations
  *  &#064;JsonTypeInfo(use=Id.NAME, include=As.WRAPPER_OBJECT)
  *  &#064;JsonSubTypes({com.myemp.Impl1.class, com.myempl.Impl2.class})
@@ -51,6 +51,9 @@ import java.lang.annotation.Target;
  * except if there is a property with name that matches
  * {@link #property()}, in which case value of that property is
  * used instead.
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -207,22 +210,26 @@ public @interface JsonTypeInfo
      * type information for instances of annotated type
      * and its subtypes; as well as what is expected during
      * deserialization.
+     *
+     * @return a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.Id} object.
      */
     public Id use();    
     
     /**
      * Specifies mechanism to use for including type metadata (if any; for
-     * {@link Id#NONE} nothing is included); used when serializing,
+     * {@link com.fasterxml.jackson.annotation.JsonTypeInfo.Id#NONE} nothing is included); used when serializing,
      * and expected when deserializing.
      *<p>
-     * Note that for type metadata type of {@link Id#CUSTOM},
+     * Note that for type metadata type of {@link com.fasterxml.jackson.annotation.JsonTypeInfo.Id#CUSTOM},
      * this setting may or may not have any effect.
+     *
+     * @return a {@link com.fasterxml.jackson.annotation.JsonTypeInfo.As} object.
      */
     public As include() default As.PROPERTY;
 
     /**
-     * Property names used when type inclusion method ({@link As#PROPERTY}) is used
-     * (or possibly when using type metadata of type {@link Id#CUSTOM}).
+     * Property names used when type inclusion method ({@link com.fasterxml.jackson.annotation.JsonTypeInfo.As#PROPERTY}) is used
+     * (or possibly when using type metadata of type {@link com.fasterxml.jackson.annotation.JsonTypeInfo.Id#CUSTOM}).
      * If POJO itself has a property with same name, value of property
      * will be set with type id metadata: if no such property exists, type id
      * is only used for determining actual type.
@@ -230,6 +237,8 @@ public @interface JsonTypeInfo
      * Default property name used if this property is not explicitly defined
      * (or is set to empty <code>String</code>) is based on
      * type metadata type ({@link #use}) used.
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String property() default "";
 
@@ -250,19 +259,21 @@ public @interface JsonTypeInfo
      *<p>
      * There are certain special values that indicate alternate behavior:
      *<ul>
-     * <li>{@link Void} means that objects with unmappable (or missing)
+     * <li>{@link java.lang.Void} means that objects with unmappable (or missing)
      *    type are to be mapped to null references.
      *    For backwards compatibility (2.5 and below), value of
      *    <code>com.fasterxml.jackson.databind.annotation.NoClass</code> is also allowed
      *    for such usage.
      *  </li>
-     * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
+     * <li>Placeholder value of {@link com.fasterxml.jackson.annotation.JsonTypeInfo} (that is, this annotation type
      *    itself} means "there is no default implementation" (in which
      *   case an error results from unmappable type).
      *   For backwards compatibility with earlier versions (2.5 and below),
-     *   value of {@link None} may also be used.
+     *   value of {@link com.fasterxml.jackson.annotation.JsonTypeInfo.None} may also be used.
      *  </li>
      * </ul>
+     *
+     * @return a {@link java.lang.Class} object.
      */
     public Class<?> defaultImpl() default JsonTypeInfo.class;
 
@@ -275,8 +286,9 @@ public @interface JsonTypeInfo
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
      * <code>JsonDeserializer</code>.
-     * 
+     *
      * @since 2.0
+     * @return a boolean.
      */
     public boolean visible() default false;
 

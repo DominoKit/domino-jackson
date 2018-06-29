@@ -16,16 +16,19 @@ import java.lang.annotation.Target;
  * public member methods that return a value, do not take argument,
  * and have prefix "get" in their name.
  * <p>
- * Default setting for all accessors is {@link Visibility#DEFAULT}, which
+ * Default setting for all accessors is {@link com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility#DEFAULT}, which
  * in turn means that the global defaults are used. Defaults
  * are different for different accessor types (getters need to be public;
  * setters can have any access modifier, for example).
- * If you assign different {@link Visibility} type then it will override
+ * If you assign different {@link com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility} type then it will override
  * global defaults: for example, to require that all setters must be public,
  * you would use:
  * <pre>
  *   &#64;JsonAutoDetect(setterVisibility=Visibility.PUBLIC_ONLY)
  * </pre>
+ *
+ * @author vegegoku
+ * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

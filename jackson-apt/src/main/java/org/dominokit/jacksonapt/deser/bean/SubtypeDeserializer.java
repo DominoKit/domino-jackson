@@ -24,7 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import java.util.Map;
 
 /**
- * Delegate the deserialization of a subtype to a corresponding {@link AbstractBeanJsonDeserializer}
+ * Delegate the deserialization of a subtype to a corresponding {@link org.dominokit.jacksonapt.deser.bean.AbstractBeanJsonDeserializer}
  *
  * @author Nicolas Morel
  * @version $Id: $
