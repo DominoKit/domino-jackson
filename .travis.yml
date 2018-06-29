@@ -11,7 +11,7 @@ cache:
   - $HOME/.m2
 install: true
 script:
-- mvn clean install -DdryRun=true
+- mvn clean install
 notifications:
   webhooks:
     urls:
