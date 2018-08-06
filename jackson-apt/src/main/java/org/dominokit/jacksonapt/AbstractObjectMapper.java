@@ -16,6 +16,7 @@
 
 package org.dominokit.jacksonapt;
 
+import org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer;
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.exception.JsonSerializationException;
 import org.dominokit.jacksonapt.stream.JsonReader;
@@ -45,13 +46,17 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
         this.rootName = rootName;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T read(String in) throws JsonDeserializationException {
         return read(in, DefaultJsonDeserializationContext.builder().build());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T read(String in, JsonDeserializationContext ctx) throws JsonDeserializationException {
         JsonReader reader = ctx.newJsonReader(in);
 
@@ -91,6 +96,23 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public T[] readArray(String input, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException {
+        return readArray(input, DefaultJsonDeserializationContext.builder().build(), arrayCreator);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public T[] readArray(String input, JsonDeserializationContext ctx, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException {
+        ArrayJsonDeserializer<T> jsonDeserializer = ArrayJsonDeserializer.newInstance(getDeserializer(), arrayCreator);
+        return jsonDeserializer.deserialize(ctx.newJsonReader(input), ctx);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * <p>Getter for the field <code>deserializer</code>.</p>
      */
@@ -109,13 +131,17 @@ public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
      */
     protected abstract JsonDeserializer<T> newDeserializer();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String write(T value) throws JsonSerializationException {
         return write(value, DefaultJsonSerializationContext.builder().build());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public String write(T value, JsonSerializationContext ctx) throws JsonSerializationException {
         JsonWriter writer = ctx.newJsonWriter();
         try {

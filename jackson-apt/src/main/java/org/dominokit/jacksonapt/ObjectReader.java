@@ -16,6 +16,7 @@
 
 package org.dominokit.jacksonapt;
 
+import org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer;
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 
 /**
@@ -59,6 +60,28 @@ public interface ObjectReader<T> {
      * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
      */
     T read(String input, JsonDeserializationContext ctx) throws JsonDeserializationException;
+
+    /**
+     * Reads a JSON input into an array object.
+     *
+     * @param input        JSON input to read
+     * @param arrayCreator Creator for initializing new instance of an array of specific length
+     * @return the read array object
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
+     */
+    T[] readArray(String input, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException;
+
+    /**
+     * Reads a JSON input into an array object.
+     *
+     * @param input        JSON input to read
+     * @param ctx          Context for the full reading process
+     * @param arrayCreator Creator for initializing new instance of an array of specific length
+     * @return the read array object
+     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
+     */
+    T[] readArray(String input, JsonDeserializationContext ctx, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException;
+
 
     /**
      * <p>getDeserializer.</p>
