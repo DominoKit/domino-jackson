@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
+
 /**
  * <p>AptDeserializerBuilder class.</p>
  *
@@ -151,7 +153,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .addStatement("$T map = $T.get().mapLikeFactory().make()", resultType, JacksonContextProvider.class);
 
         orderedFields().stream().filter(this::isNotStatic).forEach(field -> builder.addStatement("map.put($S, $L)",
-                field.getSimpleName(), new DeserializerBuilder(beanType, field).buildDeserializer()));
+                field.getSimpleName(), new DeserializerBuilder(typeUtils, beanType, field).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();

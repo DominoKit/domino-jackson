@@ -20,11 +20,14 @@ import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.*;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.messager;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 
 /**
@@ -43,7 +46,7 @@ public abstract class AbstractJsonMapperGenerator {
      * <p>Constructor for AbstractJsonMapperGenerator.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
-     * @param filer a {@link javax.annotation.processing.Filer} object.
+     * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
     public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
         this.beanType = beanType;
@@ -53,7 +56,7 @@ public abstract class AbstractJsonMapperGenerator {
     /**
      * <p>generate.</p>
      *
-     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @param beanName    a {@link javax.lang.model.element.Name} object.
      * @param packageName a {@link java.lang.String} object.
      * @throws java.io.IOException if any.
      */
@@ -127,28 +130,45 @@ public abstract class AbstractJsonMapperGenerator {
     protected List<Element> orderedFields() {
         TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
 
+        final List<Element> fields = new ArrayList<>();
+
+        List<Element> orderedFields = getOrderedFields(typeElement);
+        fields.addAll(orderedFields);
+
+
+        return fields;
+    }
+
+    private List<Element> getOrderedFields(TypeElement typeElement) {
+
+        TypeMirror superclass = typeElement.getSuperclass();
+        if (superclass.getKind().equals(TypeKind.NONE)) {
+            return new ArrayList<>();
+        }
+
         final List<Element> orderedProperties = new ArrayList<>();
 
-        final List<Element> fields = typeElement.getEnclosedElements().stream().filter(e -> ElementKind.FIELD
+        final List<Element> enclosedFields = typeElement.getEnclosedElements().stream().filter(e -> ElementKind.FIELD
                 .equals(e.getKind()) && !e.getModifiers()
                 .contains(Modifier.STATIC)).collect(Collectors.toList());
 
         Optional.ofNullable(typeUtils.asElement(beanType).getAnnotation(JsonPropertyOrder.class))
                 .ifPresent(jsonPropertyOrder -> {
                     final List<String> orderedFieldsNames = Arrays.asList(jsonPropertyOrder.value());
-                    orderedProperties.addAll(fields.stream()
+                    orderedProperties.addAll(enclosedFields.stream()
                             .filter(f -> orderedFieldsNames.contains(f.getSimpleName().toString()))
                             .collect(Collectors.toList()));
 
-                    fields.removeAll(orderedProperties);
+                    enclosedFields.removeAll(orderedProperties);
                     if (jsonPropertyOrder.alphabetic()) {
-                        fields.sort(Comparator.comparing(f -> f.getSimpleName().toString()));
+                        enclosedFields.sort(Comparator.comparing(f -> f.getSimpleName().toString()));
                     }
 
-                    fields.addAll(0, orderedProperties);
+                    enclosedFields.addAll(0, orderedProperties);
                 });
 
-        return fields;
+        enclosedFields.addAll(getOrderedFields((TypeElement) typeUtils.asElement(superclass)));
+        return enclosedFields;
     }
 
     public static class AccessorInfo {

@@ -340,4 +340,25 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
         runTests();
     }
+
+    @Test
+    public void testInheritedObjectsDeserializer() throws Exception{
+        String json = "{\"address\":\"amman - jordan\",\"id\":1,\"name\":\"someone\"}";
+        ChildObject target=new ChildObject();
+        target.setId(1);
+        target.setName("someone");
+        target.setAddress("amman - jordan");
+        String result = ChildObject.MAPPER.write(target);
+        assertEquals(result, json);
+
+
+        String jsonSubChild = "{\"age\":10,\"address\":\"amman - jordan\",\"id\":1,\"name\":\"someone\"}";
+        ChildOfChild targetSubChild=new ChildOfChild();
+        targetSubChild.setId(1);
+        targetSubChild.setName("someone");
+        targetSubChild.setAddress("amman - jordan");
+        targetSubChild.setAge(10);
+        String resultSubChild = ChildOfChild.MAPPER.write(targetSubChild);
+        assertEquals(jsonSubChild, resultSubChild);
+    }
 }

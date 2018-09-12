@@ -19,27 +19,26 @@ import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.AccessorsFilter;
 import org.dominokit.jacksonapt.processor.ObjectMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer;
 import org.dominokit.jacksonapt.stream.impl.DefaultJsonWriter;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.lang.model.util.Types;
 
-class SerializerBuilder {
+class SerializerBuilder extends AccessorsFilter {
 
     private final TypeMirror beanType;
     private final Element field;
     private final TypeMirror fieldType;
 
-    SerializerBuilder(TypeMirror beanType, Element field) {
+    SerializerBuilder(Types typeUtils, TypeMirror beanType, Element field) {
+        super(typeUtils);
         this.beanType = beanType;
         this.field = field;
         this.fieldType = field.asType();
@@ -82,7 +81,7 @@ class SerializerBuilder {
     AbstractJsonMapperGenerator.AccessorInfo getterInfo() {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
         String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
-        if (allBeanMethods(beanType).contains(prefix + upperCaseFirstLetter)) {
+        if (getAccessors(beanType).contains(prefix + upperCaseFirstLetter)) {
             return new AbstractJsonMapperGenerator.AccessorInfo(true, prefix + upperCaseFirstLetter);
         }
         return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
@@ -92,12 +91,5 @@ class SerializerBuilder {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
-    private Set<String> allBeanMethods(TypeMirror beanType) {
-        return ((TypeElement) ObjectMapperProcessor.typeUtils.asElement(beanType)).getEnclosedElements().stream()
-                .filter(e -> ElementKind.METHOD.equals(e.getKind()) &&
-                        !e.getModifiers().contains(Modifier.STATIC) &&
-                        e.getModifiers().contains(Modifier.PUBLIC))
-                .map(e -> e.getSimpleName().toString()).collect(Collectors.toSet());
-    }
 
 }

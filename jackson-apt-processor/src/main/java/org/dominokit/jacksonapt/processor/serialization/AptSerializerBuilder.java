@@ -27,6 +27,8 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import java.util.List;
 
+import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
+
 /**
  * <p>AptSerializerBuilder class.</p>
  *
@@ -83,7 +85,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                         ArrayTypeName.of(BeanPropertySerializer.class), BeanPropertySerializer.class, fields.size());
 
         fields.stream().filter(this::isNotStatic).forEach(field -> builder.addStatement("result[$L] = $L",
-                index[0]++, new SerializerBuilder(beanType, field).buildSerializer()));
+                index[0]++, new SerializerBuilder(typeUtils, beanType, field).buildSerializer()));
 
         builder.addStatement("return result");
         return builder.build();

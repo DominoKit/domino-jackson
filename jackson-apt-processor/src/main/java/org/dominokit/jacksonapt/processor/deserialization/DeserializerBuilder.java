@@ -20,24 +20,23 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.bean.BeanPropertyDeserializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.AccessorsFilter;
 import org.dominokit.jacksonapt.processor.ObjectMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.lang.model.util.Types;
 
-class DeserializerBuilder {
+class DeserializerBuilder extends AccessorsFilter {
 
     private final TypeMirror beanType;
     private final Element field;
     private final TypeMirror fieldType;
 
-    DeserializerBuilder(TypeMirror beanType, Element field) {
+    DeserializerBuilder(Types typeUtils, TypeMirror beanType, Element field) {
+        super(typeUtils);
         this.beanType = beanType;
         this.field = field;
         this.fieldType = field.asType();
@@ -47,40 +46,40 @@ class DeserializerBuilder {
         final String paramValue = "value";
         final String paramBean = "bean";
 
-        TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder( "" )
-                .superclass( ParameterizedTypeName
-                        .get( ClassName.get( BeanPropertyDeserializer.class ), TypeName.get( beanType ), Type.wrapperType( fieldType) ) );
+        TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("")
+                .superclass(ParameterizedTypeName
+                        .get(ClassName.get(BeanPropertyDeserializer.class), TypeName.get(beanType), Type.wrapperType(fieldType)));
 
-            builder.addMethod( buildDeserializerMethod());
+        builder.addMethod(buildDeserializerMethod());
 
-        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder( "setValue" )
-                .addModifiers( Modifier.PUBLIC )
-                .addAnnotation( Override.class )
-                .addParameter( ClassName.get( beanType ), paramBean );
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("setValue")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .addParameter(ClassName.get(beanType), paramBean);
 
-        AbstractJsonMapperGenerator.AccessorInfo accessorInfo=setterInfo(field);
+        AbstractJsonMapperGenerator.AccessorInfo accessorInfo = setterInfo(field);
 
-        methodBuilder.addParameter( Type.wrapperType( fieldType ), paramValue )
-                .addParameter( JsonDeserializationContext.class, "ctx" )
-                .addStatement( "$L", paramBean + "." + accessorInfo.accessor + (accessorInfo.present ? "(" : "=") + paramValue + (accessorInfo.present ? ")" : "") );
+        methodBuilder.addParameter(Type.wrapperType(fieldType), paramValue)
+                .addParameter(JsonDeserializationContext.class, "ctx")
+                .addStatement("$L", paramBean + "." + accessorInfo.accessor + (accessorInfo.present ? "(" : "=") + paramValue + (accessorInfo.present ? ")" : ""));
 
-        builder.addMethod( methodBuilder.build() );
+        builder.addMethod(methodBuilder.build());
 
         return builder.build();
     }
 
-    private MethodSpec buildDeserializerMethod(){
-        return MethodSpec.methodBuilder( "newDeserializer" )
-                .addModifiers( Modifier.PROTECTED )
-                .addAnnotation( Override.class )
-                .returns( ParameterizedTypeName.get( ClassName.get( JsonDeserializer.class ), ObjectMapperProcessor.DEFAULT_WILDCARD ) )
-                .addStatement( "return $L", new FieldDeserializersChainBuilder(beanType).getInstance(field) )
+    private MethodSpec buildDeserializerMethod() {
+        return MethodSpec.methodBuilder("newDeserializer")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), ObjectMapperProcessor.DEFAULT_WILDCARD))
+                .addStatement("return $L", new FieldDeserializersChainBuilder(beanType).getInstance(field))
                 .build();
     }
 
     private AbstractJsonMapperGenerator.AccessorInfo setterInfo(Element field) {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
-        if (allBeanMethods(beanType).contains("set" + upperCaseFirstLetter)) {
+        if (getAccessors(beanType).contains("set" + upperCaseFirstLetter)) {
             return new AbstractJsonMapperGenerator.AccessorInfo(true, "set" + upperCaseFirstLetter);
         }
         return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
@@ -90,12 +89,5 @@ class DeserializerBuilder {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
-    private Set<String> allBeanMethods(TypeMirror beanType) {
-        return ((TypeElement) ObjectMapperProcessor.typeUtils.asElement(beanType)).getEnclosedElements().stream()
-                .filter(e -> ElementKind.METHOD.equals(e.getKind()) &&
-                        !e.getModifiers().contains(Modifier.STATIC) &&
-                        e.getModifiers().contains(Modifier.PUBLIC))
-                .map(e -> e.getSimpleName().toString()).collect(Collectors.toSet());
-    }
 
 }

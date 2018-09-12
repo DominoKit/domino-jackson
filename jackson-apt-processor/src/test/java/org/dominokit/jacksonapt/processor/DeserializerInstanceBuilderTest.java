@@ -630,4 +630,24 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         runTests();
     }
 
+    @Test
+    public void testInheritedObjectsDeserializer() throws Exception{
+        String json = "{\"id\":1, \"name\":\"someone\",\"address\":\"amman - jordan\"}";
+        ChildObject deserializationResult = ChildObject.MAPPER.read(json);
+        ChildObject expected=new ChildObject();
+        expected.setId(1);
+        expected.setName("someone");
+        expected.setAddress("amman - jordan");
+        assertEquals(deserializationResult, expected);
+
+        String jsonSubChild = "{\"id\":1, \"name\":\"someone\",\"address\":\"amman - jordan\",\"age\":10}";
+        ChildOfChild subChildResult = ChildOfChild.MAPPER.read(jsonSubChild);
+        ChildOfChild expectedSubChild=new ChildOfChild();
+        expectedSubChild.setId(1);
+        expectedSubChild.setName("someone");
+        expectedSubChild.setAddress("amman - jordan");
+        expectedSubChild.setAge(10);
+        assertEquals(subChildResult, expectedSubChild);
+    }
+
 }
