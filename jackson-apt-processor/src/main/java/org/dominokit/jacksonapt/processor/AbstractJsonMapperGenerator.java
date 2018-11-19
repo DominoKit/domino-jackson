@@ -22,12 +22,10 @@ import javax.annotation.processing.Filer;
 import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.messager;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 
 /**
@@ -81,7 +79,7 @@ public abstract class AbstractJsonMapperGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .returns(ClassName.get(Class.class))
-                .addStatement("return $T.class", TypeName.get(beanType))
+                .addStatement("return $T.class", TypeName.get(ObjectMapperProcessor.typeUtils.erasure(beanType)))
                 .build();
     }
 

@@ -60,6 +60,10 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         return builder.add(getFieldDeserializer(field.asType()), asClassesArray()).build();
     }
 
+    public CodeBlock getInstance(TypeMirror type) {
+        return builder.add(getFieldDeserializer(type), asClassesArray()).build();
+    }
+    
     private TypeName[] asClassesArray() {
         return deserializers.toArray(new TypeName[deserializers.size()]);
     }

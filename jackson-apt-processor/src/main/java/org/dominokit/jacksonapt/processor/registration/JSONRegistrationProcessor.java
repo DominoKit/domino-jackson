@@ -3,12 +3,14 @@ package org.dominokit.jacksonapt.processor.registration;
 import com.google.auto.common.MoreTypes;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.*;
+
 import org.dominokit.jacksonapt.ObjectMapper;
 import org.dominokit.jacksonapt.ObjectReader;
 import org.dominokit.jacksonapt.ObjectWriter;
 import org.dominokit.jacksonapt.annotation.JSONRegistration;
 import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
 import org.dominokit.jacksonapt.registration.JsonRegistry;
+import org.dominokit.jacksonapt.registration.Type;
 
 import javax.annotation.Generated;
 import javax.annotation.processing.Processor;
@@ -16,7 +18,14 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.ArrayType;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ErrorType;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
+import javax.lang.model.util.SimpleTypeVisitor6;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -91,7 +100,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
                 .addAnnotation(Override.class)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(ClassName.get(returnType), typeVariable))
-                .addParameter(ParameterizedTypeName.get(ClassName.get(Class.class), typeVariable), "type");
+                .addParameter(ClassName.get("org.dominokit.jacksonapt.registration", "Type"), "type");
 
         if (lookupIfNotFound) {
             methodBuilder.beginControlFlow("if(" + mapName + ".containsKey(type))")
@@ -106,11 +115,10 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
     private FieldSpec createConstantMap(String name, Class<?> jsonType) {
         ClassName mapType = ClassName.get(Map.class);
-        ParameterizedTypeName classOfWildcard = ParameterizedTypeName.get(ClassName.get(Class.class),
-                WildcardTypeName.subtypeOf(Object.class));
+        ClassName typeClassName = ClassName.get(Type.class);
         ClassName jsonMapperType = ClassName.get(jsonType);
+        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(mapType, typeClassName, jsonMapperType);
 
-        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(mapType, classOfWildcard, jsonMapperType);
         return FieldSpec.builder(parameterizedTypeName, name, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                 .initializer("new $T()", HashMap.class)
                 .build();
@@ -135,11 +143,72 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     private CodeBlock registerLine(Element element, String mapName) {
         String className = enclosingName(element) + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
         String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-        TypeMirror beanType = getBeanType(element);
+
+        StringBuilder typesCreationCode = new StringBuilder();
+    	List<ClassName> classNames = new ArrayList<>();
+    	processType(getBeanType(element), typesCreationCode, classNames);
+    	
         return CodeBlock.builder()
-                .addStatement(mapName + ".put($T.class, new " + packageName + "." + className + "())", beanType)
+                .addStatement(
+                	mapName + ".put("+ typesCreationCode.toString() + ", new " + packageName + "." + className + "())", 
+                	classNames.toArray(new Object[classNames.size()]))
                 .build();
     }
+    
+    private void processType(TypeMirror type, StringBuilder result, List<ClassName> classNames) {
+		type.accept(new SimpleTypeVisitor6<Void, Void>() {
+			
+			@Override
+			public Void visitDeclared(DeclaredType declaredType, Void v) {
+				result.append("Type.of(");
+				classNames.add(ClassName.get((TypeElement) declaredType.asElement()));
+				result.append("$T");
+				result.append(".class)");
+
+				for (TypeMirror type: declaredType.getTypeArguments()) {
+					result.append(".typeParam(");
+					processType(type, result, classNames);
+					result.append(")");
+				}
+				
+				return null;
+			}
+
+			@Override
+			public Void visitPrimitive(PrimitiveType primitiveType, Void v) {
+				result.append("Type.of(");
+				result.append(primitiveType);
+				result.append(".class)");
+				return null; 
+			}
+
+			@Override
+			public Void visitArray(ArrayType arrayType, Void v) {
+				result.append("Type.array(");
+				processType(arrayType.getComponentType(), result, classNames);
+				result.append(")");
+				
+				return null;
+			}
+
+			@Override
+			public Void visitTypeVariable(TypeVariable typeVariable, Void v) {
+				processType(processingEnv.getTypeUtils().erasure(typeVariable), result, classNames);
+				return null;
+			}
+
+			@Override
+			public Void visitError(ErrorType errorType, Void v) { 
+				return null;
+			}
+
+			@Override
+			protected Void defaultAction(TypeMirror typeMirror, Void v) { 
+				return null;
+			}
+		},
+		null);
+	}
 
     private String enclosingName(Element element) {
         if (useInterface(element))
