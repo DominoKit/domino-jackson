@@ -115,7 +115,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
     private FieldSpec createConstantMap(String name, Class<?> jsonType) {
         ClassName mapType = ClassName.get(Map.class);
-        ClassName typeClassName = ClassName.get(Type.class);
+        ClassName typeClassName = ClassName.get("org.dominokit.jacksonapt.registration", "Type");
         ClassName jsonMapperType = ClassName.get(jsonType);
         ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(mapType, typeClassName, jsonMapperType);
 
@@ -144,71 +144,64 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         String className = enclosingName(element) + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
         String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
 
-        StringBuilder typesCreationCode = new StringBuilder();
-    	List<ClassName> classNames = new ArrayList<>();
-    	processType(getBeanType(element), typesCreationCode, classNames);
-    	
         return CodeBlock.builder()
                 .addStatement(
-                	mapName + ".put("+ typesCreationCode.toString() + ", new " + packageName + "." + className + "())", 
-                	classNames.toArray(new Object[classNames.size()]))
+                	mapName + ".put($L, new " + packageName + "." + className + "())",
+                	createTypeExpression(getBeanType(element)))
                 .build();
     }
     
-    private void processType(TypeMirror type, StringBuilder result, List<ClassName> classNames) {
-		type.accept(new SimpleTypeVisitor6<Void, Void>() {
-			
+    private CodeBlock createTypeExpression(TypeMirror type) {
+    	return type.accept(new SimpleTypeVisitor6<CodeBlock, Void>() {
 			@Override
-			public Void visitDeclared(DeclaredType declaredType, Void v) {
-				result.append("Type.of(");
-				classNames.add(ClassName.get((TypeElement) declaredType.asElement()));
-				result.append("$T");
-				result.append(".class)");
-
+			public CodeBlock visitDeclared(DeclaredType declaredType, Void v) {
+				CodeBlock.Builder builder = CodeBlock.builder();
+				
+				builder.add(
+					"$T.of($T.class)", 
+					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
+					ClassName.get((TypeElement) declaredType.asElement()));
+				
 				for (TypeMirror type: declaredType.getTypeArguments()) {
-					result.append(".typeParam(");
-					processType(type, result, classNames);
-					result.append(")");
+					builder.add(".typeParam($L)", type.accept(this, null));
 				}
 				
-				return null;
+				return builder.build();
 			}
-
+			
 			@Override
-			public Void visitPrimitive(PrimitiveType primitiveType, Void v) {
-				result.append("Type.of(");
-				result.append(primitiveType);
-				result.append(".class)");
-				return null; 
-			}
-
-			@Override
-			public Void visitArray(ArrayType arrayType, Void v) {
-				result.append("Type.array(");
-				processType(arrayType.getComponentType(), result, classNames);
-				result.append(")");
+			public CodeBlock visitPrimitive(PrimitiveType primitiveType, Void v) {
+				CodeBlock.Builder builder = CodeBlock.builder();
+				builder.add(
+					"$T.of($T.class)", 
+					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
+					ClassName.get(primitiveType));
 				
-				return null;
+				return builder.build();
 			}
-
+			
 			@Override
-			public Void visitTypeVariable(TypeVariable typeVariable, Void v) {
-				processType(processingEnv.getTypeUtils().erasure(typeVariable), result, classNames);
-				return null;
+			public CodeBlock visitArray(ArrayType arrayType, Void v) {
+				CodeBlock.Builder builder = CodeBlock.builder();
+				builder.add(
+					"$T.array($L)", 
+					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
+					arrayType.getComponentType().accept(this, null));
+				
+				return builder.build();
 			}
-
+			
 			@Override
-			public Void visitError(ErrorType errorType, Void v) { 
-				return null;
+			public CodeBlock visitTypeVariable(TypeVariable typeVariable, Void v) 
+			{
+				CodeBlock.Builder builder = CodeBlock.builder();
+				builder.add(processingEnv.getTypeUtils().erasure(typeVariable).accept(this, null));
+				
+				return builder.build();
 			}
-
-			@Override
-			protected Void defaultAction(TypeMirror typeMirror, Void v) { 
-				return null;
-			}
-		},
-		null);
-	}
+			
+		}, null);
+    }
 
     private String enclosingName(Element element) {
         if (useInterface(element))

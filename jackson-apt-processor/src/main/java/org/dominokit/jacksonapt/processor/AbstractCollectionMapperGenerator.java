@@ -30,12 +30,7 @@ public abstract class AbstractCollectionMapperGenerator extends AbstractMapperGe
 				.addAnnotation(Override.class)
 				.returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class),
 						ClassName.get(getElementType(element))))
-				.addCode(
-						CodeBlock.builder()
-						.add("return ")
-						.add(new FieldDeserializersChainBuilder(getElementType(element)).getInstance(getElementType(element)))
-						.add(";")
-						.build())
+				.addStatement("return $L", new FieldDeserializersChainBuilder(getElementType(element)).getInstance(getElementType(element)))
 				.build();
 	}
 
@@ -44,12 +39,7 @@ public abstract class AbstractCollectionMapperGenerator extends AbstractMapperGe
 				.addModifiers(Modifier.PROTECTED)
 				.addAnnotation(Override.class)
 				.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD))
-				.addCode(
-						CodeBlock.builder()
-						.add("return ")
-						.add(new FieldSerializerChainBuilder(getElementType(element)).getInstance(getElementType(element)))
-						.add(";")
-						.build())
+				.addStatement("return $L", new FieldSerializerChainBuilder(getElementType(element)).getInstance(getElementType(element)))
 				.build();
 	}
 

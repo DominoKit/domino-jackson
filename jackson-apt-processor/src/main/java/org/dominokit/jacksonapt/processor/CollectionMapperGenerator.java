@@ -20,7 +20,7 @@ public class CollectionMapperGenerator extends AbstractCollectionMapperGenerator
 	@Override
     protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName) {
         return Stream.of(makeNewDeserializerMethod(element, beanName), makeNewSerializerMethod(element, beanName))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
 	@Override

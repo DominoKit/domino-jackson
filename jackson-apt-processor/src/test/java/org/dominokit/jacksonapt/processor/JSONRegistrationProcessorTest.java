@@ -28,6 +28,12 @@ public class JSONRegistrationProcessorTest {
     @JSONWriter
     public interface PersonWriter extends ObjectWriter<Person> {
     }
+    
+
+	@JSONMapper
+	interface ListOfMapMapper extends ObjectMapper<List<Map<Integer, SimpleBeanObject>>> {
+	}
+
 
     @Test
     public void whenCompile_thenShouldRegisterMappersReadersAndWritersInTheirOwnRegistry() {
@@ -35,6 +41,6 @@ public class JSONRegistrationProcessorTest {
         assertNotNull(testJsonRegistry.getMapper(Type.of(Person.class)));
         assertNotNull(testJsonRegistry.getReader(Type.of(Person.class)));
         assertNotNull(testJsonRegistry.getWriter(Type.of(Person.class)));
-        assertNotNull(testJsonRegistry.getMapper(Type.of(List.class).typeParam(Type.of(Map.class).typeParam(Type.of(String.class)).typeParam(Type.of(SimpleBeanObject.class)))));
+        assertNotNull(testJsonRegistry.getMapper(Type.of(List.class).typeParam(Type.of(Map.class).typeParam(Type.of(Integer.class)).typeParam(Type.of(SimpleBeanObject.class)))));
     }
 }

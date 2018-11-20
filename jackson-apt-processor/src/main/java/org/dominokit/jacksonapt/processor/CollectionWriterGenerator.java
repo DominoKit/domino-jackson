@@ -21,7 +21,7 @@ public class CollectionWriterGenerator extends AbstractCollectionMapperGenerator
 	@Override
 	protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName) {
 		 return Stream.of(makeNewSerializerMethod(element, beanName))
-	                .collect(Collectors.toSet());
+	                .collect(Collectors.toList());
 	}
 
 	@Override
