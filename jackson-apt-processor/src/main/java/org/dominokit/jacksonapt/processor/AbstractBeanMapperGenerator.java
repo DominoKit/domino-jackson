@@ -20,7 +20,7 @@ import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.*;
 public abstract class AbstractBeanMapperGenerator {
 
     void generate(Element element) throws IOException {
-        String className = enclosingName(element, "_") + (useInterface(element)?element.getSimpleName():"Mapper") + "Impl";
+        String className = enclosingName(element, "_") + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
         String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
         TypeMirror beanType = getBeanType(element);
         Name beanName = typeUtils.asElement(beanType).getSimpleName();
@@ -30,9 +30,13 @@ public abstract class AbstractBeanMapperGenerator {
         TypeSpec.Builder builder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(abstractObjectMapper(element))
+                .addField(FieldSpec.builder(ClassName.bestGuess(className), "INSTANCE")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                        .initializer(CodeBlock.builder().add("new $T()", ClassName.bestGuess(className)).build()).
+                                build())
                 .addMethod(makeConstructor(beanName))
                 .addMethods(getMapperMethods(element, beanName));
-        if(useInterface(element))
+        if (useInterface(element))
             builder.addSuperinterface(TypeName.get(element.asType()));
 
         TypeSpec classSpec = builder
@@ -55,10 +59,10 @@ public abstract class AbstractBeanMapperGenerator {
     }
 
     private TypeMirror getBeanType(Element element) {
-        if(useInterface(element)){
+        if (useInterface(element)) {
             TypeMirror objectReader = ((TypeElement) typeUtils.asElement(element.asType())).getInterfaces().get(0);
             return MoreTypes.asDeclared(objectReader).getTypeArguments().get(0);
-        }else{
+        } else {
             return element.asType();
         }
 
@@ -109,7 +113,7 @@ public abstract class AbstractBeanMapperGenerator {
     /**
      * <p>getMapperMethods.</p>
      *
-     * @param element a {@link javax.lang.model.element.Element} object.
+     * @param element  a {@link javax.lang.model.element.Element} object.
      * @param beanName a {@link javax.lang.model.element.Name} object.
      * @return a {@link java.lang.Iterable} object.
      */
@@ -118,9 +122,9 @@ public abstract class AbstractBeanMapperGenerator {
     /**
      * <p>generateJsonMappers.</p>
      *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @param beanName    a {@link javax.lang.model.element.Name} object.
      */
     protected abstract void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName);
 }
