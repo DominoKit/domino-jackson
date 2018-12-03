@@ -15,6 +15,7 @@
  */
 package org.dominokit.jacksonapt.processor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.squareup.javapoet.*;
 
@@ -22,12 +23,11 @@ import javax.annotation.processing.Filer;
 import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.messager;
+import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 
 /**
@@ -149,8 +149,7 @@ public abstract class AbstractJsonMapperGenerator {
         final List<Element> orderedProperties = new ArrayList<>();
 
         final List<Element> enclosedFields = typeElement.getEnclosedElements().stream().filter(e -> ElementKind.FIELD
-                .equals(e.getKind()) && !e.getModifiers()
-                .contains(Modifier.STATIC)).collect(Collectors.toList());
+                .equals(e.getKind()) && isEligibleForSerializationDeserialization(e)).collect(Collectors.toList());
 
         Optional.ofNullable(typeUtils.asElement(beanType).getAnnotation(JsonPropertyOrder.class))
                 .ifPresent(jsonPropertyOrder -> {
@@ -183,12 +182,25 @@ public abstract class AbstractJsonMapperGenerator {
     }
 
     /**
-     * <p>isNotStatic.</p>
      *
-     * @param field a {@link javax.lang.model.element.Element} object.
-     * @return a boolean.
+     * @param field
+     * @return boolean true if the field is not static
      */
     protected boolean isNotStatic(Element field) {
         return !field.getModifiers().contains(Modifier.STATIC);
+    }
+
+    /**
+     *
+     * @param field
+     * @return boolean true only if {@link JsonIgnore} present and its value is true
+     */
+    protected boolean isIgnored(Element field) {
+        JsonIgnore annotation = field.getAnnotation(JsonIgnore.class);
+        return nonNull(annotation) && annotation.value();
+    }
+
+    protected boolean isEligibleForSerializationDeserialization(Element field){
+        return isNotStatic(field) && !isIgnored(field);
     }
 }

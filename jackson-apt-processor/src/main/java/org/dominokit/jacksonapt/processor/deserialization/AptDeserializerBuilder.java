@@ -15,6 +15,7 @@
  */
 package org.dominokit.jacksonapt.processor.deserialization;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
@@ -25,13 +26,19 @@ import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 import javax.annotation.processing.Filer;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
 
 /**
@@ -49,7 +56,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      * <p>Constructor for AptDeserializerBuilder.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
-     * @param filer a {@link javax.annotation.processing.Filer} object.
+     * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
     public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
         super(beanType, filer);
@@ -83,16 +90,57 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     /** {@inheritDoc} */
     @Override
     protected Set<MethodSpec> moreMethods() {
-        return Stream.of(buildInitInstanceBuilderMethod(beanType, ParameterizedTypeName
-                .get(ClassName.get(MapLike.class), ClassName
-                        .get(HasDeserializerAndParameters.class)))).collect(Collectors.toSet());
+        Set<MethodSpec> methods = new HashSet<>();
+        methods.add(buildInitInstanceBuilderMethod(beanType));
+
+        MethodSpec initIgnoreFieldsMethod = buildInitIgnoreFields(beanType);
+        if (nonNull(initIgnoreFieldsMethod)) {
+            methods.add(initIgnoreFieldsMethod);
+        }
+
+        return methods;
     }
 
-    private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType, ParameterizedTypeName parameterizedTypeName) {
+    /**
+     *
+     * @param beanType
+     * @return MethodSpec for the set of ignored fields. if no ignored fields exist return null;
+     */
+    private MethodSpec buildInitIgnoreFields(TypeMirror beanType) {
+        MethodSpec.Builder builder;
+        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
+        final List<Element> ignoredFields = typeElement
+                .getEnclosedElements()
+                .stream()
+                .filter(e -> ElementKind.FIELD
+                        .equals(e.getKind()) && isNotStatic(e) && isIgnored(e))
+                .collect(Collectors.toList());
+
+
+        if (!ignoredFields.isEmpty()) {
+            builder = MethodSpec.methodBuilder("initIgnoredProperties");
+            builder
+                    .addAnnotation(Override.class)
+                    .addModifiers(Modifier.PROTECTED)
+                    .returns(ParameterizedTypeName.get(HashSet.class, String.class))
+                    .addStatement("HashSet<String> col = new HashSet<String>(" + ignoredFields.size() + ")");
+            ignoredFields.forEach(f -> builder.addStatement("col.add(\"" + getPropertyName(f) + "\")"));
+            builder.addStatement("return col");
+
+            return builder.build();
+        }
+
+        return null;
+    }
+
+    private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType) {
+
         return MethodSpec.methodBuilder("initInstanceBuilder")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class), ClassName.get(beanType)))
-                .addStatement("final $T deserializers = null", parameterizedTypeName)
+                .addStatement("final $T deserializers = null", ParameterizedTypeName
+                        .get(ClassName.get(MapLike.class), ClassName
+                                .get(HasDeserializerAndParameters.class)))
                 .addStatement("return $L", instanceBuilderReturnType())
                 .addAnnotation(Override.class)
                 .build();
@@ -152,11 +200,27 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .returns(resultType)
                 .addStatement("$T map = $T.get().mapLikeFactory().make()", resultType, JacksonContextProvider.class);
 
-        orderedFields().stream().filter(this::isNotStatic).forEach(field -> builder.addStatement("map.put($S, $L)",
-                field.getSimpleName(), new DeserializerBuilder(typeUtils, beanType, field).buildDeserializer()));
+        orderedFields().stream()
+                .filter(this::isEligibleForSerializationDeserialization)
+                .forEach(field -> builder.addStatement("map.put($S, $L)",
+                        getPropertyName(field), new DeserializerBuilder(typeUtils, beanType, field).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();
+    }
+
+    /**
+     *
+     * @param field
+     * @return the field provided in the {@link JsonProperty} as long as the provided name is not JsonProperty.USE_DEFAULT_NAME otherwise return the field simple name
+     */
+    private String getPropertyName(Element field){
+        JsonProperty annotation = field.getAnnotation(JsonProperty.class);
+        if(isNull(annotation) || JsonProperty.USE_DEFAULT_NAME.equals(annotation.value())){
+            return field.getSimpleName().toString();
+        }else{
+            return annotation.value();
+        }
     }
 
 }

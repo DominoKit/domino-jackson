@@ -47,7 +47,7 @@ class SerializerBuilder extends AccessorsFilter {
     TypeSpec buildSerializer() {
         final String paramBean = "bean";
 
-        TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("\"$L\"", DefaultJsonWriter.encodeString(field.getSimpleName().toString()))
+        TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("\"$L\"", DefaultJsonWriter.encodeString(getPropertyName(field)))
                 .superclass(ParameterizedTypeName
                         .get(ClassName.get(BeanPropertySerializer.class), TypeName.get(beanType), Type.wrapperType(fieldType)));
 
