@@ -18,16 +18,10 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.ArrayType;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
-import javax.lang.model.util.SimpleTypeVisitor6;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <p>JSONRegistrationProcessor class.</p>
@@ -158,73 +152,19 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
                 .build();
     }
     
-    private CodeBlock createTypeExpression(TypeMirror type) {
-    	return type.accept(new SimpleTypeVisitor6<CodeBlock, Void>() {
-			@Override
-			public CodeBlock visitDeclared(DeclaredType declaredType, Void v) {
-				CodeBlock.Builder builder = CodeBlock.builder();
-				
-
-				for (TypeMirror type: declaredType.getTypeArguments()) {
-					builder.add(".typeParam($L)", type.accept(this, null));
-				}
-				
-				builder.add(
-					"new $T.of($L)",
-					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"),
-					declaredType.getTypeArguments().stream().map(type -> type.accept(this, null)).map(type -> type.toString()).collect(Collectors.joining(",")),
-					ClassName.get((TypeElement) declaredType.asElement()));
-				
-				
-				return builder.build();
-			}
-			
-			@Override
-			public CodeBlock visitPrimitive(PrimitiveType primitiveType, Void v) {
-				CodeBlock.Builder builder = CodeBlock.builder();
-				builder.add(
-					"new $T.of($T.class)", 
-					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), 
-					ClassName.get(primitiveType));
-				
-				return builder.build();
-			}
-			
-			@Override
-			public CodeBlock visitArray(ArrayType arrayType, Void v) {
-				CodeBlock.Builder builder = CodeBlock.builder();
-				builder.add(
-					"$T.array($L)", 
-					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), 
-					arrayType.getComponentType().accept(this, null));
-				
-				return builder.build();
-			}
-			
-			@Override
-			public CodeBlock visitTypeVariable(TypeVariable typeVariable, Void v) 
-			{
-				CodeBlock.Builder builder = CodeBlock.builder();
-				builder.add(processingEnv.getTypeUtils().erasure(typeVariable).accept(this, null));
-				
-				return builder.build();
-			}
-			
-		}, null);
-    }
     private void addTypeTokenLiteral(CodeBlock.Builder builder, TypeName name) {
     	builder.add("new $T<$L>(", TypeToken.class, name.isPrimitive()? name.box(): name);
 
     	TypeName rawType;
     	List<TypeName> typeArguments;
-    	
+
     	if (name instanceof ParameterizedTypeName) {
     		ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName)name;
     		rawType = parameterizedTypeName.rawType;
     		typeArguments = parameterizedTypeName.typeArguments;
     	} else if (name instanceof ArrayTypeName) {
     		ArrayTypeName arrayTypeName = (ArrayTypeName)name;
-    		
+
     		rawType = null;
     		typeArguments = Collections.singletonList(arrayTypeName.componentType);
     	} else if (name instanceof ClassName || name instanceof TypeName) {
@@ -232,17 +172,17 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     		typeArguments = Collections.emptyList();
     	} else
     		throw new IllegalArgumentException("Unsupported type " + name); 
-    	
+
     	if(rawType == null)
     		builder.add("null");
     	else
     		builder.add("$T.class", rawType);
-    	
+
     	for (TypeName typeArgumentName: typeArguments) {
     		builder.add(", ");
     		addTypeTokenLiteral(builder, typeArgumentName);
     	}
-    	
+
     	builder.add(") {}");
     }
     
