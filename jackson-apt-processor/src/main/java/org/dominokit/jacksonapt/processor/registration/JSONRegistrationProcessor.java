@@ -10,7 +10,7 @@ import org.dominokit.jacksonapt.ObjectWriter;
 import org.dominokit.jacksonapt.annotation.JSONRegistration;
 import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
 import org.dominokit.jacksonapt.registration.JsonRegistry;
-import org.dominokit.jacksonapt.registration.Type;
+import org.dominokit.jacksonapt.registration.TypeToken;
 
 import javax.annotation.Generated;
 import javax.annotation.processing.Processor;
@@ -20,7 +20,6 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.ErrorType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
@@ -28,6 +27,7 @@ import javax.lang.model.util.SimpleTypeVisitor6;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>JSONRegistrationProcessor class.</p>
@@ -100,7 +100,11 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
                 .addAnnotation(Override.class)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(ClassName.get(returnType), typeVariable))
-                .addParameter(ClassName.get("org.dominokit.jacksonapt.registration", "Type"), "type");
+        		.addParameter(
+        			ParameterizedTypeName.get(
+        				ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), 
+        				typeVariable),
+            		"type");
 
         if (lookupIfNotFound) {
             methodBuilder.beginControlFlow("if(" + mapName + ".containsKey(type))")
@@ -115,7 +119,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
     private FieldSpec createConstantMap(String name, Class<?> jsonType) {
         ClassName mapType = ClassName.get(Map.class);
-        ClassName typeClassName = ClassName.get("org.dominokit.jacksonapt.registration", "Type");
+        ClassName typeClassName = ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken");
         ClassName jsonMapperType = ClassName.get(jsonType);
         ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(mapType, typeClassName, jsonMapperType);
 
@@ -144,10 +148,13 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         String className = enclosingName(element) + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
         String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
 
+        CodeBlock.Builder typeTokenBuilder = CodeBlock.builder();
+        addTypeTokenLiteral(typeTokenBuilder, TypeName.get(getBeanType(element)));
+        
         return CodeBlock.builder()
                 .addStatement(
                 	mapName + ".put($L, new " + packageName + "." + className + "())",
-                	createTypeExpression(getBeanType(element)))
+                	typeTokenBuilder.build())
                 .build();
     }
     
@@ -157,14 +164,17 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 			public CodeBlock visitDeclared(DeclaredType declaredType, Void v) {
 				CodeBlock.Builder builder = CodeBlock.builder();
 				
-				builder.add(
-					"$T.of($T.class)", 
-					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
-					ClassName.get((TypeElement) declaredType.asElement()));
-				
+
 				for (TypeMirror type: declaredType.getTypeArguments()) {
 					builder.add(".typeParam($L)", type.accept(this, null));
 				}
+				
+				builder.add(
+					"new $T.of($L)",
+					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"),
+					declaredType.getTypeArguments().stream().map(type -> type.accept(this, null)).map(type -> type.toString()).collect(Collectors.joining(",")),
+					ClassName.get((TypeElement) declaredType.asElement()));
+				
 				
 				return builder.build();
 			}
@@ -173,8 +183,8 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 			public CodeBlock visitPrimitive(PrimitiveType primitiveType, Void v) {
 				CodeBlock.Builder builder = CodeBlock.builder();
 				builder.add(
-					"$T.of($T.class)", 
-					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
+					"new $T.of($T.class)", 
+					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), 
 					ClassName.get(primitiveType));
 				
 				return builder.build();
@@ -185,7 +195,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 				CodeBlock.Builder builder = CodeBlock.builder();
 				builder.add(
 					"$T.array($L)", 
-					ClassName.get("org.dominokit.jacksonapt.registration", "Type"), 
+					ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), 
 					arrayType.getComponentType().accept(this, null));
 				
 				return builder.build();
@@ -202,7 +212,40 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 			
 		}, null);
     }
+    private void addTypeTokenLiteral(CodeBlock.Builder builder, TypeName name) {
+    	builder.add("new $T<$L>(", TypeToken.class, name.isPrimitive()? name.box(): name);
 
+    	TypeName rawType;
+    	List<TypeName> typeArguments;
+    	
+    	if (name instanceof ParameterizedTypeName) {
+    		ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName)name;
+    		rawType = parameterizedTypeName.rawType;
+    		typeArguments = parameterizedTypeName.typeArguments;
+    	} else if (name instanceof ArrayTypeName) {
+    		ArrayTypeName arrayTypeName = (ArrayTypeName)name;
+    		
+    		rawType = null;
+    		typeArguments = Collections.singletonList(arrayTypeName.componentType);
+    	} else if (name instanceof ClassName || name instanceof TypeName) {
+    		rawType = name.isPrimitive()? name.box(): name;
+    		typeArguments = Collections.emptyList();
+    	} else
+    		throw new IllegalArgumentException("Unsupported type " + name); 
+    	
+    	if(rawType == null)
+    		builder.add("null");
+    	else
+    		builder.add("$T.class", rawType);
+    	
+    	for (TypeName typeArgumentName: typeArguments) {
+    		builder.add(", ");
+    		addTypeTokenLiteral(builder, typeArgumentName);
+    	}
+    	
+    	builder.add(") {}");
+    }
+    
     private String enclosingName(Element element) {
         if (useInterface(element))
             return element.getEnclosingElement().getSimpleName().toString() + "_";

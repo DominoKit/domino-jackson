@@ -16,7 +16,7 @@ import org.dominokit.jacksonapt.annotation.JSONMapper;
 import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONWriter;
 import org.dominokit.jacksonapt.registration.JsonRegistry;
-import org.dominokit.jacksonapt.registration.Type;
+import org.dominokit.jacksonapt.registration.TypeToken;
 import org.junit.Test;
 
 public class CollectionMapperTest {
@@ -93,20 +93,26 @@ public class CollectionMapperTest {
 	public void jsonRegistryTest() {
 		JsonRegistry jsonRegistry = new TestJsonRegistry();
 		
-		ObjectMapper<List<Map<String, SimpleBeanObject>>> mapMapper = jsonRegistry.getMapper(Type.of(List.class).typeParam(Type.of(Map.class).typeParam(Type.of(String.class)).typeParam(Type.of(SimpleBeanObject.class)))); 
+		ObjectMapper<List<Map<String, SimpleBeanObject>>> mapMapper = jsonRegistry.getMapper(
+			new TypeToken<List<Map<String, SimpleBeanObject>>>(
+				List.class, 
+				new TypeToken<Map<String, SimpleBeanObject>>(
+					Map.class, 
+					TypeToken.of(String.class), 
+					TypeToken.of(SimpleBeanObject.class)){} ){}); 
 		assertThat(mapMapper).isNotNull();
 		List<Map<String,SimpleBeanObject>> simpleBeanObjectListOfMaps = mapMapper.read("[{\"testObj\":{\"state\":10}}]");
 		assertThat(simpleBeanObjectListOfMaps.size()).isEqualTo(1);
 		assertThat(simpleBeanObjectListOfMaps.get(0).get("testObj")).isNotNull();
 		assertThat(simpleBeanObjectListOfMaps.get(0).get("testObj").state).isEqualTo(10);
 		
-		ObjectReader<Set<SimpleBeanObject>> setReader = jsonRegistry.getReader(Type.of(Set.class).typeParam(Type.of(SimpleBeanObject.class)));
+		ObjectReader<Set<SimpleBeanObject>> setReader = jsonRegistry.getReader(new TypeToken<Set<SimpleBeanObject>>(Set.class, TypeToken.of(SimpleBeanObject.class)){});
 		assertThat(setReader).isNotNull();
 		Set<SimpleBeanObject> simpleBeanObjectSet = setReader.read("[{\"state\":20}]");
 		assertThat(simpleBeanObjectSet.size()).isEqualTo(1);
 		assertThat(simpleBeanObjectSet.iterator().next().state).isEqualTo(20);
 		
-		ObjectWriter<Set<SimpleBeanObject>> setWriter = jsonRegistry.getWriter(Type.of(Set.class).typeParam(Type.of(SimpleBeanObject.class)));
+		ObjectWriter<Set<SimpleBeanObject>> setWriter = jsonRegistry.getWriter(new TypeToken<Set<SimpleBeanObject>>(Set.class, TypeToken.of(SimpleBeanObject.class)){});
 		assertThat(setWriter).isNotNull();
 		assertThat(setWriter.write(new HashSet<>(Arrays.asList(new SimpleBeanObject(30))))).isEqualTo("[{\"state\":30}]");
 		
