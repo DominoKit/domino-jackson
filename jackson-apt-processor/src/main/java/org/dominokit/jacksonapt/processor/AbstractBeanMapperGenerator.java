@@ -14,7 +14,6 @@ import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.*;
  * @version $Id: $Id
  */
 public abstract class AbstractBeanMapperGenerator extends AbstractMapperGenerator {
-	
     MethodSpec makeNewDeserializerMethod(Element element, Name beanName) {
         return MethodSpec.methodBuilder("newDeserializer")
                 .addModifiers(Modifier.PROTECTED)

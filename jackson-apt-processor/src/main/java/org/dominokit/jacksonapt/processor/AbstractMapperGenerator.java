@@ -18,6 +18,8 @@ import org.dominokit.jacksonapt.ObjectWriter;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -28,7 +30,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 
 	@Override
 	public void generate(Element element) throws IOException {
-		String className = getBeanClassName(element);
+		String className = enclosingName(element, "_") + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
 		String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
 		TypeMirror beanType = getElementType(element);
 		Name beanName = typeUtils.asElement(beanType).getSimpleName();
@@ -36,12 +38,16 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 		generateJsonMappers(beanType, packageName, beanName);
 
 		TypeSpec.Builder builder = TypeSpec.classBuilder(className)
-				.addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-				.superclass(abstractObjectMapper(element))
-				.addMethod(makeConstructor(beanName))
-				.addMethods(getMapperMethods(element, beanName));
-		if(useInterface(element))
-			builder.addSuperinterface(TypeName.get(element.asType()));
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .superclass(abstractObjectMapper(element))
+                .addField(FieldSpec.builder(ClassName.bestGuess(className), "INSTANCE")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                        .initializer(CodeBlock.builder().add("new $T()", ClassName.bestGuess(className)).build()).
+                                build())
+                .addMethod(makeConstructor(beanName))
+                .addMethods(getMapperMethods(element, beanName));
+        if (useInterface(element))
+            builder.addSuperinterface(TypeName.get(element.asType()));
 
 		TypeSpec classSpec = builder
 				.build();
@@ -49,10 +55,6 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 		JavaFile.builder(packageName, classSpec).build().writeTo(filer);
 	}
 
-	protected String getBeanClassName(Element element) {
-		return enclosingName(element, "_") + (useInterface(element)?element.getSimpleName():"Mapper") + "Impl";
-	}
-	
 	protected static TypeMirror getElementType(Element element) {
 		if(useInterface(element)){
 			TypeMirror objectReader = ((TypeElement) typeUtils.asElement(element.asType())).getInterfaces().get(0);
@@ -99,20 +101,20 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 	protected abstract Class<?> getSuperClass();
 
 	/**
-	 * <p>getMapperMethods.</p>
-	 *
-	 * @param element a {@link javax.lang.model.element.Element} object.
-	 * @param beanName a {@link javax.lang.model.element.Name} object.
-	 * @return a {@link java.lang.Iterable} object.
-	 */
+     * <p>getMapperMethods.</p>
+     *
+     * @param element  a {@link javax.lang.model.element.Element} object.
+     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @return a {@link java.lang.Iterable} object.
+     */
 	protected abstract Iterable<MethodSpec> getMapperMethods(Element element, Name beanName);
 	
-	 /**
+	/**
      * <p>generateJsonMappers.</p>
      *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @param beanName    a {@link javax.lang.model.element.Name} object.
      */
     protected abstract void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName);
 

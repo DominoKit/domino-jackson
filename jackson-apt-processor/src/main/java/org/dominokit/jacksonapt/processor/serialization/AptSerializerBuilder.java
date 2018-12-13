@@ -84,7 +84,9 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                 .addStatement("$T result = new $T[$L]",
                         ArrayTypeName.of(BeanPropertySerializer.class), BeanPropertySerializer.class, fields.size());
 
-        fields.stream().filter(this::isNotStatic).forEach(field -> builder.addStatement("result[$L] = $L",
+        fields.stream()
+                .filter(this::isEligibleForSerializationDeserialization)
+                .forEach(field -> builder.addStatement("result[$L] = $L",
                 index[0]++, new SerializerBuilder(typeUtils, beanType, field).buildSerializer()));
 
         builder.addStatement("return result");

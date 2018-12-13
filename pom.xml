@@ -140,7 +140,6 @@
                         </codeserverArgs>
                         <compilerArgs>
                             <compilerArg>-generateJsInteropExports</compilerArg>
-                            <!--<compilerArg>-strict</compilerArg>-->
                         </compilerArgs>
                     </configuration>
                 </plugin>
