@@ -28,9 +28,6 @@ import java.lang.annotation.Target;
  *<p>
  * NOTE: annotation is allowed for properties, starting with 2.4, mostly to support
  * alphabetic ordering of {@link java.util.Map} entries.
- *
- * @author vegegoku
- * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
@@ -40,8 +37,6 @@ public @interface JsonPropertyOrder
 {
     /**
      * Order in which properties of annotated object are to be serialized in.
-     *
-     * @return an array of {@link java.lang.String} objects.
      */
     public String[] value() default { };
 
@@ -50,8 +45,6 @@ public @interface JsonPropertyOrder
      * not explicitly included in annotation instance. If set to true,
      * they will be alphabetically ordered; if false, order is
      * undefined (default setting)
-     *
-     * @return a boolean.
      */
     public boolean alphabetic() default false;
 }

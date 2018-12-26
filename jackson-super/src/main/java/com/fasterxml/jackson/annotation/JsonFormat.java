@@ -1,82 +1,78 @@
 package com.fasterxml.jackson.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
- * Super source for {@link com.fasterxml.jackson.annotation.JsonFormat} to remove the use of java.util.Locale and java.util.TimeZone
- * classes
- * <p>
  * General-purpose annotation used for configuring details of how
  * values of properties are to be serialized.
  * Unlike most other Jackson annotations, annotation does not
  * have specific universal interpretation: instead, effect depends on datatype
  * of property being annotated (or more specifically, deserializer
  * and serializer being used).
- * <p>
+ *<p>
  * Common uses include choosing between alternate representations -- for example,
  * whether {@link java.util.Date} is to be serialized as number (Java timestamp)
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
- * <p>
+ *<p>
  * As of Jackson 2.6, known special handling includes:
- * <ul>
- * <li>{@link java.util.Date}: Shape can  be {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#STRING} or {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#NUMBER};
- * pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
- * </li>
+ *<ul>
+ * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
+ *   </li>
  * <li>Can be used on Classes (types) as well, for modified default behavior, possibly
- * overridden by per-property annotation
- * </li>
- * <li>{@link java.lang.Enum}s: Shapes {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#STRING} and {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#NUMBER} can be
- * used to change between numeric (index) and textual (name or <code>toString()</code>);
- * but it is also possible to use {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} to serialize (but not deserialize)
- * {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
- * as JSON Object only works with class annotation;
- * will not work as per-property annotation.
- * </li>
+ *   overridden by per-property annotation
+ *   </li>
+ * <li>{@link Enum}s: Shapes {@link Shape#STRING} and {@link Shape#NUMBER} can be
+ *    used to change between numeric (index) and textual (name or <code>toString()</code>);
+ *    but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
+ *    {@link Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
+ *     as JSON Object only works with class annotation; 
+ *    will not work as per-property annotation.
+ *   </li>
  * <li>{@link java.util.Collection}s can be serialized as (and deserialized from) JSON Objects,
- * if {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
- * will not work as per-property annotation.
- * </li>
- * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
- * {@link com.fasterxml.jackson.annotation.JsonFormat.Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
- * scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
- * will not work as per-property annotation.
- * </li>
- * </ul>
+ *    if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
+ *    will not work as per-property annotation.
+ *   </li>
+ * <li>{@link Number} subclasses can be serialized as full objects if
+ *    {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
+ *    scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
+ *    will not work as per-property annotation.
+ *   </li>
+ *</ul>
  *
  * @since 2.0
- * @author vegegoku
- * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
-        ElementType.TYPE})
+    ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-public @interface JsonFormat {
+public @interface JsonFormat
+{
     /**
-     * Value that indicates that default {@link java.util.Locale}
+     * Value that indicates that default {@link Locale}
      * (from deserialization or serialization context) should be used:
      * annotation does not define value to use.
      */
     public final static String DEFAULT_LOCALE = "##default";
 
     /**
-     * Value that indicates that default {@link java.util.TimeZone}
+     * Value that indicates that default {@link TimeZone}
      * (from deserialization or serialization context) should be used:
      * annotation does not define value to use.
+     *<p>
+     * NOTE: default here does NOT mean JVM defaults but Jackson databindings
+     * default, usually UTC, but may be changed on <code>ObjectMapper</code>.
      */
     public final static String DEFAULT_TIMEZONE = "##default";
-
+    
     /**
      * Datatype-specific additional piece of configuration that may be used
      * to further refine formatting aspects. This may, for example, determine
      * low-level format String used for {@link java.util.Date} serialization;
      * however, exact use is determined by specific <code>JsonSerializer</code>
-     *
-     * @return a {@link java.lang.String} object.
      */
     public String pattern() default "";
 
@@ -85,54 +81,58 @@ public @interface JsonFormat {
      * but usually has straight-forward counterpart in data format (JSON).
      * Note that commonly only a subset of shapes is available; and if 'invalid' value
      * is chosen, defaults are usually used.
-     *
-     * @return a {@link com.fasterxml.jackson.annotation.JsonFormat.Shape} object.
      */
     public Shape shape() default Shape.ANY;
 
     /**
-     * {@link java.util.Locale} to use for serialization (if needed).
+     * {@link Locale} to use for serialization (if needed).
      * Special value of {@link #DEFAULT_LOCALE}
      * can be used to mean "just use the default", where default is specified
      * by the serialization context, which in turn defaults to system
-     * defaults ({@link java.util.Locale#getDefault()}) unless explicitly
+     * defaults ({@link Locale#getDefault()}) unless explicitly
      * set to another locale.
-     *
-     * @return a {@link java.lang.String} object.
      */
     public String locale() default DEFAULT_LOCALE;
-
+    
     /**
-     * {@link java.util.TimeZone} to use for serialization (if needed).
+     * {@link TimeZone} to use for serialization (if needed).
      * Special value of {@link #DEFAULT_TIMEZONE}
      * can be used to mean "just use the default", where default is specified
      * by the serialization context, which in turn defaults to system
-     * defaults ({@link java.util.TimeZone#getDefault()}) unless explicitly
-     * set to another locale.
-     *
-     * @return a {@link java.lang.String} object.
+     * default (UTC) unless explicitly set to another timezone.
      */
     public String timezone() default DEFAULT_TIMEZONE;
 
     /**
-     * Set of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature}s to explicitly enable with respect
-     * to handling of annotated property. This will have precedence over possible
-     * global configuration.
-     *
-     * @since 2.6
-     * @return an array of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature} objects.
+     * Property that indicates whether "lenient" handling should be enabled or
+     * disabled. This is relevant mostly for deserialization of some textual
+     * datatypes, especially date/time types.
+     *<p>
+     * Note that underlying default setting depends on datatype (or more precisely
+     * deserializer for it): for most date/time types, default is for leniency
+     * to be enabled.
+     * 
+     * @since 2.9
      */
-    public JsonFormat.Feature[] with() default {};
+    public OptBoolean lenient() default OptBoolean.DEFAULT;
 
     /**
-     * Set of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature}s to explicitly disable with respect
+     * Set of {@link Feature}s to explicitly enable with respect
      * to handling of annotated property. This will have precedence over possible
      * global configuration.
      *
      * @since 2.6
-     * @return an array of {@link com.fasterxml.jackson.annotation.JsonFormat.Feature} objects.
      */
-    public JsonFormat.Feature[] without() default {};
+    public Feature[] with() default { };
+
+    /**
+     * Set of {@link Feature}s to explicitly disable with respect
+     * to handling of annotated property. This will have precedence over possible
+     * global configuration.
+     *
+     * @since 2.6
+     */
+    public Feature[] without() default { };
 
     /*
     /**********************************************************
@@ -145,13 +145,27 @@ public @interface JsonFormat {
      * loosely to JSON types, with some extra values to indicate less precise
      * choices (i.e. allowing one of multiple actual shapes)
      */
-    public enum Shape {
+    public enum Shape
+    {
         /**
-         * Marker enum value that indicates "default" (or "whatever") choice; needed
-         * since Annotations can not have null values for enums.
+         * Marker enum value that indicates "whatever" choice, meaning that annotation
+         * does NOT specify shape to use.
+         * Note that this is different from {@link Shape#NATURAL}, which
+         * specifically instructs use of the "natural" shape for datatype.
          */
         ANY,
 
+        /**
+         * Marker enum value that indicates the "default" choice for given datatype;
+         * for example, JSON String for {@link String}, or JSON Number
+         * for Java numbers.
+         * Note that this is different from {@link Shape#ANY} in that this is actual
+         * explicit choice that overrides possible default settings.
+         *
+         * @since 2.8
+         */
+        NATURAL,
+        
         /**
          * Value that indicates shape should not be structural (that is, not
          * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
@@ -162,7 +176,7 @@ public @interface JsonFormat {
          * Value that indicates that (JSON) Array type should be used.
          */
         ARRAY,
-
+        
         /**
          * Value that indicates that (JSON) Object type should be used.
          */
@@ -190,12 +204,13 @@ public @interface JsonFormat {
          * Value that indicates that (JSON) String type should be used.
          */
         STRING,
-
+        
         /**
          * Value that indicates that (JSON) boolean type
          * (true, false) should be used.
          */
-        BOOLEAN;
+        BOOLEAN
+        ;
 
         public boolean isNumeric() {
             return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
@@ -210,7 +225,7 @@ public @interface JsonFormat {
      * Set of features that can be enabled/disabled for property annotated.
      * These often relate to specific <code>SerializationFeature</code>
      * or <code>DeserializationFeature</code>, as noted by entries.
-     * <p>
+     *<p>
      * Note that whether specific setting has an effect depends on whether
      * <code>JsonSerializer</code> / <code>JsonDeserializer</code> being used
      * takes the format setting into account. If not, please file an issue
@@ -226,6 +241,17 @@ public @interface JsonFormat {
          * Java arrays and {@link java.util.Collection}s.
          */
         ACCEPT_SINGLE_VALUE_AS_ARRAY,
+
+        /**
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>.
+         * Only affects deserialization, has no effect on serialization.
+         *<p>
+         * NOTE: starting with 2.9 can also effect Enum handling (and potentially other
+         * places where case-insensitive property values are accepted).
+         * 
+         * @since 2.8
+         */
+        ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
         /**
          * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>,
