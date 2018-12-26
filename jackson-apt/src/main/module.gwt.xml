@@ -7,6 +7,7 @@
     <inherits name="org.gwtproject.i18n.DateTimeFormat"/>
 
     <inherits name="java.util.UUID"/>
+    <inherits name="java.lang.reflect.Reflect"/>
     <!-- Jackson annotations -->
     <inherits name="com.fasterxml.jackson.annotation.JacksonAnnotation"/>
     <inherits name="com.fasterxml.jackson.databind.annotation.JacksonDatabindAnnotation"/>
