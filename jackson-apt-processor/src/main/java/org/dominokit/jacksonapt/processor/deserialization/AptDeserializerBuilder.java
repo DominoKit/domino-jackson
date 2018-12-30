@@ -30,11 +30,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -108,14 +106,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      */
     private MethodSpec buildInitIgnoreFields(TypeMirror beanType) {
         MethodSpec.Builder builder;
-        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
-        final List<Element> ignoredFields = typeElement
-                .getEnclosedElements()
-                .stream()
-                .filter(e -> ElementKind.FIELD
-                        .equals(e.getKind()) && isNotStatic(e) && isIgnored(e))
-                .collect(Collectors.toList());
-
+        final List<Element> ignoredFields = getIgnoredFields(beanType);
 
         if (!ignoredFields.isEmpty()) {
             builder = MethodSpec.methodBuilder("initIgnoredProperties");
@@ -132,6 +123,36 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
         return null;
     }
+
+    private List<Element> getIgnoredFields(TypeMirror beanType){
+        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
+
+        final List<Element> fields = new ArrayList<>();
+
+        List<Element> ignoredFields = getIgnoredFields(typeElement);
+        fields.addAll(ignoredFields);
+
+
+        return fields;
+    }
+    private List<Element> getIgnoredFields(TypeElement typeElement){
+        TypeMirror superclass = typeElement.getSuperclass();
+        if (superclass.getKind().equals(TypeKind.NONE)) {
+            return new ArrayList<>();
+        }
+
+        final List<Element> ignoredFields = typeElement
+                .getEnclosedElements()
+                .stream()
+                .filter(e -> ElementKind.FIELD
+                        .equals(e.getKind()) && isNotStatic(e) && isIgnored(e))
+                .collect(Collectors.toList());
+
+        ignoredFields.addAll(getIgnoredFields((TypeElement) typeUtils.asElement(superclass)));
+        return ignoredFields;
+
+    }
+
 
     private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType) {
 

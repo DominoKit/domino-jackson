@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.dominokit.jacksonapt.annotation.JSONMapper;
 
 @JSONMapper
-public class TestBeanWithIgnore {
+public class TestBeanWithIgnore extends BaseBeanWithIgnore{
 
     @JsonIgnore
     private Integer id;

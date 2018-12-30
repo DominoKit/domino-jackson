@@ -20,20 +20,24 @@ public class PropertyAnnotationsTestCase {
 
     @Test
     public void testIgnoredPropertyShouldNotBeDeserialized(){
-        String json = "{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}";
+        String json = "{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\", \"propertyx\":\"propxValue\"}";
         TestBeanWithIgnore bean = TestBeanWithIgnore_MapperImpl.INSTANCE.read(json);
         Assert.assertNull(bean.getId());
         Assert.assertNull(bean.getPersonGender());
+        Assert.assertNull(bean.getPropertyy());
         Assert.assertEquals("ahmad", bean.getName());
         Assert.assertEquals("Amman - Jordan", bean.getAddress());
+        Assert.assertEquals("propxValue", bean.getPropertyx());
 
 
-        String jsonContainsIgnoredProperty="{\"id\":10,\"gender\":\"male\",\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}";
+        String jsonContainsIgnoredProperty="{\"id\":10,\"gender\":\"male\",\"name\":\"ahmad\",\"address\":\"Amman - Jordan\", \"propertyx\":\"propxValue\", \"propertyy\":\"propyValue\"}";
         TestBeanWithIgnore anotherBean = TestBeanWithIgnore_MapperImpl.INSTANCE.read(jsonContainsIgnoredProperty);
         Assert.assertNull(anotherBean.getId());
         Assert.assertNull(anotherBean.getPersonGender());
+        Assert.assertNull(anotherBean.getPropertyy());
         Assert.assertEquals("ahmad", anotherBean.getName());
         Assert.assertEquals("Amman - Jordan", anotherBean.getAddress());
+        Assert.assertEquals("propxValue", anotherBean.getPropertyx());
     }
 
 
