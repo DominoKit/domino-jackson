@@ -18,10 +18,12 @@ public class TestBeanWithIgnore extends BaseBeanWithIgnore{
     public TestBeanWithIgnore() {
     }
 
-    public TestBeanWithIgnore(Integer id, String name, String address) {
+    public TestBeanWithIgnore(Integer id, String name, String address, String propertyx, String propertyy) {
         this.id = id;
         this.name = name;
         this.address = address;
+        setPropertyx(propertyx);
+        setPropertyy(propertyy);
     }
 
     public Integer getId() {

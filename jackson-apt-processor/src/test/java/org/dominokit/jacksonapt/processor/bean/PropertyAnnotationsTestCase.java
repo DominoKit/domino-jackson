@@ -8,8 +8,8 @@ public class PropertyAnnotationsTestCase {
 
     @Test
     public void testIgnoredPropertyShouldNotBeSerialized(){
-        String json = TestBeanWithIgnore_MapperImpl.INSTANCE.write(new TestBeanWithIgnore(10, "ahmad", "Amman - Jordan"));
-        Assert.assertEquals("{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}", json);
+        String json = TestBeanWithIgnore_MapperImpl.INSTANCE.write(new TestBeanWithIgnore(10, "ahmad", "Amman - Jordan", "propxValue", "propyValue"));
+        Assert.assertEquals("{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\",\"propertyx\":\"propxValue\"}", json);
     }
 
     @Test
