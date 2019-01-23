@@ -56,9 +56,9 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         writers.stream().map(this::registerWriterLine).forEach(constructorBuilder::addCode);
 
 
-        MethodSpec getMapperMethod = createGetMethod("getMapper", MAPPERS, ObjectMapper.class, false);
-        MethodSpec getReaderMethod = createGetMethod("getReader", READERS, ObjectReader.class, true);
-        MethodSpec getWriterMethod = createGetMethod("getWriter", WRITERS, ObjectWriter.class, true);
+        MethodSpec getMapperMethod = createGetMethod("getMapper", MAPPERS, "T", ObjectMapper.class, false);
+        MethodSpec getReaderMethod = createGetMethod("getReader", READERS, "? extends T", ObjectReader.class, true);
+        MethodSpec getWriterMethod = createGetMethod("getWriter", WRITERS, "? super T", ObjectWriter.class, true);
 
         JSONRegistration annotation = element.getAnnotation(JSONRegistration.class);
         TypeSpec jacksonConfigurator = TypeSpec.classBuilder(annotation.value() + "JsonRegistry")
@@ -84,8 +84,8 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         }
     }
 
-    private MethodSpec createGetMethod(String name, String mapName, Class<?> returnType, boolean lookupIfNotFound) {
-        TypeVariableName parameterTypeVariable = TypeVariableName.get("? extends T");
+    private MethodSpec createGetMethod(String name, String mapName, String typeVariableName, Class<?> returnType, boolean lookupIfNotFound) {
+        TypeVariableName parameterTypeVariable = TypeVariableName.get(typeVariableName);
         TypeVariableName returnTypeVariable = TypeVariableName.get("T");
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
@@ -138,7 +138,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
         TypeMirror beanType = getBeanType(element);
         return CodeBlock.builder()
-                .addStatement(mapName + ".put($T.class, new " + packageName + "." + className + "())", beanType)
+                .addStatement(mapName + ".put($T.class, $T.INSTANCE)", beanType, ClassName.bestGuess(packageName + "." + className))
                 .build();
     }
 
