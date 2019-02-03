@@ -41,7 +41,6 @@ public class PropertyAnnotationsTestCase {
     }
 
 
-
     @Test
     public void testCustomPropertyNamesDeserialization(){
         String json = "{\"person-name\":\"ahmad\",\"location\":\"Amman - Jordan\"}";
@@ -58,6 +57,12 @@ public class PropertyAnnotationsTestCase {
         Assert.assertEquals("Amman - Jordan", anotherBean.getAddress());
     }
 
-
+    @Test
+    public void testIgnoreUnknown(){
+        String json = "{\"id\": 10,\"name\":\"Ahmad\",\"location\":\"Amman - Jordan\"}";
+        Student bean = Student_MapperImpl.INSTANCE.read(json);
+        Assert.assertEquals(10, bean.getId());
+        Assert.assertEquals("Ahmad", bean.getName());
+    }
 
 }
