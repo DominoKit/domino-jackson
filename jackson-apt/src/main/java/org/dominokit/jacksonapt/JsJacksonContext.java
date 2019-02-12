@@ -1,6 +1,5 @@
 package org.dominokit.jacksonapt;
 
-import elemental2.core.Global;
 import org.dominokit.jacksonapt.deser.array.cast.JsDoubleArrayReader;
 import org.dominokit.jacksonapt.deser.array.cast.JsIntegerArrayReader;
 import org.dominokit.jacksonapt.deser.array.cast.JsShortArrayReader;
@@ -37,7 +36,7 @@ public class JsJacksonContext implements JacksonContext{
     /** {@inheritDoc} */
     @Override
     public ValueStringifier stringifier() {
-        return value -> Global.JSON.stringify(value);
+        return JSON::stringify;
     }
 
     /** {@inheritDoc} */
