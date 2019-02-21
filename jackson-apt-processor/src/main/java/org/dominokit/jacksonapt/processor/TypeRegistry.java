@@ -671,6 +671,19 @@ public final class TypeRegistry {
     }
 
     /**
+     * <p>resetTypeRegistry</p>
+     * 
+     * Helper method to clean (reset) state of TypeRegistry. This action should be
+     * performed on every APT run, since in some environments (such as Eclipse),
+     * the processor is instantiated once and used multiple times. Without some cleanup
+     * we may end up with some serializer/deserializers not generated due to TypeRegistry internal
+     * state saying that they already exists. 
+     */
+    public static void resetTypeRegistry() {
+    	customMappers.clear();
+    }
+    
+    /**
      * <p>register.</p>
      *
      * @param mapper a {@link org.dominokit.jacksonapt.processor.TypeRegistry.ClassMapper} object.

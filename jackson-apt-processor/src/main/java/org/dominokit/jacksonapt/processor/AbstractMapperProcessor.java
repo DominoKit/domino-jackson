@@ -50,7 +50,12 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
     /** {@inheritDoc} */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
+    	if (roundEnv.processingOver()) {
+    		TypeRegistry.resetTypeRegistry();
+    		return false;
+    	}
+    	
+    	mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
         readers = roundEnv.getElementsAnnotatedWith(JSONReader.class);
         writers = roundEnv.getElementsAnnotatedWith(JSONWriter.class);
         return doProcess(annotations, roundEnv);
