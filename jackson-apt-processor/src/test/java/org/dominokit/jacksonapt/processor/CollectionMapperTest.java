@@ -91,7 +91,7 @@ public class CollectionMapperTest {
 	
 	@Test
 	public void jsonRegistryTest() {
-		JsonRegistry jsonRegistry = new TestJsonRegistry();
+		JsonRegistry jsonRegistry = TestJsonRegistry.getInstance();
 		
 		ObjectMapper<List<Map<String, SimpleBeanObject>>> mapMapper = jsonRegistry.getMapper(
 			new TypeToken<List<Map<String, SimpleBeanObject>>>(

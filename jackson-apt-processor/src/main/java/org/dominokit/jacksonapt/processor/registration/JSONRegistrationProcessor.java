@@ -35,6 +35,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     private static final String WRITERS = "WRITERS";
     private static final String READERS = "READERS";
     private static final String MAPPERS = "MAPPERS";
+    private static final String INSTANCE_NAME = "INSTANCE";
 
     /** {@inheritDoc} */
     @Override
@@ -50,7 +51,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         FieldSpec writersMap = createConstantMap(WRITERS, ObjectWriter.class);
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC);
+                .addModifiers(Modifier.PRIVATE);
 
         mappers.stream().map(this::registerMapperLine).forEach(constructorBuilder::addCode);
 
@@ -58,13 +59,17 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
         writers.stream().map(this::registerWriterLine).forEach(constructorBuilder::addCode);
 
-
+        ClassName className = ClassName.get(packageOf(element), element.getAnnotation(JSONRegistration.class).value() + "JsonRegistry");
+        FieldSpec instanceField = FieldSpec
+        	.builder(className, INSTANCE_NAME, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+			.initializer("new $T()", className)
+			.build();
+        
         MethodSpec getMapperMethod = createGetMethod("getMapper", MAPPERS, ObjectMapper.class, false);
         MethodSpec getReaderMethod = createGetMethod("getReader", READERS, ObjectReader.class, true);
         MethodSpec getWriterMethod = createGetMethod("getWriter", WRITERS, ObjectWriter.class, true);
-
-        JSONRegistration annotation = element.getAnnotation(JSONRegistration.class);
-        TypeSpec jacksonConfigurator = TypeSpec.classBuilder(annotation.value() + "JsonRegistry")
+        
+        TypeSpec jacksonConfigurator = TypeSpec.classBuilder(className)
                 .addJavadoc(CodeBlock.of("This is generated class, please don't modify\n"))
                 .addSuperinterface(JsonRegistry.class)
                 .addAnnotation(AnnotationSpec.builder(Generated.class)
@@ -74,6 +79,8 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
                 .addField(mappersMap)
                 .addField(readersMap)
                 .addField(writersMap)
+                .addField(instanceField)
+                .addMethod(createGetInstanceMethod(className))
                 .addMethod(constructorBuilder.build())
                 .addMethod(getMapperMethod)
                 .addMethod(getReaderMethod)
@@ -87,11 +94,24 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         }
     }
 
-    private MethodSpec createGetMethod(String name, String mapName, Class<?> returnType, boolean lookupIfNotFound) {
+    private MethodSpec createGetInstanceMethod(TypeName result) {
+    	 return
+    		 MethodSpec.methodBuilder("getInstance")
+            	.addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(result)
+                 .addStatement("return " + INSTANCE_NAME)
+                 .build();
+                 
+	}
+
+	private MethodSpec createGetMethod(String name, String mapName, Class<?> returnType, boolean lookupIfNotFound) {
         TypeVariableName typeVariable = TypeVariableName.get("T");
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
+                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class)
+                        .addMember("value", "\"unchecked\"")
+                        .build())
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(ClassName.get(returnType), typeVariable))
         		.addParameter(
@@ -100,25 +120,27 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         				typeVariable),
             		"type");
 
+      	ParameterizedTypeName returnTypeName = ParameterizedTypeName.get(ClassName.get(returnType), typeVariable);
         if (lookupIfNotFound) {
             methodBuilder.beginControlFlow("if(" + mapName + ".containsKey(type))")
-                    .addStatement("return " + mapName + ".get(type)")
+                    .addStatement("return ($T)" + mapName + ".get(type)", returnTypeName)
                     .endControlFlow()
-                    .addStatement("return " + MAPPERS + ".get(type)");
+                    .addStatement("return ($T)" + MAPPERS + ".get(type)", returnTypeName);
         } else {
-            methodBuilder.addStatement("return " + mapName + ".get(type)");
+            methodBuilder.addStatement("return ($T)" + mapName + ".get(type)", returnTypeName);
         }
+        
         return methodBuilder.build();
     }
 
     private FieldSpec createConstantMap(String name, Class<?> jsonType) {
-        ClassName mapType = ClassName.get(Map.class);
-        ClassName typeClassName = ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken");
-        ClassName jsonMapperType = ClassName.get(jsonType);
-        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(mapType, typeClassName, jsonMapperType);
+        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(
+        	ClassName.get(Map.class), 
+        	ParameterizedTypeName.get(ClassName.get("org.dominokit.jacksonapt.registration", "TypeToken"), TypeVariableName.get("?")), 
+        	ParameterizedTypeName.get(ClassName.get(jsonType), TypeVariableName.get("?")));
 
-        return FieldSpec.builder(parameterizedTypeName, name, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
-                .initializer("new $T()", HashMap.class)
+        return FieldSpec.builder(parameterizedTypeName, name, Modifier.PRIVATE, Modifier.FINAL)
+                .initializer("new $T<>()", HashMap.class)
                 .build();
     }
 
