@@ -26,7 +26,7 @@ public class DeserializerGenerator {
      * @return a {@link java.lang.String} object.
      */
     public String generate(TypeMirror beanType, String packageName, Name beanName) {
-        String generatedClassName = Type.deserializerName(packageName, beanName.toString());
+        String generatedClassName = Type.deserializerName(packageName, beanType);
         if (!TypeRegistry.containsDeserializer(beanType.toString())) {
             try {
                 new AptDeserializerBuilder(beanType, filer)

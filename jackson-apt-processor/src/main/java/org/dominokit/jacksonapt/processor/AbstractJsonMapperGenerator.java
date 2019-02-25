@@ -21,9 +21,11 @@ import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.*;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,7 +65,7 @@ public abstract class AbstractJsonMapperGenerator {
     protected void generate(Name beanName, String packageName) throws IOException {
         MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
-        final TypeSpec.Builder builder = TypeSpec.classBuilder(beanName + namePostfix())
+        final TypeSpec.Builder builder = TypeSpec.classBuilder(Type.stringifyType(beanType) + namePostfix())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(superClass())
                 .addMethod(constructor)
@@ -129,17 +131,26 @@ public abstract class AbstractJsonMapperGenerator {
      */
     protected List<Element> orderedFields() {
         TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
-
+        
+        List<? extends TypeMirror> typeArguments  = Collections.emptyList();
+        List<? extends TypeParameterElement> typeParameters = Collections.emptyList();
+        if (beanType instanceof DeclaredType) {
+        	typeArguments = ((DeclaredType)beanType).getTypeArguments();
+        	typeParameters = typeElement.getTypeParameters();
+        }
+        		
         final List<Element> fields = new ArrayList<>();
 
-        List<Element> orderedFields = getOrderedFields(typeElement);
+        List<Element> orderedFields = getOrderedFields(typeElement, typeParameters, typeArguments);
         fields.addAll(orderedFields);
-
 
         return fields;
     }
 
-    private List<Element> getOrderedFields(TypeElement typeElement) {
+    private List<Element> getOrderedFields(
+    		TypeElement typeElement,
+    		List<? extends TypeParameterElement> typeParameters,
+    		List<? extends TypeMirror> typeArguments) {
 
         TypeMirror superclass = typeElement.getSuperclass();
         if (superclass.getKind().equals(TypeKind.NONE)) {
@@ -148,8 +159,9 @@ public abstract class AbstractJsonMapperGenerator {
 
         final List<Element> orderedProperties = new ArrayList<>();
 
-        final List<Element> enclosedFields = typeElement.getEnclosedElements().stream().filter(e -> ElementKind.FIELD
-                .equals(e.getKind()) && isEligibleForSerializationDeserialization(e)).collect(Collectors.toList());
+        final List<Element> enclosedFields = typeElement.getEnclosedElements().stream()
+        	.filter(e -> ElementKind.FIELD.equals(e.getKind()) && isEligibleForSerializationDeserialization(e))
+        	.collect(Collectors.toList());
 
         Optional.ofNullable(typeUtils.asElement(beanType).getAnnotation(JsonPropertyOrder.class))
                 .ifPresent(jsonPropertyOrder -> {
@@ -166,10 +178,94 @@ public abstract class AbstractJsonMapperGenerator {
                     enclosedFields.addAll(0, orderedProperties);
                 });
 
-        enclosedFields.addAll(getOrderedFields((TypeElement) typeUtils.asElement(superclass)));
-        return enclosedFields;
+        // Map fields type parameters to type arguments by using wrapper element
+        List<Element> orderedFields = enclosedFields
+        	.stream()
+        	.map(field -> 
+        		typeParameters.contains(typeUtils.asElement(field.asType()))? 
+        			wrapElementWithType(field, typeArguments.get(typeParameters.indexOf(typeUtils.asElement(field.asType())))):
+        			field)
+        	.collect(Collectors.toList());
+        
+        List<? extends TypeMirror> superTypeArguments  = Collections.emptyList();
+        List<? extends TypeParameterElement> superTypeParameters = Collections.emptyList();
+        if (superclass instanceof DeclaredType) {
+        	superTypeArguments = ((DeclaredType)superclass).getTypeArguments();
+        	superTypeParameters = ((TypeElement) typeUtils.asElement(superclass)).getTypeParameters();
+        }
+        
+        // Map type arguments from base type to super type arguments
+        superTypeArguments = superTypeArguments.stream()
+        	.map(typeArgument -> 
+    			typeParameters.contains(typeUtils.asElement(typeArgument))?
+    				typeArguments.get(typeParameters.indexOf(typeUtils.asElement(typeArgument)))
+    				:typeArgument)
+        	.collect(Collectors.toList());
+    					
+        orderedFields.addAll(
+        	getOrderedFields(
+        		(TypeElement) typeUtils.asElement(superclass),
+        		superTypeParameters,
+        		superTypeArguments));
+        
+        return orderedFields;
     }
+    
+    private Element wrapElementWithType(Element element, TypeMirror typeMirror) {
+    	return new Element() {
 
+			@Override
+			public <A extends Annotation> A[] getAnnotationsByType(Class<A> annotationType) {
+				return element.getAnnotationsByType(annotationType);
+			}
+
+			@Override
+			public TypeMirror asType() {
+				return typeMirror;
+			}
+
+			@Override
+			public ElementKind getKind() {
+				return element.getKind();
+			}
+
+			@Override
+			public Set<Modifier> getModifiers() {
+				return element.getModifiers();
+			}
+
+			@Override
+			public Name getSimpleName() {
+				return element.getSimpleName();
+			}
+
+			@Override
+			public Element getEnclosingElement() {
+				return element.getEnclosingElement();
+			}
+
+			@Override
+			public List<? extends Element> getEnclosedElements() {
+				return element.getEnclosedElements();
+			}
+
+			@Override
+			public List<? extends AnnotationMirror> getAnnotationMirrors() {
+				return element.getAnnotationMirrors();
+			}
+
+			@Override
+			public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
+				return element.getAnnotation(annotationType);
+			}
+
+			@Override
+			public <R, P> R accept(ElementVisitor<R, P> v, P p) {
+				return element.accept(v, p);
+			}
+    	};
+    }
+    
     public static class AccessorInfo {
 
         public boolean present;

@@ -19,7 +19,7 @@ public class CollectionWriterGenerator extends AbstractCollectionMapperGenerator
 	}
 
 	@Override
-	protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName) {
+	protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName, TypeMirror beanType) {
 		 return Stream.of(makeNewSerializerMethod(element, beanName))
 	                .collect(Collectors.toList());
 	}

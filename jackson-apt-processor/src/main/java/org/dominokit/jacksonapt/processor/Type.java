@@ -24,8 +24,11 @@ import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.SimpleTypeVisitor6;
+
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -246,18 +249,17 @@ public class Type {
      */
     public static String serializerName(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
-        return serializerName(type.packageName(), type.simpleName());
+        return serializerName(type.packageName(), typeMirror);
     }
 
     /**
      * <p>serializerName.</p>
      *
      * @param packageName a {@link java.lang.String} object.
-     * @param beanName a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
      */
-    public static String serializerName(String packageName, String beanName) {
-        return packageName + "." + beanName + BEAN_JSON_SERIALIZER_IMPL;
+    public static String serializerName(String packageName, TypeMirror beanType) {
+        return packageName + "." + stringifyType(beanType) + BEAN_JSON_SERIALIZER_IMPL;
     }
 
     /**
@@ -268,20 +270,41 @@ public class Type {
      */
     public static String deserializerName(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
-        return deserializerName(type.packageName(), type.simpleName());
+        return deserializerName(type.packageName(), typeMirror);
     }
-
+    
     /**
      * <p>deserializerName.</p>
      *
      * @param packageName a {@link java.lang.String} object.
-     * @param beanName a {@link java.lang.String} object.
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object
      * @return a {@link java.lang.String} object.
      */
-    public static String deserializerName(String packageName, String beanName) {
-        return packageName + "." + beanName + BEAN_JSON_DESERIALIZER_IMPL;
+    public static String deserializerName(String packageName, TypeMirror beanType) {
+        return packageName + "." + stringifyType(beanType) + BEAN_JSON_DESERIALIZER_IMPL;
     }
+    
+    /**
+     * <p>stringifyType</p>
+     * Stringify given TypeMirror including generic arguments
+     *  
+     * @param type a {@link javax.lang.model.type.TypeMirror} object
+     * @return a {@link java.lang.String} containing string representation of given TypeMirror
+     */
+    public static String stringifyType(TypeMirror type) {
+    	return type.accept(new SimpleTypeVisitor6<String, String>() {
+			@Override
+			public String visitDeclared(DeclaredType t, String p) {
+				return 
+					p 
+					+ t.asElement().getSimpleName()
+					+ ((!t.getTypeArguments().isEmpty())?
+						"_" + t.getTypeArguments().stream().map(type -> visit(type, "")).collect(Collectors.joining("_"))
+						: "");
+			}
 
+    	}, "");
+    }
     /**
      * <p>generateDeserializer.</p>
      *

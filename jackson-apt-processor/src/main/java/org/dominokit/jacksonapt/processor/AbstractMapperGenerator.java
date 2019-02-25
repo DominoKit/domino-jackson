@@ -45,7 +45,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
                         .initializer(CodeBlock.builder().add("new $T()", ClassName.bestGuess(className)).build()).
                                 build())
                 .addMethod(makeConstructor(beanName))
-                .addMethods(getMapperMethods(element, beanName));
+                .addMethods(getMapperMethods(element, beanName, beanType));
         if (useInterface(element))
             builder.addSuperinterface(TypeName.get(element.asType()));
 
@@ -105,9 +105,10 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
      *
      * @param element  a {@link javax.lang.model.element.Element} object.
      * @param beanName a {@link javax.lang.model.element.Name} object.
+     * @param type a {@link javax.lang.model.type.TypeMirror} object.
      * @return a {@link java.lang.Iterable} object.
      */
-	protected abstract Iterable<MethodSpec> getMapperMethods(Element element, Name beanName);
+	protected abstract Iterable<MethodSpec> getMapperMethods(Element element, Name beanName, TypeMirror type);
 	
 	/**
      * <p>generateJsonMappers.</p>

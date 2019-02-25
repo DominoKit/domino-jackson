@@ -24,7 +24,7 @@ public class SerializerGenerator {
      * @return a {@link java.lang.String} object.
      */
     public String generate(TypeMirror beanType, String packageName, Name beanName) {
-        String generatedClassName = Type.serializerName(packageName, beanName.toString());
+        String generatedClassName = Type.serializerName(packageName, beanType);
         if (!TypeRegistry.containsSerializer(beanType.toString())) {
             try {
                 new AptSerializerBuilder(beanType, ObjectMapperProcessor.filer)
