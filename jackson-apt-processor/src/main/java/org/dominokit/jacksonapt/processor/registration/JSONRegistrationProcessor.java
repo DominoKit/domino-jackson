@@ -85,14 +85,13 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     }
 
     private MethodSpec createGetMethod(String name, String mapName, Class<?> returnType, boolean lookupIfNotFound) {
-        TypeVariableName parameterTypeVariable = TypeVariableName.get("? extends T");
-        TypeVariableName returnTypeVariable = TypeVariableName.get("T");
+        TypeVariableName typeVariable = TypeVariableName.get("T");
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
-                .addTypeVariable(returnTypeVariable)
-                .returns(ParameterizedTypeName.get(ClassName.get(returnType), returnTypeVariable))
-                .addParameter(ParameterizedTypeName.get(ClassName.get(Class.class), parameterTypeVariable), "type");
+                .addTypeVariable(typeVariable)
+                .returns(ParameterizedTypeName.get(ClassName.get(returnType), typeVariable))
+                .addParameter(ParameterizedTypeName.get(ClassName.get(Class.class), typeVariable), "type");
 
         if (lookupIfNotFound) {
             methodBuilder.beginControlFlow("if(" + mapName + ".containsKey(type))")

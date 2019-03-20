@@ -19,7 +19,7 @@ public interface JsonRegistry {
      * @param <T> a T object.
      * @return a {@link org.dominokit.jacksonapt.ObjectMapper} object.
      */
-    <T> ObjectMapper<T> getMapper(Class<? extends T> type);
+    <T> ObjectMapper<T> getMapper(Class<T> type);
 
     /**
      * <p>getReader.</p>
@@ -28,7 +28,7 @@ public interface JsonRegistry {
      * @param <T> a T object.
      * @return a {@link org.dominokit.jacksonapt.ObjectReader} object.
      */
-    <T> ObjectReader<T> getReader(Class<? extends T> type);
+    <T> ObjectReader<T> getReader(Class<T> type);
 
     /**
      * <p>getWriter.</p>
@@ -37,5 +37,5 @@ public interface JsonRegistry {
      * @param <T> a T object.
      * @return a {@link org.dominokit.jacksonapt.ObjectWriter} object.
      */
-    <T> ObjectWriter<T> getWriter(Class<? extends T> type);
+    <T> ObjectWriter<T> getWriter(Class<T> type);
 }
