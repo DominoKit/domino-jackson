@@ -3,18 +3,25 @@ package org.dominokit.jacksonapt.processor;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.elementUtils;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.filer;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
+import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.DEFAULT_WILDCARD;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 
+import org.dominokit.jacksonapt.JsonDeserializer;
+import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.ObjectMapper;
 import org.dominokit.jacksonapt.ObjectReader;
 import org.dominokit.jacksonapt.ObjectWriter;
+import org.dominokit.jacksonapt.processor.deserialization.FieldDeserializersChainBuilder;
+import org.dominokit.jacksonapt.processor.serialization.FieldSerializerChainBuilder;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
@@ -45,7 +52,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
                         .initializer(CodeBlock.builder().add("new $T()", ClassName.bestGuess(className)).build()).
                                 build())
                 .addMethod(makeConstructor(beanName))
-                .addMethods(getMapperMethods(element, beanName, beanType));
+                .addMethods(getMapperMethods(element, beanType));
         if (useInterface(element))
             builder.addSuperinterface(TypeName.get(element.asType()));
 
@@ -94,6 +101,67 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 	}
 
 	/**
+	 *  <p>makeNewDeserializerMethod.</p>
+	 *  
+	 * Creates method for build corresponding deserializer for  given beanType. If beanType is
+	 * basic type, generated code utilize existing deserializers. Otherwise, it creates instances
+	 * of newly generated ones.
+	 * 
+	 * @param element
+	 * @param beanType
+	 * @return
+	 */
+	protected MethodSpec makeNewDeserializerMethod(Element element, TypeMirror beanType) {
+		CodeBlock.Builder builder = CodeBlock.builder();
+		if (Type.isBasicType(typeUtils.erasure(beanType)))
+			builder.addStatement("return $L", new FieldDeserializersChainBuilder(getElementType(element)).getInstance(getElementType(element)));
+		else
+			builder.addStatement("return new " + deserializerName(beanType));
+
+		return MethodSpec.methodBuilder("newDeserializer")
+				.addModifiers(Modifier.PROTECTED)
+				.addAnnotation(Override.class)
+				.returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class),
+						ClassName.get(getElementType(element))))
+				.addCode(builder.build())
+				.build();
+
+	}
+	
+	/**
+	 *  <p>makeNewSerializerMethod.</p>
+	 *  
+	 * Creates method for build corresponding serializer for  given beanType. If beanType is
+	 * basic type, generated code utilize existing serializers. Otherwise, it creates instances
+	 * of newly generated ones.
+	 * 
+	 * @param beanType
+	 * @return
+	 */
+	protected MethodSpec makeNewSerializerMethod(TypeMirror beanType) {
+		CodeBlock.Builder builder = CodeBlock.builder();
+		if (Type.isBasicType(typeUtils.erasure(beanType)))
+			builder.addStatement("return $L", new FieldSerializerChainBuilder(beanType).getInstance(beanType));
+		else
+			builder.addStatement("return new " + serializerName(beanType));
+
+		return MethodSpec.methodBuilder("newSerializer")
+				.addModifiers(Modifier.PROTECTED)
+				.addAnnotation(Override.class)
+				.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD))
+				.addCode(builder.build())
+				.build();
+	}
+	
+	private String deserializerName(TypeMirror type) {
+		return Type.stringifyType(type) + "BeanJsonDeserializerImpl()";
+	}
+	
+	private String serializerName(TypeMirror type) {
+		return Type.stringifyType(type) + "BeanJsonSerializerImpl()";
+	}
+	
+	/**
 	 * <p>getSuperClass.</p>
 	 *
 	 * @return a {@link java.lang.Class} object.
@@ -104,19 +172,43 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
      * <p>getMapperMethods.</p>
      *
      * @param element  a {@link javax.lang.model.element.Element} object.
-     * @param beanName a {@link javax.lang.model.element.Name} object.
      * @param type a {@link javax.lang.model.type.TypeMirror} object.
      * @return a {@link java.lang.Iterable} object.
      */
-	protected abstract Iterable<MethodSpec> getMapperMethods(Element element, Name beanName, TypeMirror type);
+	protected abstract Iterable<MethodSpec> getMapperMethods(Element element, TypeMirror type);
 	
 	/**
      * <p>generateJsonMappers.</p>
      *
+     * Creates  mapper implementation for given beanType. If beanType is generic type, create
+     * corresponding mappers for type arguments incl. their type arguments as well. All type
+     * parameters will be included as part of the name of the mapper implementation.
+     * 
+     * Note that mappers are not generated for "simple" data types, since their implementation
+     * already exist.
+     * 
      * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @param beanName    a {@link javax.lang.model.element.Name} object.
      */
-    protected abstract void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName);
+	protected void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName) {
+		if (beanType instanceof DeclaredType) {
+			List<? extends TypeMirror> typeArguments = ((DeclaredType)beanType).getTypeArguments();
+			for (TypeMirror typeParamType:typeArguments)
+				generateJsonMappers(
+						typeParamType,
+						packageName,
+						typeUtils.asElement(typeParamType).getSimpleName());
+			
+			if (!Type.isBasicType(typeUtils.erasure(beanType))) {
+				generateDeserializer(beanType, packageName);
+				generateSerializer(beanType, packageName);
+			}
+		}
+	}
+	
+	protected void generateSerializer(TypeMirror beanType, String packageName) {
+	}
 
+	protected void generateDeserializer(TypeMirror beanType, String packageName) {
+	}
 }

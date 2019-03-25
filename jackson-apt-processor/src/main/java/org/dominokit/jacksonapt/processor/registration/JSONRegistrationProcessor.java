@@ -234,7 +234,7 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
 
     /** {@inheritDoc} */
     @Override
-    protected List<Class> supportedAnnotations() {
+    protected List<Class<?>> supportedAnnotations() {
         return Collections.singletonList(JSONRegistration.class);
     }
 }

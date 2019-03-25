@@ -4,7 +4,6 @@ import com.squareup.javapoet.MethodSpec;
 import org.dominokit.jacksonapt.AbstractObjectWriter;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Name;
 import javax.lang.model.type.TypeMirror;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,23 +14,23 @@ import java.util.stream.Stream;
  * @author vegegoku
  * @version $Id: $Id
  */
-public class BeanWriterGenerator extends AbstractBeanMapperGenerator {
+public class BeanWriterGenerator extends AbstractMapperGenerator {
     /** {@inheritDoc} */
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     protected Class<AbstractObjectWriter> getSuperClass() {
         return AbstractObjectWriter.class;
     }
 
     /** {@inheritDoc} */
     @Override
-    protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName, TypeMirror beanType) {
-        return Stream.of(makeNewSerializerMethod(beanName, beanType))
+    protected Iterable<MethodSpec> getMapperMethods(Element element, TypeMirror beanType) {
+        return Stream.of(makeNewSerializerMethod(beanType))
                 .collect(Collectors.toList());
     }
-
-    /** {@inheritDoc} */
+    
     @Override
-    protected void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName) {
-        new SerializerGenerator().generate(beanType, packageName, beanName);
-    }
+	protected void generateSerializer(TypeMirror beanType, String packageName) {
+		new SerializerGenerator().generate(beanType, packageName);
+	}
 }

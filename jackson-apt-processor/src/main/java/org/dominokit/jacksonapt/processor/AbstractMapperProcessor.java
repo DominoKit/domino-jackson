@@ -99,5 +99,5 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
      *
      * @return a {@link java.util.List} object.
      */
-    protected abstract List<Class> supportedAnnotations();
+    protected abstract List<Class<?>> supportedAnnotations();
 }

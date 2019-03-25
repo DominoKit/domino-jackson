@@ -58,11 +58,10 @@ public abstract class AbstractJsonMapperGenerator {
     /**
      * <p>generate.</p>
      *
-     * @param beanName    a {@link javax.lang.model.element.Name} object.
      * @param packageName a {@link java.lang.String} object.
      * @throws java.io.IOException if any.
      */
-    protected void generate(Name beanName, String packageName) throws IOException {
+    protected void generate(String packageName) throws IOException {
         MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
         final TypeSpec.Builder builder = TypeSpec.classBuilder(Type.stringifyType(beanType) + namePostfix())

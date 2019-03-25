@@ -76,7 +76,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
     /** {@inheritDoc} */
     @Override
-    protected List<Class> supportedAnnotations() {
+    protected List<Class<?>> supportedAnnotations() {
         return Arrays.asList(JSONReader.class, JSONWriter.class, JSONMapper.class);
     }
 
