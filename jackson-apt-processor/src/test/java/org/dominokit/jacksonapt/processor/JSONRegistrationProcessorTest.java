@@ -7,9 +7,13 @@ import org.dominokit.jacksonapt.annotation.JSONMapper;
 import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONWriter;
 import org.dominokit.jacksonapt.registration.JsonRegistry;
+import org.dominokit.jacksonapt.registration.TypeToken;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
+import java.util.Map;
 
 public class JSONRegistrationProcessorTest {
 
@@ -24,12 +28,25 @@ public class JSONRegistrationProcessorTest {
     @JSONWriter
     public interface PersonWriter extends ObjectWriter<Person> {
     }
+    
+
+	@JSONMapper
+	interface ListOfMapMapper extends ObjectMapper<List<Map<Integer, SimpleBeanObject>>> {
+	}
+
 
     @Test
     public void whenCompile_thenShouldRegisterMappersReadersAndWritersInTheirOwnRegistry() {
         JsonRegistry testJsonRegistry = new TestJsonRegistry();
-        assertNotNull(testJsonRegistry.getMapper(Person.class));
-        assertNotNull(testJsonRegistry.getReader(Person.class));
-        assertNotNull(testJsonRegistry.getWriter(Person.class));
+        assertNotNull(testJsonRegistry.getMapper(TypeToken.of(Person.class)));
+        assertNotNull(testJsonRegistry.getReader(TypeToken.of(Person.class)));
+        assertNotNull(testJsonRegistry.getWriter(TypeToken.of(Person.class)));
+        assertNotNull(testJsonRegistry.getMapper(
+        	new TypeToken<List<Map<Integer, SimpleBeanObject>>>(
+        		List.class, 
+        		new TypeToken<Map<Integer, SimpleBeanObject>>(
+        			Map.class, 
+        			TypeToken.of(Integer.class), 
+        			TypeToken.of(SimpleBeanObject.class)){}){}));
     }
 }

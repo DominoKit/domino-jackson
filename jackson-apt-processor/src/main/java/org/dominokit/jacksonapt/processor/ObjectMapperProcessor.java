@@ -52,7 +52,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
     private void generateMappers(Element element) {
         try {
-            new BeanMapperGenerator().generate(element);
+            new MapperGeneratorFactory().generate(element);
         } catch (Exception e) {
             handleError(e);
         }
@@ -60,7 +60,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
     private void generateMapperForReader(Element element) {
         try {
-            new BeanReaderGenerator().generate(element);
+            new MapperGeneratorFactory().generateReader(element);
         } catch (Exception e) {
             handleError(e);
         }
@@ -68,7 +68,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
     private void generateMapperForWriter(Element element) {
         try {
-            new BeanWriterGenerator().generate(element);
+            new MapperGeneratorFactory().generateWriter(element);
         } catch (Exception e) {
             handleError(e);
         }

@@ -26,7 +26,7 @@ public class BeanWriterGenerator extends AbstractBeanMapperGenerator {
     @Override
     protected Iterable<MethodSpec> getMapperMethods(Element element, Name beanName) {
         return Stream.of(makeNewSerializerMethod(beanName))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     /** {@inheritDoc} */

@@ -63,6 +63,10 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         return builder.add(getFieldSerializer(field.asType()), asClassesArray()).build();
     }
 
+    public CodeBlock getInstance(TypeMirror fieldType) {
+        return builder.add(getFieldSerializer(fieldType), asClassesArray()).build();
+    }
+    
     private TypeName[] asClassesArray() {
         return serializers.toArray(new TypeName[serializers.size()]);
     }
