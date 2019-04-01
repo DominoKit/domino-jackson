@@ -6,26 +6,26 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation similar to
- * {@link javax.xml.bind.annotation.XmlValue}
- * that indicates that results of the annotated "getter" method
- * (which means signature must be that of getters; non-void return
- * type, no args) is to be used as the single value to serialize
- * for the instance. Usually value will be of a simple scalar type
+ * Marker annotation 
+ * that indicates that the value of annotated accessor (either field
+ * or "getter" method [a method with non-void return type, no args])
+ * is to be used as the single value to serialize for the instance,
+ * instead of the usual method of collecting properties of value.
+ * Usually value will be of a simple scalar type
  * (String or Number), but it can be any serializable type (Collection,
  * Map or Bean).
  *<p>
- * At most one method of a <code>Class</code> can be annotated with this annotation;
+ * At most one accessor of a <code>Class</code> can be annotated with this annotation;
  * if more than one is found, an exception may be thrown.
- * Also, if method signature is not compatible with Getters, an exception
- * may be thrown (whether exception is thrown or not is an implementation detail (due
- * to filtering during introspection, some annotations may be skipped)
- * and applications should not rely on specific behavior).
+ * Also, if method signature of annotated method is not compatible with Getters,
+ * an exception may be thrown (whether exception is thrown or not is an
+ * implementation detail (due to filtering during introspection, some annotations
+ * may be skipped) and applications should not rely on specific behavior).
  *<p>
  * A typical usage is that of annotating <code>toString()</code>
  * method so that returned String value is used as the JSON serialization;
  * and if deserialization is needed, there is matching constructor
- * or factory method annotated with {@link com.fasterxml.jackson.annotation.JsonCreator} annotation.
+ * or factory method annotated with {@link JsonCreator} annotation.
  *<p>
  * Boolean argument is only used so that sub-classes can "disable"
  * annotation if necessary.
@@ -38,10 +38,10 @@ import java.lang.annotation.Target;
  * this is not used for POJO deserialization.
  *
  * @see JsonCreator
- * @author vegegoku
- * @version $Id: $Id
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD,
+    ElementType.FIELD // since 2.9
+})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonValue

@@ -13,17 +13,18 @@ import java.lang.annotation.Target;
  * NOTE: when annotating creator methods (constructors, factory methods),
  * method must either be:
  *<ul>
- * <li>Single-argument constructor/factory method without JsonProperty
+ * <li>Single-argument constructor/factory method without {@link JsonProperty}
  *    annotation for the argument: if so, this is so-called "delegate creator",
  *    in which case Jackson first binds JSON into type of the argument, and
- *    then calls creator. This is often used in conjunction with {@link com.fasterxml.jackson.annotation.JsonValue}
+ *    then calls creator. This is often used in conjunction with {@link JsonValue}
  *    (used for serialization).
  *   </li>
  * <li>Constructor/factory method where <b>every argument</b> is annotated with
- *
+ *   either {@link JsonProperty} or {@link JacksonInject}, to indicate name
+ *   of property to bind to
  *  </li>
  * </ul>
- *
+ * Also note that all {@link JsonProperty} annotations must specify actual name
  * (NOT empty String for "default") unless you use one of extension modules
  * that can detect parameter name; this because default JDK versions before 8
  * have not been able to store and/or retrieve parameter names from bytecode.
@@ -32,14 +33,12 @@ import java.lang.annotation.Target;
  *<p>
  * One common use case is to use a delegating Creator to construct instances from
  * scalar values (like <code>java.lang.String</code>) during deserialization,
- * and serialize values using {@link com.fasterxml.jackson.annotation.JsonValue}.
+ * and serialize values using {@link JsonValue}.
  *<p>
- *
+ * NOTE: As of Jackson 2.6, use of {@link JsonProperty#required()} is supported
  * for Creator methods (but not necessarily for regular setters or fields!).
- *
+ * 
  * @see JsonCreator
- * @author vegegoku
- * @version $Id: $Id
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
@@ -53,13 +52,12 @@ public @interface JsonCreator
      * "property-based" bindings are possible: since
      * delegating mode can not be used for multi-argument creators, the only choice
      * there is "property-based" mode.
-     * Check {@link com.fasterxml.jackson.annotation.JsonCreator.Mode} for more complete explanation of possible choices.
+     * Check {@link Mode} for more complete explanation of possible choices.
      *<p>
-     * Default value of {@link com.fasterxml.jackson.annotation.JsonCreator.Mode#DEFAULT} means that caller is to use standard
+     * Default value of {@link Mode#DEFAULT} means that caller is to use standard
      * heuristics for choosing mode to use.
-     *
+     * 
      * @since 2.5
-     * @return a {@link com.fasterxml.jackson.annotation.JsonCreator.Mode} object.
      */
     public Mode mode() default Mode.DEFAULT;
 

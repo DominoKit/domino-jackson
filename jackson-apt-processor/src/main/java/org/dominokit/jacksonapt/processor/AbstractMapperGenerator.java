@@ -53,7 +53,8 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
                                 build())
                 .addMethod(makeConstructor(beanName))
                 .addMethods(getMapperMethods(element, beanType));
-        if (useInterface(element))
+
+		if (useInterface(element))
             builder.addSuperinterface(TypeName.get(element.asType()));
 
 		TypeSpec classSpec = builder

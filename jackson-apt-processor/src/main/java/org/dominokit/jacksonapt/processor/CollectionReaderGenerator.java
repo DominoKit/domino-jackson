@@ -11,7 +11,6 @@ import org.dominokit.jacksonapt.AbstractObjectReader;
 import com.squareup.javapoet.MethodSpec;
 
 public class CollectionReaderGenerator extends AbstractMapperGenerator {
-
 	@Override
 	protected Class<?> getSuperClass() {
 		return AbstractObjectReader.class;

@@ -15,6 +15,7 @@
  */
 package org.dominokit.jacksonapt.processor.deserialization;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JacksonContextProvider;
@@ -30,11 +31,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -62,32 +61,42 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         super(beanType, filer);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected TypeName superClass() {
         return ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonDeserializer.class),
                 ClassName.get(beanType));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String namePostfix() {
         return Type.BEAN_JSON_DESERIALIZER_IMPL;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String targetTypeMethodName() {
         return "getDeserializedType";
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected MethodSpec initMethod() {
         return buildInitDeserializersMethod(beanType);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Set<MethodSpec> moreMethods() {
         Set<MethodSpec> methods = new HashSet<>();
@@ -98,24 +107,35 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             methods.add(initIgnoreFieldsMethod);
         }
 
+        JsonIgnoreProperties ignorePropertiesAnnotation = typeUtils.asElement(beanType).getAnnotation(JsonIgnoreProperties.class);
+
+        if (nonNull(ignorePropertiesAnnotation)) {
+            methods.add(buildIgnoreUnknownMethod(ignorePropertiesAnnotation.ignoreUnknown()));
+        }
+
         return methods;
     }
 
+
+    private MethodSpec buildIgnoreUnknownMethod(boolean ignored) {
+
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("isDefaultIgnoreUnknown")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PROTECTED)
+                .returns(TypeName.BOOLEAN)
+                .addStatement("return $L", ignored);
+
+        return builder.build();
+    }
+
+
     /**
-     *
      * @param beanType
      * @return MethodSpec for the set of ignored fields. if no ignored fields exist return null;
      */
     private MethodSpec buildInitIgnoreFields(TypeMirror beanType) {
         MethodSpec.Builder builder;
-        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
-        final List<Element> ignoredFields = typeElement
-                .getEnclosedElements()
-                .stream()
-                .filter(e -> ElementKind.FIELD
-                        .equals(e.getKind()) && isNotStatic(e) && isIgnored(e))
-                .collect(Collectors.toList());
-
+        final List<Element> ignoredFields = getIgnoredFields(beanType);
 
         if (!ignoredFields.isEmpty()) {
             builder = MethodSpec.methodBuilder("initIgnoredProperties");
@@ -133,6 +153,37 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         return null;
     }
 
+    private List<Element> getIgnoredFields(TypeMirror beanType) {
+        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
+
+        final List<Element> fields = new ArrayList<>();
+
+        List<Element> ignoredFields = getIgnoredFields(typeElement);
+        fields.addAll(ignoredFields);
+
+
+        return fields;
+    }
+
+    private List<Element> getIgnoredFields(TypeElement typeElement) {
+        TypeMirror superclass = typeElement.getSuperclass();
+        if (superclass.getKind().equals(TypeKind.NONE)) {
+            return new ArrayList<>();
+        }
+
+        final List<Element> ignoredFields = typeElement
+                .getEnclosedElements()
+                .stream()
+                .filter(e -> ElementKind.FIELD
+                        .equals(e.getKind()) && isNotStatic(e) && isIgnored(e))
+                .collect(Collectors.toList());
+
+        ignoredFields.addAll(getIgnoredFields((TypeElement) typeUtils.asElement(superclass)));
+        return ignoredFields;
+
+    }
+
+
     private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType) {
 
         return MethodSpec.methodBuilder("initInstanceBuilder")
@@ -145,6 +196,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .addAnnotation(Override.class)
                 .build();
     }
+
 
     private TypeSpec instanceBuilderReturnType() {
 
@@ -173,7 +225,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "bufferedProperties")
                 .addParameter(ParameterizedTypeName.get(Map.class, String.class, Object.class), "bufferedPropertiesValues")
                 .addStatement("return new $T($N(), bufferedProperties)",
-                        ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
+                ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
                         createMethod)
                 .build();
     }
@@ -210,15 +262,14 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     /**
-     *
      * @param field
      * @return the field provided in the {@link JsonProperty} as long as the provided name is not JsonProperty.USE_DEFAULT_NAME otherwise return the field simple name
      */
-    private String getPropertyName(Element field){
+    private String getPropertyName(Element field) {
         JsonProperty annotation = field.getAnnotation(JsonProperty.class);
-        if(isNull(annotation) || JsonProperty.USE_DEFAULT_NAME.equals(annotation.value())){
+        if (isNull(annotation) || JsonProperty.USE_DEFAULT_NAME.equals(annotation.value())) {
             return field.getSimpleName().toString();
-        }else{
+        } else {
             return annotation.value();
         }
     }

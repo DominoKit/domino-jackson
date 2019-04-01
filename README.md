@@ -292,8 +292,9 @@ More features from the original GWT-Jackson will be supported, starting from the
     
     - [x] Support for JsonIgnore
     - [x] Support for JsonProperty _Only custom property name is supported_
+    - [x] Support for JsonIgnoreProperties(ignoreUnknow = true)
     
-- [ ] Support Inheritance
+- [x] Support Inheritance -Mapper can serialize extended classes properties but does not dedict subtypes from json string_
 - [ ] Support [custom serializers/deserializers](https://github.com/nmorel/gwt-jackson/wiki/Custom-serializers-and-deserializers)
 - [ ] Support Guava extension.
 - [ ] Support [Mix-in annotations](https://github.com/nmorel/gwt-jackson/wiki/Mix-in-annotations)

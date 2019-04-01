@@ -1,32 +1,23 @@
 package com.fasterxml.jackson.annotation;
 
 /**
- * Super source for {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} to remove the use of
- * {@link java.lang.String#format(String, Object...)}
- * <p>
  * Definition of API used for constructing Object Identifiers
- * (as annotated using {@link com.fasterxml.jackson.annotation.JsonIdentityInfo}).
+ * (as annotated using {@link JsonIdentityInfo}).
  * Also defines factory methods used for creating instances
  * for serialization, deserialization.
  *
  * @param <T> Type of Object Identifiers produced.
- * @author vegegoku
- * @version $Id: $Id
  */
 @SuppressWarnings("serial")
 public abstract class ObjectIdGenerator<T>
-        implements java.io.Serializable {
+    implements java.io.Serializable
+{
     /*
     /**********************************************************
     /* Accessors
     /**********************************************************
      */
 
-    /**
-     * <p>getScope.</p>
-     *
-     * @return a {@link java.lang.Class} object.
-     */
     public abstract Class<?> getScope();
 
     /**
@@ -35,9 +26,8 @@ public abstract class ObjectIdGenerator<T>
      * scope; determination is based by passing a configured
      * "blueprint" (prototype) instance; from which the actual
      * instances are created (using {@link #newForSerialization}).
-     *
+     * 
      * @return True if this instance can be used as-is; false if not
-     * @param gen a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
 
@@ -49,12 +39,11 @@ public abstract class ObjectIdGenerator<T>
      * more complex and may incur additional buffering or performance overhead,
      * avoiding of which makes sense for common case of scalar object ids
      * (or native object ids some formats support).
-     * <p>
+     *<p>
      * Default implementation returns <code>false</code>, so needs to be overridden
      * by Object-producing generators.
      *
      * @since 2.5
-     * @return a boolean.
      */
     public boolean maySerializeAsObject() {
         return false;
@@ -62,71 +51,65 @@ public abstract class ObjectIdGenerator<T>
 
     /**
      * Accessor that may be called (after verifying (via {@link #maySerializeAsObject()})
-     * whether given name
-     *
-     * @param name   Name of property to check
+     * whether given name 
+     * 
+     * @param name Name of property to check
      * @param parser Parser that points to property name, in case generator needs
-     *               further verification (note: untyped, because <code>JsonParser</code> is defined
-     *               in `jackson-core`, and this package does not depend on it).
+     *    further verification (note: untyped, because <code>JsonParser</code> is defined
+     *    in `jackson-core`, and this package does not depend on it).
+     * 
      * @since 2.5
-     * @return a boolean.
      */
     public boolean isValidReferencePropertyName(String name, Object parser) {
         return false;
     }
-
+    
     /*
     /**********************************************************
     /* Factory methods
     /**********************************************************
      */
-
+    
     /**
      * Factory method to create a blueprint instance for specified
      * scope. Generators that do not use scope may return 'this'.
-     *
-     * @param scope a {@link java.lang.Class} object.
-     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
      */
     public abstract ObjectIdGenerator<T> forScope(Class<?> scope);
-
+    
     /**
      * Factory method called to create a new instance to use for
      * serialization: needed since generators may have state
      * (next id to produce).
-     * <p>
+     *<p>
      * Note that actual type of 'context' is
      * <code>com.fasterxml.jackson.databind.SerializerProvider</code>,
      * but can not be declared here as type itself (as well as call
      * to this object) comes from databind package.
-     *
+     * 
      * @param context Serialization context object used (of type
-     *                <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
-     *                may be needed by more complex generators to access contextual
-     *                information such as configuration.
-     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator} object.
+     *    <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
+     *    may be needed by more complex generators to access contextual
+     *    information such as configuration.
      */
     public abstract ObjectIdGenerator<T> newForSerialization(Object context);
 
     /**
      * Method for constructing key to use for ObjectId-to-POJO maps.
-     *
-     * @param key a {@link java.lang.Object} object.
-     * @return a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
      */
     public abstract IdKey key(Object key);
-
+    
     /*
     /**********************************************************
     /* Methods for serialization
     /**********************************************************
      */
-
+    
     /**
      * Method used for generating a new Object Identifier to serialize
      * for given POJO.
-     *
+     * 
      * @param forPojo POJO for which identifier is needed
+     * 
      * @return Object Identifier to use.
      */
     public abstract T generateId(Object forPojo);
@@ -143,7 +126,8 @@ public abstract class ObjectIdGenerator<T>
      * and scopes are used.
      */
     public final static class IdKey
-            implements java.io.Serializable {
+        implements java.io.Serializable
+    {
         private static final long serialVersionUID = 1L;
 
         /**
@@ -162,7 +146,7 @@ public abstract class ObjectIdGenerator<T>
         public final Object key;
 
         private final int hashCode;
-
+        
         public IdKey(Class<?> type, Class<?> scope, Object key) {
             if (key == null) {
                 throw new IllegalArgumentException("Can not construct IdKey for null key");
@@ -170,7 +154,7 @@ public abstract class ObjectIdGenerator<T>
             this.type = type;
             this.scope = scope;
             this.key = key;
-
+            
             int h = key.hashCode() + type.getName().hashCode();
             if (scope != null) {
                 h ^= scope.getName().hashCode();
@@ -179,12 +163,11 @@ public abstract class ObjectIdGenerator<T>
         }
 
         @Override
-        public int hashCode() {
-            return hashCode;
-        }
+        public int hashCode() { return hashCode; }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o)
+        {
             if (o == this) return true;
             if (o == null) return false;
             if (o.getClass() != getClass()) return false;

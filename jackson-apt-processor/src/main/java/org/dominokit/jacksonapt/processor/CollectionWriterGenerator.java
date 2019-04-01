@@ -11,7 +11,6 @@ import org.dominokit.jacksonapt.AbstractObjectWriter;
 import com.squareup.javapoet.MethodSpec;
 
 public class CollectionWriterGenerator extends AbstractMapperGenerator {
-
 	@Override
 	protected Class<?> getSuperClass() {
 		return AbstractObjectWriter.class;

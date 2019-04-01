@@ -8,8 +8,8 @@ public class PropertyAnnotationsTestCase {
 
     @Test
     public void testIgnoredPropertyShouldNotBeSerialized(){
-        String json = TestBeanWithIgnore_MapperImpl.INSTANCE.write(new TestBeanWithIgnore(10, "ahmad", "Amman - Jordan"));
-        Assert.assertEquals("{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}", json);
+        String json = TestBeanWithIgnore_MapperImpl.INSTANCE.write(new TestBeanWithIgnore(10, "ahmad", "Amman - Jordan", "propxValue", "propyValue"));
+        Assert.assertEquals("{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\",\"propertyx\":\"propxValue\"}", json);
     }
 
     @Test
@@ -20,22 +20,25 @@ public class PropertyAnnotationsTestCase {
 
     @Test
     public void testIgnoredPropertyShouldNotBeDeserialized(){
-        String json = "{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}";
+        String json = "{\"name\":\"ahmad\",\"address\":\"Amman - Jordan\", \"propertyx\":\"propxValue\"}";
         TestBeanWithIgnore bean = TestBeanWithIgnore_MapperImpl.INSTANCE.read(json);
         Assert.assertNull(bean.getId());
         Assert.assertNull(bean.getPersonGender());
+        Assert.assertNull(bean.getPropertyy());
         Assert.assertEquals("ahmad", bean.getName());
         Assert.assertEquals("Amman - Jordan", bean.getAddress());
+        Assert.assertEquals("propxValue", bean.getPropertyx());
 
 
-        String jsonContainsIgnoredProperty="{\"id\":10,\"gender\":\"male\",\"name\":\"ahmad\",\"address\":\"Amman - Jordan\"}";
+        String jsonContainsIgnoredProperty="{\"id\":10,\"gender\":\"male\",\"name\":\"ahmad\",\"address\":\"Amman - Jordan\", \"propertyx\":\"propxValue\", \"propertyy\":\"propyValue\"}";
         TestBeanWithIgnore anotherBean = TestBeanWithIgnore_MapperImpl.INSTANCE.read(jsonContainsIgnoredProperty);
         Assert.assertNull(anotherBean.getId());
         Assert.assertNull(anotherBean.getPersonGender());
+        Assert.assertNull(anotherBean.getPropertyy());
         Assert.assertEquals("ahmad", anotherBean.getName());
         Assert.assertEquals("Amman - Jordan", anotherBean.getAddress());
+        Assert.assertEquals("propxValue", anotherBean.getPropertyx());
     }
-
 
 
     @Test
@@ -54,6 +57,12 @@ public class PropertyAnnotationsTestCase {
         Assert.assertEquals("Amman - Jordan", anotherBean.getAddress());
     }
 
-
+    @Test
+    public void testIgnoreUnknown(){
+        String json = "{\"id\": 10,\"name\":\"Ahmad\",\"location\":\"Amman - Jordan\"}";
+        Student bean = Student_MapperImpl.INSTANCE.read(json);
+        Assert.assertEquals(10, bean.getId());
+        Assert.assertEquals("Ahmad", bean.getName());
+    }
 
 }

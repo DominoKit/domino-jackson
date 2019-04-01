@@ -38,6 +38,7 @@ public class JSONRegistrationProcessorTest {
     @Test
     public void whenCompile_thenShouldRegisterMappersReadersAndWritersInTheirOwnRegistry() {
         JsonRegistry testJsonRegistry = TestJsonRegistry.getInstance();
+        
         assertNotNull(testJsonRegistry.getMapper(TypeToken.of(Person.class)));
         assertNotNull(testJsonRegistry.getReader(TypeToken.of(Person.class)));
         assertNotNull(testJsonRegistry.getWriter(TypeToken.of(Person.class)));
