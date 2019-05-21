@@ -24,7 +24,7 @@ import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.SimpleTypeVisitor6;
+import javax.lang.model.util.SimpleTypeVisitor8;
 
 import java.util.Collection;
 import java.util.Map;
@@ -292,7 +292,7 @@ public class Type {
      * @return a {@link java.lang.String} containing string representation of given TypeMirror
      */
     public static String stringifyType(TypeMirror type) {
-    	return type.accept(new SimpleTypeVisitor6<String, String>() {
+    	return type.accept(new SimpleTypeVisitor8<String, String>() {
 			@Override
 			public String visitDeclared(DeclaredType t, String p) {
 				return 
