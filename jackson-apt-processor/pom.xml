@@ -117,6 +117,8 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>uber</shadedClassifierName>
                         </configuration>
                     </execution>
                 </executions>
