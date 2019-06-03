@@ -29,12 +29,12 @@ public class BeanMapperGenerator extends AbstractMapperGenerator {
     }
 
     @Override
-   	protected void generateSerializer(TypeMirror beanType, String packageName) {
-   		new SerializerGenerator().generate(beanType, packageName);
+   	protected void generateSerializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
+   		new SerializerGenerator().generate(beanType, packageName, subTypesInfo);
    	}
    	
    	@Override
-   	protected void generateDeserializer(TypeMirror beanType, String packageName) {
-   		new DeserializerGenerator().generate(beanType, packageName);
+   	protected void generateDeserializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
+   		new DeserializerGenerator().generate(beanType, packageName, subTypesInfo);
    	}
 }

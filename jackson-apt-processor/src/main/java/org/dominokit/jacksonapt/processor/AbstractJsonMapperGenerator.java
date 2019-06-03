@@ -17,6 +17,7 @@ package org.dominokit.jacksonapt.processor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
@@ -24,6 +25,10 @@ import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+
+import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
+import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -44,14 +49,17 @@ public abstract class AbstractJsonMapperGenerator {
 
     private final Filer filer;
 
+	protected SubTypesInfo subTypesInfo;
+
     /**
      * <p>Constructor for AbstractJsonMapperGenerator.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
+    public AbstractJsonMapperGenerator(TypeMirror beanType, SubTypesInfo subTypesInfo, Filer filer) {
         this.beanType = beanType;
+        this.subTypesInfo = subTypesInfo;
         this.filer = filer;
     }
 
@@ -73,6 +81,10 @@ public abstract class AbstractJsonMapperGenerator {
         moreMethods().forEach(builder::addMethod);
 
         builder.addMethod(initMethod());
+        if (subTypesInfo.hasSubTypes()) {
+        	builder.addMethod(buildInitTypeInfoMethod());
+        	builder.addMethod(initSubtypesMethod());
+        }
 
         JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
     }
@@ -122,6 +134,13 @@ public abstract class AbstractJsonMapperGenerator {
      * @return a {@link com.squareup.javapoet.MethodSpec} object.
      */
     protected abstract MethodSpec initMethod();
+    
+    /**
+     * <p>initMethod.</p>
+     *
+     * @return a {@link com.squareup.javapoet.MethodSpec} object.
+     */
+    protected abstract MethodSpec initSubtypesMethod();
 
     /**
      * <p>orderedFields.</p>
@@ -297,5 +316,38 @@ public abstract class AbstractJsonMapperGenerator {
 
     protected boolean isEligibleForSerializationDeserialization(Element field){
         return isNotStatic(field) && !isIgnored(field);
+    }
+    
+    protected abstract boolean isSerializer();
+    
+    /**
+     * Build the code to initialize a {@link TypeSerializationInfo} or {@link TypeDeserializationInfo}.
+     *
+     * @param typeInfo the type information obtained through the {@link JsonTypeInfo} annotation
+     * @return the code built
+     */
+    protected final CodeBlock generateTypeInfo() {
+        final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+        CodeBlock.Builder builder = CodeBlock.builder()
+                .add( "new $T($T.$L, $S)", type, As.class, subTypesInfo.getAs(), subTypesInfo.getPropertyName() )
+                .indent()
+                .indent();
+
+        for ( Map.Entry<String, TypeMirror> entry : subTypesInfo.getSubTypes().entrySet() ) {
+            builder.add( "\n.addTypeInfo($T.class, $S)",entry.getValue(), entry.getKey());
+        }
+
+        return builder.unindent().unindent().build();
+    }
+    
+    private MethodSpec buildInitTypeInfoMethod() {
+    	final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+        
+    	return MethodSpec.methodBuilder( "initTypeInfo")
+                .addModifiers( Modifier.PROTECTED )
+                .addAnnotation( Override.class )
+                .returns(ParameterizedTypeName.get(ClassName.get(type), TypeName.get(beanType)))
+                .addStatement( "return $L", generateTypeInfo())
+                .build();
     }
 }

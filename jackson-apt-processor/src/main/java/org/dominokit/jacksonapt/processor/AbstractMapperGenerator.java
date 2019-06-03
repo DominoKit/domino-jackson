@@ -7,7 +7,10 @@ import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.DEFAULT_W
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
@@ -23,6 +26,8 @@ import org.dominokit.jacksonapt.ObjectWriter;
 import org.dominokit.jacksonapt.processor.deserialization.FieldDeserializersChainBuilder;
 import org.dominokit.jacksonapt.processor.serialization.FieldSerializerChainBuilder;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -110,7 +115,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 	 * 
 	 * @param element
 	 * @param beanType
-	 * @return
+	 * @return 
 	 */
 	protected MethodSpec makeNewDeserializerMethod(Element element, TypeMirror beanType) {
 		CodeBlock.Builder builder = CodeBlock.builder();
@@ -191,8 +196,24 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
      * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
      */
-	protected void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName) {
+	
+	private void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName) {
 		if (beanType instanceof DeclaredType) {
+			TypeElement beanElement =  (TypeElement)((DeclaredType)beanType).asElement();
+			SubTypesInfo subTypeInfo = SubTypesInfo.emtpy();
+			
+			JsonTypeInfo typeInfo = beanElement.getAnnotation(com.fasterxml.jackson.annotation.JsonTypeInfo.class);
+			if (typeInfo != null && typeInfo.use() == JsonTypeInfo.Id.NAME ) {
+				JsonSubTypes subTypes = beanElement.getAnnotation(com.fasterxml.jackson.annotation.JsonSubTypes.class);
+				if (subTypes != null) {
+					Map<String, TypeMirror> subtypesMap = getSubtypeTypeMirrors(beanElement);
+					subTypeInfo = new SubTypesInfo(
+						typeInfo.include(), 
+						typeInfo.property().isEmpty() ? typeInfo.use().getDefaultPropertyName() : typeInfo.property(), 
+						subtypesMap);
+				}
+			}
+			
 			List<? extends TypeMirror> typeArguments = ((DeclaredType)beanType).getTypeArguments();
 			for (TypeMirror typeParamType:typeArguments)
 				generateJsonMappers(
@@ -201,15 +222,48 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 						typeUtils.asElement(typeParamType).getSimpleName());
 			
 			if (!Type.isBasicType(typeUtils.erasure(beanType))) {
-				generateDeserializer(beanType, packageName);
-				generateSerializer(beanType, packageName);
+				generateDeserializer(beanType, packageName, subTypeInfo);
+				generateSerializer(beanType, packageName, subTypeInfo);
 			}
 		}
 	}
 	
-	protected void generateSerializer(TypeMirror beanType, String packageName) {
+	/**
+	 * Iterate over JsonSubTypes.Type annotations and converts them to a map 
+	 * @param element
+	 * @return  map of JsonSubTypes.Type.name (as String) and JsonSubTypes.Type.value (as TypeMirror)
+	 */
+	// Retrieving Class<?> from Annotation can be tricky in Annotation processor
+	// See https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/
+	@SuppressWarnings("unchecked")
+	private Map<String, TypeMirror> getSubtypeTypeMirrors(Element element) {
+		List<? extends AnnotationMirror> subTypes = element.getAnnotationMirrors().stream()
+				.filter(am -> am.getAnnotationType().asElement().getSimpleName().toString().equals("JsonSubTypes")) // Get JsonSubType annotation mirror
+				.flatMap(am-> am.getElementValues().entrySet().stream()) // do a flat map for JsonSubType element values map entries
+				.filter(entry -> entry.getKey().getSimpleName().toString().equals("value")) //find the "value" element of JsonSubType
+				.flatMap(entry -> ((List<AnnotationMirror>)entry.getValue().getValue()).stream()) // treat JsonSubType.value() as list of annotation mirrors of JsonSubType.Type
+				.collect(Collectors.toList());
+		
+		return 
+			subTypes.stream()
+				.collect(
+					Collectors.toMap(
+						am -> am.getElementValues().entrySet().stream() // create a stream from all element values map entries for a given JsonSubType.Type
+							.filter(entry -> entry.getKey().getSimpleName().toString().equals("name")) // find "name" element 
+							.map(entry-> (String)entry.getValue().getValue()) // get the value from "name" element, which is a String
+							.findFirst()
+							.orElse(null),
+						am -> am.getElementValues().entrySet().stream() // create a stream from all element values map entries for a given JsonSubType.Type
+							.filter(entry -> entry.getKey().getSimpleName().toString().equals("value")) // find "name" element
+							.map(entry-> (TypeMirror)entry.getValue().getValue())
+							.findFirst()
+							.orElse(null)));
+		
+	}
+	
+	protected void generateSerializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
 	}
 
-	protected void generateDeserializer(TypeMirror beanType, String packageName) {
+	protected void generateDeserializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
 	}
 }

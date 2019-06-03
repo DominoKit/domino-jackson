@@ -23,11 +23,11 @@ public class DeserializerGenerator {
      * @param packageName a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
      */
-    public String generate(TypeMirror beanType, String packageName) {
+    public String generate(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
         String generatedClassName = Type.deserializerName(packageName, beanType);
         if (!TypeRegistry.containsDeserializer(beanType.toString())) {
             try {
-                new AptDeserializerBuilder(beanType, filer).generate(packageName);
+                new AptDeserializerBuilder(beanType, subTypesInfo, filer).generate(packageName);
                 TypeRegistry.registerDeserializer(beanType.toString(), ClassName.bestGuess(generatedClassName));
             } catch (IOException e) {
                 throw new DeserializerGenerator.DeserializerGenerationFailedException(beanType.toString());

@@ -11,6 +11,10 @@ public class MapperGeneratorFactory implements MapperGenerator{
 	@Override
 	public void generate(Element element) throws IOException {
 		TypeMirror beanType = AbstractMapperGenerator.getElementType(element);
+		// TODO get rid of CollectionMapperGenerator!
+		// All needed code to distinguish between a collection 
+		// and a bean is within makeNewDeserializerMethod() and
+		// makeNewSerializerMethod() of 
 		if (Type.isCollection(beanType) || Type.isMap(beanType)) {
 			new CollectionMapperGenerator().generate(element);;
 		} else

@@ -23,7 +23,7 @@ public class CollectionReaderGenerator extends AbstractMapperGenerator {
     }
 	
 	@Override
-	protected void generateDeserializer(TypeMirror beanType, String packageName) {
-		new DeserializerGenerator().generate(beanType, packageName);
+	protected void generateDeserializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
+		new DeserializerGenerator().generate(beanType, packageName, subTypesInfo);
 	}
 }

@@ -20,9 +20,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
+import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.*;
+import org.dominokit.jacksonapt.deser.bean.SubtypeDeserializer.BeanSubtypeDeserializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.SubTypesInfo;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
@@ -57,8 +60,8 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
-        super(beanType, filer);
+    public AptDeserializerBuilder(TypeMirror beanType, SubTypesInfo subTypesInfo, Filer filer) {
+        super(beanType, subTypesInfo, filer);
     }
 
     /**
@@ -94,6 +97,61 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         return buildInitDeserializersMethod(beanType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected MethodSpec initSubtypesMethod() {
+    	 if (subTypesInfo == null)
+	    	 return  MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
+	                 .addModifiers(Modifier.PROTECTED)
+	                 .addAnnotation(Override.class)
+	                 .returns(
+	                	ParameterizedTypeName.get(
+	                			ClassName.get(Map.class), 
+	                			ClassName.get(Class.class), 
+	                			ClassName.get(SubtypeDeserializer.class)))
+	                 .addStatement("return $T.emptyMap()",Collections.class).build();
+    	 else {
+    		 MethodSpec.Builder builder = MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
+             	.addModifiers( Modifier.PROTECTED )
+             	.addAnnotation( Override.class )
+             	.returns(
+	                	ParameterizedTypeName.get(
+	                			ClassName.get(Map.class), 
+	                			ClassName.get(Class.class), 
+	                			ClassName.get(SubtypeDeserializer.class)))
+             	.addStatement( "$T map = new $T($L)",
+            		 ParameterizedTypeName.get(
+	                			ClassName.get(Map.class), 
+	                			ClassName.get(Class.class), 
+	                			ClassName.get(SubtypeDeserializer.class)),
+            		 ClassName.get(IdentityHashMap.class), 
+            		 subTypesInfo.getSubTypes().size());
+    		 
+    		 for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
+    			 // Build subtype deserializer
+    			 String deserializerClassName = Type.generateDeserializer(subtypeEntry.getValue());
+        		 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
+                         .superclass(ClassName.get(BeanSubtypeDeserializer.class))
+                         .addMethod(MethodSpec.methodBuilder("newDeserializer")
+                        		 .addModifiers(Modifier.PROTECTED)
+                        		 .addAnnotation(Override.class)
+                        		 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), WildcardTypeName.subtypeOf(Object.class)))
+                        		 .addStatement("return new $T()", ClassName.bestGuess(deserializerClassName))
+                        		 .build()
+                         ).build();
+        		 
+        		 builder.addStatement( "map.put($T.class, $L)", TypeName.get(subtypeEntry.getValue()), subtypeType);
+    		 }
+    		 
+    		 builder.addStatement("return map");
+    		 
+    		 return builder.build();
+    		 
+    	 }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -274,4 +332,8 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         }
     }
 
+    @Override
+    protected boolean isSerializer() {
+    	return false;
+    }
 }

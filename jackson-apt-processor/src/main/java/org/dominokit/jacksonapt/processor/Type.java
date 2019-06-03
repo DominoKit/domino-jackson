@@ -313,7 +313,7 @@ public class Type {
      */
     public static String generateDeserializer(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
-        return new DeserializerGenerator().generate(typeMirror, type.packageName());
+        return new DeserializerGenerator().generate(typeMirror, type.packageName(), SubTypesInfo.emtpy());
     }
 
     /**
@@ -324,6 +324,6 @@ public class Type {
      */
     public static String generateSerializer(TypeMirror typeMirror) {
         ClassName type = ClassName.bestGuess(typeMirror.toString());
-        return new SerializerGenerator().generate(typeMirror, type.packageName());
+        return new SerializerGenerator().generate(typeMirror, type.packageName(), SubTypesInfo.emtpy());
     }
 }
