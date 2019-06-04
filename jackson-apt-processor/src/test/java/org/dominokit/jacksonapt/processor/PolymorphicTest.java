@@ -18,7 +18,7 @@ import org.junit.Test;
 
 public class PolymorphicTest {
 	@JSONMapper
-	interface PolymorphicBaseMapper extends ObjectMapper<PolymorphicBaseClass> {
+	interface PolymorphicBaseMapper extends ObjectMapper<PolymorphicBaseInterface> {
 	}
 	private PolymorphicBaseMapper BASEMAPPERINSTANCE = new PolymorphicTest_PolymorphicBaseMapperImpl();
 
@@ -28,8 +28,7 @@ public class PolymorphicTest {
 		pcc.i = 102;
 		pcc.str = "test string";
 		String json = BASEMAPPERINSTANCE.write(pcc);
-		PolymorphicBaseClass pcc_processed = BASEMAPPERINSTANCE.read(json);
-		assertEquals(pcc.i, pcc_processed.i);
+		PolymorphicBaseInterface pcc_processed = BASEMAPPERINSTANCE.read(json);
 		assertEquals(pcc_processed.getClass(), PolymorphicChildClass.class);
 		assertEquals(pcc.str, ((PolymorphicChildClass)pcc_processed).str);
 		
@@ -38,7 +37,6 @@ public class PolymorphicTest {
 		pcc2.ii = 2233;
 		json = BASEMAPPERINSTANCE.write(pcc2);
 		pcc_processed = BASEMAPPERINSTANCE.read(json);
-		assertEquals(pcc2.i, pcc_processed.i);
 		assertEquals(pcc_processed.getClass(), PolymorphicChildClass2.class);
 		assertEquals(pcc2.ii, ((PolymorphicChildClass2)pcc_processed).ii);
 	}

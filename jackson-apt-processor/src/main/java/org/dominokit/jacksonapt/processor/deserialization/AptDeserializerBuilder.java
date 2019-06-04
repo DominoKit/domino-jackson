@@ -34,6 +34,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import java.util.*;
@@ -158,7 +159,14 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     @Override
     protected Set<MethodSpec> moreMethods() {
         Set<MethodSpec> methods = new HashSet<>();
-        methods.add(buildInitInstanceBuilderMethod(beanType));
+     // Object instance can be created by InstanceBuilder 
+        // only for non-abstract classes
+        if (
+        	beanType instanceof DeclaredType
+        	&& ((DeclaredType)beanType).asElement().getKind() == ElementKind.CLASS
+        	&& !((DeclaredType)beanType).asElement().getModifiers().contains(Modifier.ABSTRACT))
+        			 	methods.add(buildInitInstanceBuilderMethod(beanType));
+
 
         MethodSpec initIgnoreFieldsMethod = buildInitIgnoreFields(beanType);
         if (nonNull(initIgnoreFieldsMethod)) {
