@@ -22,8 +22,14 @@ public class PolymorphicTest {
 	}
 	private PolymorphicBaseMapper BASEMAPPERINSTANCE = new PolymorphicTest_PolymorphicBaseMapperImpl();
 
+//	@JSONMapper
+//	interface GenericClassWithPolymorphicParamMapper extends ObjectMapper<GenericClassWithPolymorphicParam<PolymorphicBaseInterface>> {
+//	}
+//	
+//	private GenericClassWithPolymorphicParamMapper GENERICMAPPERINSTANCE = new PolymorphicTest_GenericClassWithPolymorphicParamMapperImpl();
+	
 	@Test
-	public void test() {
+	public void testSubtypes() {
 		PolymorphicChildClass pcc = new PolymorphicChildClass();
 		pcc.i = 102;
 		pcc.str = "test string";
@@ -40,4 +46,17 @@ public class PolymorphicTest {
 		assertEquals(pcc_processed.getClass(), PolymorphicChildClass2.class);
 		assertEquals(pcc2.ii, ((PolymorphicChildClass2)pcc_processed).ii);
 	}
+//	
+//	@Test
+//	public void testSubtypeWithGenerics() {
+//		GenericClassWithPolymorphicParam<PolymorphicChildClass> gcpp= new GenericClassWithPolymorphicParam<>();
+//		gcpp.data = new PolymorphicChildClass();
+//		gcpp.data.str = "hello";
+//		
+//		GenericClassWithPolymorphicParam<PolymorphicBaseInterface> gg = gcpp;
+//		GENERICMAPPERINSTANCE.write(gg);
+//	}
+	
+
+
 }

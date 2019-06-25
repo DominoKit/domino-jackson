@@ -7,12 +7,12 @@ import javax.lang.model.type.TypeMirror;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 public class SubTypesInfo {
-	private final As as;
+	private final As include;
 	private final String propertyName;
 	private final Map<String, TypeMirror> subTypes;
 	
-	public SubTypesInfo(As as, String propertyName, Map<String, TypeMirror> subTypes) {
-		this.as = as;
+	public SubTypesInfo(As include, String propertyName, Map<String, TypeMirror> subTypes) {
+		this.include = include;
 		this.propertyName = propertyName;
 		this.subTypes = subTypes;
 				
@@ -26,8 +26,8 @@ public class SubTypesInfo {
 		return subTypes != null && !subTypes.isEmpty();
 	}
 	
-	public As getAs() {
-		return as;
+	public As getInclude() {
+		return include;
 	}
 
 	public String getPropertyName() {

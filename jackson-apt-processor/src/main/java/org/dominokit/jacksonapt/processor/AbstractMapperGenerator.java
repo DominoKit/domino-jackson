@@ -16,6 +16,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import org.dominokit.jacksonapt.JsonDeserializer;
@@ -198,7 +199,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
      */
 	
 	private void generateJsonMappers(TypeMirror beanType, String packageName, Name beanName) {
-		if (beanType instanceof DeclaredType) {
+		if (beanType.getKind() == TypeKind.DECLARED) {
 			TypeElement beanElement =  (TypeElement)((DeclaredType)beanType).asElement();
 			SubTypesInfo subTypeInfo = SubTypesInfo.emtpy();
 			
@@ -215,12 +216,18 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 			}
 			
 			List<? extends TypeMirror> typeArguments = ((DeclaredType)beanType).getTypeArguments();
-			for (TypeMirror typeParamType:typeArguments)
+			for (TypeMirror typeParamType:typeArguments) {
+//				if (typeParamType.getKind() == TypeKind.WILDCARD) {
+//					TypeMirror extendsBound = ((javax.lang.model.type.WildcardType)typeParamType).getExtendsBound();
+//					if (extendsBound != null)
+//						typeParamType = extendsBound;
+//				}
+				
 				generateJsonMappers(
 						typeParamType,
 						packageName,
 						typeUtils.asElement(typeParamType).getSimpleName());
-			
+			}
 			if (!Type.isBasicType(typeUtils.erasure(beanType))) {
 				generateDeserializer(beanType, packageName, subTypeInfo);
 				generateSerializer(beanType, packageName, subTypeInfo);

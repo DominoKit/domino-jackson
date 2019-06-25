@@ -42,6 +42,13 @@ class DeserializerBuilder extends AccessorsFilter {
         this.fieldType = field.asType();
     }
 
+    DeserializerBuilder(Types typeUtils, TypeMirror beanType, Element field, TypeMirror fieldType) {
+        super(typeUtils);
+        this.beanType = beanType;
+        this.field = field;
+        this.fieldType = fieldType;
+    }
+    
     TypeSpec buildDeserializer() {
         final String paramValue = "value";
         final String paramBean = "bean";
@@ -73,7 +80,7 @@ class DeserializerBuilder extends AccessorsFilter {
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), ObjectMapperProcessor.DEFAULT_WILDCARD))
-                .addStatement("return $L", new FieldDeserializersChainBuilder(beanType).getInstance(field))
+                .addStatement("return $L", new FieldDeserializersChainBuilder(beanType).getInstance(fieldType))
                 .build();
     }
 

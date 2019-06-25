@@ -138,7 +138,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
     private MethodSpec buildInitSerializersMethod(TypeMirror beanType) {
 
         int[] index = new int[]{0};
-        final List<Element> fields = orderedFields();
+        final Map<Element, TypeMirror> fields = orderedFields();
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("initSerializers")
                 .addModifiers(Modifier.PROTECTED)
@@ -147,10 +147,10 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                 .addStatement("$T result = new $T[$L]",
                         ArrayTypeName.of(BeanPropertySerializer.class), BeanPropertySerializer.class, fields.size());
 
-        fields.stream()
-                .filter(this::isEligibleForSerializationDeserialization)
-                .forEach(field -> builder.addStatement("result[$L] = $L",
-                index[0]++, new SerializerBuilder(typeUtils, beanType, field).buildSerializer()));
+        fields.entrySet().stream()
+                .filter(entry->isEligibleForSerializationDeserialization(entry.getKey()))
+                .forEach(entry -> builder.addStatement("result[$L] = $L",
+                index[0]++, new SerializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildSerializer()));
 
         builder.addStatement("return result");
         return builder.build();

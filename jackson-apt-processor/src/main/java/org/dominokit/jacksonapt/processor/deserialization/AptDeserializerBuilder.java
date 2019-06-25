@@ -132,6 +132,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     		 
     		 for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
     			 // Build subtype deserializer
+    			 // Possibly use DeserializerGenerator?
     			 String deserializerClassName = Type.generateDeserializer(subtypeEntry.getValue());
         		 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                          .superclass(ClassName.get(BeanSubtypeDeserializer.class))
@@ -269,6 +270,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         final MethodSpec createMethod = MethodSpec.methodBuilder("create")
                 .addModifiers(Modifier.PRIVATE)
                 .returns(ClassName.get(beanType))
+//                .addStatement("return new $T()", TypeName.get(typeUtils.erasure(beanType)))
                 .addStatement("return new $T()", TypeName.get(beanType))
                 .build();
 
@@ -318,10 +320,10 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .returns(resultType)
                 .addStatement("$T map = $T.get().mapLikeFactory().make()", resultType, JacksonContextProvider.class);
 
-        orderedFields().stream()
-                .filter(this::isEligibleForSerializationDeserialization)
-                .forEach(field -> builder.addStatement("map.put($S, $L)",
-                        getPropertyName(field), new DeserializerBuilder(typeUtils, beanType, field).buildDeserializer()));
+        orderedFields().entrySet().stream()
+                .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
+                .forEach(entry -> builder.addStatement("map.put($S, $L)",
+                        getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();
