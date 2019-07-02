@@ -30,7 +30,7 @@ public class BeanWriterGenerator extends AbstractMapperGenerator {
     }
     
     @Override
-	protected void generateSerializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
-		new SerializerGenerator().generate(beanType, packageName, subTypesInfo);
+	protected void generateSerializer(TypeMirror beanType, String packageName) {
+		new SerializerGenerator().generate(beanType, packageName);
 	}
 }

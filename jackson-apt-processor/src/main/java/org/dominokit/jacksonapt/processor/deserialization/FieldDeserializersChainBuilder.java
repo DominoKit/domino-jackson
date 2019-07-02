@@ -90,10 +90,10 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         if (typeMirror.toString().equals(beanType.toString())) {
             deserializers.addLast(ClassName.bestGuess(Type.deserializerName(typeMirror)));
         } else {
-            if (TypeRegistry.containsDeserializer(typeMirror)) {
+            if (TypeRegistry.containsDeserializer(Type.stringifyType(typeMirror))) {
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
             } else {
-                TypeRegistry.registerDeserializer(typeMirror.toString(), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
+                TypeRegistry.registerDeserializer(Type.stringifyType(typeMirror), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
             }
         }
@@ -101,7 +101,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(typeMirror);
+        return Type.generateDeserializer(Type.removeOuterWildCards(typeMirror));
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {

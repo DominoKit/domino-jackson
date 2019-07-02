@@ -30,7 +30,7 @@ public class BeanReaderGenerator extends AbstractMapperGenerator {
     }
     
     @Override
-	protected void generateDeserializer(TypeMirror beanType, String packageName, SubTypesInfo subTypesInfo) {
-		new DeserializerGenerator().generate(beanType, packageName, subTypesInfo);
+	protected void generateDeserializer(TypeMirror beanType, String packageName) {
+		new DeserializerGenerator().generate(beanType, packageName);
 	}
 }

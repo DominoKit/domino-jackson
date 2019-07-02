@@ -22,13 +22,9 @@ import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.*;
-import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
-import javax.lang.model.util.SimpleTypeVisitor8;
 
 import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
@@ -61,9 +57,9 @@ public abstract class AbstractJsonMapperGenerator {
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AbstractJsonMapperGenerator(TypeMirror beanType, SubTypesInfo subTypesInfo, Filer filer) {
+    public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
         this.beanType = beanType;
-        this.subTypesInfo = subTypesInfo;
+        this.subTypesInfo = Type.getSubTypes(beanType);
         this.filer = filer;
     }
 
@@ -197,43 +193,17 @@ public abstract class AbstractJsonMapperGenerator {
         Map<Element, TypeMirror> res = enclosedFields.stream().collect(
         	Collectors.toMap(
         		fieldElement -> fieldElement, 
-        		fieldElement -> getDeclaredType(fieldElement.asType(), typeParameterMap),
+        		fieldElement -> Type.getDeclaredType(fieldElement.asType(), typeParameterMap),
         		(u,v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u)); },
         		LinkedHashMap::new));
 
         if (superclass.getKind() == TypeKind.DECLARED) 
-        	res.putAll(getOrderedFields((DeclaredType) getDeclaredType(superclass, typeParameterMap)));
+        	res.putAll(getOrderedFields((DeclaredType) Type.getDeclaredType(superclass, typeParameterMap)));
         
         return res;
     }
     
-    private TypeMirror getDeclaredType(TypeMirror type, Map<? extends TypeParameterElement, ? extends TypeMirror> parametersToArgumentsMap) {
-    	return type.accept(new SimpleTypeVisitor8<TypeMirror, Void>() {
-    		@Override
-    		public TypeMirror visitDeclared(DeclaredType t, Void p){
-    			return typeUtils.getDeclaredType(
-    					(TypeElement)t.asElement(), 
-    					t.getTypeArguments().stream().map(arg -> arg.accept(this, null)).toArray(TypeMirror[]::new));
-
-    		}
-    		
-    		@Override
-    		public TypeMirror visitTypeVariable(TypeVariable t, Void p){
-    			return parametersToArgumentsMap.get(typeUtils.asElement(t));
-    		}
-
-    		@Override
-    		public TypeMirror visitPrimitive(PrimitiveType t, Void p) {
-    			return t;
-    		}
-
-    		@Override
-    		public TypeMirror visitArray(ArrayType t, Void p){
-    			return typeUtils.getArrayType(t.getComponentType().accept(this, null));
-
-    		}
-    	}, null);
-    }
+    
     public static class AccessorInfo {
 
         public boolean present;

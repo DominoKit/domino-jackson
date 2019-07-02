@@ -61,7 +61,7 @@ class SerializerBuilder extends AccessorsFilter {
         builder.addMethod(buildSerializerMethod());
 
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("getValue")
-                .returns(Type.wrapperType(fieldType))
+                .returns(Type.wrapperType(Type.removeOuterWildCards(fieldType)))
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(ClassName.get(beanType), paramBean);

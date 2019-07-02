@@ -95,10 +95,10 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         if (typeMirror.toString().equals(beanType.toString())) {
             serializers.addLast(ClassName.bestGuess(Type.serializerName(typeMirror)));
         } else {
-            if (TypeRegistry.containsSerializer(typeMirror)) {
+            if (TypeRegistry.containsSerializer(Type.stringifyType(typeMirror))) {
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
             } else {
-                TypeRegistry.registerSerializer(typeMirror.toString(), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
+                TypeRegistry.registerSerializer(Type.stringifyType(typeMirror), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
             }
         }
@@ -106,7 +106,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomSerializer(TypeMirror typeMirror) {
-        return Type.generateSerializer(typeMirror);
+    	return Type.generateSerializer(Type.removeOuterWildCards(typeMirror));
     }
 
     private String getEnumSerializer() {

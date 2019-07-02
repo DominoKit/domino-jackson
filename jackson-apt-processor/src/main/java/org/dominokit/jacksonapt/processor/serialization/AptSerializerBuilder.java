@@ -19,7 +19,6 @@ import com.squareup.javapoet.*;
 
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
-import org.dominokit.jacksonapt.processor.SubTypesInfo;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.ser.bean.AbstractBeanJsonSerializer;
 import org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer;
@@ -33,7 +32,6 @@ import javax.lang.model.type.TypeMirror;
 
 import java.util.Collections;
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
@@ -52,8 +50,8 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param filer a {@link javax.annotation.processing.Filer} object.
      */
-    public AptSerializerBuilder(TypeMirror beanType, SubTypesInfo subTypesInfo, Filer filer) {
-        super(beanType, subTypesInfo, filer);
+    public AptSerializerBuilder(TypeMirror beanType, Filer filer) {
+        super(beanType, filer);
     }
 
     /** {@inheritDoc} */

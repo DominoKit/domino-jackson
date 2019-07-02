@@ -1,5 +1,6 @@
 package org.dominokit.jacksonapt.processor;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.lang.model.type.TypeMirror;
@@ -19,7 +20,7 @@ public class SubTypesInfo {
 	}
 	
 	public static SubTypesInfo emtpy() {
-		return new SubTypesInfo(null, null, null); 
+		return new SubTypesInfo(null, null, Collections.emptyMap()); 
 	}
 	
 	public boolean hasSubTypes() {
