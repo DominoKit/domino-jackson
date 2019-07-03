@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
@@ -105,6 +107,18 @@ public class PolymorphicTest {
 		((SecondPolymorphicChildClass)dataListSecondItem).str = "hello second class";
 		pgc.dataListSecond = Arrays.asList(dataListSecondItem);
 		
+		Map<Integer, PolymorphicBaseInterface> map = new HashMap<Integer, PolymorphicBaseInterface>();
+		PolymorphicBaseInterface dataMapItem1 = new PolymorphicChildClass();
+		((PolymorphicChildClass)dataMapItem1).str = "hello object";
+		((PolymorphicChildClass)dataMapItem1).i = 1010;
+		
+		PolymorphicBaseInterface dataMapItem2 = new PolymorphicChildClass2();
+		((PolymorphicChildClass2)dataMapItem2).ii = 10223;
+		((PolymorphicChildClass2)dataMapItem2).i = 1010;
+		map.put(101, dataMapItem1);
+		map.put(102, dataMapItem2);
+		pgc.dataMap = map;
+		
 		String jsonStr = POLYMORPHICMAPPER.write(pgc);
 		System.out.println(jsonStr);
 		
@@ -122,6 +136,12 @@ public class PolymorphicTest {
 		assertEquals(1, pgc_processed.dataListSecond.size());
 		assertEquals(SecondPolymorphicChildClass.class, pgc_processed.dataListSecond.get(0).getClass());
 		assertEquals(((SecondPolymorphicChildClass)pgc.dataListSecond.get(0)).str, ((SecondPolymorphicChildClass)pgc_processed.dataListSecond.get(0)).str);
+		
+		assertEquals(pgc.dataMap.size(), pgc_processed.dataMap.size());
+		assertEquals(pgc.dataMap.get(101).getClass(), pgc_processed.dataMap.get(101).getClass());
+		assertEquals(((PolymorphicChildClass)pgc.dataMap.get(101)).str, ((PolymorphicChildClass)pgc_processed.dataMap.get(101)).str);
+		assertEquals(pgc.dataMap.get(102).getClass(), pgc_processed.dataMap.get(102).getClass());
+		assertEquals(((PolymorphicChildClass2)pgc.dataMap.get(102)).ii, ((PolymorphicChildClass2)pgc_processed.dataMap.get(102)).ii);
 	}
 	
 	

@@ -29,19 +29,18 @@ public class DeserializerGenerator {
      * @return a {@link java.lang.String} object.
      */
     public String generate(TypeMirror beanType, String packageName) {
-        String beanTypeStr = Type.stringifyType(beanType);
-        String generatedClassName = Type.deserializerName(packageName, beanType);
+        String deserializerName = Type.deserializerName(packageName, beanType);
         
-        if (!TypeRegistry.containsDeserializer(beanTypeStr)) {
+        if (!TypeRegistry.containsDeserializer(deserializerName)) {
             try {
             	generateSubTypesDeserializers(beanType);
                 new AptDeserializerBuilder(beanType, filer).generate(packageName);
-                TypeRegistry.registerDeserializer(beanTypeStr, ClassName.bestGuess(generatedClassName));
+                TypeRegistry.registerDeserializer(deserializerName, ClassName.bestGuess(deserializerName));
             } catch (IOException e) {
                 throw new DeserializerGenerator.DeserializerGenerationFailedException(beanType.toString());
             }
         }
-        return generatedClassName;
+        return deserializerName;
     }
 
     private void generateSubTypesDeserializers(TypeMirror beanType) {

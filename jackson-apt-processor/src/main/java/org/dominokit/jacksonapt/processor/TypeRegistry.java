@@ -741,7 +741,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getCustomSerializer(TypeMirror typeMirror) {
-        return getCustomSerializer(Type.stringifyType(typeMirror));
+        return getCustomSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -764,7 +764,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getCustomDeserializer(TypeMirror typeMirror) {
-        return getCustomDeserializer(Type.stringifyType(typeMirror));
+        return getCustomDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -909,7 +909,7 @@ public final class TypeRegistry {
      * @return a boolean.
      */
     public static boolean containsSerializer(TypeMirror typeMirror) {
-        return containsSerializer(Type.stringifyType(typeMirror));
+        return containsSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -919,7 +919,7 @@ public final class TypeRegistry {
      * @return a boolean.
      */
     public static boolean containsDeserializer(TypeMirror typeMirror) {
-        return containsDeserializer(Type.stringifyType(typeMirror));
+        return containsDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
 

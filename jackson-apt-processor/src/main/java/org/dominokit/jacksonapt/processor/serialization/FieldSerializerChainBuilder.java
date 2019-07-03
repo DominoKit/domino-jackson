@@ -94,13 +94,13 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getCustomSerializer(TypeMirror typeMirror) {
-        if (typeMirror.toString().equals(beanType.toString())) {
+        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
             serializers.addLast(ClassName.bestGuess(Type.serializerName(typeMirror)));
         } else {
-            if (TypeRegistry.containsSerializer(Type.stringifyType(typeMirror))) {
+            if (TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(typeMirror))) {
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
             } else {
-                TypeRegistry.registerSerializer(Type.stringifyType(typeMirror), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
+                TypeRegistry.registerSerializer(Type.stringifyTypeWithPackage(typeMirror), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
             }
         }
@@ -127,10 +127,11 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getKeySerializer(TypeMirror typeMirror) {
+    	typeMirror = Type.removeOuterWildCards(typeMirror);
         if (Type.isEnum(typeMirror))
             serializers.addLast(TypeRegistry.getKeySerializer(Enum.class.getName()));
         else
-            serializers.addLast(TypeRegistry.getKeySerializer(typeMirror.toString()));
+            serializers.addLast(TypeRegistry.getKeySerializer(Type.stringifyTypeWithPackage(Type.removeOuterWildCards(typeMirror))));
         return GET_INSTANCE;
     }
 

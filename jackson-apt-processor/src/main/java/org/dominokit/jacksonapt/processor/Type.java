@@ -298,12 +298,27 @@ public class Type {
     
     /**
      * <p>stringifyType</p>
+     * Stringify given TypeMirror including generic arguments and append package name
+     *  
+     * @param type a {@link javax.lang.model.type.TypeMirror} object
+     * @return a {@link java.lang.String} containing string representation of given TypeMirror
+     */
+    public static String stringifyTypeWithPackage(TypeMirror type) {
+    	return stringifyType(type, elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(type))).toString() + ".");
+    }
+    
+    /**
+     * <p>stringifyType</p>
      * Stringify given TypeMirror including generic arguments
      *  
      * @param type a {@link javax.lang.model.type.TypeMirror} object
      * @return a {@link java.lang.String} containing string representation of given TypeMirror
      */
     public static String stringifyType(TypeMirror type) {
+    	return stringifyType(type, "");
+    }
+    
+    private static String stringifyType(TypeMirror type, String packageName) {
     	return type.accept(new SimpleTypeVisitor8<String, String>() {
 			@Override
 			public String visitDeclared(DeclaredType t, String p) {
@@ -325,9 +340,9 @@ public class Type {
     								"super" + visit(t.getSuperBound(), "")
     								: "");
     		}
-    	}, "");
+    	}, 
+    	packageName);
     }
-    
     /**
      * <p>generateDeserializer.</p>
      *

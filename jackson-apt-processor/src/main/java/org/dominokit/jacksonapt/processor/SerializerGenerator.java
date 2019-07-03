@@ -28,20 +28,19 @@ public class SerializerGenerator {
      * @return a {@link java.lang.String} object.
      */
     public String generate(TypeMirror beanType, String packageName) {
-    	String beanTypeStr = Type.stringifyType(beanType);
-    	String generatedClassName = Type.serializerName(packageName, beanType);
+    	String serializerName = Type.serializerName(packageName, beanType);
     	
-        if (!TypeRegistry.containsSerializer(beanTypeStr)) {
+        if (!TypeRegistry.containsSerializer(serializerName)) {
             try {
             	generateSubTypeSerializers(beanType);
             	
                 new AptSerializerBuilder(beanType, ObjectMapperProcessor.filer).generate(packageName);
-                TypeRegistry.registerSerializer(beanTypeStr, ClassName.bestGuess(generatedClassName));
+                TypeRegistry.registerSerializer(serializerName, ClassName.bestGuess(serializerName));
             } catch (IOException e) {
                 throw new SerializerGenerationFailedException(beanType.toString());
             }
         }
-        return generatedClassName;
+        return serializerName;
     }
     
     private void generateSubTypeSerializers(TypeMirror beanType) {
