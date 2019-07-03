@@ -72,6 +72,8 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getFieldSerializer(TypeMirror typeMirror) {
+    	typeMirror = Type.removeOuterWildCards(typeMirror);
+    	
         if (Type.isCollection(typeMirror))
             return getCollectionSerializer(typeMirror);
         if (Type.isIterable(typeMirror))
@@ -106,7 +108,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomSerializer(TypeMirror typeMirror) {
-    	return Type.generateSerializer(Type.removeOuterWildCards(typeMirror));
+    	return Type.generateSerializer(typeMirror);
     }
 
     private String getEnumSerializer() {

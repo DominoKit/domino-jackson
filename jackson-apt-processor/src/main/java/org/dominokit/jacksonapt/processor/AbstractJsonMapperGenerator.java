@@ -197,6 +197,20 @@ public abstract class AbstractJsonMapperGenerator {
         		(u,v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u)); },
         		LinkedHashMap::new));
 
+        String typeErrs = res.entrySet().stream()
+        	.filter(entry -> Type.hasTypeArgumentWithBoundedWildcards(entry.getValue()) || Type.hasUnboundedWildcards(entry.getValue()))
+        	.map(entry -> "Member '" + entry.getKey().getSimpleName() + "' resolved type: '" + entry.getValue() + "'")
+        	.collect(Collectors.joining("\n"));
+        
+        if (!typeErrs.isEmpty())
+        	throw new RuntimeException(
+        			"Type: '" + enclosingType 
+        			+ "' could not have generic member of type parametrized with type argument having unbounded wildcards"
+        			+" or non-collections having type argument with bounded wildcards:\n"
+        			+ typeErrs);
+        	
+        
+        
         if (superclass.getKind() == TypeKind.DECLARED) 
         	res.putAll(getOrderedFields((DeclaredType) Type.getDeclaredType(superclass, typeParameterMap)));
         

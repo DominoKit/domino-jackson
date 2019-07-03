@@ -358,11 +358,10 @@ public class Type {
      * If given type is bounded wildcard, remove the wildcard and returns extends bound 
      * if exists. If extends bounds is non existing - return the super bound.
      * 
-     * If given type is unbounded wildcard, returns null.
      * 
      * If given type is not wildcard, returns type.
      * 
-     * @param type
+     * @param type TypeMirror to be processed
      * @return extends or super bounds for given wildcard type
      */
     public static TypeMirror removeOuterWildCards(TypeMirror type) {
@@ -384,7 +383,7 @@ public class Type {
     						visit(t.getExtendsBound())
     						: t.getSuperBound() != null?
     							visit(t.getSuperBound())
-    							: null;    				
+    							: typeUtils.getDeclaredType(elementUtils.getTypeElement(Object.class.getName()));    				
     		}
     		
     		@Override
@@ -504,7 +503,7 @@ public class Type {
     					visit(t.getExtendsBound())
     					: t.getSuperBound() != null?
     						visit(t.getSuperBound())
-    						: null;    			
+    						: false;    			
     		}
     		
     		@Override
@@ -580,7 +579,7 @@ public class Type {
 	/**
 	 * Create TypeMirror for given generic type, with type parameters replaced by actual type arguments,
 	 * specified in parametersToArgumentsMap
-	 * @param type
+	 * @param type TypeMirror to be processed
 	 * @param parametersToArgumentsMap mapping type parameter elements to types
 	 * @return TypeMirror having type parameters replaced by actual type arguments
 	 */
@@ -624,4 +623,102 @@ public class Type {
 
     	}, null);
     }
+	
+	/**
+	 * Check if given type has type argument containing unbounded wildcard
+	 * @param type TypeMirror to be checked
+	 * @return true if given type has type argument containing unbounded wildcard
+	 */
+	public static boolean hasUnboundedWildcards(TypeMirror type) {
+		return type.accept(new SimpleTypeVisitor8<Boolean, Void>(){
+			@Override
+			public Boolean visitDeclared(DeclaredType t, Void p) {
+				return t.getTypeArguments().stream()
+						.map(typeArg -> visit(typeArg, null))
+						.filter(b -> b)
+						.findFirst()
+						.orElse(false);
+			}
+			@Override
+			public Boolean visitWildcard(WildcardType t, Void p) {
+				return
+						t.getExtendsBound() != null?
+							visit(t.getExtendsBound(), null)
+							: t.getSuperBound() != null?
+								visit(t.getSuperBound(), null)
+								: true;
+								
+			}
+			
+			@Override
+			public Boolean visitPrimitive(PrimitiveType t, Void p) {
+				return false;
+			}
+			
+			@Override
+			public Boolean visitTypeVariable(TypeVariable t, Void p) {
+				return false;
+			}
+			
+			@Override
+			public Boolean visitArray(ArrayType t, Void p) {
+				return visit(t.getComponentType(), null);
+			}
+			
+		},  null); 
+	}
+	
+	/**
+	 * Check if given type is generic class (and not being collection, iterable, enum or map)
+	 * with type argument containing bounded wildcard.
+	 * 
+	 * All type parameters of the type needs to be resolved to actual type arguments prior calling this method.
+	 * Note that presence of type parameter causes RuntimeException.
+	 * @param type TypeMirror to be checked. 
+	 * @return true of type is generic class with type argument containing bounded wildcards
+	 */
+	public static boolean hasTypeArgumentWithBoundedWildcards(TypeMirror type) {
+		return type.accept(new SimpleTypeVisitor8<Boolean, Boolean>(){
+			@Override
+			public Boolean visitDeclared(DeclaredType t, Boolean p) {
+				final Boolean isCustomType =  
+						!Type.isCollection(t) 
+						&& !Type.isIterable(t)
+						&& !Type.isMap(t)
+						&& !Type.isEnum(t);
+				
+				return t.getTypeArguments().stream()
+						.map(typeArg -> visit(typeArg, p || isCustomType))
+						.filter(b -> b)
+						.findFirst()
+						.orElse(false);
+			}
+			@Override
+			public Boolean visitWildcard(WildcardType t, Boolean p) {
+				return
+						t.getExtendsBound() != null?
+							p || visit(t.getExtendsBound(), p)
+							: t.getSuperBound() != null?
+								p || !visit(t.getSuperBound(), p)
+								: false;
+								
+			}
+			
+			@Override
+			public Boolean visitPrimitive(PrimitiveType t, Boolean p) {
+				return false;
+			}
+			
+			@Override
+			public Boolean visitTypeVariable(TypeVariable t, Boolean p) {
+				throw new RuntimeException("Unexpected type variable for:" + type);
+			}
+			
+			@Override
+			public Boolean visitArray(ArrayType t, Boolean p) {
+				return visit(t.getComponentType(), p);
+			}
+			
+		},  false); 
+	}
 }

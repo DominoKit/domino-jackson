@@ -330,7 +330,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         orderedFields().entrySet().stream()
                 .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("map.put($S, $L)",
-                		getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, entry.getKey(), Type.removeOuterWildCards(entry.getValue())).buildDeserializer()));
+                		getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();

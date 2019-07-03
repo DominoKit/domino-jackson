@@ -69,6 +69,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getFieldDeserializer(TypeMirror typeMirror) {
+    	typeMirror = Type.removeOuterWildCards(typeMirror);
+    	
         if (Type.isIterable(typeMirror))
             return getIterableDeserializer(typeMirror);
         if (Type.isMap(typeMirror))
@@ -101,7 +103,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(Type.removeOuterWildCards(typeMirror));
+        return Type.generateDeserializer(typeMirror);
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {
