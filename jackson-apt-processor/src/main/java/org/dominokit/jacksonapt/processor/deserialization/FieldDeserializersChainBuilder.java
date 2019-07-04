@@ -95,7 +95,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
 
     private String getCustomDeserializer(TypeMirror typeMirror) {
         if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
-            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(typeMirror)));
+            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(packageName, typeMirror)));
         } else {
             if (TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(typeMirror))) {
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));

@@ -38,7 +38,7 @@ public interface MappersChainBuilder {
     /**
      * Creates a CodeBlock for creating instances of all (de)serializers corresponding for given type.
      *
-     * @param field a {@link javax.lang.model.type.TypeMirror} object.
+     * @param fieldType a {@link javax.lang.model.type.TypeMirror} object.
      * @return a {@link com.squareup.javapoet.CodeBlock} object.
      */
     CodeBlock getInstance(TypeMirror fieldType);
