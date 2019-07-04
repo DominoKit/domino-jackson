@@ -18,13 +18,13 @@ public class JacksonContextProvider {
      *
      * @return a {@link org.dominokit.jacksonapt.JacksonContext} object.
      */
-    public static JacksonContext get(){
-        if(isNull(jacksonContext))
+    public static JacksonContext get() {
+        if (isNull(jacksonContext))
             initContext();
         return jacksonContext;
     }
 
     private static void initContext() {
-        jacksonContext=new ServerJacksonContext();
+        jacksonContext = new ServerJacksonContext();
     }
 }

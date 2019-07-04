@@ -3,7 +3,6 @@ package org.dominokit.jacksonapt.processor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;

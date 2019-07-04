@@ -1,8 +1,6 @@
 package com.fasterxml.jackson.annotation;
 
 import java.lang.annotation.*;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * General-purpose annotation used for configuring details of how
@@ -52,14 +50,14 @@ import java.util.TimeZone;
 public @interface JsonFormat
 {
     /**
-     * Value that indicates that default {@link Locale}
+     * Value that indicates that default {@link java.util.Locale}
      * (from deserialization or serialization context) should be used:
      * annotation does not define value to use.
      */
     public final static String DEFAULT_LOCALE = "##default";
 
     /**
-     * Value that indicates that default {@link TimeZone}
+     * Value that indicates that default {@link java.util.TimeZone}
      * (from deserialization or serialization context) should be used:
      * annotation does not define value to use.
      *<p>
@@ -85,17 +83,17 @@ public @interface JsonFormat
     public Shape shape() default Shape.ANY;
 
     /**
-     * {@link Locale} to use for serialization (if needed).
+     * {@link java.util.Locale} to use for serialization (if needed).
      * Special value of {@link #DEFAULT_LOCALE}
      * can be used to mean "just use the default", where default is specified
      * by the serialization context, which in turn defaults to system
-     * defaults ({@link Locale#getDefault()}) unless explicitly
+     * defaults ({@link java.util.Locale#getDefault()}) unless explicitly
      * set to another locale.
      */
     public String locale() default DEFAULT_LOCALE;
     
     /**
-     * {@link TimeZone} to use for serialization (if needed).
+     * {@link java.util.TimeZone} to use for serialization (if needed).
      * Special value of {@link #DEFAULT_TIMEZONE}
      * can be used to mean "just use the default", where default is specified
      * by the serialization context, which in turn defaults to system
