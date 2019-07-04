@@ -34,10 +34,12 @@ import com.squareup.javapoet.TypeSpec;
 
 public abstract class AbstractMapperGenerator implements MapperGenerator {
 
+	private String packageName;
+
 	@Override
 	public void generate(Element element) throws IOException {
 		String className = enclosingName(element, "_") + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
-		String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
+		packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
 		TypeMirror beanType = getElementType(element);
 		Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
@@ -114,7 +116,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 	protected MethodSpec makeNewDeserializerMethod(Element element, TypeMirror beanType) {
 		CodeBlock.Builder builder = CodeBlock.builder();
 		if (Type.isBasicType(typeUtils.erasure(beanType)))
-			builder.addStatement("return $L", new FieldDeserializersChainBuilder(getElementType(element)).getInstance(getElementType(element)));
+			builder.addStatement("return $L", new FieldDeserializersChainBuilder(packageName, getElementType(element)).getInstance(getElementType(element)));
 		else
 			builder.addStatement("return new " + deserializerName(beanType));
 
@@ -141,7 +143,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 	protected MethodSpec makeNewSerializerMethod(TypeMirror beanType) {
 		CodeBlock.Builder builder = CodeBlock.builder();
 		if (Type.isBasicType(typeUtils.erasure(beanType)))
-			builder.addStatement("return $L", new FieldSerializerChainBuilder(beanType).getInstance(beanType));
+			builder.addStatement("return $L", new FieldSerializerChainBuilder(packageName, beanType).getInstance(beanType));
 		else
 			builder.addStatement("return new " + serializerName(beanType));
 
@@ -153,10 +155,26 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
 				.build();
 	}
 	
+	/**
+	 * Create deserializer name based on given TypeMirror.
+	 * 
+	 * The package, containing the deserializer is NOT returned as part of the result.
+	 * 
+	 * @param type TypeMirror of the bean, deserializerr corresponds to
+	 * @return deserializer name as String
+	 */
 	private String deserializerName(TypeMirror type) {
 		return Type.stringifyType(type) + "BeanJsonDeserializerImpl()";
 	}
 	
+	/**
+	 * Create serializer name based on given TypeMirror.
+	 * 
+	 * The package, containing the serializer is NOT returned as part of the result.
+	 * 
+	 * @param type TypeMirror of the bean, serializerr corresponds to
+	 * @return serializer name as String
+	 */
 	private String serializerName(TypeMirror type) {
 		return Type.stringifyType(type) + "BeanJsonSerializerImpl()";
 	}

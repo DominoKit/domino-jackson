@@ -114,7 +114,7 @@ public class PolymorphicTest {
 		
 		PolymorphicBaseInterface dataMapItem2 = new PolymorphicChildClass2();
 		((PolymorphicChildClass2)dataMapItem2).ii = 10223;
-		((PolymorphicChildClass2)dataMapItem2).i = 1010;
+		((PolymorphicChildClass2)dataMapItem2).i = 1012;
 		map.put(101, dataMapItem1);
 		map.put(102, dataMapItem2);
 		pgc.dataMap = map;

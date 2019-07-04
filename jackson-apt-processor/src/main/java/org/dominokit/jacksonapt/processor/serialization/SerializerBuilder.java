@@ -36,19 +36,22 @@ class SerializerBuilder extends AccessorsFilter {
     private final TypeMirror beanType;
     private final Element field;
     private final TypeMirror fieldType;
+	private final String packageName;
 
-    SerializerBuilder(Types typeUtils, TypeMirror beanType, Element field) {
+    SerializerBuilder(Types typeUtils, TypeMirror beanType, String packageName, Element field) {
         super(typeUtils);
         this.beanType = beanType;
         this.field = field;
         this.fieldType = field.asType();
+        this.packageName = packageName;
     }
 
-    SerializerBuilder(Types typeUtils, TypeMirror beanType, Element field, TypeMirror fieldType) {
+    SerializerBuilder(Types typeUtils, TypeMirror beanType,  String packageName, Element field, TypeMirror fieldType) {
         super(typeUtils);
         this.beanType = beanType;
         this.field = field;
         this.fieldType = fieldType;
+        this.packageName = packageName;
     }
     
     TypeSpec buildSerializer() {
@@ -81,7 +84,7 @@ class SerializerBuilder extends AccessorsFilter {
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), ObjectMapperProcessor.DEFAULT_WILDCARD))
-                .addStatement("return $L", new FieldSerializerChainBuilder(beanType).getInstance(fieldType))
+                .addStatement("return $L", new FieldSerializerChainBuilder(packageName, beanType).getInstance(fieldType))
                 .build();
     }
 

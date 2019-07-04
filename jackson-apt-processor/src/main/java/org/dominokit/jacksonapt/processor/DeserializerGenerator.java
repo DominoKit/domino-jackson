@@ -9,8 +9,6 @@ import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.elementUtils;
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.filer;
 
 /**
@@ -22,20 +20,22 @@ import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.filer;
 public class DeserializerGenerator {
 
     /**
-     * <p>generate.</p>
+     * Generate deserializer for given TypeMirror type. If type is annotated
+     * with @JsonSubType and @JsonTypeInfo, deserializers for all subclasses will be 
+     * generated too.
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @return fully qualified deserialer name
      */
-    public String generate(TypeMirror beanType, String packageName) {
+    public String generate(String packageName, TypeMirror beanType) {
         String deserializerName = Type.deserializerName(packageName, beanType);
         
-        if (!TypeRegistry.containsDeserializer(deserializerName)) {
+        if (!TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {
             try {
-            	generateSubTypesDeserializers(beanType);
-                new AptDeserializerBuilder(beanType, filer).generate(packageName);
-                TypeRegistry.registerDeserializer(deserializerName, ClassName.bestGuess(deserializerName));
+            	generateSubTypesDeserializers(beanType, packageName);
+                new AptDeserializerBuilder(packageName, beanType, filer).generate();
+                TypeRegistry.registerDeserializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(deserializerName));
             } catch (IOException e) {
                 throw new DeserializerGenerator.DeserializerGenerationFailedException(beanType.toString());
             }
@@ -43,7 +43,7 @@ public class DeserializerGenerator {
         return deserializerName;
     }
 
-    private void generateSubTypesDeserializers(TypeMirror beanType) {
+    private void generateSubTypesDeserializers(TypeMirror beanType, String packageName) {
     	SubTypesInfo subTypesInfo= Type.getSubTypes(beanType);
         for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
         	// @JsonTypeInfo and @JsonSubTypes must be used only on non generic types
@@ -58,9 +58,7 @@ public class DeserializerGenerator {
         			|| !((DeclaredType)((DeclaredType)subtypeEntry.getValue()).asElement().asType()).getTypeArguments().isEmpty())
         		throw new RuntimeException("@JsonSubTypes and &JsonTypeInfo can be used only on non-generic Java types");
 			 
-        	new DeserializerGenerator().generate(
-					subtypeEntry.getValue(),
-					elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(subtypeEntry.getValue()))).toString());
+        	new DeserializerGenerator().generate(packageName, subtypeEntry.getValue());
         }
     }
     

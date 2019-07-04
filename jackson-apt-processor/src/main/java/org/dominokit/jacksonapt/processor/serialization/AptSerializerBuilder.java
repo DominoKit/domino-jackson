@@ -48,10 +48,11 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
      * <p>Constructor for AptSerializerBuilder.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      * @param filer a {@link javax.annotation.processing.Filer} object.
      */
-    public AptSerializerBuilder(TypeMirror beanType, Filer filer) {
-        super(beanType, filer);
+    public AptSerializerBuilder(String packageName, TypeMirror beanType,  Filer filer) {
+        super(packageName, beanType, filer);
     }
 
     /** {@inheritDoc} */
@@ -111,8 +112,6 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
             		 subTypesInfo.getSubTypes().size());
     		 
     		 for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
-    			 // Build subtype serializer
-    			 String serializerClassName = Type.generateSerializer(subtypeEntry.getValue());
     			 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
         		 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                          .superclass(ClassName.get(BeanSubtypeSerializer.class))
@@ -120,7 +119,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                         		 .addModifiers(Modifier.PROTECTED)
                         		 .addAnnotation(Override.class)
                         		 .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), WildcardTypeName.subtypeOf(Object.class)))
-                        		 .addStatement("return new $T()", ClassName.bestGuess(serializerClassName))
+                        		 .addStatement("return new $T()", ClassName.bestGuess(Type.serializerName(packageName, subtypeEntry.getValue())))
                         		 .build()
                          ).build();
         		 
@@ -148,7 +147,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
         fields.entrySet().stream()
                 .filter(entry->isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("result[$L] = $L",
-                index[0]++, new SerializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildSerializer()));
+                index[0]++, new SerializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildSerializer()));
 
         builder.addStatement("return result");
         return builder.build();

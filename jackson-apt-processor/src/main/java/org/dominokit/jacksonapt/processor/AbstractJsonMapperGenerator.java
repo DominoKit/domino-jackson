@@ -47,29 +47,32 @@ public abstract class AbstractJsonMapperGenerator {
 
     protected final TypeMirror beanType;
 
-    private final Filer filer;
+	protected final SubTypesInfo subTypesInfo;
 
-	protected SubTypesInfo subTypesInfo;
+	protected final String packageName;
+	
+	private final Filer filer;
 
     /**
      * <p>Constructor for AbstractJsonMapperGenerator.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
+    public AbstractJsonMapperGenerator(String packageName, TypeMirror beanType, Filer filer) {
         this.beanType = beanType;
         this.subTypesInfo = Type.getSubTypes(beanType);
+        this.packageName = packageName;
         this.filer = filer;
     }
 
     /**
      * <p>generate.</p>
      *
-     * @param packageName a {@link java.lang.String} object.
      * @throws java.io.IOException if any.
      */
-    protected void generate(String packageName) throws IOException {
+    protected void generate() throws IOException {
         MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
         final TypeSpec.Builder builder = TypeSpec.classBuilder(Type.stringifyType(beanType) + namePostfix())
@@ -230,8 +233,10 @@ public abstract class AbstractJsonMapperGenerator {
     }
 
     /**
-     *
-     * @param field
+     * <p>isNotStatic</p>
+     * 
+     * Check if given field has static modifier
+     * @param field {@link javax.lang.model.element.Element} object
      * @return boolean true if the field is not static
      */
     protected boolean isNotStatic(Element field) {
@@ -239,8 +244,10 @@ public abstract class AbstractJsonMapperGenerator {
     }
 
     /**
-     *
-     * @param field
+     * <p>isIgnored</p>
+     * 
+     * Check if given field has been annotated with {@link JsonIgnore} present and its value is true
+     * @param field {@link javax.lang.model.element.Element} object
      * @return boolean true only if {@link JsonIgnore} present and its value is true
      */
     protected boolean isIgnored(Element field) {

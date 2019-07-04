@@ -796,7 +796,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getSerializer(TypeMirror typeMirror) {
-        return getSerializer(typeUtils.erasure(typeMirror).toString());
+        return getSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     private static TypeName getSerializer(String typeName) {
@@ -836,7 +836,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getDeserializer(TypeMirror typeMirror) {
-        return getDeserializer(typeUtils.erasure(typeMirror).toString());
+        return getDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     private static TypeName getDeserializer(String typeName) {

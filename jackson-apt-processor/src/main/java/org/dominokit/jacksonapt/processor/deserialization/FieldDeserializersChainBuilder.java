@@ -43,15 +43,18 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
 
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> deserializers = new LinkedList<>();
-    private TypeMirror beanType;
+    private final TypeMirror beanType;
+	private final String packageName;
 
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      */
-    public FieldDeserializersChainBuilder(TypeMirror beanType) {
+    public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType) {
         this.beanType = beanType;
+        this.packageName = packageName;
     }
 
     /** {@inheritDoc} */
@@ -60,6 +63,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         return builder.add(getFieldDeserializer(field.asType()), asClassesArray()).build();
     }
 
+    /** {@inheritDoc} */
+    @Override
     public CodeBlock getInstance(TypeMirror type) {
         return builder.add(getFieldDeserializer(type), asClassesArray()).build();
     }
@@ -103,7 +108,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(typeMirror);
+        return Type.generateDeserializer(packageName, typeMirror);
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {

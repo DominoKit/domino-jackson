@@ -43,7 +43,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
     @Override
     MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
-        return new FieldDeserializersChainBuilder(beanType);
+        return new FieldDeserializersChainBuilder(Type.getPackage(beanType), beanType);
     }
 
     @Test

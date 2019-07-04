@@ -25,7 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.*;
 import org.dominokit.jacksonapt.deser.bean.SubtypeDeserializer.BeanSubtypeDeserializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
-import org.dominokit.jacksonapt.processor.DeserializerGenerator;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
@@ -43,7 +42,6 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.elementUtils;
 
 /**
  * <p>AptDeserializerBuilder class.</p>
@@ -60,10 +58,11 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      * <p>Constructor for AptDeserializerBuilder.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AptDeserializerBuilder(TypeMirror beanType, Filer filer) {
-        super(beanType, filer);
+    public AptDeserializerBuilder(String packageName, TypeMirror beanType,  Filer filer) {
+        super(packageName, beanType, filer);
     }
 
     /**
@@ -133,17 +132,14 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             		 subTypesInfo.getSubTypes().size());
     		 
     		 for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
-    			 String deserializerClassName = new DeserializerGenerator().generate(
-    					subtypeEntry.getValue(), 
-    					elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(subtypeEntry.getValue()))).toString());
-    			 
+    			 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
         		 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                          .superclass(ClassName.get(BeanSubtypeDeserializer.class))
                          .addMethod(MethodSpec.methodBuilder("newDeserializer")
                         		 .addModifiers(Modifier.PROTECTED)
                         		 .addAnnotation(Override.class)
                         		 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), WildcardTypeName.subtypeOf(Object.class)))
-                        		 .addStatement("return new $T()", ClassName.bestGuess(deserializerClassName))
+                        		 .addStatement("return new $T()", ClassName.bestGuess(Type.deserializerName(packageName, subtypeEntry.getValue())))
                         		 .build()
                          ).build();
         		 
@@ -330,7 +326,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         orderedFields().entrySet().stream()
                 .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("map.put($S, $L)",
-                		getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildDeserializer()));
+                		getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();

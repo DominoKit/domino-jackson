@@ -6,8 +6,6 @@ import org.dominokit.jacksonapt.processor.serialization.AptSerializerBuilder;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.elementUtils;
-import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,22 +18,24 @@ import java.util.Map;
  */
 public class SerializerGenerator {
 
-    /**
-     * <p>generate.</p>
+	/**
+     * Generate serializer for given TypeMirror type. If type is annotated
+     * with @JsonSubType and @JsonTypeInfo, serializers for all subclasses will be 
+     * generated too.
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @return fully-qualified serialer name
      */
-    public String generate(TypeMirror beanType, String packageName) {
+    public String generate(String packageName, TypeMirror beanType) {
     	String serializerName = Type.serializerName(packageName, beanType);
     	
-        if (!TypeRegistry.containsSerializer(serializerName)) {
+        if (!TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(beanType))) {
             try {
-            	generateSubTypeSerializers(beanType);
+            	generateSubTypeSerializers(packageName, beanType);
             	
-                new AptSerializerBuilder(beanType, ObjectMapperProcessor.filer).generate(packageName);
-                TypeRegistry.registerSerializer(serializerName, ClassName.bestGuess(serializerName));
+                new AptSerializerBuilder(packageName, beanType, ObjectMapperProcessor.filer).generate();
+                TypeRegistry.registerSerializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(serializerName));
             } catch (IOException e) {
                 throw new SerializerGenerationFailedException(beanType.toString());
             }
@@ -43,7 +43,7 @@ public class SerializerGenerator {
         return serializerName;
     }
     
-    private void generateSubTypeSerializers(TypeMirror beanType) {
+    private void generateSubTypeSerializers(String packageName, TypeMirror beanType) {
     	SubTypesInfo subTypesInfo= Type.getSubTypes(beanType);
         for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
         	// @JsonTypeInfo and @JsonSubTypes must be used only on non generic types
@@ -57,14 +57,13 @@ public class SerializerGenerator {
         			|| !((DeclaredType)((DeclaredType)subtypeEntry.getValue()).asElement().asType()).getTypeArguments().isEmpty())
         		throw new RuntimeException("@JsonSubTypes and &JsonTypeInfo can be used only on non-generic Java types");
         	
-			 new SerializerGenerator().generate(
-					subtypeEntry.getValue(), 
-					elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(subtypeEntry.getValue()))).toString());
+			 new SerializerGenerator().generate(packageName, subtypeEntry.getValue());
         }
     }
     
 
     private class SerializerGenerationFailedException extends RuntimeException {
+		private static final long serialVersionUID = 1L;
 
 		SerializerGenerationFailedException(String type) {
             super(type);
