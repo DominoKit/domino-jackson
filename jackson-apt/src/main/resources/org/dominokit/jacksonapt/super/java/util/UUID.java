@@ -24,8 +24,8 @@ public class UUID implements Serializable, Comparable<UUID> {
     /**
      * <p>fromString.</p>
      *
-     * @param uuidString a {@link java.lang.String} object.
-     * @return a {@link java.util.UUID} object.
+     * @param uuidString a {@link String} object.
+     * @return a {@link UUID} object.
      */
     public static UUID fromString(String uuidString) {
         //TODO: Validation
@@ -39,7 +39,7 @@ public class UUID implements Serializable, Comparable<UUID> {
     /**
      * <p>randomUUID.</p>
      *
-     * @return a {@link java.util.UUID} object.
+     * @return a {@link UUID} object.
      */
     public static UUID randomUUID() {
         return fromString(generateUUIDString());
