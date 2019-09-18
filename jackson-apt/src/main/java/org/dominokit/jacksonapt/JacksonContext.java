@@ -69,12 +69,25 @@ public interface JacksonContext {
      * @return a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
      */
     JsonSerializerParameters defaultSerializerParameters();
+
+    /**
+     *<p>newSerializerParameters</p>
+     * @return a new instance of {@link JsonSerializerParameters} object
+     */
+    JsonSerializerParameters newSerializerParameters();
+
     /**
      * <p>defaultDeserializerParameters.</p>
      *
      * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
      */
     JsonDeserializerParameters defaultDeserializerParameters();
+
+    /**
+     *<p>newDeserializerParameters</p>
+     * @return a new instance of {@link JsonDeserializerParameters} object
+     */
+    JsonDeserializerParameters newDeserializerParameters();
 
     interface DateFormat{
         String format(Date date);

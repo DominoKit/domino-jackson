@@ -47,7 +47,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
         mappers.forEach(this::generateMappers);
         readers.forEach(this::generateMapperForReader);
         writers.forEach(this::generateMapperForWriter);
-        return true;
+        return false;
     }
 
     private void generateMappers(Element element) {
@@ -79,6 +79,4 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
     protected List<Class<?>> supportedAnnotations() {
         return Arrays.asList(JSONReader.class, JSONWriter.class, JSONMapper.class);
     }
-
-
 }

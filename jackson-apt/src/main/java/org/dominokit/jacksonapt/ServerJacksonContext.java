@@ -90,4 +90,18 @@ public class ServerJacksonContext extends JsJacksonContext{
         return ServerJacksonJsonDeserializerParameters.DEFAULT;
     }
 
+    /** {@inheritDoc} */
+    @GwtIncompatible
+    @Override
+    public JsonSerializerParameters newSerializerParameters() {
+        return new ServerJacksonJsonSerializerParameters();
+    }
+
+    /** {@inheritDoc} */
+    @GwtIncompatible
+    @Override
+    public JsonDeserializerParameters newDeserializerParameters() {
+        return new ServerJacksonJsonDeserializerParameters();
+    }
+
 }
