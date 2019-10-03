@@ -74,4 +74,14 @@ public class JsJacksonContext implements JacksonContext{
     public JsonDeserializerParameters defaultDeserializerParameters() {
         return GwtJacksonJsonDeserializerParameters.DEFAULT;
     }
+
+    @Override
+    public JsonSerializerParameters newSerializerParameters() {
+        return new GwtJacksonJsonSerializerParameters();
+    }
+
+    @Override
+    public JsonDeserializerParameters newDeserializerParameters() {
+        return new GwtJacksonJsonDeserializerParameters();
+    }
 }

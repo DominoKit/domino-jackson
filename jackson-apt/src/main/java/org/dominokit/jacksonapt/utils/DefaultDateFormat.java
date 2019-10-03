@@ -48,7 +48,6 @@ public final class DefaultDateFormat implements JacksonContext.DateFormat {
      * timezone definition
      */
     public static final DateTimeFormatter DATE_FORMAT_STR_ISO8601 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-//    public static final DateTimeFormatter DATE_FORMAT_STR_ISO8601 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     /**
      * Same as 'regular' 8601, but handles 'Z' as an alias for "+0000"

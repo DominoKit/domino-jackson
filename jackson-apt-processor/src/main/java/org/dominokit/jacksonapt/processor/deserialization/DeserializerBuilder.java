@@ -15,9 +15,12 @@
  */
 package org.dominokit.jacksonapt.processor.deserialization;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.squareup.javapoet.*;
+import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
+import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.BeanPropertyDeserializer;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
 import org.dominokit.jacksonapt.processor.AccessorsFilter;
@@ -28,6 +31,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
+
+import static java.util.Objects.nonNull;
 
 class DeserializerBuilder extends AccessorsFilter {
 
@@ -52,6 +57,10 @@ class DeserializerBuilder extends AccessorsFilter {
 
         builder.addMethod(buildDeserializerMethod());
 
+        if(nonNull(field.getAnnotation(JsonFormat.class))){
+            builder.addMethod(buildParametersMethod());
+        }
+
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("setValue")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
@@ -74,6 +83,20 @@ class DeserializerBuilder extends AccessorsFilter {
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), ObjectMapperProcessor.DEFAULT_WILDCARD))
                 .addStatement("return $L", new FieldDeserializersChainBuilder(beanType).getInstance(field))
+                .build();
+    }
+
+    private MethodSpec buildParametersMethod(){
+        JsonFormat jsonFormat = field.getAnnotation(JsonFormat.class);
+        return MethodSpec.methodBuilder("newParameters")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .returns(JsonDeserializerParameters.class)
+                .addStatement("return $T.get()\n\t\t.newDeserializerParameters()\n\t\t.setPattern($S)\n\t\t.setShape($T.$L)"
+                        ,TypeName.get(JacksonContextProvider.class)
+                        ,jsonFormat.pattern()
+                        ,TypeName.get(JsonFormat.Shape.class)
+                        ,jsonFormat.shape().toString())
                 .build();
     }
 
