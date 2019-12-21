@@ -43,14 +43,6 @@ class SerializerBuilder extends AccessorsFilter {
     private final TypeMirror fieldType;
 	private final String packageName;
 
-    SerializerBuilder(Types typeUtils, TypeMirror beanType, String packageName, Element field) {
-        super(typeUtils);
-        this.beanType = beanType;
-        this.field = field;
-        this.fieldType = field.asType();
-        this.packageName = packageName;
-    }
-
     SerializerBuilder(Types typeUtils, TypeMirror beanType,  String packageName, Element field, TypeMirror fieldType) {
         super(typeUtils);
         this.beanType = beanType;

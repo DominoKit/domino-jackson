@@ -33,6 +33,8 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static java.util.Objects.nonNull;
+
 /**
  * <p>FieldSerializerChainBuilder class.</p>
  *
@@ -48,6 +50,17 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     private Deque<TypeName> serializers = new LinkedList<>();
     private final TypeMirror beanType;
 	private final String packageName;
+
+
+    /**
+     * <p>Constructor for FieldSerializerChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     */
+    public FieldSerializerChainBuilder(TypeMirror beanType) {
+        this.beanType = beanType;
+        this.packageName = null;
+    }
 
     /**
      * <p>Constructor for FieldSerializerChainBuilder.</p>
@@ -100,7 +113,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
 
     private String getCustomSerializer(TypeMirror typeMirror) {
         if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
-            serializers.addLast(ClassName.bestGuess(Type.serializerName(packageName, typeMirror)));
+            serializers.addLast(ClassName.bestGuess(Type.serializerName(getPackageName(typeMirror), typeMirror)));
         } else {
             if (TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(typeMirror))) {
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
@@ -112,8 +125,15 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         return "new $T()";
     }
 
+    private String getPackageName(TypeMirror typeMirror){
+        if(nonNull(this.packageName)){
+            return this.packageName;
+        }
+        return ClassName.bestGuess(typeMirror.toString()).packageName();
+    }
+
     private String generateCustomSerializer(TypeMirror typeMirror) {
-    	return Type.generateSerializer(packageName, typeMirror);
+    	return Type.generateSerializer(getPackageName(typeMirror), typeMirror);
     }
 
     private String getEnumSerializer() {

@@ -31,6 +31,8 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static java.util.Objects.nonNull;
+
 /**
  * <p>FieldDeserializersChainBuilder class.</p>
  *
@@ -45,6 +47,16 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private Deque<TypeName> deserializers = new LinkedList<>();
     private final TypeMirror beanType;
 	private final String packageName;
+
+    /**
+     * <p>Constructor for FieldDeserializersChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     */
+    public FieldDeserializersChainBuilder(TypeMirror beanType) {
+        this.beanType = beanType;
+        this.packageName = null;
+    }
 
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
@@ -95,7 +107,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
 
     private String getCustomDeserializer(TypeMirror typeMirror) {
         if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
-            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(packageName, typeMirror)));
+            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(getPackageName(typeMirror), typeMirror)));
         } else {
             if (TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(typeMirror))) {
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
@@ -107,8 +119,15 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         return "new $T()";
     }
 
+    private String getPackageName(TypeMirror typeMirror){
+        if(nonNull(this.packageName)){
+            return this.packageName;
+        }
+        return ClassName.bestGuess(typeMirror.toString()).packageName();
+    }
+
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(packageName, typeMirror);
+        return Type.generateDeserializer(getPackageName(typeMirror), typeMirror);
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {

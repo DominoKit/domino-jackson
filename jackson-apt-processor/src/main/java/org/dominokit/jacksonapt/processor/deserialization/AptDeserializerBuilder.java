@@ -346,7 +346,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     @Override
-    protected boolean isSerializer() {
-    	return false;
+    protected Class<?> getMapperType(){
+        return TypeDeserializationInfo.class;
     }
 }

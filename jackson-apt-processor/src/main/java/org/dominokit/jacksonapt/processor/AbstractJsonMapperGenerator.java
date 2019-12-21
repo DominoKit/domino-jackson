@@ -259,7 +259,7 @@ public abstract class AbstractJsonMapperGenerator {
         return isNotStatic(field) && !isIgnored(field);
     }
     
-    protected abstract boolean isSerializer();
+    protected abstract Class<?> getMapperType();
     
     /**
      * Build the code to initialize a {@link TypeSerializationInfo} or {@link TypeDeserializationInfo}.
@@ -267,7 +267,7 @@ public abstract class AbstractJsonMapperGenerator {
      * @return the code built
      */
     protected final CodeBlock generateTypeInfo() {
-        final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+        final Class<?> type = getMapperType();
         CodeBlock.Builder builder = CodeBlock.builder()
                 .add( "new $T($T.$L, $S)", type, As.class, subTypesInfo.getInclude(), subTypesInfo.getPropertyName() )
                 .indent()
@@ -281,7 +281,7 @@ public abstract class AbstractJsonMapperGenerator {
     }
     
     private MethodSpec buildInitTypeInfoMethod() {
-    	final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+    	final Class<?> type = getMapperType();
         
     	return MethodSpec.methodBuilder( "initTypeInfo")
                 .addModifiers( Modifier.PROTECTED )
