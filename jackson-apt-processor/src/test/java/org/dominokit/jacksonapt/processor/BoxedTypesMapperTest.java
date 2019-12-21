@@ -36,7 +36,7 @@ public class BoxedTypesMapperTest {
 	static BoxedIntegerMapper BOXEDINTEGERMAPPER = new BoxedTypesMapperTest_BoxedIntegerMapperImpl();
 	
 	@JSONMapper
-	interface ListOfMapMapper extends ObjectMapper<List<Map<Integer, SimpleGenericBeanObject<Void>>>> {
+	interface ListOfMapMapper extends ObjectMapper<List<Map<Integer, SimpleGenericBeanObject<Double>>>> {
 	}
 	
 	static  ListOfMapMapper LISTOFMAPOFSIMPLEGENERICBEANOBJECTMAPPER = new BoxedTypesMapperTest_ListOfMapMapperImpl();
@@ -50,18 +50,19 @@ public class BoxedTypesMapperTest {
 		jsonStr = BOXEDINTEGERMAPPER.write(new Integer(20));
 		assertEquals(new Integer(20), BOXEDINTEGERMAPPER.read(jsonStr));
 		
-		Map<Integer, SimpleGenericBeanObject<Void>> map = new HashMap<>();
-		map.put(new Integer(15), new SimpleGenericBeanObject<Void>(222, null));
+		Map<Integer, SimpleGenericBeanObject<Double>> map = new HashMap<>();
+		map.put(new Integer(15), new SimpleGenericBeanObject<Double>(222, 18.1));
 		
-		List<Map<Integer, SimpleGenericBeanObject<Void>>> list = new ArrayList<>();
+		List<Map<Integer, SimpleGenericBeanObject<Double>>> list = new ArrayList<>();
 		list.add(map);
 		
 		jsonStr = LISTOFMAPOFSIMPLEGENERICBEANOBJECTMAPPER.write(list);
 		
-		List<Map<Integer, SimpleGenericBeanObject<Void>>> deserializedList = LISTOFMAPOFSIMPLEGENERICBEANOBJECTMAPPER.read(jsonStr);
+		List<Map<Integer, SimpleGenericBeanObject<Double>>> deserializedList = LISTOFMAPOFSIMPLEGENERICBEANOBJECTMAPPER.read(jsonStr);
 		assertEquals(1, deserializedList.size());
 		assertNotNull(deserializedList.get(0).get(15));
 		assertEquals(222, deserializedList.get(0).get(15).intField);
+		assertEquals(Double.valueOf(18.1), deserializedList.get(0).get(15).typeField);
 	}
 }
 

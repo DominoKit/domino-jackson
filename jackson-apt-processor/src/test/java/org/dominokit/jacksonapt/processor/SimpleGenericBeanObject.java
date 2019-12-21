@@ -1,8 +1,11 @@
 package org.dominokit.jacksonapt.processor;
 
+import java.util.List;
+
 public class SimpleGenericBeanObject<T> {
 	public int intField;
 	public T typeField;
+	public List<T>[] genericArr;
 	public String str = "str";
 	
 	public SimpleGenericBeanObject() {
@@ -35,7 +38,7 @@ public class SimpleGenericBeanObject<T> {
 	@Override
 	public boolean equals(Object other) {
 		return 
-			other instanceof SimpleBeanObject
+			other instanceof SimpleGenericBeanObject
 			&& intField == ((SimpleGenericBeanObject)other).intField
 			&& typeField.equals(((SimpleGenericBeanObject)other).typeField);
 	}
