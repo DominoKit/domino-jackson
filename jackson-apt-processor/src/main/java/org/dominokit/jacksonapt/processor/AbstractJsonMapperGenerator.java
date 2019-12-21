@@ -17,6 +17,7 @@ package org.dominokit.jacksonapt.processor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.squareup.javapoet.*;
 
 import javax.annotation.processing.Filer;
@@ -24,10 +25,14 @@ import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+
+import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
+import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
+
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
@@ -42,26 +47,32 @@ public abstract class AbstractJsonMapperGenerator {
 
     protected final TypeMirror beanType;
 
-    private final Filer filer;
+	protected final SubTypesInfo subTypesInfo;
+
+	protected final String packageName;
+	
+	private final Filer filer;
 
     /**
      * <p>Constructor for AbstractJsonMapperGenerator.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      * @param filer    a {@link javax.annotation.processing.Filer} object.
      */
-    public AbstractJsonMapperGenerator(TypeMirror beanType, Filer filer) {
+    public AbstractJsonMapperGenerator(String packageName, TypeMirror beanType, Filer filer) {
         this.beanType = beanType;
+        this.subTypesInfo = Type.getSubTypes(beanType);
+        this.packageName = packageName;
         this.filer = filer;
     }
 
     /**
      * <p>generate.</p>
      *
-     * @param packageName a {@link java.lang.String} object.
      * @throws java.io.IOException if any.
      */
-    protected void generate(String packageName) throws IOException {
+    protected void generate() throws IOException {
         MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
         final TypeSpec.Builder builder = TypeSpec.classBuilder(Type.stringifyType(beanType) + namePostfix())
@@ -73,6 +84,10 @@ public abstract class AbstractJsonMapperGenerator {
         moreMethods().forEach(builder::addMethod);
 
         builder.addMethod(initMethod());
+        if (subTypesInfo.hasSubTypes()) {
+        	builder.addMethod(buildInitTypeInfoMethod());
+        	builder.addMethod(initSubtypesMethod());
+        }
 
         JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
     }
@@ -122,43 +137,36 @@ public abstract class AbstractJsonMapperGenerator {
      * @return a {@link com.squareup.javapoet.MethodSpec} object.
      */
     protected abstract MethodSpec initMethod();
+    
+    /**
+     * <p>initMethod.</p>
+     *
+     * @return a {@link com.squareup.javapoet.MethodSpec} object.
+     */
+    protected abstract MethodSpec initSubtypesMethod();
 
     /**
      * <p>orderedFields.</p>
      *
      * @return a {@link java.util.List} object.
      */
-    protected List<Element> orderedFields() {
-        TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
-        
-        List<? extends TypeMirror> typeArguments  = Collections.emptyList();
-        List<? extends TypeParameterElement> typeParameters = Collections.emptyList();
-        if (beanType instanceof DeclaredType) {
-        	typeArguments = ((DeclaredType)beanType).getTypeArguments();
-        	typeParameters = typeElement.getTypeParameters();
-        }
-        		
-        final List<Element> fields = new ArrayList<>();
-
-        List<Element> orderedFields = getOrderedFields(typeElement, typeParameters, typeArguments);
-        fields.addAll(orderedFields);
-
-        return fields;
+    protected Map<Element, TypeMirror> orderedFields() {
+        return 
+        	beanType.getKind() == TypeKind.DECLARED?
+        		getOrderedFields(((DeclaredType)beanType)):
+        		Collections.emptyMap();
     }
 
-    private List<Element> getOrderedFields(
-    		TypeElement typeElement,
-    		List<? extends TypeParameterElement> typeParameters,
-    		List<? extends TypeMirror> typeArguments) {
-
-        TypeMirror superclass = typeElement.getSuperclass();
+    private Map<Element, TypeMirror> getOrderedFields(DeclaredType enclosingType) {
+    	TypeElement enclosingElement= ((TypeElement)enclosingType.asElement());
+    	TypeMirror superclass = enclosingElement.getSuperclass();
         if (superclass.getKind().equals(TypeKind.NONE)) {
-            return new ArrayList<>();
+            return new HashMap<>();
         }
-
+        
         final List<Element> orderedProperties = new ArrayList<>();
 
-        final List<Element> enclosedFields = typeElement.getEnclosedElements().stream()
+        final List<Element> enclosedFields = enclosingElement.getEnclosedElements().stream()
         	.filter(e -> ElementKind.FIELD.equals(e.getKind()) && isEligibleForSerializationDeserialization(e))
         	.collect(Collectors.toList());
 
@@ -177,93 +185,41 @@ public abstract class AbstractJsonMapperGenerator {
                     enclosedFields.addAll(0, orderedProperties);
                 });
 
-        // Map fields type parameters to type arguments by using wrapper element
-        List<Element> orderedFields = enclosedFields
-        	.stream()
-        	.map(field -> 
-        		typeParameters.contains(typeUtils.asElement(field.asType()))? 
-        			wrapElementWithType(field, typeArguments.get(typeParameters.indexOf(typeUtils.asElement(field.asType())))):
-        			field)
-        	.collect(Collectors.toList());
         
-        List<? extends TypeMirror> superTypeArguments  = Collections.emptyList();
-        List<? extends TypeParameterElement> superTypeParameters = Collections.emptyList();
-        if (superclass instanceof DeclaredType) {
-        	superTypeArguments = ((DeclaredType)superclass).getTypeArguments();
-        	superTypeParameters = ((TypeElement) typeUtils.asElement(superclass)).getTypeParameters();
-        }
+        List<? extends TypeParameterElement> typeParameters = enclosingElement.getTypeParameters();
+    	List<? extends TypeMirror> typeArguments = enclosingType.getTypeArguments();
+    	final Map<? extends TypeParameterElement, ? extends TypeMirror> typeParameterMap = 
+    		IntStream.range(0, typeParameters.size())
+    			.boxed()
+    			.collect(Collectors.toMap(i -> typeParameters.get(i), i -> typeArguments.get(i)));
+    	
+        Map<Element, TypeMirror> res = enclosedFields.stream().collect(
+        	Collectors.toMap(
+        		fieldElement -> fieldElement, 
+        		fieldElement -> Type.getDeclaredType(fieldElement.asType(), typeParameterMap),
+        		(u,v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u)); },
+        		LinkedHashMap::new));
+
+        String typeErrs = res.entrySet().stream()
+        	.filter(entry -> Type.hasTypeArgumentWithBoundedWildcards(entry.getValue()) || Type.hasUnboundedWildcards(entry.getValue()))
+        	.map(entry -> "Member '" + entry.getKey().getSimpleName() + "' resolved type: '" + entry.getValue() + "'")
+        	.collect(Collectors.joining("\n"));
         
-        // Map type arguments from base type to super type arguments
-        superTypeArguments = superTypeArguments.stream()
-        	.map(typeArgument -> 
-    			typeParameters.contains(typeUtils.asElement(typeArgument))?
-    				typeArguments.get(typeParameters.indexOf(typeUtils.asElement(typeArgument)))
-    				:typeArgument)
-        	.collect(Collectors.toList());
-    					
-        orderedFields.addAll(
-        	getOrderedFields(
-        		(TypeElement) typeUtils.asElement(superclass),
-        		superTypeParameters,
-        		superTypeArguments));
+        if (!typeErrs.isEmpty())
+        	throw new RuntimeException(
+        			"Type: '" + enclosingType 
+        			+ "' could not have generic member of type parametrized with type argument having unbounded wildcards"
+        			+" or non-collections having type argument with bounded wildcards:\n"
+        			+ typeErrs);
+        	
         
-        return orderedFields;
+        
+        if (superclass.getKind() == TypeKind.DECLARED) 
+        	res.putAll(getOrderedFields((DeclaredType) Type.getDeclaredType(superclass, typeParameterMap)));
+        
+        return res;
     }
     
-    private Element wrapElementWithType(Element element, TypeMirror typeMirror) {
-    	return new Element() {
-
-			@Override
-			public <A extends Annotation> A[] getAnnotationsByType(Class<A> annotationType) {
-				return element.getAnnotationsByType(annotationType);
-			}
-
-			@Override
-			public TypeMirror asType() {
-				return typeMirror;
-			}
-
-			@Override
-			public ElementKind getKind() {
-				return element.getKind();
-			}
-
-			@Override
-			public Set<Modifier> getModifiers() {
-				return element.getModifiers();
-			}
-
-			@Override
-			public Name getSimpleName() {
-				return element.getSimpleName();
-			}
-
-			@Override
-			public Element getEnclosingElement() {
-				return element.getEnclosingElement();
-			}
-
-			@Override
-			public List<? extends Element> getEnclosedElements() {
-				return element.getEnclosedElements();
-			}
-
-			@Override
-			public List<? extends AnnotationMirror> getAnnotationMirrors() {
-				return element.getAnnotationMirrors();
-			}
-
-			@Override
-			public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
-				return element.getAnnotation(annotationType);
-			}
-
-			@Override
-			public <R, P> R accept(ElementVisitor<R, P> v, P p) {
-				return element.accept(v, p);
-			}
-    	};
-    }
     
     public static class AccessorInfo {
 
@@ -277,8 +233,10 @@ public abstract class AbstractJsonMapperGenerator {
     }
 
     /**
-     *
-     * @param field
+     * <p>isNotStatic</p>
+     * 
+     * Check if given field has static modifier
+     * @param field {@link javax.lang.model.element.Element} object
      * @return boolean true if the field is not static
      */
     protected boolean isNotStatic(Element field) {
@@ -286,8 +244,10 @@ public abstract class AbstractJsonMapperGenerator {
     }
 
     /**
-     *
-     * @param field
+     * <p>isIgnored</p>
+     * 
+     * Check if given field has been annotated with {@link JsonIgnore} present and its value is true
+     * @param field {@link javax.lang.model.element.Element} object
      * @return boolean true only if {@link JsonIgnore} present and its value is true
      */
     protected boolean isIgnored(Element field) {
@@ -297,5 +257,37 @@ public abstract class AbstractJsonMapperGenerator {
 
     protected boolean isEligibleForSerializationDeserialization(Element field){
         return isNotStatic(field) && !isIgnored(field);
+    }
+    
+    protected abstract boolean isSerializer();
+    
+    /**
+     * Build the code to initialize a {@link TypeSerializationInfo} or {@link TypeDeserializationInfo}.
+     *
+     * @return the code built
+     */
+    protected final CodeBlock generateTypeInfo() {
+        final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+        CodeBlock.Builder builder = CodeBlock.builder()
+                .add( "new $T($T.$L, $S)", type, As.class, subTypesInfo.getInclude(), subTypesInfo.getPropertyName() )
+                .indent()
+                .indent();
+
+        for ( Map.Entry<String, TypeMirror> entry : subTypesInfo.getSubTypes().entrySet() ) {
+            builder.add( "\n.addTypeInfo($T.class, $S)",entry.getValue(), entry.getKey());
+        }
+
+        return builder.unindent().unindent().build();
+    }
+    
+    private MethodSpec buildInitTypeInfoMethod() {
+    	final Class<?> type = isSerializer()? TypeSerializationInfo.class: TypeDeserializationInfo.class;
+        
+    	return MethodSpec.methodBuilder( "initTypeInfo")
+                .addModifiers( Modifier.PROTECTED )
+                .addAnnotation( Override.class )
+                .returns(ParameterizedTypeName.get(ClassName.get(type), TypeName.get(beanType)))
+                .addStatement( "return $L", generateTypeInfo())
+                .build();
     }
 }

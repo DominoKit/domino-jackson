@@ -18,6 +18,7 @@ package org.dominokit.jacksonapt.processor;
 import com.squareup.javapoet.CodeBlock;
 
 import javax.lang.model.element.Element;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * <p>MappersChainBuilder interface.</p>
@@ -27,10 +28,18 @@ import javax.lang.model.element.Element;
  */
 public interface MappersChainBuilder {
     /**
-     * <p>getInstance.</p>
-     *
+     * Creates a CodeBlock for creating instances of all (de)serializers corresponding for given element.
+     * 
      * @param field a {@link javax.lang.model.element.Element} object.
      * @return a {@link com.squareup.javapoet.CodeBlock} object.
      */
     CodeBlock getInstance(Element field);
+    
+    /**
+     * Creates a CodeBlock for creating instances of all (de)serializers corresponding for given type.
+     *
+     * @param fieldType a {@link javax.lang.model.type.TypeMirror} object.
+     * @return a {@link com.squareup.javapoet.CodeBlock} object.
+     */
+    CodeBlock getInstance(TypeMirror fieldType);
 }

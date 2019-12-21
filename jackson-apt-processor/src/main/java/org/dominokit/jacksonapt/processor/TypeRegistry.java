@@ -741,7 +741,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getCustomSerializer(TypeMirror typeMirror) {
-        return getCustomSerializer(typeMirror.toString());
+        return getCustomSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -764,7 +764,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getCustomDeserializer(TypeMirror typeMirror) {
-        return getCustomDeserializer(typeMirror.toString());
+        return getCustomDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -796,7 +796,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getSerializer(TypeMirror typeMirror) {
-        return getSerializer(typeUtils.erasure(typeMirror).toString());
+        return getSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     private static TypeName getSerializer(String typeName) {
@@ -836,7 +836,7 @@ public final class TypeRegistry {
      * @return a {@link com.squareup.javapoet.TypeName} object.
      */
     public static TypeName getDeserializer(TypeMirror typeMirror) {
-        return getDeserializer(typeUtils.erasure(typeMirror).toString());
+        return getDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     private static TypeName getDeserializer(String typeName) {
@@ -909,7 +909,7 @@ public final class TypeRegistry {
      * @return a boolean.
      */
     public static boolean containsSerializer(TypeMirror typeMirror) {
-        return containsSerializer(typeMirror.toString());
+        return containsSerializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     /**
@@ -919,7 +919,7 @@ public final class TypeRegistry {
      * @return a boolean.
      */
     public static boolean containsDeserializer(TypeMirror typeMirror) {
-        return containsDeserializer(typeMirror.toString());
+        return containsDeserializer(Type.stringifyTypeWithPackage(typeMirror));
     }
 
 

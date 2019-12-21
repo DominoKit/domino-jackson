@@ -17,7 +17,7 @@ import static java.util.Objects.isNull;
 
 public class AccessorsFilter {
 
-    private Types typeUtils;
+    protected Types typeUtils;
 
     public AccessorsFilter(Types typeUtils) {
         this.typeUtils = typeUtils;

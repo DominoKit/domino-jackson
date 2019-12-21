@@ -43,15 +43,18 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
 
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> deserializers = new LinkedList<>();
-    private TypeMirror beanType;
+    private final TypeMirror beanType;
+	private final String packageName;
 
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
      */
-    public FieldDeserializersChainBuilder(TypeMirror beanType) {
+    public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType) {
         this.beanType = beanType;
+        this.packageName = packageName;
     }
 
     /** {@inheritDoc} */
@@ -60,6 +63,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         return builder.add(getFieldDeserializer(field.asType()), asClassesArray()).build();
     }
 
+    /** {@inheritDoc} */
+    @Override
     public CodeBlock getInstance(TypeMirror type) {
         return builder.add(getFieldDeserializer(type), asClassesArray()).build();
     }
@@ -69,6 +74,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getFieldDeserializer(TypeMirror typeMirror) {
+    	typeMirror = Type.removeOuterWildCards(typeMirror);
+    	
         if (Type.isIterable(typeMirror))
             return getIterableDeserializer(typeMirror);
         if (Type.isMap(typeMirror))
@@ -87,13 +94,13 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getCustomDeserializer(TypeMirror typeMirror) {
-        if (typeMirror.toString().equals(beanType.toString())) {
-            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(typeMirror)));
+        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
+            deserializers.addLast(ClassName.bestGuess(Type.deserializerName(packageName, typeMirror)));
         } else {
-            if (TypeRegistry.containsDeserializer(typeMirror)) {
+            if (TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(typeMirror))) {
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
             } else {
-                TypeRegistry.registerDeserializer(typeMirror.toString(), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
+                TypeRegistry.registerDeserializer(Type.stringifyTypeWithPackage(typeMirror), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
             }
         }
@@ -101,7 +108,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(typeMirror);
+        return Type.generateDeserializer(packageName, typeMirror);
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {
@@ -121,19 +128,20 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getKeyDeserializer(TypeMirror typeMirror) {
+    	typeMirror = Type.removeOuterWildCards(typeMirror);
         if (Type.isEnum(typeMirror))
             return getEnumKeyDeserializer(typeMirror);
         return getBasicKeyDeserializer(typeMirror);
     }
 
     private String getBasicKeyDeserializer(TypeMirror typeMirror) {
-        deserializers.addLast(TypeRegistry.getKeyDeserializer(typeMirror.toString()));
+        deserializers.addLast(TypeRegistry.getKeyDeserializer(Type.stringifyTypeWithPackage(Type.removeOuterWildCards(typeMirror))));
         return GET_INSTANCE;
     }
 
     private String getEnumKeyDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeRegistry.getKeyDeserializer(Enum.class.getName()));
-        deserializers.addLast(TypeName.get(typeMirror));
+        deserializers.addLast(TypeName.get(Type.removeOuterWildCards(typeMirror)));
         return NEW_INSTANCE + "$T.class" + ")";
     }
 
