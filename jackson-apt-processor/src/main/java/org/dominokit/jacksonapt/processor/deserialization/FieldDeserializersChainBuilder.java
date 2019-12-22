@@ -31,6 +31,7 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 /**
@@ -46,7 +47,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> deserializers = new LinkedList<>();
     private final TypeMirror beanType;
-	private final String packageName;
+    private final String packageName;
 
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
@@ -61,7 +62,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
      *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
      */
     public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType) {
@@ -69,25 +70,29 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         this.packageName = packageName;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CodeBlock getInstance(Element field) {
         return builder.add(getFieldDeserializer(field.asType()), asClassesArray()).build();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CodeBlock getInstance(TypeMirror type) {
         return builder.add(getFieldDeserializer(type), asClassesArray()).build();
     }
-    
+
     private TypeName[] asClassesArray() {
         return deserializers.toArray(new TypeName[deserializers.size()]);
     }
 
     private String getFieldDeserializer(TypeMirror typeMirror) {
-    	typeMirror = Type.removeOuterWildCards(typeMirror);
-    	
+        typeMirror = Type.removeOuterWildCards(typeMirror);
+
         if (Type.isIterable(typeMirror))
             return getIterableDeserializer(typeMirror);
         if (Type.isMap(typeMirror))
@@ -119,11 +124,12 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         return "new $T()";
     }
 
-    private String getPackageName(TypeMirror typeMirror){
-        if(nonNull(this.packageName)){
+    private String getPackageName(TypeMirror typeMirror) {
+        if (Type.isJsonMapper(typeMirror) || isNull(this.packageName)) {
+            return ClassName.bestGuess(typeMirror.toString()).packageName();
+        } else {
             return this.packageName;
         }
-        return ClassName.bestGuess(typeMirror.toString()).packageName();
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
@@ -147,7 +153,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getKeyDeserializer(TypeMirror typeMirror) {
-    	typeMirror = Type.removeOuterWildCards(typeMirror);
+        typeMirror = Type.removeOuterWildCards(typeMirror);
         if (Type.isEnum(typeMirror))
             return getEnumKeyDeserializer(typeMirror);
         return getBasicKeyDeserializer(typeMirror);
