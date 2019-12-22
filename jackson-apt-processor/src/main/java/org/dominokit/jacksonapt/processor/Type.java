@@ -17,6 +17,7 @@ package org.dominokit.jacksonapt.processor;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.squareup.javapoet.TypeName;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -39,6 +40,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.typeUtils;
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.elementUtils;
 
@@ -734,5 +736,10 @@ public class Type {
 			}
 			
 		},  false); 
+	}
+
+	public static boolean isJsonMapper(TypeMirror typeMirror){
+		return nonNull(typeUtils.asElement(typeMirror)
+				.getAnnotation(JSONMapper.class));
 	}
 }

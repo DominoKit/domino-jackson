@@ -33,6 +33,7 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 /**
@@ -125,11 +126,12 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         return "new $T()";
     }
 
-    private String getPackageName(TypeMirror typeMirror){
-        if(nonNull(this.packageName)){
+    private String getPackageName(TypeMirror typeMirror) {
+        if (Type.isJsonMapper(typeMirror) || isNull(this.packageName)) {
+            return ClassName.bestGuess(typeMirror.toString()).packageName();
+        } else {
             return this.packageName;
         }
-        return ClassName.bestGuess(typeMirror.toString()).packageName();
     }
 
     private String generateCustomSerializer(TypeMirror typeMirror) {
