@@ -7,10 +7,7 @@ import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.DEFAULT_W
 
 import java.io.IOException;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
@@ -83,12 +80,14 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
     }
 
     protected String enclosingName(Element element, String postfix) {
-        if (useInterface(element)) {
-            return element.getEnclosingElement().getSimpleName().toString() + postfix;
-
+        Element enclosingElement = element.getEnclosingElement();
+        if (useInterface(element) && !ElementKind.PACKAGE.equals(enclosingElement.getKind())) {
+            return enclosingElement.getSimpleName().toString() + postfix;
+        }else if(useInterface(element) && ElementKind.PACKAGE.equals(enclosingElement.getKind())){
+            return "";
+        }else{
+            return element.getSimpleName().toString() + postfix;
         }
-        return element.getSimpleName().toString() + postfix;
-
     }
 
     protected TypeName abstractObjectMapper(Element element) {
