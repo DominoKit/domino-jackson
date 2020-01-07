@@ -1,5 +1,5 @@
 ![GWT3/J2CL compatible](https://img.shields.io/badge/GWT3/J2CL-compatible-brightgreen.svg) [![Build Status](https://travis-ci.org/DominoKit/domino-jackson.svg?branch=master)](https://travis-ci.org/DominoKit/domino-jackson)
-<a title="Gitter" href="https://gitter.im/domino-gwt/Gwt-jackson-apt"><img src="https://badges.gitter.im/Join%20Chat.svg"></a>
+<a title="Gitter" href="https://gitter.im/DominoKit/domino"><img src="https://badges.gitter.im/Join%20Chat.svg"></a>
 
 Domino-jackson
 =====
