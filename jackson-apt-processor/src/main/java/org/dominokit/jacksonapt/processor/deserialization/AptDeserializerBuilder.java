@@ -17,6 +17,8 @@ package org.dominokit.jacksonapt.processor.deserialization;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
@@ -24,7 +26,9 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.*;
 import org.dominokit.jacksonapt.deser.bean.SubtypeDeserializer.BeanSubtypeDeserializer;
+import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
@@ -34,13 +38,16 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.elementUtils;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
 
 /**
@@ -57,11 +64,11 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     /**
      * <p>Constructor for AptDeserializerBuilder.</p>
      *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
      * @param packageName a {@link java.lang.String} object.
-     * @param filer    a {@link javax.annotation.processing.Filer} object.
+     * @param filer       a {@link javax.annotation.processing.Filer} object.
      */
-    public AptDeserializerBuilder(String packageName, TypeMirror beanType,  Filer filer) {
+    public AptDeserializerBuilder(String packageName, TypeMirror beanType, Filer filer) {
         super(packageName, beanType, filer);
     }
 
@@ -71,8 +78,8 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     @Override
     protected TypeName superClass() {
         return ParameterizedTypeName.get(
-        		ClassName.get(AbstractBeanJsonDeserializer.class),
-        		ClassName.get(beanType));
+                ClassName.get(AbstractBeanJsonDeserializer.class),
+                ClassName.get(beanType));
     }
 
     /**
@@ -96,7 +103,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      */
     @Override
     protected MethodSpec initMethod() {
-        return buildInitDeserializersMethod(beanType);
+        return buildInitDeserializersMethod();
     }
 
     /**
@@ -104,69 +111,68 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      */
     @Override
     protected MethodSpec initSubtypesMethod() {
-    	 if (subTypesInfo == null)
-	    	 return  MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
-	                 .addModifiers(Modifier.PROTECTED)
-	                 .addAnnotation(Override.class)
-	                 .returns(
-	                	ParameterizedTypeName.get(
-	                			ClassName.get(Map.class), 
-	                			ClassName.get(Class.class), 
-	                			ClassName.get(SubtypeDeserializer.class)))
-	                 .addStatement("return $T.emptyMap()",Collections.class).build();
-    	 else {
-    		 MethodSpec.Builder builder = MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
-             	.addModifiers( Modifier.PROTECTED )
-             	.addAnnotation( Override.class )
-             	.returns(
-	                	ParameterizedTypeName.get(
-	                			ClassName.get(Map.class), 
-	                			ClassName.get(Class.class), 
-	                			ClassName.get(SubtypeDeserializer.class)))
-             	.addStatement( "$T map = new $T($L)",
-            		 ParameterizedTypeName.get(
-	                			ClassName.get(Map.class), 
-	                			ClassName.get(Class.class), 
-	                			ClassName.get(SubtypeDeserializer.class)),
-            		 ClassName.get(IdentityHashMap.class), 
-            		 subTypesInfo.getSubTypes().size());
-    		 
-    		 for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
-    			 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
-        		 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
-                         .superclass(ClassName.get(BeanSubtypeDeserializer.class))
-                         .addMethod(MethodSpec.methodBuilder("newDeserializer")
-                        		 .addModifiers(Modifier.PROTECTED)
-                        		 .addAnnotation(Override.class)
-                        		 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), WildcardTypeName.subtypeOf(Object.class)))
-                        		 .addStatement("return new $T()", ClassName.bestGuess(Type.deserializerName(packageName, subtypeEntry.getValue())))
-                        		 .build()
-                         ).build();
-        		 
-        		 builder.addStatement( "map.put($T.class, $L)", TypeName.get(subtypeEntry.getValue()), subtypeType);
-    		 }
-    		 
-    		 builder.addStatement("return map");
-    		 
-    		 return builder.build();
-    		 
-    	 }
+        if (subTypesInfo == null)
+            return MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addAnnotation(Override.class)
+                    .returns(
+                            ParameterizedTypeName.get(
+                                    ClassName.get(Map.class),
+                                    ClassName.get(Class.class),
+                                    ClassName.get(SubtypeDeserializer.class)))
+                    .addStatement("return $T.emptyMap()", Collections.class).build();
+        else {
+            MethodSpec.Builder builder = MethodSpec.methodBuilder("initMapSubtypeClassToDeserializer")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addAnnotation(Override.class)
+                    .returns(
+                            ParameterizedTypeName.get(
+                                    ClassName.get(Map.class),
+                                    ClassName.get(Class.class),
+                                    ClassName.get(SubtypeDeserializer.class)))
+                    .addStatement("$T map = new $T($L)",
+                            ParameterizedTypeName.get(
+                                    ClassName.get(Map.class),
+                                    ClassName.get(Class.class),
+                                    ClassName.get(SubtypeDeserializer.class)),
+                            ClassName.get(IdentityHashMap.class),
+                            subTypesInfo.getSubTypes().size());
+
+            for (Map.Entry<String, TypeMirror> subtypeEntry : subTypesInfo.getSubTypes().entrySet()) {
+                // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
+                TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
+                        .superclass(ClassName.get(BeanSubtypeDeserializer.class))
+                        .addMethod(MethodSpec.methodBuilder("newDeserializer")
+                                .addModifiers(Modifier.PROTECTED)
+                                .addAnnotation(Override.class)
+                                .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), WildcardTypeName.subtypeOf(Object.class)))
+                                .addStatement("return new $T()", ClassName.bestGuess(Type.deserializerName(packageName, subtypeEntry.getValue())))
+                                .build()
+                        ).build();
+
+                builder.addStatement("map.put($T.class, $L)", TypeName.get(subtypeEntry.getValue()), subtypeType);
+            }
+
+            builder.addStatement("return map");
+
+            return builder.build();
+
+        }
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected Set<MethodSpec> moreMethods() {
         Set<MethodSpec> methods = new HashSet<>();
-        // Object instance can be created by InstanceBuilder 
+        // Object instance can be created by InstanceBuilder
         // only for non-abstract classes
         if (
-        	beanType.getKind() == TypeKind.DECLARED
-        	&& ((DeclaredType)beanType).asElement().getKind() == ElementKind.CLASS
-        	&& !((DeclaredType)beanType).asElement().getModifiers().contains(Modifier.ABSTRACT))
-        			 	methods.add(buildInitInstanceBuilderMethod(beanType));
-
+                beanType.getKind() == TypeKind.DECLARED
+                        && ((DeclaredType) beanType).asElement().getKind() == ElementKind.CLASS
+                        && !((DeclaredType) beanType).asElement().getModifiers().contains(Modifier.ABSTRACT))
+            methods.add(buildInitInstanceBuilderMethod());
 
         MethodSpec initIgnoreFieldsMethod = buildInitIgnoreFields(beanType);
         if (nonNull(initIgnoreFieldsMethod)) {
@@ -182,6 +188,25 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         return methods;
     }
 
+    private boolean isUseBuilder() {
+        String builderName = getBuilderName();
+        return builderName != null && !builderName.isEmpty();
+    }
+
+    private String getBuilderName() {
+        JsonDeserialize jsonDeserialize = typeUtils.asElement(beanType).getAnnotation(JsonDeserialize.class);
+        if (isNull(jsonDeserialize)) {
+            return null;
+        }
+        String builderName;
+        try {
+            builderName = jsonDeserialize.builder().getName();
+        } catch (MirroredTypeException e) {
+            TypeMirror typeMirror = e.getTypeMirror();
+            builderName = typeMirror.toString();
+        }
+        return builderName;
+    }
 
     private MethodSpec buildIgnoreUnknownMethod(boolean ignored) {
 
@@ -221,14 +246,8 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
     private List<Element> getIgnoredFields(TypeMirror beanType) {
         TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
-
-        final List<Element> fields = new ArrayList<>();
-
         List<Element> ignoredFields = getIgnoredFields(typeElement);
-        fields.addAll(ignoredFields);
-
-
-        return fields;
+        return new ArrayList<>(ignoredFields);
     }
 
     private List<Element> getIgnoredFields(TypeElement typeElement) {
@@ -246,46 +265,68 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
         ignoredFields.addAll(getIgnoredFields((TypeElement) typeUtils.asElement(superclass)));
         return ignoredFields;
-
     }
 
-
-    private MethodSpec buildInitInstanceBuilderMethod(TypeMirror beanType) {
-
-        return MethodSpec.methodBuilder("initInstanceBuilder")
+    private MethodSpec buildInitInstanceBuilderMethod() {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("initInstanceBuilder")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class), ClassName.get(beanType)))
                 .addStatement("final $T deserializers = null", ParameterizedTypeName
                         .get(ClassName.get(MapLike.class), ClassName
-                                .get(HasDeserializerAndParameters.class)))
-                .addStatement("return $L", instanceBuilderReturnType())
+                                .get(HasDeserializerAndParameters.class)));
+
+        boolean useBuilder = isUseBuilder();
+        if (useBuilder) {
+            TypeElement builderElement = getBuilderElement();
+            method.addStatement("final $T builderDeserializer = new $T()",
+                    ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonDeserializer.class), ClassName.get(builderElement)),
+                    builderDeserializerName(builderElement));
+            try {
+                new AptDeserializerBuilder(packageName, builderElement.asType(), AbstractMapperProcessor.filer).generate();
+            } catch (IOException e) {
+                throw new JsonDeserializationException(e);
+            }
+        }
+
+        return method
+                .addStatement("return $L", instanceBuilderReturnType(useBuilder))
                 .addAnnotation(Override.class)
                 .build();
     }
 
+    private TypeElement getBuilderElement() {
+        String builderName = getBuilderName();
+        return elementUtils.getTypeElement(builderName);
+    }
 
-    private TypeSpec instanceBuilderReturnType() {
+    private ClassName builderDeserializerName(TypeElement builder) {
+        return ClassName.bestGuess(builder.getSimpleName() + namePostfix());
+    }
 
+    private TypeSpec instanceBuilderReturnType(boolean useBuilder) {
         final MethodSpec createMethod = MethodSpec.methodBuilder("create")
                 .addModifiers(Modifier.PRIVATE)
                 .returns(ClassName.get(beanType))
-                .addStatement(
-                	(Type.isGenericType(beanType)?
-                		"return new $T<>()":
-                		"return new $T()"), 
-                	TypeName.get(typeUtils.erasure(beanType)))
+                .addStatement((Type.isGenericType(beanType) ?
+                                "return new $T<>()" :
+                                "return new $T()"),
+                        TypeName.get(typeUtils.erasure(beanType)))
                 .build();
 
-        return TypeSpec.anonymousClassBuilder("")
+        TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("")
                 .addSuperinterface(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class),
                         ClassName.get(beanType)))
-                .addMethod(newInstanceMethod(beanType, createMethod))
-                .addMethod(getDeserializerMethod(beanType))
-                .addMethod(createMethod).build();
+                .addMethod(newInstanceMethod(beanType, createMethod, useBuilder))
+                .addMethod(getDeserializerMethod());
+
+        if (!useBuilder) {
+            builder.addMethod(createMethod);
+        }
+        return builder.build();
     }
 
-    private MethodSpec newInstanceMethod(TypeMirror beanType, MethodSpec createMethod) {
-        return MethodSpec.methodBuilder("newInstance")
+    private MethodSpec newInstanceMethod(TypeMirror beanType, MethodSpec createMethod, boolean useBuilder) {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("newInstance")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)))
@@ -293,14 +334,28 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .addParameter(JsonDeserializationContext.class, "ctx")
                 .addParameter(JsonDeserializerParameters.class, "params")
                 .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "bufferedProperties")
-                .addParameter(ParameterizedTypeName.get(Map.class, String.class, Object.class), "bufferedPropertiesValues")
-                .addStatement("return new $T($N(), bufferedProperties)",
-                ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
-                        createMethod)
-                .build();
+                .addParameter(ParameterizedTypeName.get(Map.class, String.class, Object.class), "bufferedPropertiesValues");
+
+        if (useBuilder) {
+            TypeElement builderElement = getBuilderElement();
+            JsonPOJOBuilder jsonPOJOBuilder = builderElement.getAnnotation(JsonPOJOBuilder.class);
+            String buildMethodName = JsonPOJOBuilder.DEFAULT_BUILD_METHOD;
+            if (nonNull(jsonPOJOBuilder)) {
+                buildMethodName = jsonPOJOBuilder.buildMethodName();
+            }
+            builder
+                    .addStatement("return new $T(builderDeserializer.deserializeInline(reader, ctx, params, null, null, null, bufferedProperties)." + buildMethodName + "(), bufferedProperties)",
+                            ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)));
+        } else {
+            builder.addStatement("return new $T($N(), bufferedProperties)",
+                    ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
+                    createMethod);
+        }
+
+        return builder.build();
     }
 
-    private MethodSpec getDeserializerMethod(TypeMirror beanType) {
+    private MethodSpec getDeserializerMethod() {
         return MethodSpec.methodBuilder("getParametersDeserializer")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
@@ -310,12 +365,14 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .build();
     }
 
-    private MethodSpec buildInitDeserializersMethod(TypeMirror beanType) {
-
+    private MethodSpec buildInitDeserializersMethod() {
+        if (isUseBuilder()) {
+            return null;
+        }
         TypeName resultType = ParameterizedTypeName.get(ClassName.get(MapLike.class),
-        		ParameterizedTypeName.get(
-                	ClassName.get(BeanPropertyDeserializer.class),
-                	TypeName.get(beanType), DEFAULT_WILDCARD));
+                ParameterizedTypeName.get(
+                        ClassName.get(BeanPropertyDeserializer.class),
+                        TypeName.get(beanType), DEFAULT_WILDCARD));
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("initDeserializers")
                 .addModifiers(Modifier.PROTECTED)
@@ -326,7 +383,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         orderedFields().entrySet().stream()
                 .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("map.put($S, $L)",
-                		getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildDeserializer()));
+                        getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
         return builder.build();
@@ -346,7 +403,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     @Override
-    protected Class<?> getMapperType(){
+    protected Class<?> getMapperType() {
         return TypeDeserializationInfo.class;
     }
 }

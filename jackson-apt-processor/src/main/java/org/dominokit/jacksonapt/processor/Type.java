@@ -58,6 +58,7 @@ public class Type {
     public static final String BEAN_JSON_SERIALIZER_IMPL = "BeanJsonSerializerImpl";
     /** Constant <code>BEAN_JSON_DESERIALIZER_IMPL="BeanJsonDeserializerImpl"</code> */
     public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
+
     /**
      * <p>wrapperType.</p>
      *
