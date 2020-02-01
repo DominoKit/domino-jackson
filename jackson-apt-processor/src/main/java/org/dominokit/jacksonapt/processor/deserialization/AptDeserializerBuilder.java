@@ -15,6 +15,7 @@
  */
 package org.dominokit.jacksonapt.processor.deserialization;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -31,12 +32,10 @@ import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
 import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
+import org.dominokit.jacksonapt.stream.JsonToken;
 
 import javax.annotation.processing.Filer;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
@@ -59,6 +58,7 @@ import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUti
 public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
     private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
+    private List<ParameterDeserializerBuilder> parameterBuilders;
 
 
     /**
@@ -188,6 +188,22 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         return methods;
     }
 
+    private boolean isUseJsonCreator() {
+        return ((DeclaredType) beanType).asElement().getEnclosedElements()
+                .stream()
+                .anyMatch(o -> o.getAnnotation(JsonCreator.class) != null);
+    }
+
+    private ExecutableElement getCreator() {
+        return ((DeclaredType) beanType).asElement()
+                .getEnclosedElements()
+                .stream()
+                .filter(o -> o.getAnnotation(JsonCreator.class) != null)
+                .map(o -> (ExecutableElement) o)
+                .findFirst()
+                .orElse(null);
+    }
+
     private boolean isUseBuilder() {
         String builderName = getBuilderName();
         return builderName != null && !builderName.isEmpty();
@@ -268,17 +284,29 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     private MethodSpec buildInitInstanceBuilderMethod() {
-        MethodSpec.Builder method = MethodSpec.methodBuilder("initInstanceBuilder")
+        ParameterizedTypeName deserializersTypeName = ParameterizedTypeName
+                .get(ClassName.get(MapLike.class), ClassName
+                        .get(HasDeserializerAndParameters.class));
+        MethodSpec.Builder initInstanceMethodBuilder = MethodSpec.methodBuilder("initInstanceBuilder")
                 .addModifiers(Modifier.PROTECTED)
-                .returns(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class), ClassName.get(beanType)))
-                .addStatement("final $T deserializers = null", ParameterizedTypeName
-                        .get(ClassName.get(MapLike.class), ClassName
-                                .get(HasDeserializerAndParameters.class)));
+                .returns(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class), ClassName.get(beanType)));
+
+        if (isUseJsonCreator()) {
+            ExecutableElement creator = getCreator();
+            List<? extends VariableElement> parameterTypes = creator.getParameters();
+            parameterBuilders = parameterTypes.stream()
+                    .map(o -> new ParameterDeserializerBuilder(typeUtils, beanType, o, packageName))
+                    .collect(Collectors.toList());
+            initInstanceMethodBuilder.addStatement("final $T deserializers = $T.get().mapLikeFactory().make()", deserializersTypeName, JacksonContextProvider.class);
+            buildPropertiesDeserializers(initInstanceMethodBuilder);
+        } else {
+            initInstanceMethodBuilder.addStatement("final $T deserializers = null", deserializersTypeName);
+        }
 
         boolean useBuilder = isUseBuilder();
         if (useBuilder) {
             TypeElement builderElement = getBuilderElement();
-            method.addStatement("final $T builderDeserializer = new $T()",
+            initInstanceMethodBuilder.addStatement("final $T builderDeserializer = new $T()",
                     ParameterizedTypeName.get(ClassName.get(AbstractBeanJsonDeserializer.class), ClassName.get(builderElement)),
                     builderDeserializerName(builderElement));
             try {
@@ -288,10 +316,17 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             }
         }
 
-        return method
+        return initInstanceMethodBuilder
                 .addStatement("return $L", instanceBuilderReturnType(useBuilder))
                 .addAnnotation(Override.class)
                 .build();
+    }
+
+    private void buildPropertiesDeserializers(MethodSpec.Builder initInstanceMethodBuilder) {
+        for (ParameterDeserializerBuilder parameterBuilder : parameterBuilders) {
+            initInstanceMethodBuilder.addCode(parameterBuilder.build());
+            initInstanceMethodBuilder.addStatement("deserializers.put($S, $L)", parameterBuilder.getParameterName(), parameterBuilder.getDeserializerName());
+        }
     }
 
     private TypeElement getBuilderElement() {
@@ -304,14 +339,30 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     private TypeSpec instanceBuilderReturnType(boolean useBuilder) {
-        final MethodSpec createMethod = MethodSpec.methodBuilder("create")
+        MethodSpec.Builder createMethodBuilder = MethodSpec.methodBuilder("create")
                 .addModifiers(Modifier.PRIVATE)
-                .returns(ClassName.get(beanType))
-                .addStatement((Type.isGenericType(beanType) ?
-                                "return new $T<>()" :
-                                "return new $T()"),
-                        TypeName.get(typeUtils.erasure(beanType)))
-                .build();
+                .returns(ClassName.get(beanType));
+
+        if (isUseJsonCreator()) {
+            for (ParameterDeserializerBuilder parameterBuilder : parameterBuilders) {
+                createMethodBuilder.addParameter(Type.wrapperType(parameterBuilder.getParameterType()), parameterBuilder.getParameterName());
+            }
+            StringBuilder newBeanBuilder = new StringBuilder()
+                    .append("return new $T")
+                    .append(Type.isGenericType(beanType) ? "<>(" : "(");
+            String parametersString = parameterBuilders.stream()
+                    .map(ParameterDeserializerBuilder::getParameterName)
+                    .collect(Collectors.joining(", "));
+            newBeanBuilder.append(parametersString).append(")");
+            createMethodBuilder.addStatement(newBeanBuilder.toString(), TypeName.get(typeUtils.erasure(beanType)));
+        } else {
+            createMethodBuilder.addStatement((Type.isGenericType(beanType) ?
+                            "return new $T<>()" :
+                            "return new $T()"),
+                    TypeName.get(typeUtils.erasure(beanType)));
+        }
+
+        final MethodSpec createMethod = createMethodBuilder.build();
 
         TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("")
                 .addSuperinterface(ParameterizedTypeName.get(ClassName.get(InstanceBuilder.class),
@@ -343,9 +394,10 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             if (nonNull(jsonPOJOBuilder)) {
                 buildMethodName = jsonPOJOBuilder.buildMethodName();
             }
-            builder
-                    .addStatement("return new $T(builderDeserializer.deserializeInline(reader, ctx, params, null, null, null, bufferedProperties)." + buildMethodName + "(), bufferedProperties)",
-                            ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)));
+            builder.addStatement("return new $T(builderDeserializer.deserializeInline(reader, ctx, params, null, null, null, bufferedProperties)." + buildMethodName + "(), bufferedProperties)",
+                    ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)));
+        } else if (isUseJsonCreator()) {
+            buildAssignProperties(beanType, createMethod, builder);
         } else {
             builder.addStatement("return new $T($N(), bufferedProperties)",
                     ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
@@ -353,6 +405,32 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         }
 
         return builder.build();
+    }
+
+    private void buildAssignProperties(TypeMirror beanType, MethodSpec createMethod, MethodSpec.Builder builder) {
+        for (ParameterDeserializerBuilder parameterBuilder : parameterBuilders) {
+            builder.addStatement("$T $L = null", Type.wrapperType(parameterBuilder.getParameterType()), parameterBuilder.getParameterName() + "Property");
+        }
+        builder.beginControlFlow("while ($T.NAME == reader.peek())", JsonToken.class);
+        builder.addStatement("String nextName = reader.nextName()");
+        for (ParameterDeserializerBuilder parameterBuilder : parameterBuilders) {
+            String paramName = parameterBuilder.getParameterName();
+            builder.beginControlFlow("if($S.equals(nextName))", paramName);
+            builder.addStatement("$L = $L.deserialize(reader, ctx)", paramName + "Property", paramName + "Deserializer");
+            builder.addStatement("continue");
+            builder.endControlFlow();
+        }
+        builder.endControlFlow();
+        String argumentsString = parameterBuilders
+                .stream()
+                .map(ParameterDeserializerBuilder::getParameterName)
+                .map(name -> name + "Property")
+                .collect(Collectors.joining(", "));
+
+        builder.addStatement("return new $T($N($L), bufferedProperties)",
+                ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)),
+                createMethod,
+                argumentsString);
     }
 
     private MethodSpec getDeserializerMethod() {
@@ -366,7 +444,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     private MethodSpec buildInitDeserializersMethod() {
-        if (isUseBuilder()) {
+        if (isUseBuilder() || isUseJsonCreator()) {
             return null;
         }
         TypeName resultType = ParameterizedTypeName.get(ClassName.get(MapLike.class),
