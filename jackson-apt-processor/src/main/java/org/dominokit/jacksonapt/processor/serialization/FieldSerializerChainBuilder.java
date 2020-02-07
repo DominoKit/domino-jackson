@@ -46,6 +46,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
 
     private static final String GET_INSTANCE = "$T.getInstance()";
     private static final String NEW_INSTANCE = "$T.newInstance(";
+    private boolean rootGenerated = true;
 
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> serializers = new LinkedList<>();
@@ -61,6 +62,18 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     public FieldSerializerChainBuilder(TypeMirror beanType) {
         this.beanType = beanType;
         this.packageName = null;
+        this.rootGenerated = true;
+    }
+
+    /**
+     * <p>Constructor for FieldSerializerChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     */
+    public FieldSerializerChainBuilder(TypeMirror beanType, boolean rootGenerated) {
+        this.beanType = beanType;
+        this.packageName = null;
+        this.rootGenerated = rootGenerated;
     }
 
     /**
@@ -72,6 +85,19 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     public FieldSerializerChainBuilder(String packageName, TypeMirror beanType) {
         this.beanType = beanType;
         this.packageName = packageName;
+        this.rootGenerated = true;
+    }
+
+    /**
+     * <p>Constructor for FieldSerializerChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
+     */
+    public FieldSerializerChainBuilder(String packageName, TypeMirror beanType, boolean rootGenerated) {
+        this.beanType = beanType;
+        this.packageName = packageName;
+        this.rootGenerated = rootGenerated;
     }
 
     /** {@inheritDoc} */
@@ -113,7 +139,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getCustomSerializer(TypeMirror typeMirror) {
-        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
+        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType)) && rootGenerated) {
             serializers.addLast(ClassName.bestGuess(Type.serializerName(getPackageName(typeMirror), typeMirror)));
         } else {
             if (TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(typeMirror))) {
@@ -121,6 +147,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
             } else {
                 TypeRegistry.registerSerializer(Type.stringifyTypeWithPackage(typeMirror), ClassName.bestGuess(generateCustomSerializer(typeMirror)));
                 serializers.addLast(TypeRegistry.getCustomSerializer(typeMirror));
+                this.rootGenerated = true;
             }
         }
         return "new $T()";

@@ -43,6 +43,7 @@ import static java.util.Objects.nonNull;
 public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private static final String GET_INSTANCE = "$T.getInstance()";
     private static final String NEW_INSTANCE = "$T.newInstance(";
+    private boolean rootGenerated;
 
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> deserializers = new LinkedList<>();
@@ -57,6 +58,18 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     public FieldDeserializersChainBuilder(TypeMirror beanType) {
         this.beanType = beanType;
         this.packageName = null;
+        this.rootGenerated = true;
+    }
+
+    /**
+     * <p>Constructor for FieldDeserializersChainBuilder.</p>
+     *
+     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+     */
+    public FieldDeserializersChainBuilder(TypeMirror beanType, boolean rootGenerated) {
+        this.beanType = beanType;
+        this.packageName = null;
+        this.rootGenerated = rootGenerated;
     }
 
     /**
@@ -68,6 +81,19 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType) {
         this.beanType = beanType;
         this.packageName = packageName;
+        this.rootGenerated = true;
+    }
+
+    /**
+     * <p>Constructor for FieldDeserializersChainBuilder.</p>
+     *
+     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
+     * @param packageName a {@link java.lang.String} object.
+     */
+    public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType, boolean rootGenerated) {
+        this.beanType = beanType;
+        this.packageName = packageName;
+        this.rootGenerated = rootGenerated;
     }
 
     /**
@@ -111,7 +137,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getCustomDeserializer(TypeMirror typeMirror) {
-        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))) {
+        if (Type.stringifyTypeWithPackage(typeMirror).equals(Type.stringifyTypeWithPackage(beanType))  && rootGenerated) {
             deserializers.addLast(ClassName.bestGuess(Type.deserializerName(getPackageName(typeMirror), typeMirror)));
         } else {
             if (TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(typeMirror))) {
@@ -119,6 +145,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
             } else {
                 TypeRegistry.registerDeserializer(Type.stringifyTypeWithPackage(typeMirror), ClassName.bestGuess(generateCustomDeserializer(typeMirror)));
                 deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
+                rootGenerated = true;
             }
         }
         return "new $T()";
