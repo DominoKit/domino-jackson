@@ -117,6 +117,7 @@
                 <configuration>
                     <moduleName>org.dominokit.jacksonapt.GwtJacksonApt</moduleName>
                     <moduleShortName>gwtjacksonapt</moduleShortName>
+                    <relocateSuperSource>true</relocateSuperSource>
                 </configuration>
             </plugin>
         </plugins>
