@@ -191,7 +191,7 @@ public abstract class AbstractJsonMapperGenerator {
         final Map<? extends TypeParameterElement, ? extends TypeMirror> typeParameterMap =
                 IntStream.range(0, typeParameters.size())
                         .boxed()
-                        .collect(Collectors.toMap(i -> typeParameters.get(i), i -> typeArguments.get(i)));
+                        .collect(Collectors.toMap(typeParameters::get, typeArguments::get));
 
         Map<Element, TypeMirror> res = enclosedFields.stream().collect(
                 Collectors.toMap(
@@ -224,12 +224,23 @@ public abstract class AbstractJsonMapperGenerator {
 
     public static class AccessorInfo {
 
-        public boolean present;
-        public String accessor;
+        public Optional<ExecutableElement> method;
+        private String name;
 
-        public AccessorInfo(boolean present, String accessor) {
-            this.present = present;
-            this.accessor = accessor;
+        public AccessorInfo(Optional<ExecutableElement> method) {
+            this.method = method;
+        }
+
+        public AccessorInfo(String name) {
+            this.name = name;
+            this.method = Optional.empty();
+        }
+
+        public String getName(){
+            if(method.isPresent()){
+                return method.get().getSimpleName().toString();
+            }
+            return name;
         }
     }
 

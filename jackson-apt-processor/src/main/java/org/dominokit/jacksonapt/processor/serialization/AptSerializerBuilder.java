@@ -15,28 +15,26 @@
  */
 package org.dominokit.jacksonapt.processor.serialization;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.squareup.javapoet.*;
-
+import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
-import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.BeanIdentityInfo;
 import org.dominokit.jacksonapt.processor.Type;
-import org.dominokit.jacksonapt.ser.bean.AbstractBeanJsonSerializer;
-import org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer;
-import org.dominokit.jacksonapt.ser.bean.SubtypeSerializer;
+import org.dominokit.jacksonapt.ser.bean.*;
 import org.dominokit.jacksonapt.ser.bean.SubtypeSerializer.BeanSubtypeSerializer;
-import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
+import java.util.*;
 
-import java.util.Collections;
-import java.util.IdentityHashMap;
-import java.util.Map;
-
+import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.messager;
 import static org.dominokit.jacksonapt.processor.AbstractMapperProcessor.typeUtils;
+import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.DEFAULT_WILDCARD;
 
 /**
  * <p>AptSerializerBuilder class.</p>
@@ -88,6 +86,119 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
     @Override
     protected MethodSpec initMethod() {
         return buildInitSerializersMethod(beanType);
+    }
+
+    @Override
+    protected Set<MethodSpec> moreMethods() {
+        Set<MethodSpec> methods = new HashSet<>();
+
+        Optional<BeanIdentityInfo> beanIdentityInfo = Type.processIdentity(beanType);
+        if (beanIdentityInfo.isPresent()) {
+            Optional<CodeBlock> serializerType = getIdentitySerializerType(beanIdentityInfo.get());
+            methods.add(buildInitIdentityInfoMethod(serializerType, beanIdentityInfo));
+        }
+
+        return methods;
+    }
+
+    private Optional<CodeBlock> getIdentitySerializerType(BeanIdentityInfo identityInfo) {
+        if (identityInfo.isIdABeanProperty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(new FieldSerializerChainBuilder(identityInfo.getType().get()).getInstance(identityInfo.getType().get()));
+        }
+    }
+
+
+    private MethodSpec buildInitIdentityInfoMethod(Optional<CodeBlock> serializerType, Optional<BeanIdentityInfo> beanIdentityInfo) {
+        return MethodSpec.methodBuilder("initIdentityInfo")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .returns(ParameterizedTypeName.get(ClassName.get(IdentitySerializationInfo.class), TypeName.get(beanType)))
+                .addStatement("return $L",
+                        generateIdentifierSerializationInfo(beanIdentityInfo.get(), serializerType))
+                .build();
+    }
+
+    private TypeSpec generateIdentifierSerializationInfo(BeanIdentityInfo identityInfo,
+                                                         Optional<CodeBlock> serializerType) {
+
+        TypeSpec.Builder builder = TypeSpec
+                .anonymousClassBuilder("$L, $S", identityInfo.isAlwaysAsId(), identityInfo.getPropertyName());
+
+        if (identityInfo.isIdABeanProperty()) {
+
+            Map<Element, TypeMirror> fieldsMap = orderedFields();
+            Optional<Map.Entry<Element, TypeMirror>> propertyEntry = fieldsMap
+                    .entrySet()
+                    .stream()
+                    .filter(entry -> entry.getKey().getSimpleName().toString().equals(identityInfo.getPropertyName()))
+                    .findFirst();
+            if (propertyEntry.isPresent()) {
+                builder.superclass(ParameterizedTypeName.get(ClassName.get(PropertyIdentitySerializationInfo.class), TypeName.get(beanType), Type.wrapperType(propertyEntry.get().getValue())));
+                buildBeanPropertySerializerBody(builder, propertyEntry.get());
+            } else {
+                messager.printMessage(Diagnostic.Kind.ERROR, "Property [" + identityInfo.getPropertyName() + "] not found in type [" + beanType.toString() + "]!.");
+            }
+
+        } else {
+            TypeMirror qualifiedType = identityInfo.getType().get();
+
+            builder.superclass(ParameterizedTypeName.get(ClassName.get(AbstractIdentitySerializationInfo.class), TypeName.get(beanType), TypeName.get(qualifiedType)));
+
+            builder.addMethod(MethodSpec.methodBuilder("newSerializer")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addAnnotation(Override.class)
+                    .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD))
+                    .addStatement("return $L", serializerType.get())
+                    .build());
+
+            TypeName generatorType = ParameterizedTypeName.get(ClassName.get(ObjectIdGenerator.class), TypeName.get(qualifiedType));
+            TypeName returnType = ParameterizedTypeName.get(ClassName.get(ObjectIdSerializer.class), TypeName.get(qualifiedType));
+
+            builder.addMethod(MethodSpec.methodBuilder("getObjectId")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addAnnotation(Override.class)
+                    .returns(returnType)
+                    .addParameter(TypeName.get(beanType), "bean")
+                    .addParameter(JsonSerializationContext.class, "ctx")
+                    .addStatement("$T generator = new $T().forScope($T.class)",
+                            generatorType, identityInfo.getGenerator(), identityInfo.getScope().get())
+                    .addStatement("$T scopedGen = ctx.findObjectIdGenerator(generator)", generatorType)
+                    .beginControlFlow("if (null == scopedGen)")
+                    .addStatement("scopedGen = generator.newForSerialization(ctx)")
+                    .addStatement("ctx.addGenerator(scopedGen)")
+                    .endControlFlow()
+                    .addStatement("return new $T(scopedGen.generateId(bean), getSerializer())", returnType)
+                    .build());
+        }
+
+        return builder.build();
+    }
+
+
+    private void buildBeanPropertySerializerBody(TypeSpec.Builder builder, Map.Entry<Element, TypeMirror> property) {
+
+        CodeBlock serializerType = new FieldSerializerChainBuilder(property.getValue()).getInstance(property.getValue());
+        String paramName = "bean";
+        AccessorInfo accessorInfo = new SerializerBuilder(typeUtils, beanType, packageName, property.getKey(), property.getValue()).getterInfo();
+
+        MethodSpec.Builder newSerializerMethodBuilder = MethodSpec.methodBuilder("newSerializer")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .addStatement("return $L", serializerType);
+            newSerializerMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD));
+        builder.addMethod(newSerializerMethodBuilder.build());
+
+        builder.addMethod(MethodSpec.methodBuilder("getValue")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(Type.wrapperType(property.getValue()))
+                .addParameter(TypeName.get(beanType), paramName)
+                .addParameter(JsonSerializationContext.class, "ctx")
+                .addStatement("return $L.$L()", paramName, accessorInfo.getName())
+                .build()
+        );
     }
 
     /**
@@ -165,7 +276,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
     }
 
     @Override
-    protected Class<?> getMapperType(){
+    protected Class<?> getMapperType() {
         return TypeSerializationInfo.class;
     }
 }

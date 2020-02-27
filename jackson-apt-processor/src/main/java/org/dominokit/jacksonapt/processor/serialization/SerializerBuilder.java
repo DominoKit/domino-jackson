@@ -37,6 +37,8 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 
+import java.util.Optional;
+
 import static java.util.Objects.nonNull;
 
 class SerializerBuilder extends AccessorsFilter {
@@ -76,7 +78,7 @@ class SerializerBuilder extends AccessorsFilter {
 
         methodBuilder
                 .addParameter(JsonSerializationContext.class, "ctx")
-                .addStatement("return $L", paramBean + "." + accessorInfo.accessor + (accessorInfo.present ? "()" : ""));
+                .addStatement("return $L", paramBean + "." + accessorInfo.getName() + (accessorInfo.method.isPresent() ? "()" : ""));
 
         builder.addMethod(methodBuilder.build());
 
@@ -141,10 +143,11 @@ class SerializerBuilder extends AccessorsFilter {
     AbstractJsonMapperGenerator.AccessorInfo getterInfo() {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
         String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
-        if (getAccessors(beanType).contains(prefix + upperCaseFirstLetter)) {
-            return new AbstractJsonMapperGenerator.AccessorInfo(true, prefix + upperCaseFirstLetter);
-        }
-        return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
+        Optional<AbstractJsonMapperGenerator.AccessorInfo> accessor = getAccessors(beanType)
+                .stream()
+                .filter(accessorInfo -> accessorInfo.getName().equals(prefix + upperCaseFirstLetter))
+                .findFirst();
+        return accessor.orElseGet(() -> new AbstractJsonMapperGenerator.AccessorInfo(field.getSimpleName().toString()));
     }
 
     private String upperCaseFirstLetter(String name) {

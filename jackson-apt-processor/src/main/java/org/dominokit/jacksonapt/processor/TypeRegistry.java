@@ -63,6 +63,8 @@ public final class TypeRegistry {
     private static Map<String, Class> collectionsDeserializers = new HashMap<>();
     private static Map<String, Class> mapDeserializers = new HashMap<>();
     private static Map<String, ClassMapper> customMappers = new HashMap<>();
+    private static Set<String> inActiveGenSerializers = new HashSet<>();
+    private static Set<String> inActiveGenDeserializers = new HashSet<>();
 
     static final ClassMapperFactory MAPPER = new ClassMapperFactory();
 
@@ -970,6 +972,30 @@ public final class TypeRegistry {
             registry.put(this.clazz, this);
             return this;
         }
+    }
+
+    public static void addInActiveGenSerializer(TypeMirror typeMirror){
+        inActiveGenSerializers.add(Type.stringifyTypeWithPackage(typeMirror));
+    }
+
+    public static void addInActiveGenDeserializer(TypeMirror typeMirror){
+        inActiveGenDeserializers.add(Type.stringifyTypeWithPackage(typeMirror));
+    }
+
+    public static void removeInActiveGenSerializer(TypeMirror typeMirror){
+        inActiveGenSerializers.remove(Type.stringifyTypeWithPackage(typeMirror));
+    }
+
+    public static void removeInActiveGenDeserializer(TypeMirror typeMirror){
+        inActiveGenDeserializers.remove(Type.stringifyTypeWithPackage(typeMirror));
+    }
+
+    public static boolean isInActiveGenSerializer(TypeMirror typeMirror){
+        return inActiveGenSerializers.contains(Type.stringifyTypeWithPackage(typeMirror));
+    }
+
+    public static boolean isInActiveGenDeserializer(TypeMirror typeMirror){
+        return inActiveGenDeserializers.contains(Type.stringifyTypeWithPackage(typeMirror));
     }
 
     private static class TypeSerializerNotFoundException extends RuntimeException {

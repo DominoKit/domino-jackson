@@ -52,7 +52,7 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
     private void generateMappers(Element element) {
         try {
-            new BeanMapperGenerator().generate(element);;
+            new BeanMapperGenerator().generate(element);
         } catch (Exception e) {
             handleError(e);
         }

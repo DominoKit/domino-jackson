@@ -160,7 +160,13 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
-        return Type.generateDeserializer(getPackageName(typeMirror), typeMirror);
+        if(TypeRegistry.containsDeserializer(typeMirror) || TypeRegistry.isInActiveGenDeserializer(typeMirror)){
+            return Type.deserializerName(getPackageName(typeMirror), typeMirror);
+        }
+        TypeRegistry.addInActiveGenDeserializer(typeMirror);
+        String deserializerName = Type.generateDeserializer(getPackageName(typeMirror), typeMirror);
+        TypeRegistry.removeInActiveGenDeserializer(typeMirror);
+        return deserializerName;
     }
 
     private String getEnumDeserializer(TypeMirror typeMirror) {

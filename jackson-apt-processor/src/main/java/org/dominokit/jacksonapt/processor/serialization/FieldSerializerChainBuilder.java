@@ -162,7 +162,13 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String generateCustomSerializer(TypeMirror typeMirror) {
-    	return Type.generateSerializer(getPackageName(typeMirror), typeMirror);
+        if(TypeRegistry.containsSerializer(typeMirror) || TypeRegistry.isInActiveGenSerializer(typeMirror)){
+            return Type.serializerName(getPackageName(typeMirror), typeMirror);
+        }
+        TypeRegistry.addInActiveGenSerializer(typeMirror);
+        String serializerName = Type.generateSerializer(getPackageName(typeMirror), typeMirror);
+        TypeRegistry.removeInActiveGenSerializer(typeMirror);
+        return serializerName;
     }
 
     private String getEnumSerializer() {

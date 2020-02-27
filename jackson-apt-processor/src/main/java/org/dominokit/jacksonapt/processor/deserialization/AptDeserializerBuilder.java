@@ -30,6 +30,7 @@ import org.dominokit.jacksonapt.deser.bean.SubtypeDeserializer.BeanSubtypeDeseri
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
 import org.dominokit.jacksonapt.processor.AbstractMapperProcessor;
+import org.dominokit.jacksonapt.processor.BeanIdentityInfo;
 import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
@@ -168,11 +169,11 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         Set<MethodSpec> methods = new HashSet<>();
         // Object instance can be created by InstanceBuilder
         // only for non-abstract classes
-        if (
-                beanType.getKind() == TypeKind.DECLARED
-                        && ((DeclaredType) beanType).asElement().getKind() == ElementKind.CLASS
-                        && !((DeclaredType) beanType).asElement().getModifiers().contains(Modifier.ABSTRACT))
+        if (beanType.getKind() == TypeKind.DECLARED
+                && ((DeclaredType) beanType).asElement().getKind() == ElementKind.CLASS
+                && !((DeclaredType) beanType).asElement().getModifiers().contains(Modifier.ABSTRACT)) {
             methods.add(buildInitInstanceBuilderMethod());
+        }
 
         MethodSpec initIgnoreFieldsMethod = buildInitIgnoreFields(beanType);
         if (nonNull(initIgnoreFieldsMethod)) {
@@ -185,7 +186,52 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             methods.add(buildIgnoreUnknownMethod(ignorePropertiesAnnotation.ignoreUnknown()));
         }
 
+        Optional<BeanIdentityInfo> beanIdentityInfo = Type.processIdentity(beanType);
+        if(beanIdentityInfo.isPresent()){
+            methods.add(buildInitIdentityInfoMethod(beanIdentityInfo.get()));
+        }
+
         return methods;
+    }
+
+    private MethodSpec buildInitIdentityInfoMethod(BeanIdentityInfo identityInfo) {
+
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("initIdentityInfo")
+                .addModifiers(Modifier.PROTECTED)
+                .addAnnotation(Override.class)
+                .returns(ParameterizedTypeName.get(ClassName.get(IdentityDeserializationInfo.class), TypeName.get(beanType)));
+
+        if (identityInfo.isIdABeanProperty()) {
+            builder.addStatement("return $L", buildPropertyIdentifierDeserializationInfo(beanType, identityInfo));
+        } else {
+            builder.addStatement("return $L",
+                    buildIdentifierDeserializationInfo(beanType, identityInfo,
+                            new FieldDeserializersChainBuilder(identityInfo.getType().get()).getInstance(identityInfo.getType().get())));
+        }
+
+        return builder.build();
+    }
+
+
+    private TypeSpec buildIdentifierDeserializationInfo(TypeMirror type, BeanIdentityInfo identityInfo,
+                                                        CodeBlock deserializerType) {
+        return TypeSpec.anonymousClassBuilder("$S, $T.class, $T.class",
+                identityInfo.getPropertyName(), identityInfo.getGenerator(), identityInfo.getScope().get())
+                .superclass(ParameterizedTypeName.get(ClassName.get(AbstractIdentityDeserializationInfo.class), TypeName.get(type), TypeName.get(identityInfo.getType().get())))
+                .addMethod(MethodSpec.methodBuilder("newDeserializer")
+                        .addModifiers(Modifier.PROTECTED)
+                        .addAnnotation(Override.class)
+                        .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), DEFAULT_WILDCARD))
+                        .addStatement("return $L", deserializerType)
+                        .build()
+                ).build();
+    }
+
+    private CodeBlock buildPropertyIdentifierDeserializationInfo(TypeMirror type, BeanIdentityInfo identityInfo) {
+        return CodeBlock.builder().
+                add("new $T($S, $T.class, $T.class)", ParameterizedTypeName.get(ClassName.get(PropertyIdentityDeserializationInfo.class), TypeName.get(type)),
+                        identityInfo.getPropertyName(), identityInfo.getGenerator(), identityInfo.getScope().get())
+                .build();
     }
 
     private boolean isUseJsonCreator() {

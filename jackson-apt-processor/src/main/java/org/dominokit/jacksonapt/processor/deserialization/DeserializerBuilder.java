@@ -22,7 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.BeanPropertyDeserializer;
-import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator;
+import org.dominokit.jacksonapt.processor.AbstractJsonMapperGenerator.AccessorInfo;
 import org.dominokit.jacksonapt.processor.AccessorsFilter;
 import org.dominokit.jacksonapt.processor.ObjectMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
@@ -31,6 +31,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
+import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
@@ -68,11 +69,11 @@ class DeserializerBuilder extends AccessorsFilter {
                 .addAnnotation(Override.class)
                 .addParameter(ClassName.get(beanType), paramBean);
 
-        AbstractJsonMapperGenerator.AccessorInfo accessorInfo = setterInfo(field);
+        AccessorInfo accessorInfo = setterInfo(field);
 
         methodBuilder.addParameter(Type.wrapperType(fieldType), paramValue)
                 .addParameter(JsonDeserializationContext.class, "ctx")
-                .addStatement("$L", paramBean + "." + accessorInfo.accessor + (accessorInfo.present ? "(" : "=") + paramValue + (accessorInfo.present ? ")" : ""));
+                .addStatement("$L", paramBean + "." + accessorInfo.getName() + (accessorInfo.method.isPresent() ? "(" : "=") + paramValue + (accessorInfo.method.isPresent() ? ")" : ""));
 
         builder.addMethod(methodBuilder.build());
 
@@ -102,12 +103,15 @@ class DeserializerBuilder extends AccessorsFilter {
                 .build();
     }
 
-    private AbstractJsonMapperGenerator.AccessorInfo setterInfo(Element field) {
+    private AccessorInfo setterInfo(Element field) {
         final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
-        if (getAccessors(beanType).contains("set" + upperCaseFirstLetter)) {
-            return new AbstractJsonMapperGenerator.AccessorInfo(true, "set" + upperCaseFirstLetter);
-        }
-        return new AbstractJsonMapperGenerator.AccessorInfo(false, field.getSimpleName().toString());
+
+        Optional<AccessorInfo> accessor = getAccessors(beanType)
+                .stream()
+                .filter(accessorInfo -> accessorInfo.getName().equals("set" + upperCaseFirstLetter))
+                .findFirst();
+
+        return accessor.orElseGet(() -> new AccessorInfo(field.getSimpleName().toString()));
     }
 
     private String upperCaseFirstLetter(String name) {

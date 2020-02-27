@@ -33,9 +33,10 @@ public class SerializerGenerator {
         if (!TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(beanType))) {
             try {
             	generateSubTypeSerializers(packageName, beanType);
-            	
+                TypeRegistry.addInActiveGenSerializer(beanType);
                 new AptSerializerBuilder(packageName, beanType, ObjectMapperProcessor.filer).generate();
                 TypeRegistry.registerSerializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(serializerName));
+                TypeRegistry.removeInActiveGenSerializer(beanType);
             } catch (IOException e) {
                 throw new SerializerGenerationFailedException(beanType.toString());
             }
@@ -51,7 +52,7 @@ public class SerializerGenerator {
         	// not allow to get interface(s) for given class. That means even if we have 
         	// beanType for base interface (i.e. annotated with @JsonTypeInfo and @JsonSubTypes)
         	// with specified type arguments, we can not match them against the 
-        	// type parameters of the subtype retrieved by @JsonSubTypess
+        	// type parameters of the subtype retrieved by @JsonSubTypes
         	if (
         			!((DeclaredType)beanType).getTypeArguments().isEmpty()
         			|| !((DeclaredType)((DeclaredType)subtypeEntry.getValue()).asElement().asType()).getTypeArguments().isEmpty())

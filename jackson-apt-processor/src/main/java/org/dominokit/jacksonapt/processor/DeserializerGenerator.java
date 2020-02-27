@@ -30,12 +30,14 @@ public class DeserializerGenerator {
      */
     public String generate(String packageName, TypeMirror beanType) {
         String deserializerName = Type.deserializerName(packageName, beanType);
-        
+
         if (!TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {
             try {
             	generateSubTypesDeserializers(beanType, packageName);
+                TypeRegistry.addInActiveGenDeserializer(beanType);
                 new AptDeserializerBuilder(packageName, beanType, filer).generate();
                 TypeRegistry.registerDeserializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(deserializerName));
+                TypeRegistry.removeInActiveGenDeserializer(beanType);
             } catch (IOException e) {
                 throw new DeserializerGenerator.DeserializerGenerationFailedException(beanType.toString());
             }

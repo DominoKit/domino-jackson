@@ -33,6 +33,8 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
     public static Filer filer;
     /** Constant <code>elementUtils</code> */
     public static Elements elementUtils;
+
+    public static ProcessingEnvironment environment;
     protected Set<? extends Element> mappers;
     protected Set<? extends Element> readers;
     protected Set<? extends Element> writers;
@@ -41,6 +43,7 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
+        environment = processingEnv;
         filer = processingEnv.getFiler();
         messager = processingEnv.getMessager();
         typeUtils = processingEnv.getTypeUtils();

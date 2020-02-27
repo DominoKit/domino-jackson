@@ -451,7 +451,7 @@ public abstract class AbstractBeanJsonDeserializer<T> extends JsonDeserializer<T
         BeanPropertyDeserializer<T, ?> property = deserializers.get(propertyName);
         if (null == property) {
             if (!ignoreUnknown && ctx.isFailOnUnknownProperties() && null == anySetterDeserializer) {
-                throw ctx.traceError("Unknown property '" + propertyName + "'");
+                throw ctx.traceError("Unknown property '" + propertyName + "' in (de)serializer "+this.getClass().getCanonicalName());
             }
         }
         return property;
