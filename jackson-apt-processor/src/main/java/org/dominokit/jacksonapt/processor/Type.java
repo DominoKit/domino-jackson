@@ -549,9 +549,9 @@ public class Type {
         SubTypesInfo subTypeInfo = SubTypesInfo.emtpy();
         if (type.getKind() == TypeKind.DECLARED) {
             TypeElement beanElement = (TypeElement) ((DeclaredType) type).asElement();
-            JsonTypeInfo typeInfo = beanElement.getAnnotation(com.fasterxml.jackson.annotation.JsonTypeInfo.class);
+            JsonTypeInfo typeInfo = beanElement.getAnnotation(JsonTypeInfo.class);
             if (typeInfo != null && typeInfo.use() == JsonTypeInfo.Id.NAME) {
-                if (beanElement.getAnnotation(com.fasterxml.jackson.annotation.JsonSubTypes.class) != null) {
+                if (beanElement.getAnnotation(JsonSubTypes.class) != null) {
                     subTypeInfo = new SubTypesInfo(
                             typeInfo.include(),
                             typeInfo.property().isEmpty() ?
