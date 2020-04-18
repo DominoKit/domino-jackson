@@ -85,6 +85,19 @@ public final class ServerJacksonJsonDeserializerParameters implements JsonDeseri
      */
     private TypeDeserializationInfo typeInfo;
 
+    public ServerJacksonJsonDeserializerParameters() {
+    }
+
+    public ServerJacksonJsonDeserializerParameters(JsonDeserializerParameters jsonDeserializerParameters) {
+        this.identityInfo = jsonDeserializerParameters.getIdentityInfo();
+        this.ignoredProperties = jsonDeserializerParameters.getIgnoredProperties();
+        this.locale = jsonDeserializerParameters.getLocale();
+        this.pattern = jsonDeserializerParameters.getPattern();
+        this.shape = jsonDeserializerParameters.getShape();
+        this.typeInfo = jsonDeserializerParameters.getTypeInfo();
+    }
+
+
     /**
      * {@inheritDoc}
      *

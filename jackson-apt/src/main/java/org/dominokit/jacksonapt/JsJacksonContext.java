@@ -77,11 +77,11 @@ public class JsJacksonContext implements JacksonContext{
 
     @Override
     public JsonSerializerParameters newSerializerParameters() {
-        return new GwtJacksonJsonSerializerParameters();
+        return new GwtJacksonJsonSerializerParameters(defaultSerializerParameters());
     }
 
     @Override
     public JsonDeserializerParameters newDeserializerParameters() {
-        return new GwtJacksonJsonDeserializerParameters();
+        return new GwtJacksonJsonDeserializerParameters(defaultDeserializerParameters());
     }
 }

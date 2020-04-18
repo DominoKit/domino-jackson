@@ -19,9 +19,12 @@ package org.dominokit.jacksonapt;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo;
 import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
+import org.gwtproject.i18n.client.TimeZone;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static java.util.Objects.nonNull;
 
 /**
  * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonIgnoreProperties}. They are specific to one
@@ -83,6 +86,18 @@ public final class GwtJacksonJsonDeserializerParameters implements JsonDeseriali
      * Bean type informations
      */
     private TypeDeserializationInfo typeInfo;
+
+    public GwtJacksonJsonDeserializerParameters() {
+    }
+
+    public GwtJacksonJsonDeserializerParameters(JsonDeserializerParameters jsonDeserializerParameters) {
+        this.identityInfo = jsonDeserializerParameters.getIdentityInfo();
+        this.ignoredProperties = jsonDeserializerParameters.getIgnoredProperties();
+        this.locale = jsonDeserializerParameters.getLocale();
+        this.pattern = jsonDeserializerParameters.getPattern();
+        this.shape = jsonDeserializerParameters.getShape();
+        this.typeInfo = jsonDeserializerParameters.getTypeInfo();
+    }
 
     /**
      * {@inheritDoc}

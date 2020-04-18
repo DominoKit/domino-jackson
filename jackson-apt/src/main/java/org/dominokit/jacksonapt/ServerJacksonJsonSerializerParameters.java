@@ -20,10 +20,13 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo;
 import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
+import org.gwtproject.i18n.client.TimeZone;
 
 import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.Set;
+
+import static java.util.Objects.nonNull;
 
 /**
  * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonFormat}. They are specific to one
@@ -90,6 +93,23 @@ public final class ServerJacksonJsonSerializerParameters implements JsonSerializ
      * If true, all the properties of an object will be serialized inside the current object.
      */
     private boolean unwrapped = false;
+
+    public ServerJacksonJsonSerializerParameters() {
+    }
+
+    public ServerJacksonJsonSerializerParameters(JsonSerializerParameters jsonSerializerParameters) {
+        this.identityInfo = jsonSerializerParameters.getIdentityInfo();
+        this.ignoredProperties = jsonSerializerParameters.getIgnoredProperties();
+        this.include = jsonSerializerParameters.getInclude();
+        this.locale = jsonSerializerParameters.getLocale();
+        this.pattern = jsonSerializerParameters.getPattern();
+        this.shape = jsonSerializerParameters.getShape();
+        if(nonNull(jsonSerializerParameters.getTimezone())) {
+            this.timezone = (ZoneId) jsonSerializerParameters.getTimezone();
+        }
+        this.typeInfo = jsonSerializerParameters.getTypeInfo();
+        this.unwrapped = jsonSerializerParameters.isUnwrapped();
+    }
 
     /**
      * {@inheritDoc}

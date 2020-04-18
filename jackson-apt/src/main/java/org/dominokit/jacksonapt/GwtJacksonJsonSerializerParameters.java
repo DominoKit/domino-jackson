@@ -25,6 +25,8 @@ import org.gwtproject.i18n.client.TimeZone;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.Objects.nonNull;
+
 /**
  * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonFormat}. They are specific to one
  * {@link org.dominokit.jacksonapt.JsonSerializer} and that's why they are not contained inside {@link org.dominokit.jacksonapt.JsonSerializationContext}.
@@ -89,6 +91,23 @@ public final class GwtJacksonJsonSerializerParameters implements JsonSerializerP
      * If true, all the properties of an object will be serialized inside the current object.
      */
     private boolean unwrapped = false;
+
+    public GwtJacksonJsonSerializerParameters() {
+    }
+
+    public GwtJacksonJsonSerializerParameters(JsonSerializerParameters jsonSerializerParameters) {
+        this.identityInfo = jsonSerializerParameters.getIdentityInfo();
+        this.ignoredProperties = jsonSerializerParameters.getIgnoredProperties();
+        this.include = jsonSerializerParameters.getInclude();
+        this.locale = jsonSerializerParameters.getLocale();
+        this.pattern = jsonSerializerParameters.getPattern();
+        this.shape = jsonSerializerParameters.getShape();
+        if(nonNull(jsonSerializerParameters.getTimezone())) {
+            this.timezone = (TimeZone) jsonSerializerParameters.getTimezone();
+        }
+        this.typeInfo = jsonSerializerParameters.getTypeInfo();
+        this.unwrapped = jsonSerializerParameters.isUnwrapped();
+    }
 
     /**
      * {@inheritDoc}
