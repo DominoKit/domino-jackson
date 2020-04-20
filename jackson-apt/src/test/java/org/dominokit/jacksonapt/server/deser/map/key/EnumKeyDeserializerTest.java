@@ -33,7 +33,7 @@ public class EnumKeyDeserializerTest extends AbstractKeyDeserializerTest<EnumKey
 
     @Override
     protected EnumKeyDeserializer<EnumTest> createDeserializer() {
-        return EnumKeyDeserializer.newInstance(EnumTest.class);
+        return EnumKeyDeserializer.newInstance(EnumTest.class, EnumTest.values());
     }
 
     @Override

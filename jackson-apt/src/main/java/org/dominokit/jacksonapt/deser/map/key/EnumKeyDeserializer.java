@@ -33,27 +33,29 @@ public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserialize
      * @param enumClass class of the enumeration
      * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer}
      */
-    public static <E extends Enum<E>> EnumKeyDeserializer<E> newInstance(Class<E> enumClass) {
-        return new EnumKeyDeserializer<E>(enumClass);
+    public static <E extends Enum<E>> EnumKeyDeserializer<E> newInstance(Class<E> enumClass, E[] values) {
+        return new EnumKeyDeserializer<E>(enumClass, values);
     }
 
     private final Class<E> enumClass;
+    private final E[] values;
 
     /**
      * @param enumClass class of the enumeration
      */
-    private EnumKeyDeserializer(Class<E> enumClass) {
+    private EnumKeyDeserializer(Class<E> enumClass, E[] values) {
         if (null == enumClass) {
             throw new IllegalArgumentException("enumClass cannot be null");
         }
         this.enumClass = enumClass;
+        this.values = values;
     }
 
     /** {@inheritDoc} */
     @Override
     protected E doDeserialize(String key, JsonDeserializationContext ctx) {
         try {
-            return Enum.valueOf(enumClass, key);
+            return getEnum(values, key);
         } catch (IllegalArgumentException ex) {
             if (ctx.isReadUnknownEnumValuesAsNull()) {
                 return null;
@@ -62,6 +64,14 @@ public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserialize
         }
     }
 
+    public <E extends Enum<E>> E getEnum(E[] values, String name){
+        for(int i=0;i<values.length;i++){
+            if(values[i].name().equals(name)){
+                return values[i];
+            }
+        }
+        throw new IllegalArgumentException("["+name + "] is not a valid enum constant for Enum type "+ getEnumClass().getName());
+    }
     /**
      * <p>Getter for the field <code>enumClass</code>.</p>
      *

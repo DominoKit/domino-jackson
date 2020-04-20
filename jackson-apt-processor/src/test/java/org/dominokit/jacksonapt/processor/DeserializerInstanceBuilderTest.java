@@ -95,7 +95,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
     @Test
     public void testEnumTypeField() throws Exception {
-        addFieldTest("enumField", result -> assertEquals(buildTestString("$T.newInstance($T.class)", EnumJsonDeserializer.class, AnEnum.class), result));
+        addFieldTest("enumField", result -> assertEquals(buildTestString("$T.newInstance($T.class,$T.values())", EnumJsonDeserializer.class, AnEnum.class, AnEnum.class), result));
         runTests();
     }
 
@@ -129,7 +129,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         addFieldTest("timestampFieldArray", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), ($T<$T>) $T[]::new)", ArrayJsonDeserializer.class, SqlTimestampJsonDeserializer.class, ArrayCreator.class, Timestamp.class, Timestamp.class), result));
         addFieldTest("voidFieldArray", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), ($T<$T>) $T[]::new)", ArrayJsonDeserializer.class, VoidJsonDeserializer.class, ArrayCreator.class, Void.class, Void.class), result));
 
-        addFieldTest("enumArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class), ($T<$T>) $T[]::new)", ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, ArrayCreator.class, AnEnum.class, AnEnum.class), result));
+        addFieldTest("enumArray", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class,$T.values()), ($T<$T>) $T[]::new)", ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class, ArrayCreator.class, AnEnum.class, AnEnum.class), result));
 
         runTests();
 
@@ -165,7 +165,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         addFieldTest("timestampFieldArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), ($T<$T>) (first, second) -> new $T[first][second])", Array2dJsonDeserializer.class, SqlTimestampJsonDeserializer.class, Array2dCreator.class, Timestamp.class, Timestamp.class), result));
         addFieldTest("voidFieldArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), ($T<$T>) (first, second) -> new $T[first][second])", Array2dJsonDeserializer.class, VoidJsonDeserializer.class, Array2dCreator.class, Void.class, Void.class), result));
 
-        addFieldTest("enumArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class), ($T<$T>) (first, second) -> new $T[first][second])", Array2dJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, Array2dCreator.class, AnEnum.class, AnEnum.class), result));
+        addFieldTest("enumArray2d", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class,$T.values()), ($T<$T>) (first, second) -> new $T[first][second])", Array2dJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class, Array2dCreator.class, AnEnum.class, AnEnum.class), result));
 
         runTests();
     }
@@ -181,7 +181,7 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         addFieldTest("abstractSet", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", AbstractSetJsonDeserializer.class, StringJsonDeserializer.class), result));
         addFieldTest("arrayList", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", ArrayListJsonDeserializer.class, StringJsonDeserializer.class), result));
         addFieldTest("collection", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", CollectionJsonDeserializer.class, StringJsonDeserializer.class), result));
-        addFieldTest("enumSet", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class))", EnumSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class), result));
+        addFieldTest("enumSet", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class,$T.values()))", EnumSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class), result));
         addFieldTest("hashSet", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", HashSetJsonDeserializer.class, StringJsonDeserializer.class), result));
         addFieldTest("linkedHashSet", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", LinkedHashSetJsonDeserializer.class, StringJsonDeserializer.class), result));
         addFieldTest("linkedList", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance())", LinkedListJsonDeserializer.class, StringJsonDeserializer.class), result));
@@ -219,8 +219,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 ArrayCreator.class, Double.class, Double.class), result));
 
         addFieldTest("abstractSetArray", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.newInstance($T.newInstance($T.class), ($T<$T>) $T[]::new))",
-                AbstractSetJsonDeserializer.class, ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class,
+                "$T.newInstance($T.newInstance($T.newInstance($T.class,$T.values()), ($T<$T>) $T[]::new))",
+                AbstractSetJsonDeserializer.class, ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class,
                 ArrayCreator.class, AnEnum.class, AnEnum.class), result));
 
         addFieldTest("arrayListArray", result -> assertEquals(buildTestString(
@@ -314,8 +314,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 Array2dCreator.class, Double.class, Double.class), result));
 
         addFieldTest("abstractSetArray2d", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.newInstance($T.newInstance($T.class), ($T<$T>) (first, second) -> new $T[first][second]))",
-                AbstractSetJsonDeserializer.class, Array2dJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class,
+                "$T.newInstance($T.newInstance($T.newInstance($T.class,$T.values()), ($T<$T>) (first, second) -> new $T[first][second]))",
+                AbstractSetJsonDeserializer.class, Array2dJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class,
                 Array2dCreator.class, AnEnum.class, AnEnum.class), result));
 
         addFieldTest("arrayListArray2d", result -> assertEquals(buildTestString(
@@ -403,8 +403,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 ArrayCreator.class, AbstractSequentialList.class, Double.class, AbstractSequentialList.class), result));
 
         addFieldTest("arrayAbstractSet", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.newInstance($T.newInstance($T.class)), ($T<$T<$T>>) $T[]::new)",
-                ArrayJsonDeserializer.class, AbstractSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class,
+                "$T.newInstance($T.newInstance($T.newInstance($T.class,$T.values())), ($T<$T<$T>>) $T[]::new)",
+                ArrayJsonDeserializer.class, AbstractSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class,
                 ArrayCreator.class, AbstractSet.class, AnEnum.class, AbstractSet.class), result));
 
         addFieldTest("arrayArrayList", result -> assertEquals(buildTestString(
@@ -478,8 +478,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 Array2dCreator.class, AbstractSequentialList.class, Double.class, AbstractSequentialList.class), result));
 
         addFieldTest("array2dAbstractSet", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.newInstance($T.newInstance($T.class)), ($T<$T<$T>>) (first, second) -> new $T[first][second])",
-                Array2dJsonDeserializer.class, AbstractSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class,
+                "$T.newInstance($T.newInstance($T.newInstance($T.class,$T.values())), ($T<$T<$T>>) (first, second) -> new $T[first][second])",
+                Array2dJsonDeserializer.class, AbstractSetJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class,
                 Array2dCreator.class, AbstractSet.class, AnEnum.class, AbstractSet.class), result));
 
         addFieldTest("array2dArrayList", result -> assertEquals(buildTestString(
@@ -564,10 +564,10 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
     @Test
     public void testMapTypeField() throws Exception {
         addFieldTest("abstractMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", AbstractMapJsonDeserializer.class, StringKeyDeserializer.class, StringJsonDeserializer.class), result));
-        addFieldTest("enumMap", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class), $T.getInstance())", EnumMapJsonDeserializer.class, EnumKeyDeserializer.class, AnEnum.class, IntegerJsonDeserializer.class), result));
+        addFieldTest("enumMap", result -> assertEquals(buildTestString("$T.newInstance($T.newInstance($T.class,$T.values()), $T.getInstance())", EnumMapJsonDeserializer.class, EnumKeyDeserializer.class, AnEnum.class, AnEnum.class, IntegerJsonDeserializer.class), result));
         addFieldTest("hashMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", HashMapJsonDeserializer.class, BaseNumberKeyDeserializer.IntegerKeyDeserializer.class, DoubleJsonDeserializer.class), result));
         addFieldTest("identityHashMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", IdentityHashMapJsonDeserializer.class, BaseNumberKeyDeserializer.LongKeyDeserializer.class, DateJsonDeserializer.class), result));
-        addFieldTest("linkedHashMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.newInstance($T.class))", LinkedHashMapJsonDeserializer.class, BaseNumberKeyDeserializer.DoubleKeyDeserializer.class, EnumJsonDeserializer.class, AnEnum.class), result));
+        addFieldTest("linkedHashMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.newInstance($T.class,$T.values()))", LinkedHashMapJsonDeserializer.class, BaseNumberKeyDeserializer.DoubleKeyDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class), result));
         addFieldTest("map", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", MapJsonDeserializer.class, BaseNumberKeyDeserializer.ShortKeyDeserializer.class, SqlTimeJsonDeserializer.class), result));
         addFieldTest("sortedMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", SortedMapJsonDeserializer.class, StringKeyDeserializer.class, ShortJsonDeserializer.class), result));
         addFieldTest("treeMap", result -> assertEquals(buildTestString("$T.newInstance($T.getInstance(), $T.getInstance())", TreeMapJsonDeserializer.class, StringKeyDeserializer.class, BigIntegerJsonDeserializer.class), result));
@@ -583,8 +583,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 ArrayCreator.class, String.class, String.class), result));
 
         addFieldTest("enumMapArray", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.newInstance($T.class), $T.newInstance($T.getInstance(), ($T<$T>) $T[]::new))",
-                EnumMapJsonDeserializer.class, EnumKeyDeserializer.class, AnEnum.class, ArrayJsonDeserializer.class, IntegerJsonDeserializer.class,
+                "$T.newInstance($T.newInstance($T.class,$T.values()), $T.newInstance($T.getInstance(), ($T<$T>) $T[]::new))",
+                EnumMapJsonDeserializer.class, EnumKeyDeserializer.class, AnEnum.class, AnEnum.class, ArrayJsonDeserializer.class, IntegerJsonDeserializer.class,
                 ArrayCreator.class, Integer.class, Integer.class), result));
 
         addFieldTest("hashMapArray", result -> assertEquals(buildTestString(
@@ -598,8 +598,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
                 ArrayCreator.class, Date.class, Date.class), result));
 
         addFieldTest("linkedHashMapArray", result -> assertEquals(buildTestString(
-                "$T.newInstance($T.getInstance(), $T.newInstance($T.newInstance($T.class), ($T<$T>) $T[]::new))",
-                LinkedHashMapJsonDeserializer.class, BaseNumberKeyDeserializer.DoubleKeyDeserializer.class, ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class,
+                "$T.newInstance($T.getInstance(), $T.newInstance($T.newInstance($T.class,$T.values()), ($T<$T>) $T[]::new))",
+                LinkedHashMapJsonDeserializer.class, BaseNumberKeyDeserializer.DoubleKeyDeserializer.class, ArrayJsonDeserializer.class, EnumJsonDeserializer.class, AnEnum.class, AnEnum.class,
                 ArrayCreator.class, AnEnum.class, AnEnum.class), result));
 
         addFieldTest("mapArray", result -> assertEquals(buildTestString(

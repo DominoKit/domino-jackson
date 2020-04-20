@@ -172,7 +172,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private String getEnumDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeName.get(EnumJsonDeserializer.class));
         deserializers.addLast(TypeName.get(typeMirror));
-        return NEW_INSTANCE + "$T.class)";
+        deserializers.addLast(TypeName.get(typeMirror));
+        return NEW_INSTANCE + "$T.class,$T.values())";
     }
 
     private String getBasicDeserializer(TypeMirror typeMirror) {
@@ -200,7 +201,8 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private String getEnumKeyDeserializer(TypeMirror typeMirror) {
         deserializers.addLast(TypeRegistry.getKeyDeserializer(Enum.class.getName()));
         deserializers.addLast(TypeName.get(Type.removeOuterWildCards(typeMirror)));
-        return NEW_INSTANCE + "$T.class" + ")";
+        deserializers.addLast(TypeName.get(Type.removeOuterWildCards(typeMirror)));
+        return NEW_INSTANCE + "$T.class,$T.values())";
     }
 
     private String getIterableDeserializer(TypeMirror typeMirror) {

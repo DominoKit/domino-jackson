@@ -31,7 +31,7 @@ public class EnumJsonDeserializerTest extends AbstractJsonDeserializerTest<EnumJ
 
     @Override
     protected JsonDeserializer<EnumTest> createDeserializer() {
-        return EnumJsonDeserializer.newInstance(EnumTest.class);
+        return EnumJsonDeserializer.newInstance(EnumTest.class, EnumTest.values());
     }
 
     @Override
