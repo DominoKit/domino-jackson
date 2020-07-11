@@ -859,4 +859,8 @@ public class Type {
     private static TypeElement toTypeElement(TypeMirror type) {
         return ((TypeElement) typeUtils.asElement(type));
     }
+
+    public static  String getTypeQualifiedName(TypeMirror typeMirror){
+       return  ((TypeElement)typeUtils.asElement(typeMirror)).getQualifiedName().toString();
+    }
 }

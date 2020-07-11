@@ -155,7 +155,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
 
     private String getPackageName(TypeMirror typeMirror) {
         if (Type.isJsonMapper(typeMirror) || isNull(this.packageName)) {
-            return ClassName.bestGuess(typeMirror.toString()).packageName();
+            return ClassName.bestGuess(Type.getTypeQualifiedName(typeMirror)).packageName();
         } else {
             return this.packageName;
         }

@@ -265,7 +265,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             builderName = jsonDeserialize.builder().getName();
         } catch (MirroredTypeException e) {
             TypeMirror typeMirror = e.getTypeMirror();
-            builderName = typeMirror.toString();
+            builderName = ((TypeElement)typeUtils.asElement(typeMirror)).getQualifiedName().toString();
         }
         return builderName;
     }
