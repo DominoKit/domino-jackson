@@ -103,8 +103,8 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
      * {@inheritDoc}
      */
     @Override
-    protected MethodSpec initMethod() {
-        return buildInitDeserializersMethod();
+    protected Optional<MethodSpec> initMethod() {
+        return buildInitDeserializersMethod(beanType);
     }
 
     /**
@@ -489,9 +489,9 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 .build();
     }
 
-    private MethodSpec buildInitDeserializersMethod() {
-        if (isUseBuilder() || isUseJsonCreator()) {
-            return null;
+    private Optional<MethodSpec> buildInitDeserializersMethod(TypeMirror beanType) {
+        if (isUseBuilder() || isUseJsonCreator() || isAbstract(beanType)) {
+            return Optional.empty();
         }
         TypeName resultType = ParameterizedTypeName.get(ClassName.get(MapLike.class),
                 ParameterizedTypeName.get(
@@ -510,7 +510,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                         getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
-        return builder.build();
+        return Optional.of(builder.build());
     }
 
     /**

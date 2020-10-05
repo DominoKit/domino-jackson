@@ -48,18 +48,6 @@ public class DeserializerGenerator {
     private void generateSubTypesDeserializers(TypeMirror beanType, String packageName) {
     	SubTypesInfo subTypesInfo= Type.getSubTypes(beanType);
         for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
-        	// @JsonTypeInfo and @JsonSubTypes must be used only on non generic types
-        	// This limitation is imposed by the the the java.land.model API, which does 
-        	// not allow to retrieve interface(s) for given class (i.e. using getSupperClass()). 
-        	// That limits the possibilities to inspect interface type parameters. Even
-        	// beanType is TypeMirror for base interface (i.e. annotated with @JsonTypeInfo and @JsonSubTypes)
-        	// with specified type arguments, we can not match them against the 
-        	// type parameters of the subtype retrieved by @JsonSubTypes.
-        	if (
-        			!((DeclaredType)beanType).getTypeArguments().isEmpty()
-        			|| !((DeclaredType)((DeclaredType)subtypeEntry.getValue()).asElement().asType()).getTypeArguments().isEmpty())
-        		throw new RuntimeException("@JsonSubTypes and &JsonTypeInfo can be used only on non-generic Java types");
-			 
         	new DeserializerGenerator().generate(packageName, subtypeEntry.getValue());
         }
     }

@@ -81,9 +81,8 @@ public abstract class AbstractJsonMapperGenerator {
 
         moreMethods().forEach(builder::addMethod);
 
-        MethodSpec initMethod = initMethod();
-        if (nonNull(initMethod))
-            builder.addMethod(initMethod);
+        Optional<MethodSpec> initMethod = initMethod();
+        initMethod.ifPresent(builder::addMethod);
         if (subTypesInfo.hasSubTypes()) {
             builder.addMethod(buildInitTypeInfoMethod());
             builder.addMethod(initSubtypesMethod());
@@ -136,7 +135,7 @@ public abstract class AbstractJsonMapperGenerator {
      *
      * @return a {@link com.squareup.javapoet.MethodSpec} object.
      */
-    protected abstract MethodSpec initMethod();
+    protected abstract Optional<MethodSpec> initMethod();
 
     /**
      * <p>initMethod.</p>
@@ -202,19 +201,6 @@ public abstract class AbstractJsonMapperGenerator {
                         },
                         LinkedHashMap::new));
 
-        String typeErrs = res.entrySet().stream()
-                .filter(entry -> Type.hasTypeArgumentWithBoundedWildcards(entry.getValue()) || Type.hasUnboundedWildcards(entry.getValue()))
-                .map(entry -> "Member '" + entry.getKey().getSimpleName() + "' resolved type: '" + entry.getValue() + "'")
-                .collect(Collectors.joining("\n"));
-
-        if (!typeErrs.isEmpty())
-            throw new RuntimeException(
-                    "Type: '" + enclosingType
-                            + "' could not have generic member of type parametrized with type argument having unbounded wildcards"
-                            + " or non-collections having type argument with bounded wildcards:\n"
-                            + typeErrs);
-
-
         if (superclass.getKind() == TypeKind.DECLARED)
             res.putAll(getOrderedFields((DeclaredType) Type.getDeclaredType(superclass, typeParameterMap)));
 
@@ -271,6 +257,10 @@ public abstract class AbstractJsonMapperGenerator {
 
     protected boolean isEligibleForSerializationDeserialization(Element field) {
         return isNotStatic(field) && !isIgnored(field);
+    }
+
+    public boolean isAbstract(TypeMirror beanType){
+        return typeUtils.asElement(beanType).getModifiers().contains(Modifier.ABSTRACT);
     }
 
     protected abstract Class<?> getMapperType();

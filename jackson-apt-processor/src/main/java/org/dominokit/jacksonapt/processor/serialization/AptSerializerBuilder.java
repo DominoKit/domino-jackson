@@ -84,7 +84,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
      * {@inheritDoc}
      */
     @Override
-    protected MethodSpec initMethod() {
+    protected Optional<MethodSpec> initMethod() {
         return buildInitSerializersMethod(beanType);
     }
 
@@ -187,7 +187,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .addStatement("return $L", serializerType);
-            newSerializerMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD));
+        newSerializerMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD));
         builder.addMethod(newSerializerMethodBuilder.build());
 
         builder.addMethod(MethodSpec.methodBuilder("getValue")
@@ -254,8 +254,10 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
     }
 
-    private MethodSpec buildInitSerializersMethod(TypeMirror beanType) {
-
+    private Optional<MethodSpec> buildInitSerializersMethod(TypeMirror beanType) {
+        if (isAbstract(beanType)) {
+            return Optional.empty();
+        }
         int[] index = new int[]{0};
         final Map<Element, TypeMirror> fields = orderedFields();
 
@@ -272,7 +274,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
                         index[0]++, new SerializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildSerializer()));
 
         builder.addStatement("return result");
-        return builder.build();
+        return Optional.of(builder.build());
     }
 
     @Override
