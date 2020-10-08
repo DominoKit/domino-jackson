@@ -3,6 +3,7 @@ package org.dominokit.jacksonapt.processor;
 import com.squareup.javapoet.ClassName;
 import org.dominokit.jacksonapt.processor.serialization.AptSerializerBuilder;
 
+import javax.annotation.processing.FilerException;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 
@@ -37,6 +38,8 @@ public class SerializerGenerator {
                 new AptSerializerBuilder(packageName, beanType, ObjectMapperProcessor.filer).generate();
                 TypeRegistry.registerSerializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(serializerName));
                 TypeRegistry.removeInActiveGenSerializer(beanType);
+            } catch (FilerException e) {
+                //should be skipped
             } catch (IOException e) {
                 throw new SerializerGenerationFailedException(beanType.toString());
             }
