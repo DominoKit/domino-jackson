@@ -188,7 +188,7 @@ public abstract class AbstractJsonMapperGenerator {
         List<? extends TypeParameterElement> typeParameters = enclosingElement.getTypeParameters();
         List<? extends TypeMirror> typeArguments = enclosingType.getTypeArguments();
         final Map<? extends TypeParameterElement, ? extends TypeMirror> typeParameterMap =
-                IntStream.range(0, typeParameters.size())
+                IntStream.range(0, typeArguments.size())
                         .boxed()
                         .collect(Collectors.toMap(typeParameters::get, typeArguments::get));
 
