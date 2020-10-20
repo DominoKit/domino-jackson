@@ -86,7 +86,9 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
         }else if(useInterface(element) && ElementKind.PACKAGE.equals(enclosingElement.getKind())){
             return "";
         }else{
-            return element.getSimpleName().toString() + postfix;
+            String prefix = element.getEnclosingElement().getKind().equals(ElementKind.PACKAGE) ? ""
+                    : element.getEnclosingElement().getSimpleName().toString() + "_";
+            return prefix + element.getSimpleName().toString() + postfix;
         }
     }
 

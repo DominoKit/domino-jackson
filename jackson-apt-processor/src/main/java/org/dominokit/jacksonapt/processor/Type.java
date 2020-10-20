@@ -16,6 +16,8 @@
 package org.dominokit.jacksonapt.processor;
 
 import com.fasterxml.jackson.annotation.*;
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.TypeName;
 import org.dominokit.jacksonapt.annotation.JSONMapper;
 
@@ -305,46 +307,54 @@ public class Type {
     }
 
     private static String stringifyType(TypeMirror type, boolean appendPackage) {
-        return
-                (appendPackage ?
-                        !getPackage(type).isEmpty() ? getPackage(type) + "." : ""
-                        : "")
-                        + type.accept(new SimpleTypeVisitor8<String, Void>() {
-                                          @Override
-                                          public String visitDeclared(DeclaredType t, Void p) {
-                                              return
-                                                      t.asElement().getSimpleName()
-                                                              + ((!t.getTypeArguments().isEmpty()) ?
-                                                              "_" + t.getTypeArguments().stream().map(type -> visit(type, p)).collect(Collectors.joining("_"))
-                                                              : "");
-                                          }
+        StringBuffer sb = new StringBuffer();
+        if (appendPackage && !getPackage(type).isEmpty()) {
+            sb.append(getPackage(type));
+            sb.append(".");
+        }
+        if ((!type.getKind().isPrimitive() &&
+                !type.getKind().equals(TypeKind.ARRAY) &&
+                !MoreTypes.asTypeElement(type).getEnclosingElement().getKind().equals(ElementKind.PACKAGE))) {
+            sb.append(MoreTypes.asTypeElement(type).getEnclosingElement().getSimpleName());
+            sb.append("_");
+        }
+        sb.append(type.accept(new SimpleTypeVisitor8<String, Void>() {
+                                  @Override
+                                  public String visitDeclared(DeclaredType t, Void p) {
+                                      return
+                                              t.asElement().getSimpleName()
+                                                      + ((!t.getTypeArguments().isEmpty()) ?
+                                                      "_" + t.getTypeArguments().stream().map(type -> visit(type, p)).collect(Collectors.joining("_"))
+                                                      : "");
+                                  }
 
-                                          @Override
-                                          public String visitWildcard(WildcardType t, Void p) {
-                                              return
-                                                      (t.getExtendsBound() != null) ?
-                                                              "extends_" + visit(t.getExtendsBound(), p)
-                                                              : (t.getSuperBound() != null) ?
-                                                              "super_" + visit(t.getSuperBound(), p)
-                                                              : "";
-                                          }
+                                  @Override
+                                  public String visitWildcard(WildcardType t, Void p) {
+                                      return
+                                              (t.getExtendsBound() != null) ?
+                                                      "extends_" + visit(t.getExtendsBound(), p)
+                                                      : (t.getSuperBound() != null) ?
+                                                      "super_" + visit(t.getSuperBound(), p)
+                                                      : "";
+                                  }
 
-                                          @Override
-                                          public String visitArray(ArrayType t, Void p) {
-                                              return visit(t.getComponentType(), p) + "[]";
-                                          }
+                                  @Override
+                                  public String visitArray(ArrayType t, Void p) {
+                                      return visit(t.getComponentType(), p) + "[]";
+                                  }
 
-                                          @Override
-                                          public String visitTypeVariable(TypeVariable t, Void p) {
-                                              return t.toString();
-                                          }
+                                  @Override
+                                  public String visitTypeVariable(TypeVariable t, Void p) {
+                                      return t.toString();
+                                  }
 
-                                          @Override
-                                          public String visitPrimitive(PrimitiveType t, Void p) {
-                                              return t.toString();
-                                          }
-                                      },
-                        null);
+                                  @Override
+                                  public String visitPrimitive(PrimitiveType t, Void p) {
+                                      return t.toString();
+                                  }
+                              },
+                              null));
+        return sb.toString();
     }
 
     /**
