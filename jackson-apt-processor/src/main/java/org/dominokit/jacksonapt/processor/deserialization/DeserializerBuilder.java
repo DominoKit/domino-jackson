@@ -40,14 +40,12 @@ class DeserializerBuilder extends AccessorsFilter {
     private final TypeMirror beanType;
     private final Element field;
     private final TypeMirror fieldType;
-	private final String packageName;
 
-    DeserializerBuilder(Types typeUtils, TypeMirror beanType, String packageName, Element field, TypeMirror fieldType) {
+    DeserializerBuilder(Types typeUtils, TypeMirror beanType, Element field, TypeMirror fieldType) {
         super(typeUtils);
         this.beanType = beanType;
         this.field = field;
         this.fieldType = fieldType;
-        this.packageName = packageName;
     }
     
     TypeSpec buildDeserializer() {
@@ -85,7 +83,7 @@ class DeserializerBuilder extends AccessorsFilter {
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
                 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), ObjectMapperProcessor.DEFAULT_WILDCARD))
-                .addStatement("return $L", new FieldDeserializersChainBuilder(packageName, beanType).getInstance(fieldType))
+                .addStatement("return $L", new FieldDeserializersChainBuilder(beanType).getInstance(fieldType))
                 .build();
     }
 

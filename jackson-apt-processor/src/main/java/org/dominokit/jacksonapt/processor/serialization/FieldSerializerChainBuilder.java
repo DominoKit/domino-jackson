@@ -15,6 +15,8 @@
  */
 package org.dominokit.jacksonapt.processor.serialization;
 
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
@@ -33,9 +35,6 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 /**
  * <p>FieldSerializerChainBuilder class.</p>
  *
@@ -51,8 +50,6 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> serializers = new LinkedList<>();
     private final TypeMirror beanType;
-	private final String packageName;
-
 
     /**
      * <p>Constructor for FieldSerializerChainBuilder.</p>
@@ -61,7 +58,6 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
      */
     public FieldSerializerChainBuilder(TypeMirror beanType) {
         this.beanType = beanType;
-        this.packageName = null;
         this.rootGenerated = true;
     }
 
@@ -72,31 +68,6 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
      */
     public FieldSerializerChainBuilder(TypeMirror beanType, boolean rootGenerated) {
         this.beanType = beanType;
-        this.packageName = null;
-        this.rootGenerated = rootGenerated;
-    }
-
-    /**
-     * <p>Constructor for FieldSerializerChainBuilder.</p>
-     *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName a {@link java.lang.String} object.
-     */
-    public FieldSerializerChainBuilder(String packageName, TypeMirror beanType) {
-        this.beanType = beanType;
-        this.packageName = packageName;
-        this.rootGenerated = true;
-    }
-
-    /**
-     * <p>Constructor for FieldSerializerChainBuilder.</p>
-     *
-     * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName a {@link java.lang.String} object.
-     */
-    public FieldSerializerChainBuilder(String packageName, TypeMirror beanType, boolean rootGenerated) {
-        this.beanType = beanType;
-        this.packageName = packageName;
         this.rootGenerated = rootGenerated;
     }
 
@@ -154,11 +125,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
     }
 
     private String getPackageName(TypeMirror typeMirror) {
-        if (Type.isJsonMapper(typeMirror) || isNull(this.packageName)) {
-            return ClassName.bestGuess(Type.getTypeQualifiedName(typeMirror)).packageName();
-        } else {
-            return this.packageName;
-        }
+        return MoreElements.getPackage(MoreTypes.asTypeElement(typeMirror)).toString();
     }
 
     private String generateCustomSerializer(TypeMirror typeMirror) {
@@ -166,7 +133,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
             return Type.serializerName(getPackageName(typeMirror), typeMirror);
         }
         TypeRegistry.addInActiveGenSerializer(typeMirror);
-        String serializerName = Type.generateSerializer(getPackageName(typeMirror), typeMirror);
+        String serializerName = Type.generateSerializer(typeMirror);
         TypeRegistry.removeInActiveGenSerializer(typeMirror);
         return serializerName;
     }

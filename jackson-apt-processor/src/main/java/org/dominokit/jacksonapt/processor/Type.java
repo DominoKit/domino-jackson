@@ -352,11 +352,10 @@ public class Type {
      * package.
      *
      * @param typeMirror  a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName {@link java.lang.String} package name for the serializer
      * @return a fully qualified deserializer name
      */
-    public static String generateDeserializer(String packageName, TypeMirror typeMirror) {
-        return new DeserializerGenerator().generate(packageName, typeMirror);
+    public static String generateDeserializer(TypeMirror typeMirror) {
+        return new DeserializerGenerator().generate(typeMirror);
     }
 
     /**
@@ -364,11 +363,10 @@ public class Type {
      * package.
      *
      * @param typeMirror  a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName {@link java.lang.String} package name for the serializer
      * @return a fully qualified serializer name
      */
-    public static String generateSerializer(String packageName, TypeMirror typeMirror) {
-        return new SerializerGenerator().generate(packageName, typeMirror);
+    public static String generateSerializer(TypeMirror typeMirror) {
+        return new SerializerGenerator().generate(typeMirror);
     }
 
     /**

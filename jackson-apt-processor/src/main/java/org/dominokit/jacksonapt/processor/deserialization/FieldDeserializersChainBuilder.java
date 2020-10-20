@@ -15,6 +15,8 @@
  */
 package org.dominokit.jacksonapt.processor.deserialization;
 
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
@@ -31,9 +33,6 @@ import javax.lang.model.type.TypeMirror;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
 /**
  * <p>FieldDeserializersChainBuilder class.</p>
  *
@@ -48,7 +47,6 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     private CodeBlock.Builder builder = CodeBlock.builder();
     private Deque<TypeName> deserializers = new LinkedList<>();
     private final TypeMirror beanType;
-    private final String packageName;
 
     /**
      * <p>Constructor for FieldDeserializersChainBuilder.</p>
@@ -57,7 +55,6 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
      */
     public FieldDeserializersChainBuilder(TypeMirror beanType) {
         this.beanType = beanType;
-        this.packageName = null;
         this.rootGenerated = true;
     }
 
@@ -68,31 +65,6 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
      */
     public FieldDeserializersChainBuilder(TypeMirror beanType, boolean rootGenerated) {
         this.beanType = beanType;
-        this.packageName = null;
-        this.rootGenerated = rootGenerated;
-    }
-
-    /**
-     * <p>Constructor for FieldDeserializersChainBuilder.</p>
-     *
-     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName a {@link java.lang.String} object.
-     */
-    public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType) {
-        this.beanType = beanType;
-        this.packageName = packageName;
-        this.rootGenerated = true;
-    }
-
-    /**
-     * <p>Constructor for FieldDeserializersChainBuilder.</p>
-     *
-     * @param beanType    a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName a {@link java.lang.String} object.
-     */
-    public FieldDeserializersChainBuilder(String packageName, TypeMirror beanType, boolean rootGenerated) {
-        this.beanType = beanType;
-        this.packageName = packageName;
         this.rootGenerated = rootGenerated;
     }
 
@@ -152,11 +124,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getPackageName(TypeMirror typeMirror) {
-        if (Type.isJsonMapper(typeMirror) || isNull(this.packageName)) {
-            return ClassName.bestGuess(Type.getTypeQualifiedName(typeMirror)).packageName();
-        } else {
-            return this.packageName;
-        }
+        return MoreElements.getPackage(MoreTypes.asTypeElement(typeMirror)).toString();
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {
@@ -164,7 +132,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
             return Type.deserializerName(getPackageName(typeMirror), typeMirror);
         }
         TypeRegistry.addInActiveGenDeserializer(typeMirror);
-        String deserializerName = Type.generateDeserializer(getPackageName(typeMirror), typeMirror);
+        String deserializerName = Type.generateDeserializer(typeMirror);
         TypeRegistry.removeInActiveGenDeserializer(typeMirror);
         return deserializerName;
     }

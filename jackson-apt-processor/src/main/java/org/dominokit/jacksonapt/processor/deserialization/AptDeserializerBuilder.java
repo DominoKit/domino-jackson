@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
@@ -141,13 +143,16 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
             for (Map.Entry<String, TypeMirror> subtypeEntry : subTypesInfo.getSubTypes().entrySet()) {
                 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
+                String pkg = MoreElements.getPackage(
+                        MoreTypes.asTypeElement(subtypeEntry.getValue())).toString();
                 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                         .superclass(ClassName.get(BeanSubtypeDeserializer.class))
                         .addMethod(MethodSpec.methodBuilder("newDeserializer")
                                 .addModifiers(Modifier.PROTECTED)
                                 .addAnnotation(Override.class)
                                 .returns(ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), WildcardTypeName.subtypeOf(Object.class)))
-                                .addStatement("return new $T()", ClassName.bestGuess(Type.deserializerName(packageName, subtypeEntry.getValue())))
+                                .addStatement("return new $L()", ClassName.bestGuess(
+                                        Type.deserializerName(pkg, subtypeEntry.getValue())))
                                 .build()
                         ).build();
 
@@ -341,7 +346,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             ExecutableElement creator = getCreator();
             List<? extends VariableElement> parameterTypes = creator.getParameters();
             parameterBuilders = parameterTypes.stream()
-                    .map(o -> new ParameterDeserializerBuilder(typeUtils, beanType, o, packageName))
+                    .map(o -> new ParameterDeserializerBuilder(typeUtils, beanType, o))
                     .collect(Collectors.toList());
             initInstanceMethodBuilder.addStatement("final $T deserializers = $T.get().mapLikeFactory().make()", deserializersTypeName, JacksonContextProvider.class);
             buildPropertiesDeserializers(initInstanceMethodBuilder);
@@ -507,7 +512,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
         orderedFields().entrySet().stream()
                 .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("map.put($S, $L)",
-                        getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildDeserializer()));
+                        getPropertyName(entry.getKey()), new DeserializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildDeserializer()));
 
         builder.addStatement("return map");
         return Optional.of(builder.build());

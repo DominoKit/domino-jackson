@@ -16,6 +16,8 @@
 package org.dominokit.jacksonapt.processor.serialization;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.*;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
@@ -178,15 +180,13 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
 
     private void buildBeanPropertySerializerBody(TypeSpec.Builder builder, Map.Entry<Element, TypeMirror> property) {
-
-        CodeBlock serializerType = new FieldSerializerChainBuilder(property.getValue()).getInstance(property.getValue());
         String paramName = "bean";
-        AccessorInfo accessorInfo = new SerializerBuilder(typeUtils, beanType, packageName, property.getKey(), property.getValue()).getterInfo();
+        AccessorInfo accessorInfo = new SerializerBuilder(typeUtils, beanType, property.getKey(), property.getValue()).getterInfo();
 
         MethodSpec.Builder newSerializerMethodBuilder = MethodSpec.methodBuilder("newSerializer")
                 .addModifiers(Modifier.PROTECTED)
                 .addAnnotation(Override.class)
-                .addStatement("return $L", serializerType);
+                .addStatement("return $L", new FieldSerializerChainBuilder(property.getValue()).getInstance(property.getValue()));
         newSerializerMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD));
         builder.addMethod(newSerializerMethodBuilder.build());
 
@@ -235,13 +235,16 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
             for (Map.Entry<String, TypeMirror> subtypeEntry : subTypesInfo.getSubTypes().entrySet()) {
                 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
+                String pkg = MoreElements.getPackage(
+                        MoreTypes.asTypeElement(subtypeEntry.getValue())).toString();
                 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                         .superclass(ClassName.get(BeanSubtypeSerializer.class))
                         .addMethod(MethodSpec.methodBuilder("newSerializer")
                                 .addModifiers(Modifier.PROTECTED)
                                 .addAnnotation(Override.class)
                                 .returns(ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), WildcardTypeName.subtypeOf(Object.class)))
-                                .addStatement("return new $T()", ClassName.bestGuess(Type.serializerName(packageName, subtypeEntry.getValue())))
+                                .addStatement("return new $L()", ClassName.bestGuess(
+                                        Type.serializerName(pkg, subtypeEntry.getValue())))
                                 .build()
                         ).build();
 
@@ -271,7 +274,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
         fields.entrySet().stream()
                 .filter(entry -> isEligibleForSerializationDeserialization(entry.getKey()))
                 .forEach(entry -> builder.addStatement("result[$L] = $L",
-                        index[0]++, new SerializerBuilder(typeUtils, beanType, packageName, entry.getKey(), entry.getValue()).buildSerializer()));
+                        index[0]++, new SerializerBuilder(typeUtils, beanType, entry.getKey(), entry.getValue()).buildSerializer()));
 
         builder.addStatement("return result");
         return Optional.of(builder.build());

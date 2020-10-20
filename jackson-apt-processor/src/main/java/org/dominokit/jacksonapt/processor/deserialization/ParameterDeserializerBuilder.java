@@ -22,13 +22,11 @@ public class ParameterDeserializerBuilder {
     private Types typeUtils;
     private TypeMirror type;
     private VariableElement parameter;
-    private String packageName;
 
-    public ParameterDeserializerBuilder(Types typeUtils, TypeMirror type, VariableElement parameter, String packageName) {
+    public ParameterDeserializerBuilder(Types typeUtils, TypeMirror type, VariableElement parameter) {
         this.typeUtils = typeUtils;
         this.type = type;
         this.parameter = parameter;
-        this.packageName = packageName;
     }
 
     CodeBlock build() {
@@ -38,7 +36,7 @@ public class ParameterDeserializerBuilder {
                 .addModifiers(Modifier.PROTECTED)
                 .returns(ParameterizedTypeName.get(JsonDeserializer.class))
                 .addAnnotation(Override.class)
-                .addStatement("return $L", new FieldDeserializersChainBuilder(packageName, parameter.asType()).getInstance(parameter))
+                .addStatement("return $L", new FieldDeserializersChainBuilder(parameter.asType()).getInstance(parameter))
                 .build();
 
         ParameterizedTypeName deserializerType = ParameterizedTypeName.get(ClassName.get(HasDeserializerAndParameters.class), typeName, ParameterizedTypeName
