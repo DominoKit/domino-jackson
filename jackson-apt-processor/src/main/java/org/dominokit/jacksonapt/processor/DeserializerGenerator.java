@@ -1,9 +1,10 @@
 package org.dominokit.jacksonapt.processor;
 
+import com.google.auto.common.MoreElements;
+import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import org.dominokit.jacksonapt.processor.deserialization.AptDeserializerBuilder;
 
-import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 
 import java.io.IOException;
@@ -25,15 +26,15 @@ public class DeserializerGenerator {
      * generated too.
      *
      * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
-     * @param packageName a {@link java.lang.String} object.
      * @return fully qualified deserialer name
      */
-    public String generate(String packageName, TypeMirror beanType) {
+    public String generate(TypeMirror beanType) {
+        String packageName = MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).toString();
         String deserializerName = Type.deserializerName(packageName, beanType);
 
         if (!TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {
             try {
-            	generateSubTypesDeserializers(beanType, packageName);
+                generateSubTypesDeserializers(beanType);
                 TypeRegistry.addInActiveGenDeserializer(beanType);
                 new AptDeserializerBuilder(packageName, beanType, filer).generate();
                 TypeRegistry.registerDeserializer(Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(deserializerName));
@@ -45,10 +46,10 @@ public class DeserializerGenerator {
         return deserializerName;
     }
 
-    private void generateSubTypesDeserializers(TypeMirror beanType, String packageName) {
+    private void generateSubTypesDeserializers(TypeMirror beanType) {
     	SubTypesInfo subTypesInfo= Type.getSubTypes(beanType);
         for (Map.Entry<String, TypeMirror> subtypeEntry: subTypesInfo.getSubTypes().entrySet()) {
-        	new DeserializerGenerator().generate(packageName, subtypeEntry.getValue());
+        	new DeserializerGenerator().generate(subtypeEntry.getValue());
         }
     }
     

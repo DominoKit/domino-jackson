@@ -32,7 +32,7 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest {
 
     @Override
     MappersChainBuilder getMappersChainBuilder(TypeMirror beanType) {
-        return new FieldSerializerChainBuilder(Type.getPackage(beanType), beanType);
+        return new FieldSerializerChainBuilder(beanType);
     }
 
     @Test

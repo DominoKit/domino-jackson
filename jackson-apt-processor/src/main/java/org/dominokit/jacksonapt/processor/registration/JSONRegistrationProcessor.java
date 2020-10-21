@@ -16,6 +16,7 @@ import javax.annotation.Generated;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -211,7 +212,9 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
     private String enclosingName(Element element) {
         if (useInterface(element))
             return element.getEnclosingElement().getSimpleName().toString() + "_";
-        return element.getSimpleName().toString() + "_";
+        String prefix = element.getEnclosingElement().getKind().equals(ElementKind.PACKAGE) ? ""
+                : element.getEnclosingElement().getSimpleName().toString() + "_";
+        return prefix + element.getSimpleName().toString() + "_";
     }
 
     private boolean useInterface(Element element) {
