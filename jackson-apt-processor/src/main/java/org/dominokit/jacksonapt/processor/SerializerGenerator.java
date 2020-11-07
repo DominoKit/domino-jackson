@@ -28,7 +28,7 @@ public class SerializerGenerator {
      * @return fully-qualified serialer name
      */
     public String generate(TypeMirror beanType) {
-        String packageName = MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).toString();
+        String packageName = MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).getQualifiedName().toString();
     	String serializerName = Type.serializerName(packageName, beanType);
         if (!TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(beanType))) {
             try {

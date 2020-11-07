@@ -236,7 +236,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
             for (Map.Entry<String, TypeMirror> subtypeEntry : subTypesInfo.getSubTypes().entrySet()) {
                 // Prepare anonymous BeanTypeSerializer to delegate to the "real" serializer
                 String pkg = MoreElements.getPackage(
-                        MoreTypes.asTypeElement(subtypeEntry.getValue())).toString();
+                        MoreTypes.asTypeElement(subtypeEntry.getValue())).getQualifiedName().toString();
                 TypeSpec subtypeType = TypeSpec.anonymousClassBuilder("")
                         .superclass(ClassName.get(BeanSubtypeSerializer.class))
                         .addMethod(MethodSpec.methodBuilder("newSerializer")

@@ -29,7 +29,7 @@ public class DeserializerGenerator {
      * @return fully qualified deserialer name
      */
     public String generate(TypeMirror beanType) {
-        String packageName = MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).toString();
+        String packageName = MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).getQualifiedName().toString();
         String deserializerName = Type.deserializerName(packageName, beanType);
 
         if (!TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {

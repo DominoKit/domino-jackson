@@ -124,7 +124,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
     }
 
     private String getPackageName(TypeMirror typeMirror) {
-        return MoreElements.getPackage(MoreTypes.asTypeElement(typeMirror)).toString();
+        return MoreElements.getPackage(MoreTypes.asTypeElement(typeMirror)).getQualifiedName().toString();
     }
 
     private String generateCustomDeserializer(TypeMirror typeMirror) {

@@ -247,7 +247,7 @@ public class Type {
      */
     public static String getPackage(TypeMirror typeMirror) {
         return typeUtils.asElement(typeUtils.erasure(typeMirror)) != null ?
-                elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(typeMirror))).toString()
+                elementUtils.getPackageOf(typeUtils.asElement(typeUtils.erasure(typeMirror))).getQualifiedName().toString()
                 : "";
     }
 

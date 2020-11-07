@@ -36,7 +36,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
     @Override
     public void generate(Element element) throws IOException {
         String className = enclosingName(element, "_") + (useInterface(element) ? element.getSimpleName() : "Mapper") + "Impl";
-        packageName = MoreElements.getPackage(element).toString();
+        packageName = MoreElements.getPackage(element).getQualifiedName().toString();
         TypeMirror beanType = getElementType(element);
         Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
