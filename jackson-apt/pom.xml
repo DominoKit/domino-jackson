@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit.jackson</groupId>
         <artifactId>domino-jackson</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-alpha-gwt2.8.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>jackson-apt</artifactId>
