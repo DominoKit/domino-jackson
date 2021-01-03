@@ -1,10 +1,10 @@
 package org.dominokit.jacksonapt.deser.array.cast;
 
-import elemental2.core.JsArray;
-import elemental2.core.JsNumber;
-import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
+
+import elemental2.core.JsArray;
+import elemental2.core.JsNumber;
 
 /**
  * <p>JsShortArrayReader class.</p>
@@ -20,7 +20,17 @@ public class JsShortArrayReader extends BaseJsNumberArrayReader implements Jacks
     }
 
     private static short[] reinterpretCast(JsArray<JsNumber> value) {
-        JsNumber[] sliced = value.slice();
-        return Js.uncheckedCast(sliced);
+    	short[] result = new short[value.length];
+    	for (int i = 0; i < value.length; i++) {
+			JsNumber number = value.getAt(i);
+			result[i] = Double.valueOf(number.valueOf()).shortValue();
+		}
+        return result;
     }
+
+    @Override
+	protected double read(JsonReader reader) {
+		return reader.nextInt();
+}
+
 }

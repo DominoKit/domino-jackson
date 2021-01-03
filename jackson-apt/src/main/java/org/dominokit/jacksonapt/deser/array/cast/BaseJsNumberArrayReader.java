@@ -22,11 +22,14 @@ public abstract class BaseJsNumberArrayReader {
                 reader.skipValue();
                 jsArray.push(null);
             } else {
-                jsArray.push((JsNumber) Js.cast(reader.nextInt()));
+                jsArray.push((JsNumber) Js.cast(read(reader)));
             }
         }
         reader.endArray();
 
         return jsArray;
     }
+
+	protected abstract double read(JsonReader reader);
+
 }
