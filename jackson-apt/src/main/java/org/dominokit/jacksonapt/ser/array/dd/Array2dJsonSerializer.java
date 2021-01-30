@@ -30,53 +30,59 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class Array2dJsonSerializer<T> extends JsonSerializer<T[][]> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the array.
-     * @param <T>        Type of the elements inside the array
-     * @return a new instance of {@link org.dominokit.jacksonapt.ser.array.dd.Array2dJsonSerializer}
-     */
-    public static <T> Array2dJsonSerializer<T> newInstance(JsonSerializer<T> serializer) {
-        return new Array2dJsonSerializer<T>(serializer);
+  /**
+   * newInstance
+   *
+   * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects
+   *     inside the array.
+   * @param <T> Type of the elements inside the array
+   * @return a new instance of {@link org.dominokit.jacksonapt.ser.array.dd.Array2dJsonSerializer}
+   */
+  public static <T> Array2dJsonSerializer<T> newInstance(JsonSerializer<T> serializer) {
+    return new Array2dJsonSerializer<T>(serializer);
+  }
+
+  private final JsonSerializer<T> serializer;
+
+  /**
+   * Constructor for Array2dJsonSerializer.
+   *
+   * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects
+   *     inside the array.
+   */
+  protected Array2dJsonSerializer(JsonSerializer<T> serializer) {
+    if (null == serializer) {
+      throw new IllegalArgumentException("serializer cannot be null");
+    }
+    this.serializer = serializer;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(T[][] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      T[][] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private final JsonSerializer<T> serializer;
-
-    /**
-     * <p>Constructor for Array2dJsonSerializer.</p>
-     *
-     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the array.
-     */
-    protected Array2dJsonSerializer(JsonSerializer<T> serializer) {
-        if (null == serializer) {
-            throw new IllegalArgumentException("serializer cannot be null");
-        }
-        this.serializer = serializer;
+    writer.beginArray();
+    for (T[] array : values) {
+      writer.beginArray();
+      for (T value : array) {
+        serializer.serialize(writer, value, ctx, params);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(T[][] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, T[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        writer.beginArray();
-        for (T[] array : values) {
-            writer.beginArray();
-            for (T value : array) {
-                serializer.serialize(writer, value, ctx, params);
-            }
-            writer.endArray();
-        }
-        writer.endArray();
-    }
+    writer.endArray();
+  }
 }

@@ -16,85 +16,90 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.Collection;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-import java.util.Collection;
-
 /**
- * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Collection}.
+ * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.Collection}.
  *
  * @param <C> {@link java.util.Collection} type
  * @param <T> Type of the elements inside the {@link java.util.Collection}
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T> extends BaseIterableJsonDeserializer<C, T> {
+public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
+    extends BaseIterableJsonDeserializer<C, T> {
 
-    /**
-     * <p>Constructor for BaseCollectionJsonDeserializer.</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.util.Collection}.
-     */
-    public BaseCollectionJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * Constructor for BaseCollectionJsonDeserializer.
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects
+   *     inside the {@link java.util.Collection}.
+   */
+  public BaseCollectionJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public C doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        if (JsonToken.BEGIN_ARRAY == reader.peek()) {
+  /** {@inheritDoc} */
+  @Override
+  public C doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    if (JsonToken.BEGIN_ARRAY == reader.peek()) {
 
-            C result = newCollection();
+      C result = newCollection();
 
-            reader.beginArray();
-            while (JsonToken.END_ARRAY != reader.peek()) {
-                T element = deserializer.deserialize(reader, ctx, params);
-                if (isNullValueAllowed() || null != element) {
-                    result.add(element);
-                }
-            }
-            reader.endArray();
-
-            return result;
-
-        } else if (ctx.isAcceptSingleValueAsArray()) {
-
-            C result = newCollection();
-            result.add(deserializer.deserialize(reader, ctx, params));
-            return result;
-
-        } else {
-            throw ctx.traceError("Cannot deserialize a java.util.Collection out of " + reader.peek() + " token", reader);
+      reader.beginArray();
+      while (JsonToken.END_ARRAY != reader.peek()) {
+        T element = deserializer.deserialize(reader, ctx, params);
+        if (isNullValueAllowed() || null != element) {
+          result.add(element);
         }
-    }
+      }
+      reader.endArray();
 
-    /**
-     * Instantiates a new collection for deserialization process.
-     *
-     * @return the new collection
-     */
-    protected abstract C newCollection();
+      return result;
 
-    /**
-     * <p>isNullValueAllowed</p>
-     *
-     * @return true if the collection accepts null value
-     */
-    protected boolean isNullValueAllowed() {
-        return true;
-    }
+    } else if (ctx.isAcceptSingleValueAsArray()) {
 
-    /** {@inheritDoc} */
-    @Override
-    public void setBackReference(String referenceName, Object reference, C value, JsonDeserializationContext ctx) {
-        if (null != value && !value.isEmpty()) {
-            for (T val : value) {
-                deserializer.setBackReference(referenceName, reference, val, ctx);
-            }
-        }
+      C result = newCollection();
+      result.add(deserializer.deserialize(reader, ctx, params));
+      return result;
+
+    } else {
+      throw ctx.traceError(
+          "Cannot deserialize a java.util.Collection out of " + reader.peek() + " token", reader);
     }
+  }
+
+  /**
+   * Instantiates a new collection for deserialization process.
+   *
+   * @return the new collection
+   */
+  protected abstract C newCollection();
+
+  /**
+   * isNullValueAllowed
+   *
+   * @return true if the collection accepts null value
+   */
+  protected boolean isNullValueAllowed() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setBackReference(
+      String referenceName, Object reference, C value, JsonDeserializationContext ctx) {
+    if (null != value && !value.isEmpty()) {
+      for (T val : value) {
+        deserializer.setBackReference(referenceName, reference, val, ctx);
+      }
+    }
+  }
 }

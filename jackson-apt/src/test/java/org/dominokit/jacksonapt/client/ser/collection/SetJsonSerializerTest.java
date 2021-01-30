@@ -16,30 +16,26 @@
 
 package org.dominokit.jacksonapt.client.ser.collection;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.IterableJsonSerializer;
 import org.dominokit.jacksonapt.ser.StringJsonSerializer;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SetJsonSerializerTest extends AbstractJsonSerializerTest<Set<String>> {
 
-    @Override
-    protected JsonSerializer<Set<String>> createSerializer() {
-        return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
-    }
+  @Override
+  protected JsonSerializer<Set<String>> createSerializer() {
+    return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
+  }
 
-    public void testSerializeValue() {
-        // can't predict the order so we just serialize one element
-        assertSerialization("[\"Hello\"]", new HashSet<String>(Arrays.asList("Hello", "Hello")));
-        assertSerialization("[]", Collections.<String>emptySet());
-    }
-
+  public void testSerializeValue() {
+    // can't predict the order so we just serialize one element
+    assertSerialization("[\"Hello\"]", new HashSet<String>(Arrays.asList("Hello", "Hello")));
+    assertSerialization("[]", Collections.<String>emptySet());
+  }
 }

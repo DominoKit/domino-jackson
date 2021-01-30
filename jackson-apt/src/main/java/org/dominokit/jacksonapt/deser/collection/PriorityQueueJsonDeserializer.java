@@ -16,40 +16,44 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.PriorityQueue;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
-import java.util.PriorityQueue;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.PriorityQueue}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.PriorityQueue}.
  *
  * @param <T> Type of the elements inside the {@link java.util.PriorityQueue}
  * @author Nicolas Morel
  * @version $Id: $
  */
-public class PriorityQueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<PriorityQueue<T>, T> {
+public class PriorityQueueJsonDeserializer<T>
+    extends BaseQueueJsonDeserializer<PriorityQueue<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.PriorityQueue}.
-     * @param <T>          Type of the elements inside the {@link java.util.PriorityQueue}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.PriorityQueueJsonDeserializer}
-     */
-    public static <T> PriorityQueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new PriorityQueueJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.PriorityQueue}.
+   * @param <T> Type of the elements inside the {@link java.util.PriorityQueue}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.PriorityQueueJsonDeserializer}
+   */
+  public static <T> PriorityQueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new PriorityQueueJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link PriorityQueue}.
-     */
-    private PriorityQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     PriorityQueue}.
+   */
+  private PriorityQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected PriorityQueue<T> newCollection() {
-        return new PriorityQueue<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected PriorityQueue<T> newCollection() {
+    return new PriorityQueue<T>();
+  }
 }

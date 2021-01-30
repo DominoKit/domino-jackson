@@ -29,43 +29,47 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[][]> {
 
-    private static final PrimitiveDoubleArray2dJsonSerializer INSTANCE = new PrimitiveDoubleArray2dJsonSerializer();
+  private static final PrimitiveDoubleArray2dJsonSerializer INSTANCE =
+      new PrimitiveDoubleArray2dJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveDoubleArray2dJsonSerializer}
-     */
-    public static PrimitiveDoubleArray2dJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.dd.PrimitiveDoubleArray2dJsonSerializer}
+   */
+  public static PrimitiveDoubleArray2dJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveDoubleArray2dJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(double[][] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      double[][] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveDoubleArray2dJsonSerializer() {
+    writer.beginArray();
+    for (double[] array : values) {
+      writer.beginArray();
+      for (double value : array) {
+        writer.value(value);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(double[][] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, double[][] values, JsonSerializationContext ctx,
-                            JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        writer.beginArray();
-        for (double[] array : values) {
-            writer.beginArray();
-            for (double value : array) {
-                writer.value(value);
-            }
-            writer.endArray();
-        }
-        writer.endArray();
-    }
+    writer.endArray();
+  }
 }

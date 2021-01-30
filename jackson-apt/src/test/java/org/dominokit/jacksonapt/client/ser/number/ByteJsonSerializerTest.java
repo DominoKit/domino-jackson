@@ -19,20 +19,18 @@ package org.dominokit.jacksonapt.client.ser.number;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer.ByteJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ByteJsonSerializerTest extends AbstractJsonSerializerTest<Byte> {
 
-    @Override
-    protected ByteJsonSerializer createSerializer() {
-        return ByteJsonSerializer.getInstance();
-    }
+  @Override
+  protected ByteJsonSerializer createSerializer() {
+    return ByteJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("34", (byte) 34);
-        assertSerialization("1", new Byte("1"));
-        assertSerialization("-128", Byte.MIN_VALUE);
-        assertSerialization("127", Byte.MAX_VALUE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("34", (byte) 34);
+    assertSerialization("1", new Byte("1"));
+    assertSerialization("-128", Byte.MIN_VALUE);
+    assertSerialization("127", Byte.MAX_VALUE);
+  }
 }

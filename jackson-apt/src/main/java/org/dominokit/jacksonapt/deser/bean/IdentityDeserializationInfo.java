@@ -28,34 +28,34 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  */
 public interface IdentityDeserializationInfo<T> {
 
-    /**
-     * <p>getPropertyName</p>
-     *
-     * @return name of the identifier property
-     */
-    String getPropertyName();
+  /**
+   * getPropertyName
+   *
+   * @return name of the identifier property
+   */
+  String getPropertyName();
 
-    /**
-     * <p>isProperty</p>
-     *
-     * @return true if the identifier is also a property of the bean
-     */
-    boolean isProperty();
+  /**
+   * isProperty
+   *
+   * @return true if the identifier is also a property of the bean
+   */
+  boolean isProperty();
 
-    /**
-     * <p>newIdKey</p>
-     *
-     * @param id Identifier
-     * @return a new {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey}
-     */
-    IdKey newIdKey(Object id);
+  /**
+   * newIdKey
+   *
+   * @param id Identifier
+   * @return a new {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey}
+   */
+  IdKey newIdKey(Object id);
 
-    /**
-     * Reads the id and returns it.
-     *
-     * @param reader reader
-     * @param ctx    context of the deserialization process
-     * @return the identifier
-     */
-    Object readId(JsonReader reader, JsonDeserializationContext ctx);
+  /**
+   * Reads the id and returns it.
+   *
+   * @param reader reader
+   * @param ctx context of the deserialization process
+   * @return the identifier
+   */
+  Object readId(JsonReader reader, JsonDeserializationContext ctx);
 }

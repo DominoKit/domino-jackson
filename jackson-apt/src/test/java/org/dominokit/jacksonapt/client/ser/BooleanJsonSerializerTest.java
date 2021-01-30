@@ -18,20 +18,18 @@ package org.dominokit.jacksonapt.client.ser;
 
 import org.dominokit.jacksonapt.ser.BooleanJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanJsonSerializerTest extends AbstractJsonSerializerTest<Boolean> {
 
-    @Override
-    protected BooleanJsonSerializer createSerializer() {
-        return BooleanJsonSerializer.getInstance();
-    }
+  @Override
+  protected BooleanJsonSerializer createSerializer() {
+    return BooleanJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("true", true);
-        assertSerialization("true", Boolean.TRUE);
-        assertSerialization("false", false);
-        assertSerialization("false", Boolean.FALSE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("true", true);
+    assertSerialization("true", Boolean.TRUE);
+    assertSerialization("false", false);
+    assertSerialization("false", Boolean.FALSE);
+  }
 }

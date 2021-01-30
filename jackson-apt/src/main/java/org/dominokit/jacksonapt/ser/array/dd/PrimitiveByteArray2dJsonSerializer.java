@@ -30,38 +30,43 @@ import org.dominokit.jacksonapt.utils.Base64Utils;
  */
 public class PrimitiveByteArray2dJsonSerializer extends JsonSerializer<byte[][]> {
 
-    private static final PrimitiveByteArray2dJsonSerializer INSTANCE = new PrimitiveByteArray2dJsonSerializer();
+  private static final PrimitiveByteArray2dJsonSerializer INSTANCE =
+      new PrimitiveByteArray2dJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveByteArray2dJsonSerializer}
-     */
-    public static PrimitiveByteArray2dJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.dd.PrimitiveByteArray2dJsonSerializer}
+   */
+  public static PrimitiveByteArray2dJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveByteArray2dJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(byte[][] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      byte[][] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveByteArray2dJsonSerializer() {
+    writer.beginArray();
+    for (byte[] array : values) {
+      writer.unescapeValue(Base64Utils.toBase64(array));
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(byte[][] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, byte[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        writer.beginArray();
-        for (byte[] array : values) {
-            writer.unescapeValue(Base64Utils.toBase64(array));
-        }
-        writer.endArray();
-    }
+    writer.endArray();
+  }
 }

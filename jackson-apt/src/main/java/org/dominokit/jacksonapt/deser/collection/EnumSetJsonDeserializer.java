@@ -16,48 +16,53 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.EnumSet;
 import org.dominokit.jacksonapt.deser.EnumJsonDeserializer;
 
-import java.util.EnumSet;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.EnumSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.EnumSet}.
  *
  * @param <E> Type of the enumeration inside the {@link java.util.EnumSet}
  * @author Nicolas Morel
  * @version $Id: $
  */
-public class EnumSetJsonDeserializer<E extends Enum<E>> extends BaseSetJsonDeserializer<EnumSet<E>, E> {
+public class EnumSetJsonDeserializer<E extends Enum<E>>
+    extends BaseSetJsonDeserializer<EnumSet<E>, E> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer} used to deserialize the enums inside the {@link java.util.EnumSet}.
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.EnumSetJsonDeserializer}
-     */
-    public static <E extends Enum<E>> EnumSetJsonDeserializer<E> newInstance(EnumJsonDeserializer<E> deserializer) {
-        return new EnumSetJsonDeserializer<E>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer} used to
+   *     deserialize the enums inside the {@link java.util.EnumSet}.
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.EnumSetJsonDeserializer}
+   */
+  public static <E extends Enum<E>> EnumSetJsonDeserializer<E> newInstance(
+      EnumJsonDeserializer<E> deserializer) {
+    return new EnumSetJsonDeserializer<E>(deserializer);
+  }
 
-    private final Class<E> enumClass;
+  private final Class<E> enumClass;
 
-    /**
-     * @param deserializer {@link EnumJsonDeserializer} used to deserialize the enums inside the {@link EnumSet}.
-     */
-    private EnumSetJsonDeserializer(EnumJsonDeserializer<E> deserializer) {
-        super(deserializer);
-        this.enumClass = deserializer.getEnumClass();
-    }
+  /**
+   * @param deserializer {@link EnumJsonDeserializer} used to deserialize the enums inside the
+   *     {@link EnumSet}.
+   */
+  private EnumSetJsonDeserializer(EnumJsonDeserializer<E> deserializer) {
+    super(deserializer);
+    this.enumClass = deserializer.getEnumClass();
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected EnumSet<E> newCollection() {
-        return EnumSet.noneOf(enumClass);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected EnumSet<E> newCollection() {
+    return EnumSet.noneOf(enumClass);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isNullValueAllowed() {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isNullValueAllowed() {
+    return false;
+  }
 }

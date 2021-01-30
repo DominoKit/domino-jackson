@@ -26,46 +26,45 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  */
 public abstract class Deserializer<T> {
 
-    private KeyDeserializer<T> key;
+  private KeyDeserializer<T> key;
 
-    private JsonDeserializer<T> json;
+  private JsonDeserializer<T> json;
 
-    /**
-     * <p>key</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} object.
-     */
-    public KeyDeserializer<T> key() {
-        if (null == key) {
-            key = createKeyDeserializer();
-        }
-        return key;
+  /**
+   * key
+   *
+   * @return a {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} object.
+   */
+  public KeyDeserializer<T> key() {
+    if (null == key) {
+      key = createKeyDeserializer();
     }
+    return key;
+  }
 
-    /**
-     * <p>createKeyDeserializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} object.
-     */
-    protected abstract KeyDeserializer<T> createKeyDeserializer();
+  /**
+   * createKeyDeserializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} object.
+   */
+  protected abstract KeyDeserializer<T> createKeyDeserializer();
 
-    /**
-     * <p>json</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
-     */
-    public JsonDeserializer<T> json() {
-        if (null == json) {
-            json = createJsonDeserializer();
-        }
-        return json;
+  /**
+   * json
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+   */
+  public JsonDeserializer<T> json() {
+    if (null == json) {
+      json = createJsonDeserializer();
     }
+    return json;
+  }
 
-    /**
-     * <p>createJsonDeserializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
-     */
-    protected abstract JsonDeserializer<T> createJsonDeserializer();
-
+  /**
+   * createJsonDeserializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+   */
+  protected abstract JsonDeserializer<T> createJsonDeserializer();
 }

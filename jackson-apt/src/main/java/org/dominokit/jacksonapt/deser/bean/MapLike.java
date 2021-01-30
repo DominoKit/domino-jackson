@@ -16,26 +16,26 @@
 package org.dominokit.jacksonapt.deser.bean;
 
 /**
- * <p>MapLike interface.</p>
+ * MapLike interface.
  *
  * @author vegegoku
  * @version $Id: $Id
  */
 public interface MapLike<T> {
 
-    /**
-     * <p>get.</p>
-     *
-     * @param key a {@link java.lang.String} object.
-     * @return a T object.
-     */
-    T get(String key);
+  /**
+   * get.
+   *
+   * @param key a {@link java.lang.String} object.
+   * @return a T object.
+   */
+  T get(String key);
 
-    /**
-     * <p>put.</p>
-     *
-     * @param key a {@link java.lang.String} object.
-     * @param value a T object.
-     */
-    void put(String key, T value);
+  /**
+   * put.
+   *
+   * @param key a {@link java.lang.String} object.
+   * @param value a T object.
+   */
+  void put(String key, T value);
 }

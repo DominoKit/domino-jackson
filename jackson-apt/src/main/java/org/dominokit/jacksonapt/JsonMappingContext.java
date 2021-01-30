@@ -26,11 +26,10 @@ import java.util.logging.Logger;
  */
 public interface JsonMappingContext {
 
-    /**
-     * <p>getLogger</p>
-     *
-     * @return a {@link java.util.logging.Logger} object.
-     */
-    Logger getLogger();
-
+  /**
+   * getLogger
+   *
+   * @return a {@link java.util.logging.Logger} object.
+   */
+  Logger getLogger();
 }

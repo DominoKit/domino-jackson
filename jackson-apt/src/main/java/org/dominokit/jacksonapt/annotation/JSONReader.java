@@ -21,12 +21,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>JSONReader class.</p>
+ * JSONReader class.
  *
  * @author vegegoku
  * @version $Id: $Id
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JSONReader {
-}
+public @interface JSONReader {}

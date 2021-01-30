@@ -26,24 +26,24 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  */
 public abstract class HasDeserializer<V, S extends JsonDeserializer<V>> {
 
-    private S deserializer;
+  private S deserializer;
 
-    /**
-     * <p>Getter for the field <code>deserializer</code>.</p>
-     *
-     * @return a S object.
-     */
-    public S getDeserializer() {
-        if (null == deserializer) {
-            deserializer = (S) newDeserializer();
-        }
-        return deserializer;
+  /**
+   * Getter for the field <code>deserializer</code>.
+   *
+   * @return a S object.
+   */
+  public S getDeserializer() {
+    if (null == deserializer) {
+      deserializer = (S) newDeserializer();
     }
+    return deserializer;
+  }
 
-    /**
-     * <p>newDeserializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
-     */
-    protected abstract JsonDeserializer<?> newDeserializer();
+  /**
+   * newDeserializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+   */
+  protected abstract JsonDeserializer<?> newDeserializer();
 }

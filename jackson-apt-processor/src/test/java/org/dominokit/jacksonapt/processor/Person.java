@@ -19,5 +19,4 @@ package org.dominokit.jacksonapt.processor;
 import jsinterop.annotations.JsType;
 
 @JsType
-public class Person {
-}
+public class Person {}

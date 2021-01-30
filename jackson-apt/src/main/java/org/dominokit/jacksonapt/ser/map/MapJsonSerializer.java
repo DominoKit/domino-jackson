@@ -16,16 +16,15 @@
 
 package org.dominokit.jacksonapt.ser.map;
 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.ser.map.key.KeySerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
-
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.util.Map}.
@@ -38,98 +37,103 @@ import java.util.TreeMap;
  */
 public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer<M> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param keySerializer   {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to serialize the keys.
-     * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the values.
-     * @param <M> Type of the {@link java.util.Map}
-     * @return a new instance of {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer}
-     */
-    public static <M extends Map<?, ?>> MapJsonSerializer<M, ?, ?> newInstance(KeySerializer<?> keySerializer, JsonSerializer<?>
-            valueSerializer) {
-        return new MapJsonSerializer(keySerializer, valueSerializer);
+  /**
+   * newInstance
+   *
+   * @param keySerializer {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to
+   *     serialize the keys.
+   * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the
+   *     values.
+   * @param <M> Type of the {@link java.util.Map}
+   * @return a new instance of {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer}
+   */
+  public static <M extends Map<?, ?>> MapJsonSerializer<M, ?, ?> newInstance(
+      KeySerializer<?> keySerializer, JsonSerializer<?> valueSerializer) {
+    return new MapJsonSerializer(keySerializer, valueSerializer);
+  }
+
+  protected final KeySerializer<K> keySerializer;
+
+  protected final JsonSerializer<V> valueSerializer;
+
+  /**
+   * Constructor for MapJsonSerializer.
+   *
+   * @param keySerializer {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to
+   *     serialize the keys.
+   * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the
+   *     values.
+   */
+  protected MapJsonSerializer(KeySerializer<K> keySerializer, JsonSerializer<V> valueSerializer) {
+    if (null == keySerializer) {
+      throw new IllegalArgumentException("keySerializer cannot be null");
     }
+    if (null == valueSerializer) {
+      throw new IllegalArgumentException("valueSerializer cannot be null");
+    }
+    this.keySerializer = keySerializer;
+    this.valueSerializer = valueSerializer;
+  }
 
-    protected final KeySerializer<K> keySerializer;
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(M value) {
+    return null == value || value.isEmpty();
+  }
 
-    protected final JsonSerializer<V> valueSerializer;
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    writer.beginObject();
 
-    /**
-     * <p>Constructor for MapJsonSerializer.</p>
-     *
-     * @param keySerializer   {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} used to serialize the keys.
-     * @param valueSerializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the values.
-     */
-    protected MapJsonSerializer(KeySerializer<K> keySerializer, JsonSerializer<V> valueSerializer) {
-        if (null == keySerializer) {
-            throw new IllegalArgumentException("keySerializer cannot be null");
+    serializeValues(writer, values, ctx, params);
+
+    writer.endObject();
+  }
+
+  /**
+   * serializeValues
+   *
+   * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
+   * @param values a M object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+   * @param params a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
+   */
+  public void serializeValues(
+      JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    if (!values.isEmpty()) {
+      Map<K, V> map = values;
+      if (ctx.isOrderMapEntriesByKeys() && !(values instanceof SortedMap<?, ?>)) {
+        map = new TreeMap<K, V>(map);
+      }
+
+      if (ctx.isWriteNullMapValues()) {
+
+        for (Entry<K, V> entry : map.entrySet()) {
+          String name = keySerializer.serialize(entry.getKey(), ctx);
+          if (keySerializer.mustBeEscaped(ctx)) {
+            writer.name(name);
+          } else {
+            writer.unescapeName(name);
+          }
+          valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
         }
-        if (null == valueSerializer) {
-            throw new IllegalArgumentException("valueSerializer cannot be null");
-        }
-        this.keySerializer = keySerializer;
-        this.valueSerializer = valueSerializer;
-    }
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(M value) {
-        return null == value || value.isEmpty();
-    }
+      } else {
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.beginObject();
-
-        serializeValues(writer, values, ctx, params);
-
-        writer.endObject();
-    }
-
-    /**
-     * <p>serializeValues</p>
-     *
-     * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
-     * @param values a M object.
-     * @param ctx    a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
-     * @param params a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
-     */
-    public void serializeValues(JsonWriter writer, M values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!values.isEmpty()) {
-            Map<K, V> map = values;
-            if (ctx.isOrderMapEntriesByKeys() && !(values instanceof SortedMap<?, ?>)) {
-                map = new TreeMap<K, V>(map);
-            }
-
-            if (ctx.isWriteNullMapValues()) {
-
-                for (Entry<K, V> entry : map.entrySet()) {
-                    String name = keySerializer.serialize(entry.getKey(), ctx);
-                    if (keySerializer.mustBeEscaped(ctx)) {
-                        writer.name(name);
-                    } else {
-                        writer.unescapeName(name);
-                    }
-                    valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
-                }
-
+        for (Entry<K, V> entry : map.entrySet()) {
+          if (null != entry.getValue()) {
+            String name = keySerializer.serialize(entry.getKey(), ctx);
+            if (keySerializer.mustBeEscaped(ctx)) {
+              writer.name(name);
             } else {
-
-                for (Entry<K, V> entry : map.entrySet()) {
-                    if (null != entry.getValue()) {
-                        String name = keySerializer.serialize(entry.getKey(), ctx);
-                        if (keySerializer.mustBeEscaped(ctx)) {
-                            writer.name(name);
-                        } else {
-                            writer.unescapeName(name);
-                        }
-                        valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
-                    }
-                }
-
+              writer.unescapeName(name);
             }
+            valueSerializer.serialize(writer, entry.getValue(), ctx, params, true);
+          }
         }
+      }
     }
+  }
 }

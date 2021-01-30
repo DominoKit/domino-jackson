@@ -20,13 +20,11 @@ import org.dominokit.jacksonapt.client.stream.AbstractJsonWriterTest;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.stream.impl.DefaultJsonWriter;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class DefaultJsonWriterTest extends AbstractJsonWriterTest {
 
-    @Override
-    public JsonWriter newJsonWriter() {
-        return new DefaultJsonWriter(new StringBuilder());
-    }
+  @Override
+  public JsonWriter newJsonWriter() {
+    return new DefaultJsonWriter(new StringBuilder());
+  }
 }

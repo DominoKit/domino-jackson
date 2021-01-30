@@ -16,12 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.array.dd;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
-
-import java.util.List;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of int.
@@ -29,50 +28,55 @@ import java.util.List;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public class PrimitiveIntegerArray2dJsonDeserializer extends AbstractArray2dJsonDeserializer<int[][]> {
+public class PrimitiveIntegerArray2dJsonDeserializer
+    extends AbstractArray2dJsonDeserializer<int[][]> {
 
-    private static final PrimitiveIntegerArray2dJsonDeserializer INSTANCE = new PrimitiveIntegerArray2dJsonDeserializer();
+  private static final PrimitiveIntegerArray2dJsonDeserializer INSTANCE =
+      new PrimitiveIntegerArray2dJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.dd.PrimitiveIntegerArray2dJsonDeserializer}
-     */
-    public static PrimitiveIntegerArray2dJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.dd.PrimitiveIntegerArray2dJsonDeserializer}
+   */
+  public static PrimitiveIntegerArray2dJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveIntegerArray2dJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public int[][] doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<List<Integer>> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance(), params);
+
+    if (list.isEmpty()) {
+      return new int[0][0];
     }
 
-    private PrimitiveIntegerArray2dJsonDeserializer() {
+    List<Integer> firstList = list.get(0);
+    if (firstList.isEmpty()) {
+      return new int[list.size()][0];
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<List<Integer>> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance(), params);
+    int[][] array = new int[list.size()][firstList.size()];
 
-        if (list.isEmpty()) {
-            return new int[0][0];
+    int i = 0;
+    int j;
+    for (List<Integer> innerList : list) {
+      j = 0;
+      for (Integer value : innerList) {
+        if (null != value) {
+          array[i][j] = value;
         }
-
-        List<Integer> firstList = list.get(0);
-        if (firstList.isEmpty()) {
-            return new int[list.size()][0];
-        }
-
-        int[][] array = new int[list.size()][firstList.size()];
-
-        int i = 0;
-        int j;
-        for (List<Integer> innerList : list) {
-            j = 0;
-            for (Integer value : innerList) {
-                if (null != value) {
-                    array[i][j] = value;
-                }
-                j++;
-            }
-            i++;
-        }
-        return array;
+        j++;
+      }
+      i++;
     }
+    return array;
+  }
 }

@@ -20,7 +20,9 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
 
 /**
  * Writes an object to JSON.
- * <p>Example : </p>
+ *
+ * <p>Example :
+ *
  * <pre>
  * public class Person {
  *     public String firstName, lastName;
@@ -44,29 +46,31 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
  */
 public interface ObjectWriter<T> {
 
-    /**
-     * Writes an object to JSON.
-     *
-     * @param value Object to write
-     * @return the JSON output
-     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs while writing the output
-     */
-    String write(T value) throws JsonSerializationException;
+  /**
+   * Writes an object to JSON.
+   *
+   * @param value Object to write
+   * @return the JSON output
+   * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs
+   *     while writing the output
+   */
+  String write(T value) throws JsonSerializationException;
 
-    /**
-     * Writes an object to JSON.
-     *
-     * @param value Object to write
-     * @param ctx   Context for the full writing process
-     * @return a {@link java.lang.String} object.
-     * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs while writing the output
-     */
-    String write(T value, JsonSerializationContext ctx) throws JsonSerializationException;
+  /**
+   * Writes an object to JSON.
+   *
+   * @param value Object to write
+   * @param ctx Context for the full writing process
+   * @return a {@link java.lang.String} object.
+   * @throws org.dominokit.jacksonapt.exception.JsonSerializationException if an exception occurs
+   *     while writing the output
+   */
+  String write(T value, JsonSerializationContext ctx) throws JsonSerializationException;
 
-    /**
-     * <p>getSerializer.</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
-     */
-    JsonSerializer<T> getSerializer();
+  /**
+   * getSerializer.
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+   */
+  JsonSerializer<T> getSerializer();
 }

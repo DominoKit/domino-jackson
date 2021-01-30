@@ -22,42 +22,48 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Void}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.lang.Void}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class VoidJsonSerializer extends JsonSerializer<Void> {
 
-    private static final VoidJsonSerializer INSTANCE = new VoidJsonSerializer();
+  private static final VoidJsonSerializer INSTANCE = new VoidJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.VoidJsonSerializer}
-     */
-    public static VoidJsonSerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.VoidJsonSerializer}
+   */
+  public static VoidJsonSerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private VoidJsonSerializer() {
-    }
+  private VoidJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected void serializeNullValue(JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (writer.getSerializeNulls()) {
-            writer.setSerializeNulls(false);
-            writer.nullValue();
-            writer.setSerializeNulls(true);
-        } else {
-            writer.nullValue();
-        }
+  /** {@inheritDoc} */
+  @Override
+  protected void serializeNullValue(
+      JsonWriter writer, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    if (writer.getSerializeNulls()) {
+      writer.setSerializeNulls(false);
+      writer.nullValue();
+      writer.setSerializeNulls(true);
+    } else {
+      writer.nullValue();
     }
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, Void value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        // we should never be here, the null value is already handled and it's the only possible value for Void
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      Void value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    // we should never be here, the null value is already handled and it's the only possible value
+    // for Void
+  }
 }

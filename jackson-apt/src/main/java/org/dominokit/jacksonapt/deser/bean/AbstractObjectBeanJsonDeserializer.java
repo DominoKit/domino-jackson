@@ -27,51 +27,59 @@ import org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * <p>Abstract AbstractObjectBeanJsonDeserializer class.</p>
+ * Abstract AbstractObjectBeanJsonDeserializer class.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 @SuppressWarnings("UnusedDeclaration")
-public abstract class AbstractObjectBeanJsonDeserializer extends AbstractBeanJsonDeserializer<Object> {
+public abstract class AbstractObjectBeanJsonDeserializer
+    extends AbstractBeanJsonDeserializer<Object> {
 
-    private ArrayListJsonDeserializer<Object> listJsonDeserializer;
+  private ArrayListJsonDeserializer<Object> listJsonDeserializer;
 
-    private LinkedHashMapJsonDeserializer<String, Object> mapJsonDeserializer;
+  private LinkedHashMapJsonDeserializer<String, Object> mapJsonDeserializer;
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean canDeserialize() {
-        return true;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean canDeserialize() {
+    return true;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public Object deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                     IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
-        switch (reader.peek()) {
-            case NUMBER:
-                return BaseNumberJsonDeserializer.NumberJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
-            case STRING:
-                return StringJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
-            case BOOLEAN:
-                return BooleanJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
-            case BEGIN_ARRAY:
-                if (null == listJsonDeserializer) {
-                    listJsonDeserializer = ArrayListJsonDeserializer.newInstance(this);
-                }
-                return listJsonDeserializer.doDeserialize(reader, ctx, params);
-            case BEGIN_OBJECT:
-                if (null == mapJsonDeserializer) {
-                    mapJsonDeserializer = LinkedHashMapJsonDeserializer.newInstance(StringKeyDeserializer.getInstance(), this);
-                }
-                return mapJsonDeserializer.doDeserialize(reader, ctx, params);
-            case NULL:
-                reader.nextNull();
-                return null;
-            default:
-                throw ctx.traceError("Unexpected token " + reader.peek() + " for java.lang.Object deserialization", reader);
+  /** {@inheritDoc} */
+  @Override
+  public Object deserializeWrapped(
+      JsonReader reader,
+      JsonDeserializationContext ctx,
+      JsonDeserializerParameters params,
+      IdentityDeserializationInfo identityInfo,
+      TypeDeserializationInfo typeInfo,
+      String typeInformation) {
+    switch (reader.peek()) {
+      case NUMBER:
+        return BaseNumberJsonDeserializer.NumberJsonDeserializer.getInstance()
+            .doDeserialize(reader, ctx, params);
+      case STRING:
+        return StringJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
+      case BOOLEAN:
+        return BooleanJsonDeserializer.getInstance().doDeserialize(reader, ctx, params);
+      case BEGIN_ARRAY:
+        if (null == listJsonDeserializer) {
+          listJsonDeserializer = ArrayListJsonDeserializer.newInstance(this);
         }
+        return listJsonDeserializer.doDeserialize(reader, ctx, params);
+      case BEGIN_OBJECT:
+        if (null == mapJsonDeserializer) {
+          mapJsonDeserializer =
+              LinkedHashMapJsonDeserializer.newInstance(StringKeyDeserializer.getInstance(), this);
+        }
+        return mapJsonDeserializer.doDeserialize(reader, ctx, params);
+      case NULL:
+        reader.nextNull();
+        return null;
+      default:
+        throw ctx.traceError(
+            "Unexpected token " + reader.peek() + " for java.lang.Object deserialization", reader);
     }
-
+  }
 }

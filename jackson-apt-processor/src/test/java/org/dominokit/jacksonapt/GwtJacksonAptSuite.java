@@ -22,11 +22,11 @@ import org.dominokit.jacksonapt.processor.DeserializerInstanceBuilderTest;
 import org.dominokit.jacksonapt.processor.SerializerInstanceBuilderTest;
 
 public class GwtJacksonAptSuite extends GWTTestSuite {
-    public static Test suite() {
-        TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
-        suite.addTestSuite(DeserializerInstanceBuilderTest.class);
-        suite.addTestSuite(SerializerInstanceBuilderTest.class);
+  public static Test suite() {
+    TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
+    suite.addTestSuite(DeserializerInstanceBuilderTest.class);
+    suite.addTestSuite(SerializerInstanceBuilderTest.class);
 
-        return suite;
-    }
+    return suite;
+  }
 }

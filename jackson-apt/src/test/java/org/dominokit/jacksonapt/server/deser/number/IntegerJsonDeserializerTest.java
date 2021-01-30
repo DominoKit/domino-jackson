@@ -20,22 +20,20 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer.IntegerJsonDese
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class IntegerJsonDeserializerTest extends AbstractJsonDeserializerTest<Integer> {
 
-    @Override
-    protected IntegerJsonDeserializer createDeserializer() {
-        return IntegerJsonDeserializer.getInstance();
-    }
+  @Override
+  protected IntegerJsonDeserializer createDeserializer() {
+    return IntegerJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(34, "34");
-        assertDeserialization(-1, "\"-1\"");
-        assertDeserialization(Integer.MIN_VALUE, "-2147483648");
-        assertDeserialization(Integer.MAX_VALUE, "2147483647");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(34, "34");
+    assertDeserialization(-1, "\"-1\"");
+    assertDeserialization(Integer.MIN_VALUE, "-2147483648");
+    assertDeserialization(Integer.MAX_VALUE, "2147483647");
+  }
 }

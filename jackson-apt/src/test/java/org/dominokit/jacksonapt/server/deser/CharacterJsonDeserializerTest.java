@@ -20,20 +20,18 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.CharacterJsonDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class CharacterJsonDeserializerTest extends AbstractJsonDeserializerTest<Character> {
 
-    @Override
-    protected JsonDeserializer<Character> createDeserializer() {
-        return CharacterJsonDeserializer.getInstance();
-    }
+  @Override
+  protected JsonDeserializer<Character> createDeserializer() {
+    return CharacterJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization('e', "e");
-        assertDeserialization('\u00e9', "\"\u00e9\"");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization('e', "e");
+    assertDeserialization('\u00e9', "\"\u00e9\"");
+  }
 }

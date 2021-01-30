@@ -19,19 +19,19 @@ package org.dominokit.jacksonapt.deser.bean;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
 /**
- * <p>BackReferenceProperty interface.</p>
+ * BackReferenceProperty interface.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public interface BackReferenceProperty<T, R> {
 
-    /**
-     * <p>setBackReference</p>
-     *
-     * @param value     a T object.
-     * @param reference a R object.
-     * @param ctx       a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
-     */
-    void setBackReference(T value, R reference, JsonDeserializationContext ctx);
+  /**
+   * setBackReference
+   *
+   * @param value a T object.
+   * @param reference a R object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+   */
+  void setBackReference(T value, R reference, JsonDeserializationContext ctx);
 }

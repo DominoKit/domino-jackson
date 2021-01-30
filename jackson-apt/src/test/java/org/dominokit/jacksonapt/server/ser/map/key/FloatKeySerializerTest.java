@@ -19,19 +19,17 @@ package org.dominokit.jacksonapt.server.ser.map.key;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatKeySerializerTest extends AbstractKeySerializerTest<Float> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("34.10245", new Float("34.10245"));
-        assertSerialization("-784.15454", new Float("-784.15454"));
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("34.10245", new Float("34.10245"));
+    assertSerialization("-784.15454", new Float("-784.15454"));
+  }
 }

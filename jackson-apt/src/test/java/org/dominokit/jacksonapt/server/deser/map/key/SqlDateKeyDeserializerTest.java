@@ -16,25 +16,23 @@
 
 package org.dominokit.jacksonapt.server.deser.map.key;
 
+import java.sql.Date;
 import org.dominokit.jacksonapt.deser.map.key.BaseDateKeyDeserializer;
 import org.junit.Test;
 
-import java.sql.Date;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlDateKeyDeserializerTest extends AbstractKeyDeserializerTest<Date> {
 
-    @Override
-    protected BaseDateKeyDeserializer.SqlDateKeyDeserializer createDeserializer() {
-        return BaseDateKeyDeserializer.SqlDateKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BaseDateKeyDeserializer.SqlDateKeyDeserializer createDeserializer() {
+    return BaseDateKeyDeserializer.SqlDateKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Date(1377543971773l), "1377543971773");
-        assertDeserialization(new Date(getUTCTime(2012, 8, 18, 15, 45, 56, 543)), "2012-08-18T17:45:56.543+02:00");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Date(1377543971773l), "1377543971773");
+    assertDeserialization(
+        new Date(getUTCTime(2012, 8, 18, 15, 45, 56, 543)), "2012-08-18T17:45:56.543+02:00");
+  }
 }

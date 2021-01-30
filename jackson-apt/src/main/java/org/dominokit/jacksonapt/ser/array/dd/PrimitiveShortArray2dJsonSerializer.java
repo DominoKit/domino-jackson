@@ -29,42 +29,47 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class PrimitiveShortArray2dJsonSerializer extends JsonSerializer<short[][]> {
 
-    private static final PrimitiveShortArray2dJsonSerializer INSTANCE = new PrimitiveShortArray2dJsonSerializer();
+  private static final PrimitiveShortArray2dJsonSerializer INSTANCE =
+      new PrimitiveShortArray2dJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveShortArray2dJsonSerializer}
-     */
-    public static PrimitiveShortArray2dJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.dd.PrimitiveShortArray2dJsonSerializer}
+   */
+  public static PrimitiveShortArray2dJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveShortArray2dJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(short[][] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      short[][] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveShortArray2dJsonSerializer() {
+    writer.beginArray();
+    for (short[] array : values) {
+      writer.beginArray();
+      for (short value : array) {
+        writer.value(value);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(short[][] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, short[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        writer.beginArray();
-        for (short[] array : values) {
-            writer.beginArray();
-            for (short value : array) {
-                writer.value(value);
-            }
-            writer.endArray();
-        }
-        writer.endArray();
-    }
+    writer.endArray();
+  }
 }

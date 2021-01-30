@@ -16,28 +16,26 @@
 
 package org.dominokit.jacksonapt.server.deser.date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.sql.Date;
 import org.dominokit.jacksonapt.deser.BaseDateJsonDeserializer.SqlDateJsonDeserializer;
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-import java.sql.Date;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlDateJsonDeserializerTest extends AbstractJsonDeserializerTest<Date> {
 
-    @Override
-    protected SqlDateJsonDeserializer createDeserializer() {
-        return SqlDateJsonDeserializer.getInstance();
-    }
+  @Override
+  protected SqlDateJsonDeserializer createDeserializer() {
+    return SqlDateJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Date(1377543971773l), "1377543971773");
-        assertThat(getUTCTime(2012, 8, 18, 0, 0, 0, 0)).isEqualTo(deserialize("\"2012-08-18\"").getTime());
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Date(1377543971773l), "1377543971773");
+    assertThat(getUTCTime(2012, 8, 18, 0, 0, 0, 0))
+        .isEqualTo(deserialize("\"2012-08-18\"").getTime());
+  }
 }

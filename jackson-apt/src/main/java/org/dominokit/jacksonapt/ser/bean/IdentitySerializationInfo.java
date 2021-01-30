@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2019 Dominokit
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.dominokit.jacksonapt.ser.bean;
 
 import org.dominokit.jacksonapt.JsonSerializationContext;
@@ -10,33 +25,34 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
  */
 public interface IdentitySerializationInfo<T> {
 
-    /**
-     * <p>isAlwaysAsId</p>
-     *
-     * @return true if we should always serialize the bean as an identifier even if it has not been seralized yet
-     */
-    boolean isAlwaysAsId();
+  /**
+   * isAlwaysAsId
+   *
+   * @return true if we should always serialize the bean as an identifier even if it has not been
+   *     seralized yet
+   */
+  boolean isAlwaysAsId();
 
-    /**
-     * <p>isProperty</p>
-     *
-     * @return true if the identifier is also a property of the bean
-     */
-    boolean isProperty();
+  /**
+   * isProperty
+   *
+   * @return true if the identifier is also a property of the bean
+   */
+  boolean isProperty();
 
-    /**
-     * <p>getPropertyName</p>
-     *
-     * @return name of the identifier property
-     */
-    String getPropertyName();
+  /**
+   * getPropertyName
+   *
+   * @return name of the identifier property
+   */
+  String getPropertyName();
 
-    /**
-     * <p>getObjectId</p>
-     *
-     * @param bean a T object.
-     * @param ctx  a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
-     * @return a {@link org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer} object.
-     */
-    ObjectIdSerializer<?> getObjectId(T bean, JsonSerializationContext ctx);
+  /**
+   * getObjectId
+   *
+   * @param bean a T object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+   * @return a {@link org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer} object.
+   */
+  ObjectIdSerializer<?> getObjectId(T bean, JsonSerializationContext ctx);
 }

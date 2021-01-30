@@ -16,26 +16,25 @@
 
 package org.dominokit.jacksonapt.processor.pkg;
 
-import java.util.ArrayList;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import org.junit.Test;
 
 public class SimpleBeanTest {
 
-    private final Tested_MapperImpl mapper = new Tested_MapperImpl();
-    private static final String JSON = "{\"beans\":[{\"@type\":\"import\",\"name\":\"BBB\"}],\"anImport\":{\"value\":\"AAA\"}}";
+  private final Tested_MapperImpl mapper = new Tested_MapperImpl();
+  private static final String JSON =
+      "{\"beans\":[{\"@type\":\"import\",\"name\":\"BBB\"}],\"anImport\":{\"value\":\"AAA\"}}";
 
-    @Test
-    public void test() {
-        Tested tested = new Tested();
-        tested.setBeans(new ArrayList<>());
+  @Test
+  public void test() {
+    Tested tested = new Tested();
+    tested.setBeans(new ArrayList<>());
 
-        tested.setAnImport(new Import("AAA"));
-        tested.getBeans().add(new org.dominokit.jacksonapt.processor.pkg.one.Import("BBB"));
+    tested.setAnImport(new Import("AAA"));
+    tested.getBeans().add(new org.dominokit.jacksonapt.processor.pkg.one.Import("BBB"));
 
-        assertEquals(JSON, mapper.write(tested));
-    }
-
+    assertEquals(JSON, mapper.write(tested));
+  }
 }

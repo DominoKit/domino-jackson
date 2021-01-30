@@ -18,24 +18,26 @@ package org.dominokit.jacksonapt.client.ser.map.key;
 
 import org.dominokit.jacksonapt.ser.map.key.EnumKeySerializer;
 
-/**
- * @author Nicolas Morel
- */
-public class EnumKeySerializerTest extends AbstractKeySerializerTest<EnumKeySerializerTest.EnumTest> {
+/** @author Nicolas Morel */
+public class EnumKeySerializerTest
+    extends AbstractKeySerializerTest<EnumKeySerializerTest.EnumTest> {
 
-    protected static enum EnumTest {
-        ONE, TWO, THREE, FOUR
-    }
+  protected static enum EnumTest {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
 
-    @Override
-    protected EnumKeySerializer<EnumTest> createSerializer() {
-        return EnumKeySerializer.getInstance();
-    }
+  @Override
+  protected EnumKeySerializer<EnumTest> createSerializer() {
+    return EnumKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("ONE", EnumTest.ONE);
-        assertSerialization("TWO", EnumTest.TWO);
-        assertSerialization("THREE", EnumTest.THREE);
-        assertSerialization("FOUR", EnumTest.FOUR);
-    }
+  public void testSerializeValue() {
+    assertSerialization("ONE", EnumTest.ONE);
+    assertSerialization("TWO", EnumTest.TWO);
+    assertSerialization("THREE", EnumTest.THREE);
+    assertSerialization("FOUR", EnumTest.FOUR);
+  }
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2019 Dominokit
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.dominokit.jacksonapt;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
@@ -5,116 +20,116 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * <p>JsonDeserializationContext interface.</p>
+ * JsonDeserializationContext interface.
  *
  * @author vegegoku
  * @version $Id: $Id
  */
 public interface JsonDeserializationContext extends JsonMappingContext {
-    /**
-     * <p>isFailOnUnknownProperties.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isFailOnUnknownProperties();
+  /**
+   * isFailOnUnknownProperties.
+   *
+   * @return a boolean.
+   */
+  boolean isFailOnUnknownProperties();
 
-    /**
-     * <p>isUnwrapRootValue.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isUnwrapRootValue();
+  /**
+   * isUnwrapRootValue.
+   *
+   * @return a boolean.
+   */
+  boolean isUnwrapRootValue();
 
-    /**
-     * <p>isAcceptSingleValueAsArray.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isAcceptSingleValueAsArray();
+  /**
+   * isAcceptSingleValueAsArray.
+   *
+   * @return a boolean.
+   */
+  boolean isAcceptSingleValueAsArray();
 
-    /**
-     * <p>isUseSafeEval.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isUseSafeEval();
+  /**
+   * isUseSafeEval.
+   *
+   * @return a boolean.
+   */
+  boolean isUseSafeEval();
 
-    /**
-     * <p>isReadUnknownEnumValuesAsNull.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isReadUnknownEnumValuesAsNull();
+  /**
+   * isReadUnknownEnumValuesAsNull.
+   *
+   * @return a boolean.
+   */
+  boolean isReadUnknownEnumValuesAsNull();
 
-    /**
-     * <p>isUseBrowserTimezone.</p>
-     *
-     * @return a boolean.
-     */
-    boolean isUseBrowserTimezone();
+  /**
+   * isUseBrowserTimezone.
+   *
+   * @return a boolean.
+   */
+  boolean isUseBrowserTimezone();
 
-    /**
-     * <p>newJsonReader.</p>
-     *
-     * @param input a {@link java.lang.String} object.
-     * @return a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     */
-    JsonReader newJsonReader(String input);
+  /**
+   * newJsonReader.
+   *
+   * @param input a {@link java.lang.String} object.
+   * @return a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+   */
+  JsonReader newJsonReader(String input);
 
-    /**
-     * <p>traceError.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     * @return a {@link org.dominokit.jacksonapt.exception.JsonDeserializationException} object.
-     */
-    JsonDeserializationException traceError(String message);
+  /**
+   * traceError.
+   *
+   * @param message a {@link java.lang.String} object.
+   * @return a {@link org.dominokit.jacksonapt.exception.JsonDeserializationException} object.
+   */
+  JsonDeserializationException traceError(String message);
 
-    /**
-     * <p>traceError.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @return a {@link org.dominokit.jacksonapt.exception.JsonDeserializationException} object.
-     */
-    JsonDeserializationException traceError(String message, JsonReader reader);
+  /**
+   * traceError.
+   *
+   * @param message a {@link java.lang.String} object.
+   * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+   * @return a {@link org.dominokit.jacksonapt.exception.JsonDeserializationException} object.
+   */
+  JsonDeserializationException traceError(String message, JsonReader reader);
 
-    /**
-     * <p>traceError.</p>
-     *
-     * @param cause a {@link java.lang.RuntimeException} object.
-     * @return a {@link java.lang.RuntimeException} object.
-     */
-    RuntimeException traceError(RuntimeException cause);
+  /**
+   * traceError.
+   *
+   * @param cause a {@link java.lang.RuntimeException} object.
+   * @return a {@link java.lang.RuntimeException} object.
+   */
+  RuntimeException traceError(RuntimeException cause);
 
-    /**
-     * <p>traceError.</p>
-     *
-     * @param cause a {@link java.lang.RuntimeException} object.
-     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @return a {@link java.lang.RuntimeException} object.
-     */
-    RuntimeException traceError(RuntimeException cause, JsonReader reader);
+  /**
+   * traceError.
+   *
+   * @param cause a {@link java.lang.RuntimeException} object.
+   * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+   * @return a {@link java.lang.RuntimeException} object.
+   */
+  RuntimeException traceError(RuntimeException cause, JsonReader reader);
 
-    /**
-     * <p>addObjectId.</p>
-     *
-     * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
-     * @param instance a {@link java.lang.Object} object.
-     */
-    void addObjectId(ObjectIdGenerator.IdKey id, Object instance);
+  /**
+   * addObjectId.
+   *
+   * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
+   * @param instance a {@link java.lang.Object} object.
+   */
+  void addObjectId(ObjectIdGenerator.IdKey id, Object instance);
 
-    /**
-     * <p>getObjectWithId.</p>
-     *
-     * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
-     * @return a {@link java.lang.Object} object.
-     */
-    Object getObjectWithId(ObjectIdGenerator.IdKey id);
+  /**
+   * getObjectWithId.
+   *
+   * @param id a {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey} object.
+   * @return a {@link java.lang.Object} object.
+   */
+  Object getObjectWithId(ObjectIdGenerator.IdKey id);
 
-    /**
-     * <p>defaultParameters.</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
-     */
-    JsonDeserializerParameters defaultParameters();
+  /**
+   * defaultParameters.
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+   */
+  JsonDeserializerParameters defaultParameters();
 }

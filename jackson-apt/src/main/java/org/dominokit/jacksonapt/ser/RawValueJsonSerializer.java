@@ -22,32 +22,36 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Dummy {@link org.dominokit.jacksonapt.JsonSerializer} that will just output raw values by calling toString() on value to serialize.
+ * Dummy {@link org.dominokit.jacksonapt.JsonSerializer} that will just output raw values by calling
+ * toString() on value to serialize.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class RawValueJsonSerializer<T> extends JsonSerializer<T> {
 
-    private static final RawValueJsonSerializer<?> INSTANCE = new RawValueJsonSerializer();
+  private static final RawValueJsonSerializer<?> INSTANCE = new RawValueJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @param <T> a T object.
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.RawValueJsonSerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> RawValueJsonSerializer<T> getInstance() {
-        return (RawValueJsonSerializer<T>) INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @param <T> a T object.
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.RawValueJsonSerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> RawValueJsonSerializer<T> getInstance() {
+    return (RawValueJsonSerializer<T>) INSTANCE;
+  }
 
-    private RawValueJsonSerializer() {
-    }
+  private RawValueJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected void doSerialize(JsonWriter writer, Object value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.rawValue(value);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected void doSerialize(
+      JsonWriter writer,
+      Object value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    writer.rawValue(value);
+  }
 }

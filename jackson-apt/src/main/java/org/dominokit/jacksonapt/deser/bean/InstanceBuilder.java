@@ -16,44 +16,45 @@
 
 package org.dominokit.jacksonapt.deser.bean;
 
+import java.util.Map;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.Map;
-
 /**
- * <p>InstanceBuilder interface.</p>
+ * InstanceBuilder interface.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public interface InstanceBuilder<T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param reader                   a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
-     * @param ctx                      a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
-     * @param params                   a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
-     * @param bufferedProperties       a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @param bufferedPropertiesValues a {@link java.util.Map} object.
-     * @return a {@link org.dominokit.jacksonapt.deser.bean.Instance} object.
-     */
-    Instance<T> newInstance(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                            Map<String, String> bufferedProperties,
-                            Map<String, Object> bufferedPropertiesValues);
+  /**
+   * newInstance
+   *
+   * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+   * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+   * @param bufferedProperties a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @param bufferedPropertiesValues a {@link java.util.Map} object.
+   * @return a {@link org.dominokit.jacksonapt.deser.bean.Instance} object.
+   */
+  Instance<T> newInstance(
+      JsonReader reader,
+      JsonDeserializationContext ctx,
+      JsonDeserializerParameters params,
+      Map<String, String> bufferedProperties,
+      Map<String, Object> bufferedPropertiesValues);
 
-    /**
-     * <p>getParametersDeserializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.deser.bean.MapLike} object.
-     */
-    MapLike<HasDeserializerAndParameters> getParametersDeserializer();
-
+  /**
+   * getParametersDeserializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.deser.bean.MapLike} object.
+   */
+  MapLike<HasDeserializerAndParameters> getParametersDeserializer();
 }

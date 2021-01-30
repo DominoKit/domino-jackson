@@ -20,20 +20,18 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer.FloatJsonDeseri
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatJsonDeserializerTest extends AbstractJsonDeserializerTest<Float> {
 
-    @Override
-    protected FloatJsonDeserializer createDeserializer() {
-        return FloatJsonDeserializer.getInstance();
-    }
+  @Override
+  protected FloatJsonDeserializer createDeserializer() {
+    return FloatJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Float("34.10245"), "34.10245");
-        assertDeserialization(new Float("-784.15454"), "\"-784.15454\"");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Float("34.10245"), "34.10245");
+    assertDeserialization(new Float("-784.15454"), "\"-784.15454\"");
+  }
 }

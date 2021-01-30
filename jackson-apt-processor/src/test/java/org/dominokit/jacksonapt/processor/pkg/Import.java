@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-
 package org.dominokit.jacksonapt.processor.pkg;
 
-public class Import  {
+public class Import {
 
-    private String value;
+  private String value;
 
-    public Import() {
+  public Import() {}
 
-    }
+  public Import(String value) {
+    this.value = value;
+  }
 
-    public Import(String value) {
-        this.value = value;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+  public void setValue(String value) {
+    this.value = value;
+  }
 }

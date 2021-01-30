@@ -20,21 +20,19 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.StringJsonDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class StringJsonDeserializerTest extends AbstractJsonDeserializerTest<String> {
 
-    @Override
-    protected JsonDeserializer<String> createDeserializer() {
-        return StringJsonDeserializer.getInstance();
-    }
+  @Override
+  protected JsonDeserializer<String> createDeserializer() {
+    return StringJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization("", "\"\"");
-        assertDeserialization("Json", "Json");
-        assertDeserialization("&é(-è_ çà)='", "\"&é(-è_ çà)='\"");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization("", "\"\"");
+    assertDeserialization("Json", "Json");
+    assertDeserialization("&é(-è_ çà)='", "\"&é(-è_ çà)='\"");
+  }
 }

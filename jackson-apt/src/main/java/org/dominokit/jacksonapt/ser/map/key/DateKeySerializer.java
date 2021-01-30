@@ -16,10 +16,9 @@
 
 package org.dominokit.jacksonapt.ser.map.key;
 
+import java.util.Date;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.JsonSerializationContext;
-
-import java.util.Date;
 
 /**
  * Default implementation of {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} for dates.
@@ -29,33 +28,32 @@ import java.util.Date;
  */
 public class DateKeySerializer<D extends Date> extends KeySerializer<D> {
 
-    private static final DateKeySerializer INSTANCE = new DateKeySerializer();
+  private static final DateKeySerializer INSTANCE = new DateKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.DateKeySerializer}
-     */
-    public static DateKeySerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.DateKeySerializer}
+   */
+  public static DateKeySerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private DateKeySerializer() {
-    }
+  private DateKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean mustBeEscaped(JsonSerializationContext ctx) {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  public boolean mustBeEscaped(JsonSerializationContext ctx) {
+    return false;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(Date value, JsonSerializationContext ctx) {
-        if (ctx.isWriteDateKeysAsTimestamps()) {
-            return Long.toString(value.getTime());
-        } else {
-            return JacksonContextProvider.get().dateFormat().format(value);
-        }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(Date value, JsonSerializationContext ctx) {
+    if (ctx.isWriteDateKeysAsTimestamps()) {
+      return Long.toString(value.getTime());
+    } else {
+      return JacksonContextProvider.get().dateFormat().format(value);
     }
+  }
 }

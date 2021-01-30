@@ -14,31 +14,32 @@
  * limitations under the License.
  */
 
-
 package org.dominokit.jacksonapt.server.ser.map.key;
 
 import org.dominokit.jacksonapt.ser.map.key.EnumKeySerializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
-public class EnumKeySerializerTest extends AbstractKeySerializerTest<EnumKeySerializerTest.EnumTest> {
+/** @author Nicolas Morel */
+public class EnumKeySerializerTest
+    extends AbstractKeySerializerTest<EnumKeySerializerTest.EnumTest> {
 
-    protected static enum EnumTest {
-        ONE, TWO, THREE, FOUR
-    }
+  protected static enum EnumTest {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
 
-    @Override
-    protected EnumKeySerializer<EnumTest> createSerializer() {
-        return EnumKeySerializer.getInstance();
-    }
+  @Override
+  protected EnumKeySerializer<EnumTest> createSerializer() {
+    return EnumKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("ONE", EnumTest.ONE);
-        assertSerialization("TWO", EnumTest.TWO);
-        assertSerialization("THREE", EnumTest.THREE);
-        assertSerialization("FOUR", EnumTest.FOUR);
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("ONE", EnumTest.ONE);
+    assertSerialization("TWO", EnumTest.TWO);
+    assertSerialization("THREE", EnumTest.THREE);
+    assertSerialization("FOUR", EnumTest.FOUR);
+  }
 }

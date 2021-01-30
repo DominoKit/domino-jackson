@@ -20,13 +20,11 @@ import org.dominokit.jacksonapt.server.stream.AbstractJsonReaderTest;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.impl.NonBufferedJsonReader;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class NonBufferedJsonReaderTest extends AbstractJsonReaderTest {
 
-    @Override
-    public JsonReader newJsonReader(String input) {
-        return new NonBufferedJsonReader(input);
-    }
+  @Override
+  public JsonReader newJsonReader(String input) {
+    return new NonBufferedJsonReader(input);
+  }
 }

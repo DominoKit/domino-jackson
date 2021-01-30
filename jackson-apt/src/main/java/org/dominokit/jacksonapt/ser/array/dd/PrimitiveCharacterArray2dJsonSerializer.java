@@ -29,47 +29,51 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class PrimitiveCharacterArray2dJsonSerializer extends JsonSerializer<char[][]> {
 
-    private static final PrimitiveCharacterArray2dJsonSerializer INSTANCE = new PrimitiveCharacterArray2dJsonSerializer();
+  private static final PrimitiveCharacterArray2dJsonSerializer INSTANCE =
+      new PrimitiveCharacterArray2dJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.dd.PrimitiveCharacterArray2dJsonSerializer}
-     */
-    public static PrimitiveCharacterArray2dJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.dd.PrimitiveCharacterArray2dJsonSerializer}
+   */
+  public static PrimitiveCharacterArray2dJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveCharacterArray2dJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(char[][] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      char[][] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveCharacterArray2dJsonSerializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(char[][] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, char[][] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
+    writer.beginArray();
+    for (char[] array : values) {
+      if (ctx.isWriteCharArraysAsJsonArrays()) {
         writer.beginArray();
-        for (char[] array : values) {
-            if (ctx.isWriteCharArraysAsJsonArrays()) {
-                writer.beginArray();
-                for (char value : array) {
-                    writer.value(Character.toString(value));
-                }
-                writer.endArray();
-            } else {
-                writer.value(new String(array));
-            }
+        for (char value : array) {
+          writer.value(Character.toString(value));
         }
         writer.endArray();
-
+      } else {
+        writer.value(new String(array));
+      }
     }
+    writer.endArray();
+  }
 }

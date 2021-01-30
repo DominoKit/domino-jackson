@@ -19,37 +19,37 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Boolean}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
+ * java.lang.Boolean}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public final class BooleanKeySerializer extends KeySerializer<Boolean> {
 
-    private static final BooleanKeySerializer INSTANCE = new BooleanKeySerializer();
+  private static final BooleanKeySerializer INSTANCE = new BooleanKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.BooleanKeySerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static BooleanKeySerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.BooleanKeySerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static BooleanKeySerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private BooleanKeySerializer() {
-    }
+  private BooleanKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean mustBeEscaped(JsonSerializationContext ctx) {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  public boolean mustBeEscaped(JsonSerializationContext ctx) {
+    return false;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(Boolean value, JsonSerializationContext ctx) {
-        return value.toString();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(Boolean value, JsonSerializationContext ctx) {
+    return value.toString();
+  }
 }

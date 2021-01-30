@@ -19,30 +19,30 @@ package org.dominokit.jacksonapt.deser.map.key;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
 /**
- * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link java.lang.String}.
+ * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
+ * java.lang.String}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public final class StringKeyDeserializer extends KeyDeserializer<String> {
 
-    private static final StringKeyDeserializer INSTANCE = new StringKeyDeserializer();
+  private static final StringKeyDeserializer INSTANCE = new StringKeyDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer}
-     */
-    public static StringKeyDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer}
+   */
+  public static StringKeyDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private StringKeyDeserializer() {
-    }
+  private StringKeyDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doDeserialize(String key, JsonDeserializationContext ctx) {
-        return key;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String doDeserialize(String key, JsonDeserializationContext ctx) {
+    return key;
+  }
 }

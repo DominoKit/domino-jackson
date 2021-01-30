@@ -21,13 +21,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>JSONWriter class.</p>
+ * JSONWriter class.
  *
  * @author vegegoku
  * @version $Id: $Id
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JSONWriter {
-}
-
+public @interface JSONWriter {}

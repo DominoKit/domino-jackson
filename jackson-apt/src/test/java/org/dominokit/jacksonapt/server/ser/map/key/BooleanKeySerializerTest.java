@@ -19,21 +19,19 @@ package org.dominokit.jacksonapt.server.ser.map.key;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanKeySerializerTest extends AbstractKeySerializerTest<Boolean> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("true", true);
-        assertSerialization("true", Boolean.TRUE);
-        assertSerialization("false", false);
-        assertSerialization("false", Boolean.FALSE);
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("true", true);
+    assertSerialization("true", Boolean.TRUE);
+    assertSerialization("false", false);
+    assertSerialization("false", Boolean.FALSE);
+  }
 }

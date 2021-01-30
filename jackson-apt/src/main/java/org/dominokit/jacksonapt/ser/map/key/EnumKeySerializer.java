@@ -19,38 +19,38 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Enum}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
+ * java.lang.Enum}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public final class EnumKeySerializer<E extends Enum<E>> extends KeySerializer<E> {
 
-    private static final EnumKeySerializer<?> INSTANCE = new EnumKeySerializer();
+  private static final EnumKeySerializer<?> INSTANCE = new EnumKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @param <S> type of the {@link EnumKeySerializer}
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.EnumKeySerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static <S extends EnumKeySerializer<?>> S getInstance() {
-        return (S) INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @param <S> type of the {@link EnumKeySerializer}
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.EnumKeySerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static <S extends EnumKeySerializer<?>> S getInstance() {
+    return (S) INSTANCE;
+  }
 
-    private EnumKeySerializer() {
-    }
+  private EnumKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean mustBeEscaped(JsonSerializationContext ctx) {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  public boolean mustBeEscaped(JsonSerializationContext ctx) {
+    return false;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(E value, JsonSerializationContext ctx) {
-        return value.name();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(E value, JsonSerializationContext ctx) {
+    return value.name();
+  }
 }

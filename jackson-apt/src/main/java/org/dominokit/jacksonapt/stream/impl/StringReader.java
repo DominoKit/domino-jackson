@@ -17,64 +17,66 @@
 package org.dominokit.jacksonapt.stream.impl;
 
 /**
- * <p>StringReader class.</p>
+ * StringReader class.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class StringReader {
 
-    private final String in;
+  private final String in;
 
-    private final int length;
+  private final int length;
 
-    private int next;
+  private int next;
 
-    /**
-     * <p>Constructor for StringReader.</p>
-     *
-     * @param in a {@link java.lang.String} object.
-     */
-    public StringReader(String in) {
-        if (in == null) {
-            throw new NullPointerException("in == null");
-        }
-        this.in = in;
-        this.length = in.length();
-        this.next = 0;
+  /**
+   * Constructor for StringReader.
+   *
+   * @param in a {@link java.lang.String} object.
+   */
+  public StringReader(String in) {
+    if (in == null) {
+      throw new NullPointerException("in == null");
     }
+    this.in = in;
+    this.length = in.length();
+    this.next = 0;
+  }
 
-    /**
-     * <p>getInput</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getInput() {
-        return in;
-    }
+  /**
+   * getInput
+   *
+   * @return a {@link java.lang.String} object.
+   */
+  public String getInput() {
+    return in;
+  }
 
-    /**
-     * Reads characters into a portion of an array.
-     *
-     * @param cbuf Destination buffer
-     * @param off  Offset at which to start writing characters
-     * @param len  Maximum number of characters to read
-     * @return The number of characters read, or -1 if the end of the
-     * stream has been reached
-     */
-    public int read(char cbuf[], int off, int len) {
-        if ((off < 0) || (off > cbuf.length) || (len < 0) ||
-                ((off + len) > cbuf.length) || ((off + len) < 0)) {
-            throw new IndexOutOfBoundsException();
-        } else if (len == 0) {
-            return 0;
-        }
-        if (next >= length) {
-            return -1;
-        }
-        int n = Math.min(length - next, len);
-        in.getChars(next, next + n, cbuf, off);
-        next += n;
-        return n;
+  /**
+   * Reads characters into a portion of an array.
+   *
+   * @param cbuf Destination buffer
+   * @param off Offset at which to start writing characters
+   * @param len Maximum number of characters to read
+   * @return The number of characters read, or -1 if the end of the stream has been reached
+   */
+  public int read(char cbuf[], int off, int len) {
+    if ((off < 0)
+        || (off > cbuf.length)
+        || (len < 0)
+        || ((off + len) > cbuf.length)
+        || ((off + len) < 0)) {
+      throw new IndexOutOfBoundsException();
+    } else if (len == 0) {
+      return 0;
     }
+    if (next >= length) {
+      return -1;
+    }
+    int n = Math.min(length - next, len);
+    in.getChars(next, next + n, cbuf, off);
+    next += n;
+    return n;
+  }
 }

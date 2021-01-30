@@ -16,42 +16,46 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.AbstractSequentialList;
 import java.util.LinkedList;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.AbstractSequentialList}. The deserialization process returns a {@link
- * LinkedList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.AbstractSequentialList}. The deserialization process returns a {@link LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.AbstractSequentialList}
  * @author Nicolas Morel
  * @version $Id: $Id
  */
-public class AbstractSequentialListJsonDeserializer<T> extends BaseListJsonDeserializer<AbstractSequentialList<T>, T> {
+public class AbstractSequentialListJsonDeserializer<T>
+    extends BaseListJsonDeserializer<AbstractSequentialList<T>, T> {
 
-    /**
-     * <p>newInstance.</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.AbstractSequentialList}.
-     * @param <T>          Type of the elements inside the {@link java.util.AbstractSequentialList}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.AbstractSequentialListJsonDeserializer}
-     */
-    public static <T> AbstractSequentialListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new AbstractSequentialListJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance.
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.AbstractSequentialList}.
+   * @param <T> Type of the elements inside the {@link java.util.AbstractSequentialList}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.AbstractSequentialListJsonDeserializer}
+   */
+  public static <T> AbstractSequentialListJsonDeserializer<T> newInstance(
+      JsonDeserializer<T> deserializer) {
+    return new AbstractSequentialListJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractSequentialList}.
-     */
-    private AbstractSequentialListJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     AbstractSequentialList}.
+   */
+  private AbstractSequentialListJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected AbstractSequentialList<T> newCollection() {
-        return new LinkedList<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected AbstractSequentialList<T> newCollection() {
+    return new LinkedList<T>();
+  }
 }

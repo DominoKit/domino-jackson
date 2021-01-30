@@ -16,12 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
-
-import java.util.List;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of int.
@@ -31,39 +30,47 @@ import java.util.List;
  */
 public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDeserializer<int[]> {
 
-    private static final PrimitiveIntegerArrayJsonDeserializer INSTANCE = new PrimitiveIntegerArrayJsonDeserializer();
+  private static final PrimitiveIntegerArrayJsonDeserializer INSTANCE =
+      new PrimitiveIntegerArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveIntegerArrayJsonDeserializer}
-     */
-    public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.PrimitiveIntegerArrayJsonDeserializer}
+   */
+  public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveIntegerArrayJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public int[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<Integer> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance(), params);
+
+    int[] result = new int[list.size()];
+    int i = 0;
+    for (Integer value : list) {
+      if (null != value) {
+        result[i] = value;
+      }
+      i++;
     }
+    return result;
+  }
 
-    private PrimitiveIntegerArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<Integer> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance(), params);
-
-        int[] result = new int[list.size()];
-        int i = 0;
-        for (Integer value : list) {
-            if (null != value) {
-                result[i] = value;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected int[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new int[]{BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected int[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new int[] {
+      BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

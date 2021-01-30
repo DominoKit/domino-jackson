@@ -31,31 +31,35 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  */
 public class PrimitiveIntegerArrayJsonDeserializer extends AbstractArrayJsonDeserializer<int[]> {
 
-    private static final PrimitiveIntegerArrayJsonDeserializer INSTANCE = new PrimitiveIntegerArrayJsonDeserializer();
+  private static final PrimitiveIntegerArrayJsonDeserializer INSTANCE =
+      new PrimitiveIntegerArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.PrimitiveIntegerArrayJsonDeserializer}
-     */
-    public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.cast.PrimitiveIntegerArrayJsonDeserializer}
+   */
+  public static PrimitiveIntegerArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
+  private PrimitiveIntegerArrayJsonDeserializer() {}
 
-    private PrimitiveIntegerArrayJsonDeserializer() {
-    }
+  /** {@inheritDoc} */
+  @Override
+  public int[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return JacksonContextProvider.get().integerArrayReader().readArray(reader);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public int[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return JacksonContextProvider.get().integerArrayReader().readArray(reader);
-
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected int[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new int[]{BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected int[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new int[] {
+      BaseNumberJsonDeserializer.IntegerJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

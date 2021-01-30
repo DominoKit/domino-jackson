@@ -16,26 +16,22 @@
 
 package org.dominokit.jacksonapt.server.ser.number;
 
+import java.math.BigInteger;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-import java.math.BigInteger;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigIntegerJsonSerializerTest extends AbstractJsonSerializerTest<BigInteger> {
 
-    @Override
-    protected BaseNumberJsonSerializer.BigIntegerJsonSerializer createSerializer() {
-        return BaseNumberJsonSerializer.BigIntegerJsonSerializer.getInstance();
-    }
+  @Override
+  protected BaseNumberJsonSerializer.BigIntegerJsonSerializer createSerializer() {
+    return BaseNumberJsonSerializer.BigIntegerJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        BigInteger value = new BigInteger("1548784651132124566543513203245448715154542123114001571970");
-        assertSerialization("1548784651132124566543513203245448715154542123114001571970", value);
-    }
-
+  @Test
+  public void testSerializeValue() {
+    BigInteger value = new BigInteger("1548784651132124566543513203245448715154542123114001571970");
+    assertSerialization("1548784651132124566543513203245448715154542123114001571970", value);
+  }
 }

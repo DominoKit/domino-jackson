@@ -16,13 +16,13 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.LinkedList;
 import java.util.Queue;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Queue}. The deserialization process returns a {@link java.util.LinkedList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.Queue}. The deserialization process returns a {@link java.util.LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Queue}
  * @author Nicolas Morel
@@ -30,27 +30,30 @@ import java.util.Queue;
  */
 public final class QueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<Queue<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.Queue}.
-     * @param <T>          Type of the elements inside the {@link java.util.Queue}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.QueueJsonDeserializer}
-     */
-    public static <T> QueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new QueueJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.Queue}.
+   * @param <T> Type of the elements inside the {@link java.util.Queue}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.QueueJsonDeserializer}
+   */
+  public static <T> QueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new QueueJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Queue}.
-     */
-    private QueueJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     Queue}.
+   */
+  private QueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected Queue<T> newCollection() {
-        return new LinkedList<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected Queue<T> newCollection() {
+    return new LinkedList<T>();
+  }
 }

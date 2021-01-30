@@ -16,41 +16,45 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.AbstractQueue;
 import java.util.PriorityQueue;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.AbstractQueue}. The deserialization process returns a {@link java.util.PriorityQueue}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.AbstractQueue}. The deserialization process returns a {@link java.util.PriorityQueue}.
  *
  * @param <T> Type of the elements inside the {@link java.util.AbstractQueue}
  * @author Nicolas Morel
  * @version $Id: $
  */
-public final class AbstractQueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<AbstractQueue<T>, T> {
+public final class AbstractQueueJsonDeserializer<T>
+    extends BaseQueueJsonDeserializer<AbstractQueue<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.AbstractQueue}.
-     * @param <T>          Type of the elements inside the {@link java.util.AbstractQueue}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.AbstractQueueJsonDeserializer}
-     */
-    public static <T> AbstractQueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new AbstractQueueJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.AbstractQueue}.
+   * @param <T> Type of the elements inside the {@link java.util.AbstractQueue}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.AbstractQueueJsonDeserializer}
+   */
+  public static <T> AbstractQueueJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new AbstractQueueJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link AbstractQueue}.
-     */
-    private AbstractQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     AbstractQueue}.
+   */
+  private AbstractQueueJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected AbstractQueue<T> newCollection() {
-        return new PriorityQueue<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected AbstractQueue<T> newCollection() {
+    return new PriorityQueue<T>();
+  }
 }

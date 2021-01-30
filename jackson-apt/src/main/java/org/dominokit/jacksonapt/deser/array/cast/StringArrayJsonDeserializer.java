@@ -23,40 +23,41 @@ import org.dominokit.jacksonapt.deser.array.AbstractArrayJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of {@link java.lang.String}.
- * <p>Not working in production mode, cast problem. Can maybe work with disableCastChecking</p>
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of {@link
+ * java.lang.String}.
+ *
+ * <p>Not working in production mode, cast problem. Can maybe work with disableCastChecking
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class StringArrayJsonDeserializer extends AbstractArrayJsonDeserializer<String[]> {
 
-    private static final StringArrayJsonDeserializer INSTANCE = new StringArrayJsonDeserializer();
+  private static final StringArrayJsonDeserializer INSTANCE = new StringArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.StringArrayJsonDeserializer}
-     */
-    public static StringArrayJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.cast.StringArrayJsonDeserializer}
+   */
+  public static StringArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
+  private StringArrayJsonDeserializer() {}
 
+  /** {@inheritDoc} */
+  @Override
+  public String[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return JacksonContextProvider.get().stringArrayReader().readArray(reader);
+  }
 
-    private StringArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return JacksonContextProvider.get().stringArrayReader().readArray(reader);
-    }
-
-
-    /** {@inheritDoc} */
-    @Override
-    protected String[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new String[]{reader.nextString()};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new String[] {reader.nextString()};
+  }
 }

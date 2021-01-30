@@ -16,22 +16,19 @@
 
 package org.dominokit.jacksonapt.client.ser.date;
 
+import java.sql.Date;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseDateJsonSerializer.SqlDateJsonSerializer;
 
-import java.sql.Date;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlDateJsonSerializerTest extends AbstractJsonSerializerTest<Date> {
 
-    @Override
-    protected SqlDateJsonSerializer createSerializer() {
-        return SqlDateJsonSerializer.getInstance();
-    }
+  @Override
+  protected SqlDateJsonSerializer createSerializer() {
+    return SqlDateJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("\"2012-08-18\"", new Date(getUTCTime(2012, 8, 18, 12, 45, 56, 543)));
-    }
+  public void testSerializeValue() {
+    assertSerialization("\"2012-08-18\"", new Date(getUTCTime(2012, 8, 18, 12, 45, 56, 543)));
+  }
 }

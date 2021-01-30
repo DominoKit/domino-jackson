@@ -16,12 +16,12 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.LinkedHashSet;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
-import java.util.LinkedHashSet;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.LinkedHashSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.LinkedHashSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.LinkedHashSet}
  * @author Nicolas Morel
@@ -29,27 +29,30 @@ import java.util.LinkedHashSet;
  */
 public class LinkedHashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<LinkedHashSet<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.LinkedHashSet}.
-     * @param <T>          Type of the elements inside the {@link java.util.LinkedHashSet}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.LinkedHashSetJsonDeserializer}
-     */
-    public static <T> LinkedHashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new LinkedHashSetJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.LinkedHashSet}.
+   * @param <T> Type of the elements inside the {@link java.util.LinkedHashSet}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.LinkedHashSetJsonDeserializer}
+   */
+  public static <T> LinkedHashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new LinkedHashSetJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link LinkedHashSet}.
-     */
-    private LinkedHashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     LinkedHashSet}.
+   */
+  private LinkedHashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected LinkedHashSet<T> newCollection() {
-        return new LinkedHashSet<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected LinkedHashSet<T> newCollection() {
+    return new LinkedHashSet<T>();
+  }
 }

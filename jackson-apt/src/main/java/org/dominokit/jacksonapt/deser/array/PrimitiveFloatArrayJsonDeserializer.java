@@ -16,12 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
-
-import java.util.List;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of float.
@@ -31,39 +30,47 @@ import java.util.List;
  */
 public class PrimitiveFloatArrayJsonDeserializer extends AbstractArrayJsonDeserializer<float[]> {
 
-    private static final PrimitiveFloatArrayJsonDeserializer INSTANCE = new PrimitiveFloatArrayJsonDeserializer();
+  private static final PrimitiveFloatArrayJsonDeserializer INSTANCE =
+      new PrimitiveFloatArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveFloatArrayJsonDeserializer}
-     */
-    public static PrimitiveFloatArrayJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.PrimitiveFloatArrayJsonDeserializer}
+   */
+  public static PrimitiveFloatArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveFloatArrayJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public float[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<Float> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance(), params);
+
+    float[] result = new float[list.size()];
+    int i = 0;
+    for (Float value : list) {
+      if (null != value) {
+        result[i] = value;
+      }
+      i++;
     }
+    return result;
+  }
 
-    private PrimitiveFloatArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public float[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<Float> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance(), params);
-
-        float[] result = new float[list.size()];
-        int i = 0;
-        for (Float value : list) {
-            if (null != value) {
-                result[i] = value;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected float[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new float[]{BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected float[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new float[] {
+      BaseNumberJsonDeserializer.FloatJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

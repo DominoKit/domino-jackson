@@ -16,236 +16,201 @@
 
 package org.dominokit.jacksonapt.deser;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 /**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for {@link java.lang.Number}.
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for {@link
+ * java.lang.Number}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonDeserializer<N> {
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link BigDecimal}
-     */
-    public static final class BigDecimalJsonDeserializer extends BaseNumberJsonDeserializer<BigDecimal> {
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link BigDecimal} */
+  public static final class BigDecimalJsonDeserializer
+      extends BaseNumberJsonDeserializer<BigDecimal> {
 
-        private static final BigDecimalJsonDeserializer INSTANCE = new BigDecimalJsonDeserializer();
+    private static final BigDecimalJsonDeserializer INSTANCE = new BigDecimalJsonDeserializer();
 
-        /**
-         * @return an instance of {@link BigDecimalJsonDeserializer}
-         */
-        public static BigDecimalJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
-
-        private BigDecimalJsonDeserializer() {
-        }
-
-        @Override
-        protected BigDecimal doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return new BigDecimal(reader.nextString());
-        }
+    /** @return an instance of {@link BigDecimalJsonDeserializer} */
+    public static BigDecimalJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link BigInteger}
-     */
-    public static final class BigIntegerJsonDeserializer extends BaseNumberJsonDeserializer<BigInteger> {
+    private BigDecimalJsonDeserializer() {}
 
-        private static final BigIntegerJsonDeserializer INSTANCE = new BigIntegerJsonDeserializer();
+    @Override
+    protected BigDecimal doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return new BigDecimal(reader.nextString());
+    }
+  }
 
-        /**
-         * @return an instance of {@link BigIntegerJsonDeserializer}
-         */
-        public static BigIntegerJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link BigInteger} */
+  public static final class BigIntegerJsonDeserializer
+      extends BaseNumberJsonDeserializer<BigInteger> {
 
-        private BigIntegerJsonDeserializer() {
-        }
+    private static final BigIntegerJsonDeserializer INSTANCE = new BigIntegerJsonDeserializer();
 
-        @Override
-        protected BigInteger doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return new BigInteger(reader.nextString());
-        }
+    /** @return an instance of {@link BigIntegerJsonDeserializer} */
+    public static BigIntegerJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Byte}
-     */
-    public static final class ByteJsonDeserializer extends BaseNumberJsonDeserializer<Byte> {
+    private BigIntegerJsonDeserializer() {}
 
-        private static final ByteJsonDeserializer INSTANCE = new ByteJsonDeserializer();
+    @Override
+    protected BigInteger doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return new BigInteger(reader.nextString());
+    }
+  }
 
-        /**
-         * @return an instance of {@link ByteJsonDeserializer}
-         */
-        public static ByteJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Byte} */
+  public static final class ByteJsonDeserializer extends BaseNumberJsonDeserializer<Byte> {
 
-        private ByteJsonDeserializer() {
-        }
+    private static final ByteJsonDeserializer INSTANCE = new ByteJsonDeserializer();
 
-        @Override
-        protected Byte doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return (byte) reader.nextInt();
-        }
+    /** @return an instance of {@link ByteJsonDeserializer} */
+    public static ByteJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Double}
-     */
-    public static final class DoubleJsonDeserializer extends BaseNumberJsonDeserializer<Double> {
+    private ByteJsonDeserializer() {}
 
-        private static final DoubleJsonDeserializer INSTANCE = new DoubleJsonDeserializer();
+    @Override
+    protected Byte doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return (byte) reader.nextInt();
+    }
+  }
 
-        /**
-         * @return an instance of {@link DoubleJsonDeserializer}
-         */
-        public static DoubleJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Double} */
+  public static final class DoubleJsonDeserializer extends BaseNumberJsonDeserializer<Double> {
 
-        private DoubleJsonDeserializer() {
-        }
+    private static final DoubleJsonDeserializer INSTANCE = new DoubleJsonDeserializer();
 
-        @Override
-        protected Double doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return reader.nextDouble();
-        }
+    /** @return an instance of {@link DoubleJsonDeserializer} */
+    public static DoubleJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Float}
-     */
-    public static final class FloatJsonDeserializer extends BaseNumberJsonDeserializer<Float> {
+    private DoubleJsonDeserializer() {}
 
-        private static final FloatJsonDeserializer INSTANCE = new FloatJsonDeserializer();
+    @Override
+    protected Double doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return reader.nextDouble();
+    }
+  }
 
-        /**
-         * @return an instance of {@link FloatJsonDeserializer}
-         */
-        public static FloatJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Float} */
+  public static final class FloatJsonDeserializer extends BaseNumberJsonDeserializer<Float> {
 
-        private FloatJsonDeserializer() {
-        }
+    private static final FloatJsonDeserializer INSTANCE = new FloatJsonDeserializer();
 
-        @Override
-        protected Float doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return Float.parseFloat(reader.nextString());
-        }
+    /** @return an instance of {@link FloatJsonDeserializer} */
+    public static FloatJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Integer}
-     */
-    public static final class IntegerJsonDeserializer extends BaseNumberJsonDeserializer<Integer> {
+    private FloatJsonDeserializer() {}
 
-        private static final IntegerJsonDeserializer INSTANCE = new IntegerJsonDeserializer();
+    @Override
+    protected Float doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return Float.parseFloat(reader.nextString());
+    }
+  }
 
-        /**
-         * @return an instance of {@link IntegerJsonDeserializer}
-         */
-        public static IntegerJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Integer} */
+  public static final class IntegerJsonDeserializer extends BaseNumberJsonDeserializer<Integer> {
 
-        private IntegerJsonDeserializer() {
-        }
+    private static final IntegerJsonDeserializer INSTANCE = new IntegerJsonDeserializer();
 
-        @Override
-        protected Integer doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            if (JsonToken.NUMBER.equals(reader.peek())) {
-                return reader.nextInt();
-            } else {
-                return Integer.parseInt(reader.nextString());
-            }
-        }
+    /** @return an instance of {@link IntegerJsonDeserializer} */
+    public static IntegerJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Long}
-     */
-    public static final class LongJsonDeserializer extends BaseNumberJsonDeserializer<Long> {
+    private IntegerJsonDeserializer() {}
 
-        private static final LongJsonDeserializer INSTANCE = new LongJsonDeserializer();
+    @Override
+    protected Integer doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      if (JsonToken.NUMBER.equals(reader.peek())) {
+        return reader.nextInt();
+      } else {
+        return Integer.parseInt(reader.nextString());
+      }
+    }
+  }
 
-        /**
-         * @return an instance of {@link LongJsonDeserializer}
-         */
-        public static LongJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Long} */
+  public static final class LongJsonDeserializer extends BaseNumberJsonDeserializer<Long> {
 
-        private LongJsonDeserializer() {
-        }
+    private static final LongJsonDeserializer INSTANCE = new LongJsonDeserializer();
 
-        @Override
-        protected Long doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return reader.nextLong();
-        }
+    /** @return an instance of {@link LongJsonDeserializer} */
+    public static LongJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Short}
-     */
-    public static final class ShortJsonDeserializer extends BaseNumberJsonDeserializer<Short> {
+    private LongJsonDeserializer() {}
 
-        private static final ShortJsonDeserializer INSTANCE = new ShortJsonDeserializer();
+    @Override
+    protected Long doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return reader.nextLong();
+    }
+  }
 
-        /**
-         * @return an instance of {@link ShortJsonDeserializer}
-         */
-        public static ShortJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Short} */
+  public static final class ShortJsonDeserializer extends BaseNumberJsonDeserializer<Short> {
 
-        private ShortJsonDeserializer() {
-        }
+    private static final ShortJsonDeserializer INSTANCE = new ShortJsonDeserializer();
 
-        @Override
-        protected Short doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            if (JsonToken.NUMBER.equals(reader.peek())) {
-                return (short) reader.nextInt();
-            } else {
-                return Short.parseShort(reader.nextString());
-            }
-        }
+    /** @return an instance of {@link ShortJsonDeserializer} */
+    public static ShortJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonDeserializer} for {@link Number}
-     */
-    public static final class NumberJsonDeserializer extends BaseNumberJsonDeserializer<Number> {
+    private ShortJsonDeserializer() {}
 
-        private static final NumberJsonDeserializer INSTANCE = new NumberJsonDeserializer();
+    @Override
+    protected Short doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      if (JsonToken.NUMBER.equals(reader.peek())) {
+        return (short) reader.nextInt();
+      } else {
+        return Short.parseShort(reader.nextString());
+      }
+    }
+  }
 
-        /**
-         * @return an instance of {@link NumberJsonDeserializer}
-         */
-        public static NumberJsonDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonDeserializer} for {@link Number} */
+  public static final class NumberJsonDeserializer extends BaseNumberJsonDeserializer<Number> {
 
-        private NumberJsonDeserializer() {
-        }
+    private static final NumberJsonDeserializer INSTANCE = new NumberJsonDeserializer();
 
-        @Override
-        public Number doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-            return reader.nextNumber();
-        }
+    /** @return an instance of {@link NumberJsonDeserializer} */
+    public static NumberJsonDeserializer getInstance() {
+      return INSTANCE;
     }
 
+    private NumberJsonDeserializer() {}
+
+    @Override
+    public Number doDeserialize(
+        JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+      return reader.nextNumber();
+    }
+  }
 }

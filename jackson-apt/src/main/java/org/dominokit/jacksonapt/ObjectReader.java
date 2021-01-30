@@ -21,7 +21,9 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 
 /**
  * Reads a JSON input and return an object
- * <p>Example : </p>
+ *
+ * <p>Example :
+ *
  * <pre>
  * public class Person {
  *     public String firstName, lastName;
@@ -42,51 +44,59 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
  */
 public interface ObjectReader<T> {
 
-    /**
-     * Reads a JSON input into an object.
-     *
-     * @param input JSON input to read
-     * @return the read object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
-     */
-    T read(String input) throws JsonDeserializationException;
+  /**
+   * Reads a JSON input into an object.
+   *
+   * @param input JSON input to read
+   * @return the read object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs
+   *     while reading the input
+   */
+  T read(String input) throws JsonDeserializationException;
 
-    /**
-     * Reads a JSON input into an object.
-     *
-     * @param input JSON input to read
-     * @param ctx   Context for the full reading process
-     * @return the read object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
-     */
-    T read(String input, JsonDeserializationContext ctx) throws JsonDeserializationException;
+  /**
+   * Reads a JSON input into an object.
+   *
+   * @param input JSON input to read
+   * @param ctx Context for the full reading process
+   * @return the read object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs
+   *     while reading the input
+   */
+  T read(String input, JsonDeserializationContext ctx) throws JsonDeserializationException;
 
-    /**
-     * Reads a JSON input into an array object.
-     *
-     * @param input        JSON input to read
-     * @param arrayCreator Creator for initializing new instance of an array of specific length
-     * @return the read array object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
-     */
-    T[] readArray(String input, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException;
+  /**
+   * Reads a JSON input into an array object.
+   *
+   * @param input JSON input to read
+   * @param arrayCreator Creator for initializing new instance of an array of specific length
+   * @return the read array object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs
+   *     while reading the input
+   */
+  T[] readArray(String input, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator)
+      throws JsonDeserializationException;
 
-    /**
-     * Reads a JSON input into an array object.
-     *
-     * @param input        JSON input to read
-     * @param ctx          Context for the full reading process
-     * @param arrayCreator Creator for initializing new instance of an array of specific length
-     * @return the read array object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs while reading the input
-     */
-    T[] readArray(String input, JsonDeserializationContext ctx, ArrayJsonDeserializer.ArrayCreator<T> arrayCreator) throws JsonDeserializationException;
+  /**
+   * Reads a JSON input into an array object.
+   *
+   * @param input JSON input to read
+   * @param ctx Context for the full reading process
+   * @param arrayCreator Creator for initializing new instance of an array of specific length
+   * @return the read array object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an exception occurs
+   *     while reading the input
+   */
+  T[] readArray(
+      String input,
+      JsonDeserializationContext ctx,
+      ArrayJsonDeserializer.ArrayCreator<T> arrayCreator)
+      throws JsonDeserializationException;
 
-
-    /**
-     * <p>getDeserializer.</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
-     */
-    JsonDeserializer<T> getDeserializer();
+  /**
+   * getDeserializer.
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializer} object.
+   */
+  JsonDeserializer<T> getDeserializer();
 }

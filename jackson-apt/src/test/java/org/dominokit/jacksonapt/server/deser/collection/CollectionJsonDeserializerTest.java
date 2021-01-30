@@ -16,31 +16,29 @@
 
 package org.dominokit.jacksonapt.server.deser.collection;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.StringJsonDeserializer;
 import org.dominokit.jacksonapt.deser.collection.CollectionJsonDeserializer;
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+/** @author Nicolas Morel */
+public class CollectionJsonDeserializerTest
+    extends AbstractJsonDeserializerTest<Collection<String>> {
 
-/**
- * @author Nicolas Morel
- */
-public class CollectionJsonDeserializerTest extends AbstractJsonDeserializerTest<Collection<String>> {
+  @Override
+  protected JsonDeserializer<Collection<String>> createDeserializer() {
+    return CollectionJsonDeserializer.newInstance(StringJsonDeserializer.getInstance());
+  }
 
-    @Override
-    protected JsonDeserializer<Collection<String>> createDeserializer() {
-        return CollectionJsonDeserializer.newInstance(StringJsonDeserializer.getInstance());
-    }
-
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(Arrays.asList("Hello", " ", "World", "!"), "[Hello, \" \", \"World\", \"!\"]");
-        assertDeserialization(Collections.<String>emptyList(), "[]");
-    }
-
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(
+        Arrays.asList("Hello", " ", "World", "!"), "[Hello, \" \", \"World\", \"!\"]");
+    assertDeserialization(Collections.<String>emptyList(), "[]");
+  }
 }

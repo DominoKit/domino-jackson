@@ -19,30 +19,30 @@ package org.dominokit.jacksonapt.deser.map.key;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
 /**
- * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link java.lang.Boolean}.
+ * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
+ * java.lang.Boolean}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public final class BooleanKeyDeserializer extends KeyDeserializer<Boolean> {
 
-    private static final BooleanKeyDeserializer INSTANCE = new BooleanKeyDeserializer();
+  private static final BooleanKeyDeserializer INSTANCE = new BooleanKeyDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.BooleanKeyDeserializer}
-     */
-    public static BooleanKeyDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.BooleanKeyDeserializer}
+   */
+  public static BooleanKeyDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private BooleanKeyDeserializer() {
-    }
+  private BooleanKeyDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected Boolean doDeserialize(String key, JsonDeserializationContext ctx) {
-        return Boolean.valueOf(key);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected Boolean doDeserialize(String key, JsonDeserializationContext ctx) {
+    return Boolean.valueOf(key);
+  }
 }

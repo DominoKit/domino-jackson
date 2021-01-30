@@ -20,22 +20,20 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer.ShortJsonDeseri
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ShortJsonDeserializerTest extends AbstractJsonDeserializerTest<Short> {
 
-    @Override
-    protected ShortJsonDeserializer createDeserializer() {
-        return ShortJsonDeserializer.getInstance();
-    }
+  @Override
+  protected ShortJsonDeserializer createDeserializer() {
+    return ShortJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Short("34"), "34");
-        assertDeserialization(new Short("-1"), "\"-1\"");
-        assertDeserialization(Short.MIN_VALUE, "-32768");
-        assertDeserialization(Short.MAX_VALUE, "32767");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Short("34"), "34");
+    assertDeserialization(new Short("-1"), "\"-1\"");
+    assertDeserialization(Short.MIN_VALUE, "-32768");
+    assertDeserialization(Short.MAX_VALUE, "32767");
+  }
 }

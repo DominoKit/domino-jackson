@@ -16,26 +16,22 @@
 
 package org.dominokit.jacksonapt.server.ser.date;
 
+import java.util.Date;
 import org.dominokit.jacksonapt.ser.BaseDateJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-import java.util.Date;
-
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class DateJsonSerializerTest extends AbstractJsonSerializerTest<Date> {
 
-    @Override
-    protected BaseDateJsonSerializer.DateJsonSerializer createSerializer() {
-        return BaseDateJsonSerializer.DateJsonSerializer.getInstance();
-    }
+  @Override
+  protected BaseDateJsonSerializer.DateJsonSerializer createSerializer() {
+    return BaseDateJsonSerializer.DateJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        Date date = getUTCDate(2012, 8, 18, 12, 45, 56, 543);
-        assertSerialization("" + date.getTime(), date);
-    }
+  @Test
+  public void testSerializeValue() {
+    Date date = getUTCDate(2012, 8, 18, 12, 45, 56, 543);
+    assertSerialization("" + date.getTime(), date);
+  }
 }

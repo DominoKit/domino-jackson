@@ -17,26 +17,28 @@
 package org.dominokit.jacksonapt;
 
 /**
- * Base implementation of {@link org.dominokit.jacksonapt.ObjectWriter}. Extends {@link org.dominokit.jacksonapt.AbstractObjectMapper} to avoid code duplication, trying to read with this
- * writer will result in an {@link java.lang.UnsupportedOperationException}.
+ * Base implementation of {@link org.dominokit.jacksonapt.ObjectWriter}. Extends {@link
+ * org.dominokit.jacksonapt.AbstractObjectMapper} to avoid code duplication, trying to read with
+ * this writer will result in an {@link java.lang.UnsupportedOperationException}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class AbstractObjectWriter<T> extends AbstractObjectMapper<T> implements ObjectWriter<T> {
+public abstract class AbstractObjectWriter<T> extends AbstractObjectMapper<T>
+    implements ObjectWriter<T> {
 
-    /**
-     * <p>Constructor for AbstractObjectWriter.</p>
-     *
-     * @param rootName a {@link java.lang.String} object.
-     */
-    public AbstractObjectWriter(String rootName) {
-        super(rootName);
-    }
+  /**
+   * Constructor for AbstractObjectWriter.
+   *
+   * @param rootName a {@link java.lang.String} object.
+   */
+  public AbstractObjectWriter(String rootName) {
+    super(rootName);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected final JsonDeserializer<T> newDeserializer() {
-        throw new UnsupportedOperationException("ObjectWriter doesn't support deserialization");
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected final JsonDeserializer<T> newDeserializer() {
+    throw new UnsupportedOperationException("ObjectWriter doesn't support deserialization");
+  }
 }

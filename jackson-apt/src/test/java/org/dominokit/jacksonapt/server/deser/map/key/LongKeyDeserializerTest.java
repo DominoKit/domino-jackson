@@ -19,22 +19,20 @@ package org.dominokit.jacksonapt.server.deser.map.key;
 import org.dominokit.jacksonapt.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class LongKeyDeserializerTest extends AbstractKeyDeserializerTest<Long> {
 
-    @Override
-    protected BaseNumberKeyDeserializer.LongKeyDeserializer createDeserializer() {
-        return BaseNumberKeyDeserializer.LongKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BaseNumberKeyDeserializer.LongKeyDeserializer createDeserializer() {
+    return BaseNumberKeyDeserializer.LongKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(3441764551145441542l, "3441764551145441542");
-        assertDeserialization(new Long("-3441764551145441542"), "-3441764551145441542");
-        assertDeserialization(Long.MIN_VALUE, "-9223372036854775808");
-        assertDeserialization(Long.MAX_VALUE, "9223372036854775807");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(3441764551145441542l, "3441764551145441542");
+    assertDeserialization(new Long("-3441764551145441542"), "-3441764551145441542");
+    assertDeserialization(Long.MIN_VALUE, "-9223372036854775808");
+    assertDeserialization(Long.MAX_VALUE, "9223372036854775807");
+  }
 }

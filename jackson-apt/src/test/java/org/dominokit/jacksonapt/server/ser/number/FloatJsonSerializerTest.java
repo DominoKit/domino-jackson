@@ -20,19 +20,17 @@ import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatJsonSerializerTest extends AbstractJsonSerializerTest<Float> {
 
-    @Override
-    protected BaseNumberJsonSerializer.FloatJsonSerializer createSerializer() {
-        return BaseNumberJsonSerializer.FloatJsonSerializer.getInstance();
-    }
+  @Override
+  protected BaseNumberJsonSerializer.FloatJsonSerializer createSerializer() {
+    return BaseNumberJsonSerializer.FloatJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("34.10245", new Float("34.10245"));
-        assertSerialization("-784.15454", new Float("-784.15454"));
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("34.10245", new Float("34.10245"));
+    assertSerialization("-784.15454", new Float("-784.15454"));
+  }
 }

@@ -16,6 +16,8 @@
 
 package org.dominokit.jacksonapt.server.ser;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.dominokit.jacksonapt.DefaultJsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
@@ -23,30 +25,26 @@ import org.dominokit.jacksonapt.server.ServerJacksonTestCase;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class AbstractJsonSerializerTest<T> extends ServerJacksonTestCase {
 
-    protected abstract JsonSerializer<T> createSerializer();
+  protected abstract JsonSerializer<T> createSerializer();
 
-    @Test
-	public void testSerializeNullValue() {
-        assertSerialization("null", null);
-    }
+  @Test
+  public void testSerializeNullValue() {
+    assertSerialization("null", null);
+  }
 
-    protected String serialize(T value) {
-        JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
-        JsonWriter writer = ctx.newJsonWriter();
-        createSerializer().serialize(writer, value, ctx);
-        return writer.getOutput();
-    }
+  protected String serialize(T value) {
+    JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
+    JsonWriter writer = ctx.newJsonWriter();
+    createSerializer().serialize(writer, value, ctx);
+    return writer.getOutput();
+  }
 
-    protected void assertSerialization(String expected, T value) {
-        assertThat(expected).isEqualTo(serialize(value));
-    }
+  protected void assertSerialization(String expected, T value) {
+    assertThat(expected).isEqualTo(serialize(value));
+  }
 
-    public abstract void testSerializeValue();
+  public abstract void testSerializeValue();
 }

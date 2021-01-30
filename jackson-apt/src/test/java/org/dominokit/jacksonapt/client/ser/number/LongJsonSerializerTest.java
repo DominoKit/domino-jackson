@@ -19,20 +19,18 @@ package org.dominokit.jacksonapt.client.ser.number;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer.LongJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class LongJsonSerializerTest extends AbstractJsonSerializerTest<Long> {
 
-    @Override
-    protected LongJsonSerializer createSerializer() {
-        return LongJsonSerializer.getInstance();
-    }
+  @Override
+  protected LongJsonSerializer createSerializer() {
+    return LongJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("3441764551145441542", 3441764551145441542l);
-        assertSerialization("-3441764551145441542", -3441764551145441542l);
-        assertSerialization("-9223372036854775808", Long.MIN_VALUE);
-        assertSerialization("9223372036854775807", Long.MAX_VALUE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("3441764551145441542", 3441764551145441542l);
+    assertSerialization("-3441764551145441542", -3441764551145441542l);
+    assertSerialization("-9223372036854775808", Long.MIN_VALUE);
+    assertSerialization("9223372036854775807", Long.MAX_VALUE);
+  }
 }

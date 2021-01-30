@@ -18,42 +18,41 @@ package org.dominokit.jacksonapt.processor.inner;
 
 import org.dominokit.jacksonapt.annotation.JSONMapper;
 
-/**
- * @author Dmitrii Tikhomirov
- * Created by treblereel 10/20/20
- */
+/** @author Dmitrii Tikhomirov Created by treblereel 10/20/20 */
 public class MyBean2 {
 
-    @JSONMapper
-    public static class Bean {
+  @JSONMapper
+  public static class Bean {
 
-        private String myBean2Value;
+    private String myBean2Value;
 
-        public String getMyBean2Value() {
-            return myBean2Value;
-        }
-
-        public void setMyBean2Value(String myBean2Value) {
-            this.myBean2Value = myBean2Value;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof Bean)) {
-                return false;
-            }
-
-            Bean bean = (Bean) o;
-
-            return getMyBean2Value() != null ? getMyBean2Value().equals(bean.getMyBean2Value()) : bean.getMyBean2Value() == null;
-        }
-
-        @Override
-        public int hashCode() {
-            return getMyBean2Value() != null ? getMyBean2Value().hashCode() : 0;
-        }
+    public String getMyBean2Value() {
+      return myBean2Value;
     }
+
+    public void setMyBean2Value(String myBean2Value) {
+      this.myBean2Value = myBean2Value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof Bean)) {
+        return false;
+      }
+
+      Bean bean = (Bean) o;
+
+      return getMyBean2Value() != null
+          ? getMyBean2Value().equals(bean.getMyBean2Value())
+          : bean.getMyBean2Value() == null;
+    }
+
+    @Override
+    public int hashCode() {
+      return getMyBean2Value() != null ? getMyBean2Value().hashCode() : 0;
+    }
+  }
 }

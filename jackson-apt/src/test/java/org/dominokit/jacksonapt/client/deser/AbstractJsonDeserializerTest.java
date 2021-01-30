@@ -22,34 +22,32 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.client.JacksonTestCase;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class AbstractJsonDeserializerTest<T> extends JacksonTestCase {
 
-    protected abstract JsonDeserializer<T> createDeserializer();
+  protected abstract JsonDeserializer<T> createDeserializer();
 
-    public void testDeserializeNullValue() {
-        assertNull(deserialize("null"));
-    }
+  public void testDeserializeNullValue() {
+    assertNull(deserialize("null"));
+  }
 
-    protected T deserialize(String value) {
-        JsonDeserializationContext ctx = DefaultJsonDeserializationContext.builder().build();
-        return deserialize(ctx, value);
-    }
+  protected T deserialize(String value) {
+    JsonDeserializationContext ctx = DefaultJsonDeserializationContext.builder().build();
+    return deserialize(ctx, value);
+  }
 
-    protected T deserialize(JsonDeserializationContext ctx, String value) {
-        JsonReader reader = ctx.newJsonReader(value);
-        return createDeserializer().deserialize(reader, ctx);
-    }
+  protected T deserialize(JsonDeserializationContext ctx, String value) {
+    JsonReader reader = ctx.newJsonReader(value);
+    return createDeserializer().deserialize(reader, ctx);
+  }
 
-    protected void assertDeserialization(T expected, String value) {
-        assertEquals(expected, deserialize(value));
-    }
+  protected void assertDeserialization(T expected, String value) {
+    assertEquals(expected, deserialize(value));
+  }
 
-    protected void assertDeserialization(JsonDeserializationContext ctx, T expected, String value) {
-        assertEquals(expected, deserialize(ctx, value));
-    }
+  protected void assertDeserialization(JsonDeserializationContext ctx, T expected, String value) {
+    assertEquals(expected, deserialize(ctx, value));
+  }
 
-    public abstract void testDeserializeValue();
+  public abstract void testDeserializeValue();
 }

@@ -31,31 +31,35 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  */
 public class PrimitiveShortArrayJsonDeserializer extends AbstractArrayJsonDeserializer<short[]> {
 
-    private static final PrimitiveShortArrayJsonDeserializer INSTANCE = new PrimitiveShortArrayJsonDeserializer();
+  private static final PrimitiveShortArrayJsonDeserializer INSTANCE =
+      new PrimitiveShortArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.PrimitiveShortArrayJsonDeserializer}
-     */
-    public static PrimitiveShortArrayJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.cast.PrimitiveShortArrayJsonDeserializer}
+   */
+  public static PrimitiveShortArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
+  private PrimitiveShortArrayJsonDeserializer() {}
 
+  /** {@inheritDoc} */
+  @Override
+  public short[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return JacksonContextProvider.get().shortArrayReader().readArray(reader);
+  }
 
-    private PrimitiveShortArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public short[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-       return JacksonContextProvider.get().shortArrayReader().readArray(reader);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected short[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new short[]{BaseNumberJsonDeserializer.ShortJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected short[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new short[] {
+      BaseNumberJsonDeserializer.ShortJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

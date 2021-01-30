@@ -22,30 +22,31 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.String}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.lang.String}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class StringJsonDeserializer extends JsonDeserializer<String> {
 
-    private static final StringJsonDeserializer INSTANCE = new StringJsonDeserializer();
+  private static final StringJsonDeserializer INSTANCE = new StringJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.StringJsonDeserializer}
-     */
-    public static StringJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.StringJsonDeserializer}
+   */
+  public static StringJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private StringJsonDeserializer() {
-    }
+  private StringJsonDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public String doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return reader.nextString();
-    }
+  /** {@inheritDoc} */
+  @Override
+  public String doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return reader.nextString();
+  }
 }

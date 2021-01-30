@@ -18,20 +18,18 @@ package org.dominokit.jacksonapt.client.ser.map.key;
 
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ByteKeySerializerTest extends AbstractKeySerializerTest<Byte> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("34", (byte) 34);
-        assertSerialization("1", new Byte("1"));
-        assertSerialization("-128", Byte.MIN_VALUE);
-        assertSerialization("127", Byte.MAX_VALUE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("34", (byte) 34);
+    assertSerialization("1", new Byte("1"));
+    assertSerialization("-128", Byte.MIN_VALUE);
+    assertSerialization("127", Byte.MAX_VALUE);
+  }
 }

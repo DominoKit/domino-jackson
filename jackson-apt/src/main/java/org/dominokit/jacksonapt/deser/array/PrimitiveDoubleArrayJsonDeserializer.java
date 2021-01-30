@@ -16,12 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
-
-import java.util.List;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of double.
@@ -31,39 +30,47 @@ import java.util.List;
  */
 public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeserializer<double[]> {
 
-    private static final PrimitiveDoubleArrayJsonDeserializer INSTANCE = new PrimitiveDoubleArrayJsonDeserializer();
+  private static final PrimitiveDoubleArrayJsonDeserializer INSTANCE =
+      new PrimitiveDoubleArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveDoubleArrayJsonDeserializer}
-     */
-    public static PrimitiveDoubleArrayJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.PrimitiveDoubleArrayJsonDeserializer}
+   */
+  public static PrimitiveDoubleArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveDoubleArrayJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public double[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<Double> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance(), params);
+
+    double[] result = new double[list.size()];
+    int i = 0;
+    for (Double value : list) {
+      if (null != value) {
+        result[i] = value;
+      }
+      i++;
     }
+    return result;
+  }
 
-    private PrimitiveDoubleArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public double[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<Double> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance(), params);
-
-        double[] result = new double[list.size()];
-        int i = 0;
-        for (Double value : list) {
-            if (null != value) {
-                result[i] = value;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected double[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new double[]{BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected double[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new double[] {
+      BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

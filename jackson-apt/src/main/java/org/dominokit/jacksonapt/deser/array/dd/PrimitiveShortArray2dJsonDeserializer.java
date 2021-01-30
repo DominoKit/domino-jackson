@@ -16,12 +16,11 @@
 
 package org.dominokit.jacksonapt.deser.array.dd;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
-
-import java.util.List;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of short.
@@ -29,50 +28,55 @@ import java.util.List;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public class PrimitiveShortArray2dJsonDeserializer extends AbstractArray2dJsonDeserializer<short[][]> {
+public class PrimitiveShortArray2dJsonDeserializer
+    extends AbstractArray2dJsonDeserializer<short[][]> {
 
-    private static final PrimitiveShortArray2dJsonDeserializer INSTANCE = new PrimitiveShortArray2dJsonDeserializer();
+  private static final PrimitiveShortArray2dJsonDeserializer INSTANCE =
+      new PrimitiveShortArray2dJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.dd.PrimitiveShortArray2dJsonDeserializer}
-     */
-    public static PrimitiveShortArray2dJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.dd.PrimitiveShortArray2dJsonDeserializer}
+   */
+  public static PrimitiveShortArray2dJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveShortArray2dJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public short[][] doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<List<Short>> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.ShortJsonDeserializer.getInstance(), params);
+
+    if (list.isEmpty()) {
+      return new short[0][0];
     }
 
-    private PrimitiveShortArray2dJsonDeserializer() {
+    List<Short> firstList = list.get(0);
+    if (firstList.isEmpty()) {
+      return new short[list.size()][0];
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public short[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<List<Short>> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.ShortJsonDeserializer.getInstance(), params);
+    short[][] array = new short[list.size()][firstList.size()];
 
-        if (list.isEmpty()) {
-            return new short[0][0];
+    int i = 0;
+    int j;
+    for (List<Short> innerList : list) {
+      j = 0;
+      for (Short value : innerList) {
+        if (null != value) {
+          array[i][j] = value;
         }
-
-        List<Short> firstList = list.get(0);
-        if (firstList.isEmpty()) {
-            return new short[list.size()][0];
-        }
-
-        short[][] array = new short[list.size()][firstList.size()];
-
-        int i = 0;
-        int j;
-        for (List<Short> innerList : list) {
-            j = 0;
-            for (Short value : innerList) {
-                if (null != value) {
-                    array[i][j] = value;
-                }
-                j++;
-            }
-            i++;
-        }
-        return array;
+        j++;
+      }
+      i++;
     }
+    return array;
+  }
 }

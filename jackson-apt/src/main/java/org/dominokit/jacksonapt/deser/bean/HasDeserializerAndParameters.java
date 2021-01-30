@@ -28,39 +28,40 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer<V>> extends HasDeserializer<V, S> {
+public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer<V>>
+    extends HasDeserializer<V, S> {
 
-    private JsonDeserializerParameters parameters;
+  private JsonDeserializerParameters parameters;
 
-    /**
-     * <p>Getter for the field <code>parameters</code>.</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
-     */
-    protected JsonDeserializerParameters getParameters() {
-        if (null == parameters) {
-            parameters = newParameters();
-        }
-        return parameters;
+  /**
+   * Getter for the field <code>parameters</code>.
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+   */
+  protected JsonDeserializerParameters getParameters() {
+    if (null == parameters) {
+      parameters = newParameters();
     }
+    return parameters;
+  }
 
-    /**
-     * <p>newParameters</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
-     */
-    protected JsonDeserializerParameters newParameters() {
-        return JacksonContextProvider.get().defaultDeserializerParameters();
-    }
+  /**
+   * newParameters
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+   */
+  protected JsonDeserializerParameters newParameters() {
+    return JacksonContextProvider.get().defaultDeserializerParameters();
+  }
 
-    /**
-     * Deserializes the property defined for this instance.
-     *
-     * @param reader reader
-     * @param ctx    context of the deserialization process
-     * @return a V object.
-     */
-    public V deserialize(JsonReader reader, JsonDeserializationContext ctx) {
-        return getDeserializer().deserialize(reader, ctx, getParameters());
-    }
+  /**
+   * Deserializes the property defined for this instance.
+   *
+   * @param reader reader
+   * @param ctx context of the deserialization process
+   * @return a V object.
+   */
+  public V deserialize(JsonReader reader, JsonDeserializationContext ctx) {
+    return getDeserializer().deserialize(reader, ctx, getParameters());
+  }
 }

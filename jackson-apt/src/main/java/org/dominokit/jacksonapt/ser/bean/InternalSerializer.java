@@ -27,18 +27,23 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 interface InternalSerializer<T> {
 
-    /**
-     * <p>serializeInternally</p>
-     *
-     * @param writer              a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
-     * @param value               a T object.
-     * @param ctx                 a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
-     * @param params              a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
-     * @param defaultIdentityInfo a {@link org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo} object.
-     * @param defaultTypeInfo     a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo} object.
-     */
-    void serializeInternally(JsonWriter writer, T value, JsonSerializationContext ctx, JsonSerializerParameters params,
-                             IdentitySerializationInfo<T> defaultIdentityInfo, TypeSerializationInfo<T> defaultTypeInfo);
-
+  /**
+   * serializeInternally
+   *
+   * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
+   * @param value a T object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+   * @param params a {@link org.dominokit.jacksonapt.JsonSerializerParameters} object.
+   * @param defaultIdentityInfo a {@link
+   *     org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo} object.
+   * @param defaultTypeInfo a {@link org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo}
+   *     object.
+   */
+  void serializeInternally(
+      JsonWriter writer,
+      T value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params,
+      IdentitySerializationInfo<T> defaultIdentityInfo,
+      TypeSerializationInfo<T> defaultTypeInfo);
 }
-

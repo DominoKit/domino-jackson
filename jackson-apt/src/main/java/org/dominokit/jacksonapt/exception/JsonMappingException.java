@@ -24,37 +24,34 @@ package org.dominokit.jacksonapt.exception;
  */
 public class JsonMappingException extends RuntimeException {
 
-    /**
-     * <p>Constructor for JsonMappingException.</p>
-     */
-    public JsonMappingException() {
-    }
+  /** Constructor for JsonMappingException. */
+  public JsonMappingException() {}
 
-    /**
-     * <p>Constructor for JsonMappingException.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     */
-    public JsonMappingException(String message) {
-        super(message);
-    }
+  /**
+   * Constructor for JsonMappingException.
+   *
+   * @param message a {@link java.lang.String} object.
+   */
+  public JsonMappingException(String message) {
+    super(message);
+  }
 
-    /**
-     * <p>Constructor for JsonMappingException.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     * @param cause   a {@link java.lang.Throwable} object.
-     */
-    public JsonMappingException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  /**
+   * Constructor for JsonMappingException.
+   *
+   * @param message a {@link java.lang.String} object.
+   * @param cause a {@link java.lang.Throwable} object.
+   */
+  public JsonMappingException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    /**
-     * <p>Constructor for JsonMappingException.</p>
-     *
-     * @param cause a {@link java.lang.Throwable} object.
-     */
-    public JsonMappingException(Throwable cause) {
-        super(cause);
-    }
+  /**
+   * Constructor for JsonMappingException.
+   *
+   * @param cause a {@link java.lang.Throwable} object.
+   */
+  public JsonMappingException(Throwable cause) {
+    super(cause);
+  }
 }

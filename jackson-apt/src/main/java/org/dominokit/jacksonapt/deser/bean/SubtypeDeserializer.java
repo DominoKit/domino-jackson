@@ -16,61 +16,88 @@
 
 package org.dominokit.jacksonapt.deser.bean;
 
+import java.util.Map;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.Map;
-
 /**
- * Delegate the deserialization of a subtype to a corresponding {@link org.dominokit.jacksonapt.deser.bean.AbstractBeanJsonDeserializer}
+ * Delegate the deserialization of a subtype to a corresponding {@link
+ * org.dominokit.jacksonapt.deser.bean.AbstractBeanJsonDeserializer}
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
-public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>> extends HasDeserializer<T,
-        D> implements InternalDeserializer<T, D> {
+public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
+    extends HasDeserializer<T, D> implements InternalDeserializer<T, D> {
 
-    /**
-     * Delegate the deserialization of a subtype to a corresponding {@link AbstractBeanJsonDeserializer}
-     *
-     * @author Nicolas Morel
-     */
-    public abstract static class BeanSubtypeDeserializer<T> extends SubtypeDeserializer<T, AbstractBeanJsonDeserializer<T>> {
+  /**
+   * Delegate the deserialization of a subtype to a corresponding {@link
+   * AbstractBeanJsonDeserializer}
+   *
+   * @author Nicolas Morel
+   */
+  public abstract static class BeanSubtypeDeserializer<T>
+      extends SubtypeDeserializer<T, AbstractBeanJsonDeserializer<T>> {
 
-        @Override
-        public T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                   IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
-                                   Map<String, String> bufferedProperties) {
-            return getDeserializer().deserializeInline(reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties);
-        }
-
-        @Override
-        public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
-            return getDeserializer().deserializeWrapped(reader, ctx, params, identityInfo, typeInfo, typeInformation);
-        }
+    @Override
+    public T deserializeInline(
+        JsonReader reader,
+        JsonDeserializationContext ctx,
+        JsonDeserializerParameters params,
+        IdentityDeserializationInfo identityInfo,
+        TypeDeserializationInfo typeInfo,
+        String typeInformation,
+        Map<String, String> bufferedProperties) {
+      return getDeserializer()
+          .deserializeInline(
+              reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties);
     }
 
-    /**
-     * Delegate the deserialization of a subtype to a corresponding {@link JsonDeserializer}
-     *
-     * @author Nicolas Morel.
-     */
-    public abstract static class DefaultSubtypeDeserializer<T> extends SubtypeDeserializer<T, JsonDeserializer<T>> {
-
-        @Override
-        public T deserializeInline(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                   IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation,
-                                   Map<String, String> bufferedProperties) {
-            throw ctx.traceError("Cannot deserialize into a bean when not using an AbstractBeanJsonDeserializer");
-        }
-
-        @Override
-        public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                    IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
-            return getDeserializer().deserialize(reader, ctx, params);
-        }
+    @Override
+    public T deserializeWrapped(
+        JsonReader reader,
+        JsonDeserializationContext ctx,
+        JsonDeserializerParameters params,
+        IdentityDeserializationInfo identityInfo,
+        TypeDeserializationInfo typeInfo,
+        String typeInformation) {
+      return getDeserializer()
+          .deserializeWrapped(reader, ctx, params, identityInfo, typeInfo, typeInformation);
     }
+  }
+
+  /**
+   * Delegate the deserialization of a subtype to a corresponding {@link JsonDeserializer}
+   *
+   * @author Nicolas Morel.
+   */
+  public abstract static class DefaultSubtypeDeserializer<T>
+      extends SubtypeDeserializer<T, JsonDeserializer<T>> {
+
+    @Override
+    public T deserializeInline(
+        JsonReader reader,
+        JsonDeserializationContext ctx,
+        JsonDeserializerParameters params,
+        IdentityDeserializationInfo identityInfo,
+        TypeDeserializationInfo typeInfo,
+        String typeInformation,
+        Map<String, String> bufferedProperties) {
+      throw ctx.traceError(
+          "Cannot deserialize into a bean when not using an AbstractBeanJsonDeserializer");
+    }
+
+    @Override
+    public T deserializeWrapped(
+        JsonReader reader,
+        JsonDeserializationContext ctx,
+        JsonDeserializerParameters params,
+        IdentityDeserializationInfo identityInfo,
+        TypeDeserializationInfo typeInfo,
+        String typeInformation) {
+      return getDeserializer().deserialize(reader, ctx, params);
+    }
+  }
 }

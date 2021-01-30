@@ -16,39 +16,38 @@
 
 package org.dominokit.jacksonapt.ser.map.key;
 
+import java.util.Date;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
-import java.util.Date;
-
 /**
- * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Object}.
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
+ * java.lang.Object}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public final class ObjectKeySerializer extends KeySerializer<Object> {
 
-    private static final ObjectKeySerializer INSTANCE = new ObjectKeySerializer();
+  private static final ObjectKeySerializer INSTANCE = new ObjectKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.ObjectKeySerializer}
-     */
-    public static ObjectKeySerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.ObjectKeySerializer}
+   */
+  public static ObjectKeySerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private ObjectKeySerializer() {
-    }
+  private ObjectKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(Object value, JsonSerializationContext ctx) {
-        if (value instanceof Date) {
-            return DateKeySerializer.getInstance().doSerialize((Date) value, ctx);
-        } else {
-            return ToStringKeySerializer.getInstance().doSerialize(value, ctx);
-        }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(Object value, JsonSerializationContext ctx) {
+    if (value instanceof Date) {
+      return DateKeySerializer.getInstance().doSerialize((Date) value, ctx);
+    } else {
+      return ToStringKeySerializer.getInstance().doSerialize(value, ctx);
     }
+  }
 }

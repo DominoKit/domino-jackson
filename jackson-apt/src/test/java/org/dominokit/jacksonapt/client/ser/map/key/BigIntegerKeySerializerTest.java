@@ -16,23 +16,19 @@
 
 package org.dominokit.jacksonapt.client.ser.map.key;
 
+import java.math.BigInteger;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 
-import java.math.BigInteger;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigIntegerKeySerializerTest extends AbstractKeySerializerTest<BigInteger> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        BigInteger value = new BigInteger("1548784651132124566543513203245448715154542123114001571970");
-        assertSerialization("1548784651132124566543513203245448715154542123114001571970", value);
-    }
-
+  public void testSerializeValue() {
+    BigInteger value = new BigInteger("1548784651132124566543513203245448715154542123114001571970");
+    assertSerialization("1548784651132124566543513203245448715154542123114001571970", value);
+  }
 }

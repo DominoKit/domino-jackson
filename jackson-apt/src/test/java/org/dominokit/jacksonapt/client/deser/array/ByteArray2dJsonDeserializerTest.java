@@ -16,90 +16,88 @@
 
 package org.dominokit.jacksonapt.client.deser.array;
 
+import java.util.Arrays;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jacksonapt.deser.array.dd.PrimitiveByteArray2dJsonDeserializer;
 
-import java.util.Arrays;
-
-/**
- * Test byte array deserialization.
- */
+/** Test byte array deserialization. */
 public class ByteArray2dJsonDeserializerTest extends AbstractJsonDeserializerTest<byte[][]> {
 
-    @Override
-    protected JsonDeserializer<byte[][]> createDeserializer() {
-        return PrimitiveByteArray2dJsonDeserializer.getInstance();
+  @Override
+  protected JsonDeserializer<byte[][]> createDeserializer() {
+    return PrimitiveByteArray2dJsonDeserializer.getInstance();
+  }
+
+  @Override
+  public void testDeserializeValue() {
+    assertDeserialization(
+        new byte[][] {{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}},
+        "[\"AAsWIQ==\",\"APXq3w==\"," + "" + "\"AGScAA==\",\"\"]");
+  }
+
+  protected void assertDeserialization(byte[][] expected, String value) {
+    assertEquals(expected, deserialize(value));
+  }
+
+  // GwtTestCase has not assert method for arrays of arrays
+  private void assertEquals(byte[][] expected, byte[][] deserialized) {
+    if (!arraysEquals(expected, deserialized)) {
+      fail("expected: " + format(expected) + ", actual: " + format(deserialized));
     }
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertDeserialization(new byte[][]{{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}}, "[\"AAsWIQ==\",\"APXq3w==\"," +
-                "" + "\"AGScAA==\",\"\"]");
-    }
-
-    protected void assertDeserialization(byte[][] expected, String value) {
-        assertEquals(expected, deserialize(value));
-    }
-
-    // GwtTestCase has not assert method for arrays of arrays
-    private void assertEquals(byte[][] expected, byte[][] deserialized) {
-        if (!arraysEquals(expected, deserialized)) {
-            fail("expected: " + format(expected) + ", actual: " + format(deserialized));
-        }
-    }
-
-    /**
-     * Returns <code>true</code> if the two specified arrays of arrays of bytes are <em>equal</em> to one another
-     *
-     * @param array0 one array to be tested for equality
-     * @param array1 the other array to be tested for equality
-     * @return <code>true</code> if the two arrays are equal
-     */
-    private static boolean arraysEquals(byte[][] array0, byte[][] array1) {
-        if (array0 != null && array1 != null) {
-            if (array0.length != array1.length) {
-                return false;
-            } else {
-                for (int index = 0; index < array0.length; index += 1) {
-                    if (!Arrays.equals(array0[index], array1[index])) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        } else if (array0 == array1) {
-            return true;
-        } else {
+  /**
+   * Returns <code>true</code> if the two specified arrays of arrays of bytes are <em>equal</em> to
+   * one another
+   *
+   * @param array0 one array to be tested for equality
+   * @param array1 the other array to be tested for equality
+   * @return <code>true</code> if the two arrays are equal
+   */
+  private static boolean arraysEquals(byte[][] array0, byte[][] array1) {
+    if (array0 != null && array1 != null) {
+      if (array0.length != array1.length) {
+        return false;
+      } else {
+        for (int index = 0; index < array0.length; index += 1) {
+          if (!Arrays.equals(array0[index], array1[index])) {
             return false;
+          }
         }
+
+        return true;
+      }
+    } else if (array0 == array1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private static String format(byte[][] value) {
+    if (value == null) {
+      return "null";
     }
 
-    private static String format(byte[][] value) {
-        if (value == null) {
-            return "null";
+    StringBuilder builder = new StringBuilder("<");
+    String sep1 = "";
+    for (byte[] bytes : value) {
+      builder.append(sep1).append("[");
+      if (bytes != null) {
+        String sep2 = "";
+        for (byte b : bytes) {
+          builder.append(sep2).append(b);
+          sep2 = ",";
         }
-
-        StringBuilder builder = new StringBuilder("<");
-        String sep1 = "";
-        for (byte[] bytes : value) {
-            builder.append(sep1).append("[");
-            if (bytes != null) {
-                String sep2 = "";
-                for (byte b : bytes) {
-                    builder.append(sep2).append(b);
-                    sep2 = ",";
-                }
-            } else {
-                builder.append("null");
-            }
-            builder.append("]");
-            sep1 = ",";
-        }
-        builder.append(">");
-
-        return builder.toString();
+      } else {
+        builder.append("null");
+      }
+      builder.append("]");
+      sep1 = ",";
     }
+    builder.append(">");
 
+    return builder.toString();
+  }
 }

@@ -16,22 +16,19 @@
 
 package org.dominokit.jacksonapt.client.ser.map.key;
 
+import java.util.UUID;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 
-import java.util.UUID;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class UUIDKeySerializerTest extends AbstractKeySerializerTest<UUID> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        String uuid = "550e8400-e29b-41d4-a716-446655440000";
-        assertSerialization(uuid, UUID.fromString(uuid));
-    }
+  public void testSerializeValue() {
+    String uuid = "550e8400-e29b-41d4-a716-446655440000";
+    assertSerialization(uuid, UUID.fromString(uuid));
+  }
 }

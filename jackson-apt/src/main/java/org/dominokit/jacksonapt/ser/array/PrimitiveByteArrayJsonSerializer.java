@@ -30,34 +30,39 @@ import org.dominokit.jacksonapt.utils.Base64Utils;
  */
 public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
 
-    private static final PrimitiveByteArrayJsonSerializer INSTANCE = new PrimitiveByteArrayJsonSerializer();
+  private static final PrimitiveByteArrayJsonSerializer INSTANCE =
+      new PrimitiveByteArrayJsonSerializer();
 
-    /**
-     * <p>getInstance.</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveByteArrayJsonSerializer}
-     */
-    public static PrimitiveByteArrayJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance.
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.PrimitiveByteArrayJsonSerializer}
+   */
+  public static PrimitiveByteArrayJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveByteArrayJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(byte[] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      byte[] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveByteArrayJsonSerializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(byte[] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, byte[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        writer.unescapeValue(Base64Utils.toBase64(values));
-    }
+    writer.unescapeValue(Base64Utils.toBase64(values));
+  }
 }

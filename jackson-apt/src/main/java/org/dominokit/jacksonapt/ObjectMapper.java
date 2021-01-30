@@ -17,11 +17,11 @@
 package org.dominokit.jacksonapt;
 
 /**
- * Interface combining {@link org.dominokit.jacksonapt.ObjectReader} and {@link org.dominokit.jacksonapt.ObjectWriter}
+ * Interface combining {@link org.dominokit.jacksonapt.ObjectReader} and {@link
+ * org.dominokit.jacksonapt.ObjectWriter}
  *
  * @param <T> Type of the mapped object
  * @author Nicolas Morel
  * @version $Id: $
  */
-public interface ObjectMapper<T> extends ObjectReader<T>, ObjectWriter<T> {
-}
+public interface ObjectMapper<T> extends ObjectReader<T>, ObjectWriter<T> {}

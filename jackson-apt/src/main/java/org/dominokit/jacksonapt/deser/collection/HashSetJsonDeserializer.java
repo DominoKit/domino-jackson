@@ -16,12 +16,12 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.HashSet;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
-import java.util.HashSet;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.HashSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.HashSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.HashSet}
  * @author Nicolas Morel
@@ -29,27 +29,30 @@ import java.util.HashSet;
  */
 public class HashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<HashSet<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.HashSet}.
-     * @param <T>          Type of the elements inside the {@link java.util.HashSet}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.HashSetJsonDeserializer}
-     */
-    public static <T> HashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new HashSetJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.HashSet}.
+   * @param <T> Type of the elements inside the {@link java.util.HashSet}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.HashSetJsonDeserializer}
+   */
+  public static <T> HashSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new HashSetJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link HashSet}.
-     */
-    private HashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     HashSet}.
+   */
+  private HashSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected HashSet<T> newCollection() {
-        return new HashSet<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected HashSet<T> newCollection() {
+    return new HashSet<T>();
+  }
 }

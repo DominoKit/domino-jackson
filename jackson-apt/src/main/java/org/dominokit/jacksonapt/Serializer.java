@@ -26,46 +26,45 @@ import org.dominokit.jacksonapt.ser.map.key.KeySerializer;
  */
 public abstract class Serializer<T> {
 
-    private KeySerializer<T> key;
+  private KeySerializer<T> key;
 
-    private JsonSerializer<T> json;
+  private JsonSerializer<T> json;
 
-    /**
-     * <p>key</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} object.
-     */
-    public KeySerializer<T> key() {
-        if (null == key) {
-            key = createKeySerializer();
-        }
-        return key;
+  /**
+   * key
+   *
+   * @return a {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} object.
+   */
+  public KeySerializer<T> key() {
+    if (null == key) {
+      key = createKeySerializer();
     }
+    return key;
+  }
 
-    /**
-     * <p>createKeySerializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} object.
-     */
-    protected abstract KeySerializer<T> createKeySerializer();
+  /**
+   * createKeySerializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} object.
+   */
+  protected abstract KeySerializer<T> createKeySerializer();
 
-    /**
-     * <p>json</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
-     */
-    public JsonSerializer<T> json() {
-        if (null == json) {
-            json = createJsonSerializer();
-        }
-        return json;
+  /**
+   * json
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+   */
+  public JsonSerializer<T> json() {
+    if (null == json) {
+      json = createJsonSerializer();
     }
+    return json;
+  }
 
-    /**
-     * <p>createJsonSerializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
-     */
-    protected abstract JsonSerializer<T> createJsonSerializer();
-
+  /**
+   * createJsonSerializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+   */
+  protected abstract JsonSerializer<T> createJsonSerializer();
 }

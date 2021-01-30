@@ -16,24 +16,21 @@
 
 package org.dominokit.jacksonapt.server;
 
-
 import org.dominokit.jacksonapt.DefaultJsonDeserializationContext;
 import org.dominokit.jacksonapt.DefaultJsonSerializationContext;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class ServerJacksonTestCase extends BaseJacksonTestCase {
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
+  @Override
+  protected JsonDeserializationContext newDefaultDeserializationContext() {
+    return DefaultJsonDeserializationContext.builder().build();
+  }
 
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+  @Override
+  protected JsonSerializationContext newDefaultSerializationContext() {
+    return DefaultJsonSerializationContext.builder().build();
+  }
 }

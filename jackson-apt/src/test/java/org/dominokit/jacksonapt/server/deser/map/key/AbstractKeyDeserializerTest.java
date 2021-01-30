@@ -16,42 +16,40 @@
 
 package org.dominokit.jacksonapt.server.deser.map.key;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.dominokit.jacksonapt.DefaultJsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
 import org.dominokit.jacksonapt.server.ServerJacksonTestCase;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class AbstractKeyDeserializerTest<T> extends ServerJacksonTestCase {
 
-    protected abstract KeyDeserializer<T> createDeserializer();
+  protected abstract KeyDeserializer<T> createDeserializer();
 
-    @Test
-	public void testDeserializeNullValue() {
-        assertThat(deserialize(null)).isNull();
-    }
+  @Test
+  public void testDeserializeNullValue() {
+    assertThat(deserialize(null)).isNull();
+  }
 
-    protected T deserialize(String value) {
-        JsonDeserializationContext ctx = DefaultJsonDeserializationContext.builder().build();
-        return deserialize(ctx, value);
-    }
+  protected T deserialize(String value) {
+    JsonDeserializationContext ctx = DefaultJsonDeserializationContext.builder().build();
+    return deserialize(ctx, value);
+  }
 
-    protected T deserialize(JsonDeserializationContext ctx, String value) {
-        return createDeserializer().deserialize(value, ctx);
-    }
+  protected T deserialize(JsonDeserializationContext ctx, String value) {
+    return createDeserializer().deserialize(value, ctx);
+  }
 
-    protected void assertDeserialization(T expected, String value) {
-        assertThat(expected).isEqualTo(deserialize(value));
-    }
+  protected void assertDeserialization(T expected, String value) {
+    assertThat(expected).isEqualTo(deserialize(value));
+  }
 
-    protected void assertDeserialization(JsonDeserializationContext ctx, T expected, String value) {
-        assertThat(expected).isEqualTo(deserialize(ctx, value));
-    }
+  protected void assertDeserialization(JsonDeserializationContext ctx, T expected, String value) {
+    assertThat(expected).isEqualTo(deserialize(ctx, value));
+  }
 
-    public abstract void testDeserializeValue();
+  public abstract void testDeserializeValue();
 }

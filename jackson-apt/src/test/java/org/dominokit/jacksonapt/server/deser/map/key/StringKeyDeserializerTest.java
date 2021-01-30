@@ -19,21 +19,19 @@ package org.dominokit.jacksonapt.server.deser.map.key;
 import org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class StringKeyDeserializerTest extends AbstractKeyDeserializerTest<String> {
 
-    @Override
-    protected StringKeyDeserializer createDeserializer() {
-        return StringKeyDeserializer.getInstance();
-    }
+  @Override
+  protected StringKeyDeserializer createDeserializer() {
+    return StringKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization("", "");
-        assertDeserialization("Json", "Json");
-        assertDeserialization("&é(-è_ çà)='", "&é(-è_ çà)='");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization("", "");
+    assertDeserialization("Json", "Json");
+    assertDeserialization("&é(-è_ çà)='", "&é(-è_ çà)='");
+  }
 }

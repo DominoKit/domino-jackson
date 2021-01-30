@@ -16,38 +16,41 @@
 
 package org.dominokit.jacksonapt.ser;
 
+import java.util.UUID;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-import java.util.UUID;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.util.UUID}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.util.UUID}.
  *
  * @author Nicolas Morel
  * @version $Id: $
  */
 public class UUIDJsonSerializer extends JsonSerializer<UUID> {
 
-    private static final UUIDJsonSerializer INSTANCE = new UUIDJsonSerializer();
+  private static final UUIDJsonSerializer INSTANCE = new UUIDJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.UUIDJsonSerializer}
-     */
-    public static UUIDJsonSerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.UUIDJsonSerializer}
+   */
+  public static UUIDJsonSerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private UUIDJsonSerializer() {
-    }
+  private UUIDJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, UUID value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.unescapeValue(value.toString());
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      UUID value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    writer.unescapeValue(value.toString());
+  }
 }

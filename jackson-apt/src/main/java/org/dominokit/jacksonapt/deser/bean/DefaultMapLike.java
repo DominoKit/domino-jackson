@@ -15,14 +15,12 @@
  */
 package org.dominokit.jacksonapt.deser.bean;
 
-
-import org.dominokit.jacksonapt.GwtIncompatible;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.dominokit.jacksonapt.GwtIncompatible;
 
 /**
- * <p>DefaultMapLike class.</p>
+ * DefaultMapLike class.
  *
  * @author vegegoku
  * @version $Id: $Id
@@ -30,17 +28,17 @@ import java.util.Map;
 @GwtIncompatible
 public class DefaultMapLike<T> implements MapLike<T> {
 
-    private Map<String, T> map = new HashMap<>();
+  private Map<String, T> map = new HashMap<>();
 
-    /** {@inheritDoc} */
-    @Override
-    public T get(String key) {
-        return map.get(key);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public T get(String key) {
+    return map.get(key);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void put(String key, T value) {
-        map.put(key, value);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void put(String key, T value) {
+    map.put(key, value);
+  }
 }

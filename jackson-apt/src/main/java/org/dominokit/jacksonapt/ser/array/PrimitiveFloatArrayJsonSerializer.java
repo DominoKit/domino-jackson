@@ -29,42 +29,47 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class PrimitiveFloatArrayJsonSerializer extends JsonSerializer<float[]> {
 
-    private static final PrimitiveFloatArrayJsonSerializer INSTANCE = new PrimitiveFloatArrayJsonSerializer();
+  private static final PrimitiveFloatArrayJsonSerializer INSTANCE =
+      new PrimitiveFloatArrayJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveFloatArrayJsonSerializer}
-     */
-    public static PrimitiveFloatArrayJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.PrimitiveFloatArrayJsonSerializer}
+   */
+  public static PrimitiveFloatArrayJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveFloatArrayJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(float[] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      float[] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveFloatArrayJsonSerializer() {
+    if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+      writer.value(values[0]);
+    } else {
+      writer.beginArray();
+      for (float value : values) {
+        writer.value(value);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(float[] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, float[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
-            writer.value(values[0]);
-        } else {
-            writer.beginArray();
-            for (float value : values) {
-                writer.value(value);
-            }
-            writer.endArray();
-        }
-    }
+  }
 }

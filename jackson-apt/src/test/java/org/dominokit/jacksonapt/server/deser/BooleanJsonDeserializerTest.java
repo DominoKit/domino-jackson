@@ -16,32 +16,30 @@
 
 package org.dominokit.jacksonapt.server.deser;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.BooleanJsonDeserializer;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanJsonDeserializerTest extends AbstractJsonDeserializerTest<Boolean> {
 
-    @Override
-    protected JsonDeserializer<Boolean> createDeserializer() {
-        return BooleanJsonDeserializer.getInstance();
-    }
+  @Override
+  protected JsonDeserializer<Boolean> createDeserializer() {
+    return BooleanJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertThat(deserialize("true")).isTrue();
-        assertThat(deserialize("\"trUe\"")).isTrue();
-        assertThat(deserialize("1")).isTrue();
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertThat(deserialize("true")).isTrue();
+    assertThat(deserialize("\"trUe\"")).isTrue();
+    assertThat(deserialize("1")).isTrue();
 
-        assertThat(deserialize("faLse")).isFalse();
-        assertThat(deserialize("\"false\"")).isFalse();
-        assertThat(deserialize("0")).isFalse();
-        assertThat(deserialize("other")).isFalse();
-    }
+    assertThat(deserialize("faLse")).isFalse();
+    assertThat(deserialize("\"false\"")).isFalse();
+    assertThat(deserialize("0")).isFalse();
+    assertThat(deserialize("other")).isFalse();
+  }
 }

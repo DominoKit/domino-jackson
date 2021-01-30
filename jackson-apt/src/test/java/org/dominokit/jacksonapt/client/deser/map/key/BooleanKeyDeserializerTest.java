@@ -18,23 +18,21 @@ package org.dominokit.jacksonapt.client.deser.map.key;
 
 import org.dominokit.jacksonapt.deser.map.key.BooleanKeyDeserializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanKeyDeserializerTest extends AbstractKeyDeserializerTest<Boolean> {
 
-    @Override
-    protected BooleanKeyDeserializer createDeserializer() {
-        return BooleanKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BooleanKeyDeserializer createDeserializer() {
+    return BooleanKeyDeserializer.getInstance();
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertTrue(deserialize("true"));
-        assertTrue(deserialize("trUe"));
+  @Override
+  public void testDeserializeValue() {
+    assertTrue(deserialize("true"));
+    assertTrue(deserialize("trUe"));
 
-        assertFalse(deserialize("faLse"));
-        assertFalse(deserialize("false"));
-        assertFalse(deserialize("other"));
-    }
+    assertFalse(deserialize("faLse"));
+    assertFalse(deserialize("false"));
+    assertFalse(deserialize("other"));
+  }
 }

@@ -26,24 +26,24 @@ import org.dominokit.jacksonapt.JsonSerializer;
  */
 public abstract class HasSerializer<V, S extends JsonSerializer<V>> {
 
-    private S serializer;
+  private S serializer;
 
-    /**
-     * <p>Getter for the field <code>serializer</code>.</p>
-     *
-     * @return a S object.
-     */
-    protected S getSerializer() {
-        if (null == serializer) {
-            serializer = (S) newSerializer();
-        }
-        return serializer;
+  /**
+   * Getter for the field <code>serializer</code>.
+   *
+   * @return a S object.
+   */
+  protected S getSerializer() {
+    if (null == serializer) {
+      serializer = (S) newSerializer();
     }
+    return serializer;
+  }
 
-    /**
-     * <p>newSerializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
-     */
-    protected abstract JsonSerializer<?> newSerializer();
+  /**
+   * newSerializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+   */
+  protected abstract JsonSerializer<?> newSerializer();
 }

@@ -19,24 +19,26 @@ package org.dominokit.jacksonapt.client.ser;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.ser.EnumJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
-public class EnumJsonSerializerTest extends AbstractJsonSerializerTest<EnumJsonSerializerTest.EnumTest> {
+/** @author Nicolas Morel */
+public class EnumJsonSerializerTest
+    extends AbstractJsonSerializerTest<EnumJsonSerializerTest.EnumTest> {
 
-    protected static enum EnumTest {
-        ONE, TWO, THREE, FOUR
-    }
+  protected static enum EnumTest {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
 
-    @Override
-    protected JsonSerializer<EnumTest> createSerializer() {
-        return EnumJsonSerializer.getInstance();
-    }
+  @Override
+  protected JsonSerializer<EnumTest> createSerializer() {
+    return EnumJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("\"ONE\"", EnumTest.ONE);
-        assertSerialization("\"TWO\"", EnumTest.TWO);
-        assertSerialization("\"THREE\"", EnumTest.THREE);
-        assertSerialization("\"FOUR\"", EnumTest.FOUR);
-    }
+  public void testSerializeValue() {
+    assertSerialization("\"ONE\"", EnumTest.ONE);
+    assertSerialization("\"TWO\"", EnumTest.TWO);
+    assertSerialization("\"THREE\"", EnumTest.THREE);
+    assertSerialization("\"FOUR\"", EnumTest.FOUR);
+  }
 }

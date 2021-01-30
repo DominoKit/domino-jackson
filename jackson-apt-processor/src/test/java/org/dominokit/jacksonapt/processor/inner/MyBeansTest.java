@@ -16,38 +16,32 @@
 
 package org.dominokit.jacksonapt.processor.inner;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author Dmitrii Tikhomirov
- * Created by treblereel 10/20/20
- */
+import org.junit.Test;
+
+/** @author Dmitrii Tikhomirov Created by treblereel 10/20/20 */
 public class MyBeansTest {
 
-    private final MyBean1_Bean_MapperImpl mapper = new MyBean1_Bean_MapperImpl();
-    private final MyBean2_Bean_MapperImpl mapper2 = new MyBean2_Bean_MapperImpl();
-    private final MyBean3_MapperImpl mapper3 = new MyBean3_MapperImpl();
+  private final MyBean1_Bean_MapperImpl mapper = new MyBean1_Bean_MapperImpl();
+  private final MyBean2_Bean_MapperImpl mapper2 = new MyBean2_Bean_MapperImpl();
+  private final MyBean3_MapperImpl mapper3 = new MyBean3_MapperImpl();
 
+  @Test
+  public void test() {
+    MyBean1.Bean tested1 = new MyBean1.Bean();
+    tested1.setMyBean1Value("setMyBean1Value");
 
-    @Test
-    public void test() {
-        MyBean1.Bean tested1 = new MyBean1.Bean();
-        tested1.setMyBean1Value("setMyBean1Value");
+    MyBean2.Bean tested2 = new MyBean2.Bean();
+    tested2.setMyBean2Value("setMyBean2Value");
 
-        MyBean2.Bean tested2 = new MyBean2.Bean();
-        tested2.setMyBean2Value("setMyBean2Value");
+    assertEquals(tested1, mapper.read(mapper.write(tested1)));
+    assertEquals(tested2, mapper2.read(mapper2.write(tested2)));
 
-        assertEquals(tested1, mapper.read(mapper.write(tested1)));
-        assertEquals(tested2, mapper2.read(mapper2.write(tested2)));
+    MyBean3 tested = new MyBean3();
+    tested.setBean1(tested1);
+    tested.setBean2(tested2);
 
-        MyBean3 tested = new MyBean3();
-        tested.setBean1(tested1);
-        tested.setBean2(tested2);
-
-        assertEquals(tested, mapper3.read(mapper3.write(tested)));
-
-    }
-
+    assertEquals(tested, mapper3.read(mapper3.write(tested)));
+  }
 }

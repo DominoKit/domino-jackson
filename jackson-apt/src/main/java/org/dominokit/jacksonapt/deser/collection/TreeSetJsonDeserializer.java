@@ -16,12 +16,12 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.TreeSet;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
-import java.util.TreeSet;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.TreeSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.TreeSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.TreeSet}
  * @author Nicolas Morel
@@ -29,27 +29,30 @@ import java.util.TreeSet;
  */
 public class TreeSetJsonDeserializer<T> extends BaseSortedSetJsonDeserializer<TreeSet<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.TreeSet}.
-     * @param <T>          Type of the elements inside the {@link java.util.TreeSet}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.TreeSetJsonDeserializer}
-     */
-    public static <T> TreeSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new TreeSetJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.TreeSet}.
+   * @param <T> Type of the elements inside the {@link java.util.TreeSet}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.TreeSetJsonDeserializer}
+   */
+  public static <T> TreeSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new TreeSetJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link TreeSet}.
-     */
-    private TreeSetJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     TreeSet}.
+   */
+  private TreeSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected TreeSet<T> newCollection() {
-        return new TreeSet<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected TreeSet<T> newCollection() {
+    return new TreeSet<T>();
+  }
 }

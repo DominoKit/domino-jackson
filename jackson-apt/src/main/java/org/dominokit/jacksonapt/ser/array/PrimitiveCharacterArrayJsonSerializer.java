@@ -29,42 +29,48 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  */
 public class PrimitiveCharacterArrayJsonSerializer extends JsonSerializer<char[]> {
 
-    private static final PrimitiveCharacterArrayJsonSerializer INSTANCE = new PrimitiveCharacterArrayJsonSerializer();
+  private static final PrimitiveCharacterArrayJsonSerializer INSTANCE =
+      new PrimitiveCharacterArrayJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveCharacterArrayJsonSerializer}
-     */
-    public static PrimitiveCharacterArrayJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.PrimitiveCharacterArrayJsonSerializer}
+   */
+  public static PrimitiveCharacterArrayJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveCharacterArrayJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(char[] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      char[] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveCharacterArrayJsonSerializer() {
+    if (ctx.isWriteCharArraysAsJsonArrays()
+        && !(ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1)) {
+      writer.beginArray();
+      for (char value : values) {
+        writer.value(Character.toString(value));
+      }
+      writer.endArray();
+    } else {
+      writer.value(new String(values));
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(char[] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, char[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        if (ctx.isWriteCharArraysAsJsonArrays() && !(ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1)) {
-            writer.beginArray();
-            for (char value : values) {
-                writer.value(Character.toString(value));
-            }
-            writer.endArray();
-        } else {
-            writer.value(new String(values));
-        }
-    }
+  }
 }
