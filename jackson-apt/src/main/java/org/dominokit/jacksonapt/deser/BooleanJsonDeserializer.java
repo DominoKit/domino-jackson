@@ -23,39 +23,37 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Boolean}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.lang.Boolean}.
  */
 public class BooleanJsonDeserializer extends JsonDeserializer<Boolean> {
 
-    private static final BooleanJsonDeserializer INSTANCE = new BooleanJsonDeserializer();
+  private static final BooleanJsonDeserializer INSTANCE = new BooleanJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.BooleanJsonDeserializer}
-     */
-    public static BooleanJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.BooleanJsonDeserializer}
+   */
+  public static BooleanJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private BooleanJsonDeserializer() {
-    }
+  private BooleanJsonDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public Boolean doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        JsonToken token = reader.peek();
-        if (JsonToken.BOOLEAN.equals(token)) {
-            return reader.nextBoolean();
-        } else if (JsonToken.STRING.equals(token)) {
-            return Boolean.valueOf(reader.nextString());
-        } else if (JsonToken.NUMBER.equals(token)) {
-            return reader.nextInt() == 1;
-        } else {
-            return null;
-        }
+  /** {@inheritDoc} */
+  @Override
+  public Boolean doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    JsonToken token = reader.peek();
+    if (JsonToken.BOOLEAN.equals(token)) {
+      return reader.nextBoolean();
+    } else if (JsonToken.STRING.equals(token)) {
+      return Boolean.valueOf(reader.nextString());
+    } else if (JsonToken.NUMBER.equals(token)) {
+      return reader.nextInt() == 1;
+    } else {
+      return null;
     }
+  }
 }

@@ -21,74 +21,80 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
- * Base class for all the deserializer. It handles null values and exceptions. The rest is delegated to implementations.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Base class for all the deserializer. It handles null values and exceptions. The rest is delegated
+ * to implementations.
  */
 public abstract class JsonDeserializer<T> {
 
-    /**
-     * Deserializes a JSON input into an object.
-     *
-     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
-     * @param ctx    Context for the full deserialization process
-     * @return the deserialized object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs during the deserialization
-     */
-    public T deserialize(JsonReader reader, JsonDeserializationContext ctx) throws JsonDeserializationException {
-        return deserialize(reader, ctx, ctx.defaultParameters());
-    }
+  /**
+   * Deserializes a JSON input into an object.
+   *
+   * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
+   * @param ctx Context for the full deserialization process
+   * @return the deserialized object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs
+   *     during the deserialization
+   */
+  public T deserialize(JsonReader reader, JsonDeserializationContext ctx)
+      throws JsonDeserializationException {
+    return deserialize(reader, ctx, ctx.defaultParameters());
+  }
 
-    /**
-     * Deserializes a JSON input into an object.
-     *
-     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
-     * @param ctx    Context for the full deserialization process
-     * @param params Parameters for this deserialization
-     * @return the deserialized object
-     * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs during the deserialization
-     */
-    public T deserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) throws
-            JsonDeserializationException {
-        if (JsonToken.NULL.equals(reader.peek())) {
-            return deserializeNullValue(reader, ctx, params);
-        }
-        return doDeserialize(reader, ctx, params);
+  /**
+   * Deserializes a JSON input into an object.
+   *
+   * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
+   * @param ctx Context for the full deserialization process
+   * @param params Parameters for this deserialization
+   * @return the deserialized object
+   * @throws org.dominokit.jacksonapt.exception.JsonDeserializationException if an error occurs
+   *     during the deserialization
+   */
+  public T deserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params)
+      throws JsonDeserializationException {
+    if (JsonToken.NULL.equals(reader.peek())) {
+      return deserializeNullValue(reader, ctx, params);
     }
+    return doDeserialize(reader, ctx, params);
+  }
 
-    /**
-     * Deserialize the null value. This method allows children to override the default behaviour.
-     *
-     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
-     * @param ctx    Context for the full deserialization process
-     * @param params Parameters for this deserialization
-     * @return the deserialized object
-     */
-    protected T deserializeNullValue(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        reader.skipValue();
-        return null;
-    }
+  /**
+   * Deserialize the null value. This method allows children to override the default behaviour.
+   *
+   * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
+   * @param ctx Context for the full deserialization process
+   * @param params Parameters for this deserialization
+   * @return the deserialized object
+   */
+  protected T deserializeNullValue(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    reader.skipValue();
+    return null;
+  }
 
-    /**
-     * Deserializes a non-null JSON input into an object.
-     *
-     * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
-     * @param ctx    Context for the full deserialization process
-     * @param params Parameters for this deserialization
-     * @return the deserialized object
-     */
-    protected abstract T doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
+  /**
+   * Deserializes a non-null JSON input into an object.
+   *
+   * @param reader {@link org.dominokit.jacksonapt.stream.JsonReader} used to read the JSON input
+   * @param ctx Context for the full deserialization process
+   * @param params Parameters for this deserialization
+   * @return the deserialized object
+   */
+  protected abstract T doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params);
 
-    /**
-     * Set the back reference.
-     *
-     * @param referenceName name of the reference
-     * @param reference     reference to set
-     * @param value         value to set the reference to.
-     * @param ctx           Context for the full deserialization process
-     */
-    public void setBackReference(String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
-        throw new JsonDeserializationException("Cannot set a back reference to the type managed by this deserializer");
-    }
+  /**
+   * Set the back reference.
+   *
+   * @param referenceName name of the reference
+   * @param reference reference to set
+   * @param value value to set the reference to.
+   * @param ctx Context for the full deserialization process
+   */
+  public void setBackReference(
+      String referenceName, Object reference, T value, JsonDeserializationContext ctx) {
+    throw new JsonDeserializationException(
+        "Cannot set a back reference to the type managed by this deserializer");
+  }
 }

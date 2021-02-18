@@ -16,40 +16,41 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.Vector;
 import org.dominokit.jacksonapt.JsonDeserializer;
 
-import java.util.Vector;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Vector}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.Vector}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Vector}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class VectorJsonDeserializer<T> extends BaseListJsonDeserializer<Vector<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.Vector}.
-     * @param <T>          Type of the elements inside the {@link java.util.Vector}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.VectorJsonDeserializer}
-     */
-    public static <T> VectorJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new VectorJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.Vector}.
+   * @param <T> Type of the elements inside the {@link java.util.Vector}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.VectorJsonDeserializer}
+   */
+  public static <T> VectorJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new VectorJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Vector}.
-     */
-    private VectorJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     Vector}.
+   */
+  private VectorJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected Vector<T> newCollection() {
-        return new Vector<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected Vector<T> newCollection() {
+    return new Vector<T>();
+  }
 }

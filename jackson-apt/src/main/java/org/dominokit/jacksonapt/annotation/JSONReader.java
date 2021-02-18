@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>JSONReader class.</p>
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Marks a pojo or an interface for JSON Deserializer generation, this will result in generating a
+ * Deserializer and a mapper for the target pojo For an interface it must extends from {@link
+ * org.dominokit.jacksonapt.ObjectReader}
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JSONReader {
-}
+public @interface JSONReader {}

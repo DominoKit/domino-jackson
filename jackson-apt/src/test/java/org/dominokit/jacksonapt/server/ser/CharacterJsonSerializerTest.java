@@ -19,19 +19,17 @@ package org.dominokit.jacksonapt.server.ser;
 import org.dominokit.jacksonapt.ser.CharacterJsonSerializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class CharacterJsonSerializerTest extends AbstractJsonSerializerTest<Character> {
 
-    @Override
-    protected CharacterJsonSerializer createSerializer() {
-        return CharacterJsonSerializer.getInstance();
-    }
+  @Override
+  protected CharacterJsonSerializer createSerializer() {
+    return CharacterJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("\"e\"", 'e');
-        assertSerialization("\"\\u0000\"", '\u0000');
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("\"e\"", 'e');
+    assertSerialization("\"\\u0000\"", '\u0000');
+  }
 }

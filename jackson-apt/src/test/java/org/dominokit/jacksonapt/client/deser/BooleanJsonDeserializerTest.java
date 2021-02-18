@@ -19,25 +19,23 @@ package org.dominokit.jacksonapt.client.deser;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.BooleanJsonDeserializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanJsonDeserializerTest extends AbstractJsonDeserializerTest<Boolean> {
 
-    @Override
-    protected JsonDeserializer<Boolean> createDeserializer() {
-        return BooleanJsonDeserializer.getInstance();
-    }
+  @Override
+  protected JsonDeserializer<Boolean> createDeserializer() {
+    return BooleanJsonDeserializer.getInstance();
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertTrue(deserialize("true"));
-        assertTrue(deserialize("\"trUe\""));
-        assertTrue(deserialize("1"));
+  @Override
+  public void testDeserializeValue() {
+    assertTrue(deserialize("true"));
+    assertTrue(deserialize("\"trUe\""));
+    assertTrue(deserialize("1"));
 
-        assertFalse(deserialize("faLse"));
-        assertFalse(deserialize("\"false\""));
-        assertFalse(deserialize("0"));
-        assertFalse(deserialize("other"));
-    }
+    assertFalse(deserialize("faLse"));
+    assertFalse(deserialize("\"false\""));
+    assertFalse(deserialize("0"));
+    assertFalse(deserialize("other"));
+  }
 }

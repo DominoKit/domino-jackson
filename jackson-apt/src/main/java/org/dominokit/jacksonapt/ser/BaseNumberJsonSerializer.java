@@ -16,248 +16,220 @@
 
 package org.dominokit.jacksonapt.ser;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 /**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for {@link java.lang.Number}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for {@link
+ * java.lang.Number}.
  */
 public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSerializer<N> {
 
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link BigDecimal}
-     */
-    public static final class BigDecimalJsonSerializer extends BaseNumberJsonSerializer<BigDecimal> {
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link BigDecimal} */
+  public static final class BigDecimalJsonSerializer extends BaseNumberJsonSerializer<BigDecimal> {
 
-        private static final BigDecimalJsonSerializer INSTANCE = new BigDecimalJsonSerializer();
+    private static final BigDecimalJsonSerializer INSTANCE = new BigDecimalJsonSerializer();
 
-        /**
-         * @return an instance of {@link BigDecimalJsonSerializer}
-         */
-        public static BigDecimalJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private BigDecimalJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(BigDecimal value) {
-            return null == value || BigDecimal.ZERO.compareTo(value) == 0;
-        }
+    /** @return an instance of {@link BigDecimalJsonSerializer} */
+    public static BigDecimalJsonSerializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link BigInteger}
-     */
-    public static final class BigIntegerJsonSerializer extends BaseNumberJsonSerializer<BigInteger> {
+    private BigDecimalJsonSerializer() {}
 
-        private static final BigIntegerJsonSerializer INSTANCE = new BigIntegerJsonSerializer();
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(BigDecimal value) {
+      return null == value || BigDecimal.ZERO.compareTo(value) == 0;
+    }
+  }
 
-        /**
-         * @return an instance of {@link BigIntegerJsonSerializer}
-         */
-        public static BigIntegerJsonSerializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link BigInteger} */
+  public static final class BigIntegerJsonSerializer extends BaseNumberJsonSerializer<BigInteger> {
 
-        private BigIntegerJsonSerializer() {
-        }
+    private static final BigIntegerJsonSerializer INSTANCE = new BigIntegerJsonSerializer();
 
-        @Override
-        protected boolean isDefault(BigInteger value) {
-            return null == value || BigInteger.ZERO.compareTo(value) == 0;
-        }
+    /** @return an instance of {@link BigIntegerJsonSerializer} */
+    public static BigIntegerJsonSerializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Byte}
-     */
-    public static final class ByteJsonSerializer extends BaseNumberJsonSerializer<Byte> {
+    private BigIntegerJsonSerializer() {}
 
-        private static final ByteJsonSerializer INSTANCE = new ByteJsonSerializer();
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(BigInteger value) {
+      return null == value || BigInteger.ZERO.compareTo(value) == 0;
+    }
+  }
 
-        /**
-         * @return an instance of {@link ByteJsonSerializer}
-         */
-        public static ByteJsonSerializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Byte} */
+  public static final class ByteJsonSerializer extends BaseNumberJsonSerializer<Byte> {
 
-        private static byte defaultValue;
+    private static final ByteJsonSerializer INSTANCE = new ByteJsonSerializer();
 
-        private ByteJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Byte value) {
-            return null == value || defaultValue == value;
-        }
+    /** @return an instance of {@link ByteJsonSerializer} */
+    public static ByteJsonSerializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Double}
-     */
-    public static final class DoubleJsonSerializer extends BaseNumberJsonSerializer<Double> {
+    private static byte defaultValue;
 
-        private static final DoubleJsonSerializer INSTANCE = new DoubleJsonSerializer();
+    private ByteJsonSerializer() {}
 
-        /**
-         * @return an instance of {@link DoubleJsonSerializer}
-         */
-        public static DoubleJsonSerializer getInstance() {
-            return INSTANCE;
-        }
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Byte value) {
+      return null == value || defaultValue == value;
+    }
+  }
 
-        private DoubleJsonSerializer() {
-        }
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Double} */
+  public static final class DoubleJsonSerializer extends BaseNumberJsonSerializer<Double> {
 
-        @Override
-        protected boolean isDefault(Double value) {
-            return null == value || value == 0d;
-        }
+    private static final DoubleJsonSerializer INSTANCE = new DoubleJsonSerializer();
 
-        @Override
-        public void doSerialize(JsonWriter writer, Double value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-            // writer has a special method to write double, let's use instead of default Number method.
-            writer.value(value.doubleValue());
-        }
+    /** @return an instance of {@link DoubleJsonSerializer} */
+    public static DoubleJsonSerializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Float}
-     */
-    public static final class FloatJsonSerializer extends BaseNumberJsonSerializer<Float> {
+    private DoubleJsonSerializer() {}
 
-        private static final FloatJsonSerializer INSTANCE = new FloatJsonSerializer();
-
-        /**
-         * @return an instance of {@link FloatJsonSerializer}
-         */
-        public static FloatJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private FloatJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Float value) {
-            return null == value || value == 0f;
-        }
-    }
-
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Integer}
-     */
-    public static final class IntegerJsonSerializer extends BaseNumberJsonSerializer<Integer> {
-
-        private static final IntegerJsonSerializer INSTANCE = new IntegerJsonSerializer();
-
-        /**
-         * @return an instance of {@link IntegerJsonSerializer}
-         */
-        public static IntegerJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private IntegerJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Integer value) {
-            return null == value || value == 0;
-        }
-    }
-
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Long}
-     */
-    public static final class LongJsonSerializer extends BaseNumberJsonSerializer<Long> {
-
-        private static final LongJsonSerializer INSTANCE = new LongJsonSerializer();
-
-        /**
-         * @return an instance of {@link LongJsonSerializer}
-         */
-        public static LongJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private LongJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Long value) {
-            return null == value || value == 0l;
-        }
-
-        @Override
-        public void doSerialize(JsonWriter writer, Long value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-            // writer has a special method to write long, let's use instead of default Number method.
-            writer.value(value.longValue());
-        }
-    }
-
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Short}
-     */
-    public static final class ShortJsonSerializer extends BaseNumberJsonSerializer<Short> {
-
-        private static final ShortJsonSerializer INSTANCE = new ShortJsonSerializer();
-
-        /**
-         * @return an instance of {@link ShortJsonSerializer}
-         */
-        public static ShortJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private static short defaultValue;
-
-        private ShortJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Short value) {
-            return null == value || defaultValue == value;
-        }
-    }
-
-    /**
-     * Default implementation of {@link BaseNumberJsonSerializer} for {@link Number}
-     */
-    public static final class NumberJsonSerializer extends BaseNumberJsonSerializer<Number> {
-
-        private static final NumberJsonSerializer INSTANCE = new NumberJsonSerializer();
-
-        /**
-         * @return an instance of {@link NumberJsonSerializer}
-         */
-        public static NumberJsonSerializer getInstance() {
-            return INSTANCE;
-        }
-
-        private NumberJsonSerializer() {
-        }
-
-        @Override
-        protected boolean isDefault(Number value) {
-            return null == value || value.intValue() == 0;
-        }
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Double value) {
+      return null == value || value == 0d;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void doSerialize(JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.value(value);
+    public void doSerialize(
+        JsonWriter writer,
+        Double value,
+        JsonSerializationContext ctx,
+        JsonSerializerParameters params) {
+      // writer has a special method to write double, let's use instead of default Number method.
+      writer.value(value.doubleValue());
     }
+  }
+
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Float} */
+  public static final class FloatJsonSerializer extends BaseNumberJsonSerializer<Float> {
+
+    private static final FloatJsonSerializer INSTANCE = new FloatJsonSerializer();
+
+    /** @return an instance of {@link FloatJsonSerializer} */
+    public static FloatJsonSerializer getInstance() {
+      return INSTANCE;
+    }
+
+    private FloatJsonSerializer() {}
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Float value) {
+      return null == value || value == 0f;
+    }
+  }
+
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Integer} */
+  public static final class IntegerJsonSerializer extends BaseNumberJsonSerializer<Integer> {
+
+    private static final IntegerJsonSerializer INSTANCE = new IntegerJsonSerializer();
+
+    /** @return an instance of {@link IntegerJsonSerializer} */
+    public static IntegerJsonSerializer getInstance() {
+      return INSTANCE;
+    }
+
+    private IntegerJsonSerializer() {}
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Integer value) {
+      return null == value || value == 0;
+    }
+  }
+
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Long} */
+  public static final class LongJsonSerializer extends BaseNumberJsonSerializer<Long> {
+
+    private static final LongJsonSerializer INSTANCE = new LongJsonSerializer();
+
+    /** @return an instance of {@link LongJsonSerializer} */
+    public static LongJsonSerializer getInstance() {
+      return INSTANCE;
+    }
+
+    private LongJsonSerializer() {}
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Long value) {
+      return null == value || value == 0l;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void doSerialize(
+        JsonWriter writer,
+        Long value,
+        JsonSerializationContext ctx,
+        JsonSerializerParameters params) {
+      // writer has a special method to write long, let's use instead of default Number method.
+      writer.value(value.longValue());
+    }
+  }
+
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Short} */
+  public static final class ShortJsonSerializer extends BaseNumberJsonSerializer<Short> {
+
+    private static final ShortJsonSerializer INSTANCE = new ShortJsonSerializer();
+
+    /** @return an instance of {@link ShortJsonSerializer} */
+    public static ShortJsonSerializer getInstance() {
+      return INSTANCE;
+    }
+
+    private static short defaultValue;
+
+    private ShortJsonSerializer() {}
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Short value) {
+      return null == value || defaultValue == value;
+    }
+  }
+
+  /** Default implementation of {@link BaseNumberJsonSerializer} for {@link Number} */
+  public static final class NumberJsonSerializer extends BaseNumberJsonSerializer<Number> {
+
+    private static final NumberJsonSerializer INSTANCE = new NumberJsonSerializer();
+
+    /** @return an instance of {@link NumberJsonSerializer} */
+    public static NumberJsonSerializer getInstance() {
+      return INSTANCE;
+    }
+
+    private NumberJsonSerializer() {}
+
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isDefault(Number value) {
+      return null == value || value.intValue() == 0;
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer, N value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    writer.value(value);
+  }
 }

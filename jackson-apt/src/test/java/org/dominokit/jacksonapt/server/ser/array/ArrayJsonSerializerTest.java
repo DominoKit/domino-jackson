@@ -22,20 +22,18 @@ import org.dominokit.jacksonapt.ser.array.ArrayJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ArrayJsonSerializerTest extends AbstractJsonSerializerTest<String[]> {
 
-    @Override
-    protected JsonSerializer<String[]> createSerializer() {
-        return ArrayJsonSerializer.newInstance(StringJsonSerializer.getInstance());
-    }
+  @Override
+  protected JsonSerializer<String[]> createSerializer() {
+    return ArrayJsonSerializer.newInstance(StringJsonSerializer.getInstance());
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("[\"Hello\",\" \",\"World\",\"!\"]", new String[]{"Hello", " ", "World", "!"});
-        assertSerialization("[]", new String[0]);
-    }
-
+  @Test
+  public void testSerializeValue() {
+    assertSerialization(
+        "[\"Hello\",\" \",\"World\",\"!\"]", new String[] {"Hello", " ", "World", "!"});
+    assertSerialization("[]", new String[0]);
+  }
 }

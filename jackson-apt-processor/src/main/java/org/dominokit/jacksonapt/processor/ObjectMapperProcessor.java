@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,66 +17,63 @@ package org.dominokit.jacksonapt.processor;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.WildcardTypeName;
-import org.dominokit.jacksonapt.annotation.JSONMapper;
-import org.dominokit.jacksonapt.annotation.JSONReader;
-import org.dominokit.jacksonapt.annotation.JSONWriter;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+import org.dominokit.jacksonapt.annotation.JSONReader;
+import org.dominokit.jacksonapt.annotation.JSONWriter;
 
 /**
- * <p>ObjectMapperProcessor class.</p>
- *
- * @author vegegoku
- * @version $Id: $Id
+ * ObjectMapperProcessor class. a Delegate class to geneate different types of mappers for all
+ * annotated types.
  */
 @AutoService(Processor.class)
 public class ObjectMapperProcessor extends AbstractMapperProcessor {
 
-    /** Constant <code>DEFAULT_WILDCARD</code> */
-    public static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
+  /** Constant <code>DEFAULT_WILDCARD</code> */
+  public static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        mappers.forEach(this::generateMappers);
-        readers.forEach(this::generateMapperForReader);
-        writers.forEach(this::generateMapperForWriter);
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    mappers.forEach(this::generateMappers);
+    readers.forEach(this::generateMapperForReader);
+    writers.forEach(this::generateMapperForWriter);
+    return false;
+  }
 
-    private void generateMappers(Element element) {
-        try {
-            new BeanMapperGenerator().generate(element);
-        } catch (Exception e) {
-            handleError(e);
-        }
+  private void generateMappers(Element element) {
+    try {
+      new BeanMapperGenerator().generate(element);
+    } catch (Exception e) {
+      handleError(e);
     }
+  }
 
-    private void generateMapperForReader(Element element) {
-        try {
-            new BeanReaderGenerator().generate(element);
-        } catch (Exception e) {
-            handleError(e);
-        }
+  private void generateMapperForReader(Element element) {
+    try {
+      new BeanReaderGenerator().generate(element);
+    } catch (Exception e) {
+      handleError(e);
     }
+  }
 
-    private void generateMapperForWriter(Element element) {
-        try {
-        	new BeanWriterGenerator().generate(element);
-        } catch (Exception e) {
-            handleError(e);
-        }
+  private void generateMapperForWriter(Element element) {
+    try {
+      new BeanWriterGenerator().generate(element);
+    } catch (Exception e) {
+      handleError(e);
     }
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected List<Class<?>> supportedAnnotations() {
-        return Arrays.asList(JSONReader.class, JSONWriter.class, JSONMapper.class);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected List<Class<?>> supportedAnnotations() {
+    return Arrays.asList(JSONReader.class, JSONWriter.class, JSONMapper.class);
+  }
 }

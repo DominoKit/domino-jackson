@@ -22,36 +22,37 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Boolean}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.lang.Boolean}.
  */
 public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
 
-    private static final BooleanJsonSerializer INSTANCE = new BooleanJsonSerializer();
+  private static final BooleanJsonSerializer INSTANCE = new BooleanJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.BooleanJsonSerializer}
-     */
-    public static BooleanJsonSerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.BooleanJsonSerializer}
+   */
+  public static BooleanJsonSerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private BooleanJsonSerializer() {
-    }
+  private BooleanJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isDefault(Boolean value) {
-        return null == value || !value;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isDefault(Boolean value) {
+    return null == value || !value;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, Boolean value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.value(value);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      Boolean value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    writer.value(value);
+  }
 }

@@ -16,54 +16,55 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BooleanJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.List;
-
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of boolean.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
-public class PrimitiveBooleanArrayJsonDeserializer extends AbstractArrayJsonDeserializer<boolean[]> {
+public class PrimitiveBooleanArrayJsonDeserializer
+    extends AbstractArrayJsonDeserializer<boolean[]> {
 
-    private static final PrimitiveBooleanArrayJsonDeserializer INSTANCE = new PrimitiveBooleanArrayJsonDeserializer();
+  private static final PrimitiveBooleanArrayJsonDeserializer INSTANCE =
+      new PrimitiveBooleanArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveBooleanArrayJsonDeserializer}
-     */
-    public static PrimitiveBooleanArrayJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.PrimitiveBooleanArrayJsonDeserializer}
+   */
+  public static PrimitiveBooleanArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveBooleanArrayJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<Boolean> list =
+        deserializeIntoList(reader, ctx, BooleanJsonDeserializer.getInstance(), params);
+
+    boolean[] result = new boolean[list.size()];
+    int i = 0;
+    for (Boolean value : list) {
+      if (null != value) {
+        result[i] = value;
+      }
+      i++;
     }
+    return result;
+  }
 
-    private PrimitiveBooleanArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<Boolean> list = deserializeIntoList(reader, ctx, BooleanJsonDeserializer.getInstance(), params);
-
-        boolean[] result = new boolean[list.size()];
-        int i = 0;
-        for (Boolean value : list) {
-            if (null != value) {
-                result[i] = value;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new boolean[]{BooleanJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new boolean[] {BooleanJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
+  }
 }

@@ -23,38 +23,36 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.deser.array.AbstractArrayJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of double.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of double. */
 public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeserializer<double[]> {
 
-    private static final PrimitiveDoubleArrayJsonDeserializer INSTANCE = new PrimitiveDoubleArrayJsonDeserializer();
+  private static final PrimitiveDoubleArrayJsonDeserializer INSTANCE =
+      new PrimitiveDoubleArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.cast.PrimitiveDoubleArrayJsonDeserializer}
-     */
-    public static PrimitiveDoubleArrayJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.cast.PrimitiveDoubleArrayJsonDeserializer}
+   */
+  public static PrimitiveDoubleArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
+  private PrimitiveDoubleArrayJsonDeserializer() {}
 
-    private PrimitiveDoubleArrayJsonDeserializer() {
-    }
+  /** {@inheritDoc} */
+  @Override
+  public double[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return JacksonContextProvider.get().doubleArrayReader().readArray(reader);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public double[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return JacksonContextProvider.get().doubleArrayReader().readArray(reader);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected double[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new double[]{BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected double[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new double[] {
+      BaseNumberJsonDeserializer.DoubleJsonDeserializer.getInstance()
+          .deserialize(reader, ctx, params)
+    };
+  }
 }

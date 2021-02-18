@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,24 +20,22 @@ import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 
 /**
- * <p>JsMapLike class.</p>
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for a map implementation that works in the browser. for the JVM implementation please
+ * check {@link DefaultMapLike}
  */
 public class JsMapLike<T> implements MapLike<T> {
 
-    private JsPropertyMap<T> map = (JsPropertyMap<T>) Js.asAny(JsObject.create(null)).asPropertyMap();
+  private JsPropertyMap<T> map = (JsPropertyMap<T>) Js.asAny(JsObject.create(null)).asPropertyMap();
 
-    /** {@inheritDoc} */
-    @Override
-    public T get(String key) {
-        return map.get(key);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public T get(String key) {
+    return map.get(key);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void put(String key, T value) {
-        map.set(key, value);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void put(String key, T value) {
+    map.set(key, value);
+  }
 }

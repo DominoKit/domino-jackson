@@ -18,13 +18,11 @@ package org.dominokit.jacksonapt.processor.inheritance;
 
 public class DataOutput extends Data<DataOutput> {
 
-    public DataOutput() {
+  public DataOutput() {}
 
-    }
-
-    public DataOutput(String id, String postfix, String name) {
-        this.id = id + "_" + postfix;
-        this.itemSubjectRef = id + "_" + postfix + "Item";
-        this.name = name;
-    }
+  public DataOutput(String id, String postfix, String name) {
+    this.id = id + "_" + postfix;
+    this.itemSubjectRef = id + "_" + postfix + "Item";
+    this.name = name;
+  }
 }

@@ -16,38 +16,35 @@
 
 package org.dominokit.jacksonapt.deser;
 
+import java.util.UUID;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.UUID;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $Id
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.UUID}.
  */
 public class UUIDJsonDeserializer extends JsonDeserializer<UUID> {
 
-    private static final UUIDJsonDeserializer INSTANCE = new UUIDJsonDeserializer();
+  private static final UUIDJsonDeserializer INSTANCE = new UUIDJsonDeserializer();
 
-    /**
-     * <p>getInstance.</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.UUIDJsonDeserializer}
-     */
-    public static UUIDJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance.
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.UUIDJsonDeserializer}
+   */
+  public static UUIDJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private UUIDJsonDeserializer() {
-    }
+  private UUIDJsonDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public UUID doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return UUID.fromString(reader.nextString());
-    }
+  /** {@inheritDoc} */
+  @Override
+  public UUID doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return UUID.fromString(reader.nextString());
+  }
 }

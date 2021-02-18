@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit.jackson</groupId>
         <artifactId>domino-jackson</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-beta</version>
     </parent>
 
     <artifactId>jackson-apt</artifactId>
@@ -15,13 +15,6 @@
     <name>jackson-apt</name>
     <url>https://github.com/DominoKit/gwt-jackson-apt</url>
     <description>Apt based jackson</description>
-
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -50,14 +43,14 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.gwtproject.i18n</groupId>
+            <groupId>org.dominokit.i18n</groupId>
             <artifactId>gwt-cldr</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.gwtproject.i18n</groupId>
+            <groupId>org.dominokit.i18n</groupId>
             <artifactId>gwt-datetimeformat</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -69,30 +62,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>

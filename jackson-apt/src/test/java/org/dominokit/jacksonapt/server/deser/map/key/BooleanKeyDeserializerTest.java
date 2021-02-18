@@ -16,29 +16,27 @@
 
 package org.dominokit.jacksonapt.server.deser.map.key;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.dominokit.jacksonapt.deser.map.key.BooleanKeyDeserializer;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BooleanKeyDeserializerTest extends AbstractKeyDeserializerTest<Boolean> {
 
-    @Override
-    protected BooleanKeyDeserializer createDeserializer() {
-        return BooleanKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BooleanKeyDeserializer createDeserializer() {
+    return BooleanKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertThat(deserialize("true")).isTrue();
-        assertThat(deserialize("trUe"));
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertThat(deserialize("true")).isTrue();
+    assertThat(deserialize("trUe"));
 
-        assertThat(deserialize("faLse")).isFalse();
-        assertThat(deserialize("false")).isFalse();
-        assertThat(deserialize("other")).isFalse();
-    }
+    assertThat(deserialize("faLse")).isFalse();
+    assertThat(deserialize("false")).isFalse();
+    assertThat(deserialize("other")).isFalse();
+  }
 }

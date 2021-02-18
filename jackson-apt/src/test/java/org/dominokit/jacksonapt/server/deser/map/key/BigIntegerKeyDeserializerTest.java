@@ -16,27 +16,23 @@
 
 package org.dominokit.jacksonapt.server.deser.map.key;
 
+import java.math.BigInteger;
 import org.dominokit.jacksonapt.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-import java.math.BigInteger;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigIntegerKeyDeserializerTest extends AbstractKeyDeserializerTest<BigInteger> {
 
-    @Override
-    protected BaseNumberKeyDeserializer.BigIntegerKeyDeserializer createDeserializer() {
-        return BaseNumberKeyDeserializer.BigIntegerKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BaseNumberKeyDeserializer.BigIntegerKeyDeserializer createDeserializer() {
+    return BaseNumberKeyDeserializer.BigIntegerKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        String value = "1548784651132124566543513203245448715154542123114001571970";
-        BigInteger expected = new BigInteger(value);
-        assertDeserialization(expected, value);
-    }
-
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    String value = "1548784651132124566543513203245448715154542123114001571970";
+    BigInteger expected = new BigInteger(value);
+    assertDeserialization(expected, value);
+  }
 }

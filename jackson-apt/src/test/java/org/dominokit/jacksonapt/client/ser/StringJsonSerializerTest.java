@@ -18,18 +18,16 @@ package org.dominokit.jacksonapt.client.ser;
 
 import org.dominokit.jacksonapt.ser.StringJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class StringJsonSerializerTest extends AbstractJsonSerializerTest<String> {
 
-    @Override
-    protected StringJsonSerializer createSerializer() {
-        return StringJsonSerializer.getInstance();
-    }
+  @Override
+  protected StringJsonSerializer createSerializer() {
+    return StringJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("\"Hello World!\"", "Hello World!");
-        assertSerialization("\"\"", "");
-    }
+  public void testSerializeValue() {
+    assertSerialization("\"Hello World!\"", "Hello World!");
+    assertSerialization("\"\"", "");
+  }
 }

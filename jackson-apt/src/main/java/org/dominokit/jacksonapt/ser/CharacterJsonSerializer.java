@@ -22,38 +22,39 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Character}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.lang.Character}.
  */
 public class CharacterJsonSerializer extends JsonSerializer<Character> {
 
-    private static final CharacterJsonSerializer INSTANCE = new CharacterJsonSerializer();
+  private static final CharacterJsonSerializer INSTANCE = new CharacterJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.CharacterJsonSerializer}
-     */
-    public static CharacterJsonSerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.CharacterJsonSerializer}
+   */
+  public static CharacterJsonSerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private static char defaultValue;
+  private static char defaultValue;
 
-    private CharacterJsonSerializer() {
-    }
+  private CharacterJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isDefault(Character value) {
-        return null == value || value == defaultValue;
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isDefault(Character value) {
+    return null == value || value == defaultValue;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, Character value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.value(value.toString());
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      Character value,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    writer.value(value.toString());
+  }
 }

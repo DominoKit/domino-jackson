@@ -16,41 +16,42 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.List}. The deserialization process returns an {@link java.util.ArrayList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.List}. The deserialization process returns an {@link java.util.ArrayList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.List}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class ListJsonDeserializer<T> extends BaseListJsonDeserializer<List<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.List}.
-     * @param <T>          Type of the elements inside the {@link java.util.List}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.ListJsonDeserializer}
-     */
-    public static <T> ListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new ListJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.List}.
+   * @param <T> Type of the elements inside the {@link java.util.List}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.ListJsonDeserializer}
+   */
+  public static <T> ListJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new ListJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link List}.
-     */
-    private ListJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     List}.
+   */
+  private ListJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected List<T> newCollection() {
-        return new ArrayList<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected List<T> newCollection() {
+    return new ArrayList<T>();
+  }
 }

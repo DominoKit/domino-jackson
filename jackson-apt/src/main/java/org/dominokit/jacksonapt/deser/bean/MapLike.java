@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,22 @@
  */
 package org.dominokit.jacksonapt.deser.bean;
 
-/**
- * <p>MapLike interface.</p>
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** A wrapper interface for a {@link java.util.Map} */
 public interface MapLike<T> {
 
-    /**
-     * <p>get.</p>
-     *
-     * @param key a {@link java.lang.String} object.
-     * @return a T object.
-     */
-    T get(String key);
+  /**
+   * get.
+   *
+   * @param key a {@link java.lang.String} object.
+   * @return a T object.
+   */
+  T get(String key);
 
-    /**
-     * <p>put.</p>
-     *
-     * @param key a {@link java.lang.String} object.
-     * @param value a T object.
-     */
-    void put(String key, T value);
+  /**
+   * put.
+   *
+   * @param key a {@link java.lang.String} object.
+   * @param value a T object.
+   */
+  void put(String key, T value);
 }

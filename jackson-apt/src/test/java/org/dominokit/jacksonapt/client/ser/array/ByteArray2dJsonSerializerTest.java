@@ -20,20 +20,18 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.array.dd.PrimitiveByteArray2dJsonSerializer;
 
-/**
- * Test byte array serialization.
- */
+/** Test byte array serialization. */
 public class ByteArray2dJsonSerializerTest extends AbstractJsonSerializerTest<byte[][]> {
 
-    @Override
-    protected JsonSerializer<byte[][]> createSerializer() {
-        return PrimitiveByteArray2dJsonSerializer.getInstance();
-    }
+  @Override
+  protected JsonSerializer<byte[][]> createSerializer() {
+    return PrimitiveByteArray2dJsonSerializer.getInstance();
+  }
 
-    @Override
-    public void testSerializeValue() {
-        assertSerialization(
-                "[\"AAsWIQ==\",\"APXq3w==\",\"AGScAA==\",\"\"]",
-                new byte[][]{{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}});
-    }
+  @Override
+  public void testSerializeValue() {
+    assertSerialization(
+        "[\"AAsWIQ==\",\"APXq3w==\",\"AGScAA==\",\"\"]",
+        new byte[][] {{0, 11, 22, 33}, {0, -11, -22, -33}, {0, 100, -100, 0}, {}});
+  }
 }

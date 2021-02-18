@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit.gwtjackson</groupId>
         <artifactId>basic</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-beta-SNAPSHOT</version>
     </parent>
 
     <artifactId>basic-client</artifactId>
@@ -46,12 +46,12 @@
         <dependency>
             <groupId>org.dominokit.jackson</groupId>
             <artifactId>jackson-apt</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0-beta-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.dominokit.jackson</groupId>
             <artifactId>jackson-apt-processor</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0-beta-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.elemental2/elemental2-core -->

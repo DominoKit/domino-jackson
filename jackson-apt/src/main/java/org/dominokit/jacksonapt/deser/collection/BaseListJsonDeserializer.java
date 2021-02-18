@@ -16,26 +16,25 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.List;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
  * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.List}.
  *
  * @param <L> {@link java.util.List} type
  * @param <T> Type of the elements inside the {@link java.util.List}
- * @author Nicolas Morel
- * @version $Id: $
  */
-public abstract class BaseListJsonDeserializer<L extends List<T>, T> extends BaseCollectionJsonDeserializer<L, T> {
+public abstract class BaseListJsonDeserializer<L extends List<T>, T>
+    extends BaseCollectionJsonDeserializer<L, T> {
 
-    /**
-     * <p>Constructor for BaseListJsonDeserializer.</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects inside the {@link java.util.List}.
-     */
-    public BaseListJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * Constructor for BaseListJsonDeserializer.
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to map the objects
+   *     inside the {@link java.util.List}.
+   */
+  public BaseListJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 }

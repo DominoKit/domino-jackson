@@ -16,64 +16,67 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Iterable}. The deserialization process returns an {@link java.util.ArrayList}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.lang.Iterable}. The deserialization process returns an {@link java.util.ArrayList}.
  *
  * @param <T> Type of the elements inside the {@link java.lang.Iterable}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class IterableJsonDeserializer<T> extends BaseIterableJsonDeserializer<Iterable<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.lang.Iterable}.
-     * @param <T>          Type of the elements inside the {@link java.lang.Iterable}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.IterableJsonDeserializer}
-     */
-    public static <T> IterableJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new IterableJsonDeserializer<T>(deserializer);
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.lang.Iterable}.
+   * @param <T> Type of the elements inside the {@link java.lang.Iterable}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.IterableJsonDeserializer}
+   */
+  public static <T> IterableJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new IterableJsonDeserializer<T>(deserializer);
+  }
+
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     Iterable}.
+   */
+  private IterableJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Iterable<T> doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    if (JsonToken.BEGIN_ARRAY == reader.peek()) {
+
+      Collection<T> result = new ArrayList<T>();
+
+      reader.beginArray();
+      while (JsonToken.END_ARRAY != reader.peek()) {
+        result.add(deserializer.deserialize(reader, ctx, params));
+      }
+      reader.endArray();
+      return result;
+
+    } else if (ctx.isAcceptSingleValueAsArray()) {
+
+      Collection<T> result = new ArrayList<T>();
+      result.add(deserializer.deserialize(reader, ctx, params));
+      return result;
+
+    } else {
+      throw ctx.traceError(
+          "Cannot deserialize a java.lang.Iterable out of " + reader.peek() + " token", reader);
     }
-
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link Iterable}.
-     */
-    private IterableJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Iterable<T> doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        if (JsonToken.BEGIN_ARRAY == reader.peek()) {
-
-            Collection<T> result = new ArrayList<T>();
-
-            reader.beginArray();
-            while (JsonToken.END_ARRAY != reader.peek()) {
-                result.add(deserializer.deserialize(reader, ctx, params));
-            }
-            reader.endArray();
-            return result;
-
-        } else if (ctx.isAcceptSingleValueAsArray()) {
-
-            Collection<T> result = new ArrayList<T>();
-            result.add(deserializer.deserialize(reader, ctx, params));
-            return result;
-
-        } else {
-            throw ctx.traceError("Cannot deserialize a java.lang.Iterable out of " + reader.peek() + " token", reader);
-        }
-    }
+  }
 }

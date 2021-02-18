@@ -19,37 +19,34 @@ package org.dominokit.jacksonapt.ser.map.key;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
- * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.lang.Number}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
+ * java.lang.Number}.
  */
 public final class NumberKeySerializer extends KeySerializer<Number> {
 
-    private static final NumberKeySerializer INSTANCE = new NumberKeySerializer();
+  private static final NumberKeySerializer INSTANCE = new NumberKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.NumberKeySerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static NumberKeySerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.NumberKeySerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static NumberKeySerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private NumberKeySerializer() {
-    }
+  private NumberKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean mustBeEscaped(JsonSerializationContext ctx) {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  public boolean mustBeEscaped(JsonSerializationContext ctx) {
+    return false;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(Number value, JsonSerializationContext ctx) {
-        return value.toString();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(Number value, JsonSerializationContext ctx) {
+    return value.toString();
+  }
 }

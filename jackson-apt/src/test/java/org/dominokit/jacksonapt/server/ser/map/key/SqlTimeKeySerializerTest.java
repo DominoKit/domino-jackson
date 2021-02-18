@@ -16,26 +16,23 @@
 
 package org.dominokit.jacksonapt.server.ser.map.key;
 
+import java.sql.Time;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.ser.map.key.DateKeySerializer;
 import org.junit.Test;
 
-import java.sql.Time;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlTimeKeySerializerTest extends AbstractKeySerializerTest<Time> {
 
-    @Override
-    protected DateKeySerializer createSerializer() {
-        return DateKeySerializer.getInstance();
-    }
+  @Override
+  protected DateKeySerializer createSerializer() {
+    return DateKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        Time time = new Time(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
-        String expected = JacksonContextProvider.get().dateFormat().format(time);
-        assertSerialization(expected, time);
-    }
+  @Test
+  public void testSerializeValue() {
+    Time time = new Time(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+    String expected = JacksonContextProvider.get().dateFormat().format(time);
+    assertSerialization(expected, time);
+  }
 }

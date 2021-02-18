@@ -16,42 +16,38 @@
 
 package org.dominokit.jacksonapt.ser.map.key;
 
+import java.util.UUID;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
-import java.util.UUID;
-
 /**
- * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
+ * java.util.UUID}.
  */
 public final class UUIDKeySerializer extends KeySerializer<UUID> {
 
-    private static final UUIDKeySerializer INSTANCE = new UUIDKeySerializer();
+  private static final UUIDKeySerializer INSTANCE = new UUIDKeySerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.UUIDKeySerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static UUIDKeySerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.map.key.UUIDKeySerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static UUIDKeySerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private UUIDKeySerializer() {
-    }
+  private UUIDKeySerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean mustBeEscaped(JsonSerializationContext ctx) {
-        return false;
-    }
+  /** {@inheritDoc} */
+  @Override
+  public boolean mustBeEscaped(JsonSerializationContext ctx) {
+    return false;
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String doSerialize(UUID value, JsonSerializationContext ctx) {
-        return value.toString();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected String doSerialize(UUID value, JsonSerializationContext ctx) {
+    return value.toString();
+  }
 }

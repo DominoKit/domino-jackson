@@ -16,10 +16,8 @@
 
 package org.dominokit.jacksonapt.shared;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public interface ObjectReaderTester<T> {
 
-    T read(String input);
+  T read(String input);
 }

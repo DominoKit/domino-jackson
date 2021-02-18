@@ -16,9 +16,10 @@
 
 package org.dominokit.jacksonapt.processor;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public enum AnEnum {
-    A, B, C, D;
+  A,
+  B,
+  C,
+  D;
 }

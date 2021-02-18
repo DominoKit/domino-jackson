@@ -16,26 +16,23 @@
 
 package org.dominokit.jacksonapt.server.deser.date;
 
+import java.sql.Timestamp;
 import org.dominokit.jacksonapt.deser.BaseDateJsonDeserializer.SqlTimestampJsonDeserializer;
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-import java.sql.Timestamp;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlTimestampJsonDeserializerTest extends AbstractJsonDeserializerTest<Timestamp> {
 
-    @Override
-    protected SqlTimestampJsonDeserializer createDeserializer() {
-        return SqlTimestampJsonDeserializer.getInstance();
-    }
+  @Override
+  protected SqlTimestampJsonDeserializer createDeserializer() {
+    return SqlTimestampJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Timestamp(1377543971773l), "1377543971773");
-        assertDeserialization(new Timestamp(1345304756543l), "\"2012-08-18T15:45:56.543+0000\"");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Timestamp(1377543971773l), "1377543971773");
+    assertDeserialization(new Timestamp(1345304756543l), "\"2012-08-18T15:45:56.543+0000\"");
+  }
 }

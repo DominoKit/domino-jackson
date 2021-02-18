@@ -20,13 +20,11 @@ import org.dominokit.jacksonapt.server.stream.AbstractJsonWriterTest;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.stream.impl.FastJsonWriter;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FastJsonWriterTest extends AbstractJsonWriterTest {
 
-    @Override
-    public JsonWriter newJsonWriter() {
-        return new FastJsonWriter(new StringBuilder());
-    }
+  @Override
+  public JsonWriter newJsonWriter() {
+    return new FastJsonWriter(new StringBuilder());
+  }
 }

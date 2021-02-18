@@ -22,31 +22,29 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Enum}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.lang.Enum}.
  */
 public class EnumJsonSerializer<E extends Enum<E>> extends JsonSerializer<E> {
 
-    private static final EnumJsonSerializer<?> INSTANCE = new EnumJsonSerializer();
+  private static final EnumJsonSerializer<?> INSTANCE = new EnumJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.EnumJsonSerializer}
-     */
-    @SuppressWarnings("unchecked")
-    public static JsonSerializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.ser.EnumJsonSerializer}
+   */
+  @SuppressWarnings("unchecked")
+  public static JsonSerializer getInstance() {
+    return INSTANCE;
+  }
 
-    private EnumJsonSerializer() {
-    }
+  private EnumJsonSerializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, E value, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        writer.unescapeValue(value.name());
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer, E value, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    writer.unescapeValue(value.name());
+  }
 }

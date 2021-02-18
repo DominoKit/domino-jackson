@@ -16,81 +16,90 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.List;
-
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array. */
 public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]> {
 
-    @FunctionalInterface
-    public interface ArrayCreator<T> {
-        T[] create(int length);
+  /**
+   * A Functional interface to create a new array instance in the deserializer
+   *
+   * @param <T> the type of the array elements.
+   */
+  @FunctionalInterface
+  public interface ArrayCreator<T> {
+    T[] create(int length);
+  }
+
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the array.
+   * @param arrayCreator {@link
+   *     org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a
+   *     new array
+   * @param <T> Type of the elements inside the {@link java.util.AbstractCollection}
+   * @return a new instance of {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer}
+   */
+  public static <T> ArrayJsonDeserializer<T> newInstance(
+      JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
+    return new ArrayJsonDeserializer<T>(deserializer, arrayCreator);
+  }
+
+  private final JsonDeserializer<T> deserializer;
+
+  private final ArrayCreator<T> arrayCreator;
+
+  /**
+   * Constructor for ArrayJsonDeserializer.
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the array.
+   * @param arrayCreator {@link
+   *     org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a
+   *     new array
+   */
+  protected ArrayJsonDeserializer(JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
+    if (null == deserializer) {
+      throw new IllegalArgumentException("deserializer cannot be null");
     }
-
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
-     * @param arrayCreator {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a new array
-     * @param <T>          Type of the elements inside the {@link java.util.AbstractCollection}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer}
-     */
-    public static <T> ArrayJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
-        return new ArrayJsonDeserializer<T>(deserializer, arrayCreator);
+    if (null == arrayCreator) {
+      throw new IllegalArgumentException("Cannot deserialize an array without an arrayCreator");
     }
+    this.deserializer = deserializer;
+    this.arrayCreator = arrayCreator;
+  }
 
-    private final JsonDeserializer<T> deserializer;
+  /** {@inheritDoc} */
+  @Override
+  public T[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<T> list = deserializeIntoList(reader, ctx, deserializer, params);
+    return list.toArray(arrayCreator.create(list.size()));
+  }
 
-    private final ArrayCreator<T> arrayCreator;
+  /** {@inheritDoc} */
+  @Override
+  protected T[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    T[] result = arrayCreator.create(1);
+    result[0] = deserializer.deserialize(reader, ctx, params);
+    return result;
+  }
 
-    /**
-     * <p>Constructor for ArrayJsonDeserializer.</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the array.
-     * @param arrayCreator {@link org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer.ArrayCreator} used to create a new array
-     */
-    protected ArrayJsonDeserializer(JsonDeserializer<T> deserializer, ArrayCreator<T> arrayCreator) {
-        if (null == deserializer) {
-            throw new IllegalArgumentException("deserializer cannot be null");
-        }
-        if (null == arrayCreator) {
-            throw new IllegalArgumentException("Cannot deserialize an array without an arrayCreator");
-        }
-        this.deserializer = deserializer;
-        this.arrayCreator = arrayCreator;
+  /** {@inheritDoc} */
+  @Override
+  public void setBackReference(
+      String referenceName, Object reference, T[] value, JsonDeserializationContext ctx) {
+    if (null != value && value.length > 0) {
+      for (T val : value) {
+        deserializer.setBackReference(referenceName, reference, val, ctx);
+      }
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public T[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<T> list = deserializeIntoList(reader, ctx, deserializer, params);
-        return list.toArray(arrayCreator.create(list.size()));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected T[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        T[] result = arrayCreator.create(1);
-        result[0] = deserializer.deserialize(reader, ctx, params);
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setBackReference(String referenceName, Object reference, T[] value, JsonDeserializationContext ctx) {
-        if (null != value && value.length > 0) {
-            for (T val : value) {
-                deserializer.setBackReference(referenceName, reference, val, ctx);
-            }
-        }
-    }
+  }
 }

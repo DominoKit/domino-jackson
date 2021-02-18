@@ -20,19 +20,17 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.VoidJsonDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class VoidJsonDeserializerTest extends AbstractJsonDeserializerTest<Void> {
 
-    @Override
-    protected JsonDeserializer<Void> createDeserializer() {
-        return VoidJsonDeserializer.getInstance();
-    }
+  @Override
+  protected JsonDeserializer<Void> createDeserializer() {
+    return VoidJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(null, "null");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(null, "null");
+  }
 }

@@ -5,16 +5,22 @@
 
     <groupId>org.dominokit.jackson</groupId>
     <artifactId>domino-jackson</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-beta</version>
     <packaging>pom</packaging>
 
-    <url>https://github.com/DominoKit/gwt-jackson-apt</url>
+    <name>domino-jackson</name>
     <description>APT Based Jackson JSON Mappers</description>
+    <url>https://github.com/DominoKit/gwt-jackson-apt</url>
+
+    <organization>
+        <name>Dominokit</name>
+        <url>https://github.com/DominoKit</url>
+    </organization>
 
     <licenses>
         <license>
-            <name>Apache 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
@@ -23,12 +29,18 @@
             <name>Ahmad K. Bawaneh</name>
             <email>akabme@gmail.com</email>
         </developer>
+        <developer>
+            <name>Rafat J. Al-Barouki</name>
+            <email>rafat.albarouki@gmail.com</email>
+        </developer>
     </developers>
 
     <issueManagement>
         <url>https://github.com/DominoKit/gwt-jackson-apt/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
+
+    <inceptionYear>2019</inceptionYear>
 
     <scm>
         <connection>scm:git:https://github.com/DominoKit/gwt-jackson-apt.git</connection>
@@ -41,21 +53,37 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
-    <repositories>
-        <repository>
-            <id>vertispan-snapshots</id>
-            <name>Vertispan Snapshots</name>
-            <url>https://repo.vertispan.com/gwt-snapshot/</url>
-        </repository>
-    </repositories>
+    <modules>
+        <module>jackson-apt</module>
+        <module>jackson-apt-processor</module>
+        <module>jackson-super</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.plugin>3.8.1</maven.compiler.plugin>
+        <maven.source.plugin>3.0.1</maven.source.plugin>
+        <maven.javadoc.plugin>2.10.4</maven.javadoc.plugin>
+        <maven.gpg.plugin>1.6</maven.gpg.plugin>
+        <maven.nexus.staging.plugin>1.6.8</maven.nexus.staging.plugin>
+        <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
+        <maven.fmt.plugin>2.9</maven.fmt.plugin>
+        <maven.install.plugin>3.0.0-M1</maven.install.plugin>
+        <maven.license.plugin>3.0</maven.license.plugin>
+        <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
+        <maven.gwt.plugin>1.0.0</maven.gwt.plugin>
+        <elemental2.version>1.1.0</elemental2.version>
+        <gwt.i18n.version>1.0</gwt.i18n.version>
     </properties>
 
     <dependencyManagement>
@@ -63,7 +91,7 @@
             <dependency>
                 <groupId>com.google.gwt</groupId>
                 <artifactId>gwt</artifactId>
-                <version>2.8.2</version>
+                <version>2.9.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -88,13 +116,7 @@
             <dependency>
                 <groupId>com.google.elemental2</groupId>
                 <artifactId>elemental2-core</artifactId>
-                <version>1.0.0-RC1</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.elemental2</groupId>
-                <artifactId>elemental2-core</artifactId>
-                <version>1.0.0-RC1</version>
-                <classifier>sources</classifier>
+                <version>${elemental2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -103,30 +125,122 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>net.ltgt.gwt.maven</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <inherited>false</inherited>
+                <version>${maven.javadoc.plugin}</version>
                 <configuration>
-                    <launcherDir>${project.build.directory}/gwt/launcherDir</launcherDir>
+                    <failOnError>false</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.coveo</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>${maven.fmt.plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${maven.license.plugin}</version>
+                <configuration>
+                    <header>LICENSE.header</header>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <skipExistingHeaders>true</skipExistingHeaders>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                    <excludes>
+                        <exclude>**/README.md</exclude>
+                        <exclude>**/LICENSE</exclude>
+                        <exclude>**/LICENSE.header</exclude>
+                        <exclude>**/AUTHORS</exclude>
+                        <exclude>**/src/test/resources/**</exclude>
+                        <exclude>**/src/main/resources/**</exclude>
+                        <exclude>**/war</exclude>
+                        <exclude>**/pom.xml</exclude>
+                        <exclude>**/.flattened-pom.xml</exclude>
+                        <exclude>**/gwt-unitcache</exclude>
+                    </excludes>
+                    <properties>
+                        <year>${project.inceptionYear}</year>
+                        <name>${project.organization.name}</name>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven.deploy.plugin}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <configuration>
+                    <!-- Set to true to immediately bump the development version when creating a release branch -->
+                    <commitDevelopmentVersionAtStart>true</commitDevelopmentVersionAtStart>
+
+                    <!-- Which digit to increas in major.minor.patch versioning, the values being 0.1.2 respectively.
+                         By default the rightmost number is increased.
+                         Pass in the number via parameter or profile to allow configuration,
+                         since everything set in the file can't be overwritten via command line -->
+                    <versionDigitToIncrement>${bump.digit}</versionDigitToIncrement>
+
+                    <!-- Execute mvn verify before release -->
+                    <preReleaseGoals>verify</preReleaseGoals>
+                    <preHotfixGoals>verify</preHotfixGoals>
+
+                    <!-- Configure branches -->
+                    <gitFlowConfig>
+                        <productionBranch>master</productionBranch>
+                        <!-- default is develop, but we use development -->
+                        <developmentBranch>development</developmentBranch>
+                    </gitFlowConfig>
                 </configuration>
             </plugin>
             <plugin>
@@ -145,7 +259,6 @@
                             <rules>
                                 <dependencyConvergence/>
                             </rules>
-
                         </configuration>
                         <goals>
                             <goal>enforce</goal>
@@ -158,6 +271,38 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven.gpg.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <!-- Prevent `gpg` from using pinentry programs -->
+                                <gpgArguments>
+                                    <arg>--pinentry-mode</arg>
+                                    <arg>loopback</arg>
+                                </gpgArguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${maven.nexus.staging.plugin}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>net.ltgt.gwt.maven</groupId>
                     <artifactId>gwt-maven-plugin</artifactId>
                     <version>1.0.0</version>
@@ -166,7 +311,6 @@
                         <sourceLevel>1.8</sourceLevel>
                         <failOnError>true</failOnError>
                         <useCompilerArgsForTests>true</useCompilerArgsForTests>
-
                         <codeserverArgs>
                             <arg>-generateJsInteropExports</arg>
                         </codeserverArgs>
@@ -175,65 +319,30 @@
                         </compilerArgs>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <configuration>
-                        <failOnError>false</failOnError>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.8</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-    <modules>
-        <module>jackson-apt</module>
-        <module>jackson-apt-processor</module>
-        <module>jackson-super</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>production</id>
+            <activation>
+                <property>
+                    <name>ci</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -16,47 +16,51 @@
 
 package org.dominokit.jacksonapt.deser.map;
 
+import java.util.IdentityHashMap;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
 
-import java.util.IdentityHashMap;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.IdentityHashMap}.
- * <p>Cannot be overriden. Use {@link org.dominokit.jacksonapt.deser.map.BaseMapJsonDeserializer}.</p>
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.IdentityHashMap}.
+ *
+ * <p>Cannot be overriden. Use {@link org.dominokit.jacksonapt.deser.map.BaseMapJsonDeserializer}.
  *
  * @param <K> Type of the keys inside the {@link java.util.IdentityHashMap}
  * @param <V> Type of the values inside the {@link java.util.IdentityHashMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
-public final class IdentityHashMapJsonDeserializer<K, V> extends BaseMapJsonDeserializer<IdentityHashMap<K, V>, K, V> {
+public final class IdentityHashMapJsonDeserializer<K, V>
+    extends BaseMapJsonDeserializer<IdentityHashMap<K, V>, K, V> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
-     * @param <K>               Type of the keys inside the {@link java.util.IdentityHashMap}
-     * @param <V>               Type of the values inside the {@link java.util.IdentityHashMap}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.IdentityHashMapJsonDeserializer}
-     */
-    public static <K, V> IdentityHashMapJsonDeserializer<K, V> newInstance(KeyDeserializer<K> keyDeserializer,
-                                                                           JsonDeserializer<V> valueDeserializer) {
-        return new IdentityHashMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param keyDeserializer {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to
+   *     deserialize the keys.
+   * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize
+   *     the values.
+   * @param <K> Type of the keys inside the {@link java.util.IdentityHashMap}
+   * @param <V> Type of the values inside the {@link java.util.IdentityHashMap}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.map.IdentityHashMapJsonDeserializer}
+   */
+  public static <K, V> IdentityHashMapJsonDeserializer<K, V> newInstance(
+      KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+    return new IdentityHashMapJsonDeserializer<K, V>(keyDeserializer, valueDeserializer);
+  }
 
-    /**
-     * @param keyDeserializer   {@link KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
-     */
-    private IdentityHashMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
-        super(keyDeserializer, valueDeserializer);
-    }
+  /**
+   * @param keyDeserializer {@link KeyDeserializer} used to deserialize the keys.
+   * @param valueDeserializer {@link JsonDeserializer} used to deserialize the values.
+   */
+  private IdentityHashMapJsonDeserializer(
+      KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+    super(keyDeserializer, valueDeserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected IdentityHashMap<K, V> newMap() {
-        return new IdentityHashMap<K, V>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected IdentityHashMap<K, V> newMap() {
+    return new IdentityHashMap<K, V>();
+  }
 }

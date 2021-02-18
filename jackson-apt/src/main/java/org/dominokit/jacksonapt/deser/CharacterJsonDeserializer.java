@@ -23,38 +23,36 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.lang.Character}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.lang.Character}.
  */
 public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
 
-    private static final CharacterJsonDeserializer INSTANCE = new CharacterJsonDeserializer();
+  private static final CharacterJsonDeserializer INSTANCE = new CharacterJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.CharacterJsonDeserializer}
-     */
-    public static CharacterJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.CharacterJsonDeserializer}
+   */
+  public static CharacterJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private CharacterJsonDeserializer() {
-    }
+  private CharacterJsonDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public Character doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        if (JsonToken.NUMBER.equals(reader.peek())) {
-            return (char) reader.nextInt();
-        } else {
-            String value = reader.nextString();
-            if (value.isEmpty()) {
-                return null;
-            }
-            return value.charAt(0);
-        }
+  /** {@inheritDoc} */
+  @Override
+  public Character doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    if (JsonToken.NUMBER.equals(reader.peek())) {
+      return (char) reader.nextInt();
+    } else {
+      String value = reader.nextString();
+      if (value.isEmpty()) {
+        return null;
+      }
+      return value.charAt(0);
     }
+  }
 }

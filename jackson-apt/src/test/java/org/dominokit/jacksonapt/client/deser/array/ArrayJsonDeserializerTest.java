@@ -16,28 +16,26 @@
 
 package org.dominokit.jacksonapt.client.deser.array;
 
+import java.util.Arrays;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jacksonapt.deser.StringJsonDeserializer;
 import org.dominokit.jacksonapt.deser.array.ArrayJsonDeserializer;
 
-import java.util.Arrays;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ArrayJsonDeserializerTest extends AbstractJsonDeserializerTest<String[]> {
 
-    @Override
-    protected JsonDeserializer<String[]> createDeserializer() {
-        return ArrayJsonDeserializer.newInstance(StringJsonDeserializer.getInstance(), String[]::new);
-    }
+  @Override
+  protected JsonDeserializer<String[]> createDeserializer() {
+    return ArrayJsonDeserializer.newInstance(StringJsonDeserializer.getInstance(), String[]::new);
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertTrue(Arrays.deepEquals(new String[]{"Hello", " ", "World", "!"}, deserialize("[Hello, \" \", \"World\", " +
-                "" + "\"!\"]")));
-        assertTrue(Arrays.deepEquals(new String[0], deserialize("[]")));
-    }
-
+  @Override
+  public void testDeserializeValue() {
+    assertTrue(
+        Arrays.deepEquals(
+            new String[] {"Hello", " ", "World", "!"},
+            deserialize("[Hello, \" \", \"World\", " + "" + "\"!\"]")));
+    assertTrue(Arrays.deepEquals(new String[0], deserialize("[]")));
+  }
 }

@@ -18,18 +18,16 @@ package org.dominokit.jacksonapt.processor.inheritance;
 
 public class DataInput extends Data<DataInput> {
 
-    public DataInput() {
+  public DataInput() {}
 
-    }
+  public DataInput(String id, String postfix, String name, String dtype) {
+    this(id, postfix, name);
+    this.dtype = dtype;
+  }
 
-    public DataInput(String id, String postfix, String name, String dtype) {
-        this(id, postfix, name);
-        this.dtype = dtype;
-    }
-
-    public DataInput(String id, String postfix, String name) {
-        this.id = id + "_" + postfix;
-        this.itemSubjectRef = id + "_" + postfix + "Item";
-        this.name = name;
-    }
+  public DataInput(String id, String postfix, String name) {
+    this.id = id + "_" + postfix;
+    this.itemSubjectRef = id + "_" + postfix + "Item";
+    this.name = name;
+  }
 }

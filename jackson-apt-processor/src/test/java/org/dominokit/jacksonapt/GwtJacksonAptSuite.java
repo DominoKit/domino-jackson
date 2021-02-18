@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import org.dominokit.jacksonapt.processor.DeserializerInstanceBuilderTest;
 import org.dominokit.jacksonapt.processor.SerializerInstanceBuilderTest;
 
 public class GwtJacksonAptSuite extends GWTTestSuite {
-    public static Test suite() {
-        TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
-        suite.addTestSuite(DeserializerInstanceBuilderTest.class);
-        suite.addTestSuite(SerializerInstanceBuilderTest.class);
+  public static Test suite() {
+    TestSuite suite = new TestSuite("Tests for gwt-jackson-apt");
+    suite.addTestSuite(DeserializerInstanceBuilderTest.class);
+    suite.addTestSuite(SerializerInstanceBuilderTest.class);
 
-        return suite;
-    }
+    return suite;
+  }
 }

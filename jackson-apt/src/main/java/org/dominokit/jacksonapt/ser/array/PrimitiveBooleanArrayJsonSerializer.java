@@ -16,56 +16,55 @@
 
 package org.dominokit.jacksonapt.ser.array;
 
-
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of boolean.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of boolean. */
 public class PrimitiveBooleanArrayJsonSerializer extends JsonSerializer<boolean[]> {
 
-    private static final PrimitiveBooleanArrayJsonSerializer INSTANCE = new PrimitiveBooleanArrayJsonSerializer();
+  private static final PrimitiveBooleanArrayJsonSerializer INSTANCE =
+      new PrimitiveBooleanArrayJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveBooleanArrayJsonSerializer}
-     */
-    public static PrimitiveBooleanArrayJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.PrimitiveBooleanArrayJsonSerializer}
+   */
+  public static PrimitiveBooleanArrayJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveBooleanArrayJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(boolean[] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      boolean[] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveBooleanArrayJsonSerializer() {
+    if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+      writer.value(values[0]);
+    } else {
+      writer.beginArray();
+      for (boolean value : values) {
+        writer.value(value);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(boolean[] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, boolean[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
-            writer.value(values[0]);
-        } else {
-            writer.beginArray();
-            for (boolean value : values) {
-                writer.value(value);
-            }
-            writer.endArray();
-        }
-    }
+  }
 }

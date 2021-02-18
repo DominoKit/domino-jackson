@@ -20,42 +20,37 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Contains identity informations for deserialization process.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Contains identity information for deserialization process. */
 public interface IdentityDeserializationInfo<T> {
 
-    /**
-     * <p>getPropertyName</p>
-     *
-     * @return name of the identifier property
-     */
-    String getPropertyName();
+  /**
+   * getPropertyName
+   *
+   * @return a {@link String} name of the identifier property
+   */
+  String getPropertyName();
 
-    /**
-     * <p>isProperty</p>
-     *
-     * @return true if the identifier is also a property of the bean
-     */
-    boolean isProperty();
+  /**
+   * isProperty
+   *
+   * @return true if the identifier is also a property of the bean
+   */
+  boolean isProperty();
 
-    /**
-     * <p>newIdKey</p>
-     *
-     * @param id Identifier
-     * @return a new {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey}
-     */
-    IdKey newIdKey(Object id);
+  /**
+   * newIdKey
+   *
+   * @param id Identifier
+   * @return a new {@link com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey}
+   */
+  IdKey newIdKey(Object id);
 
-    /**
-     * Reads the id and returns it.
-     *
-     * @param reader reader
-     * @param ctx    context of the deserialization process
-     * @return the identifier
-     */
-    Object readId(JsonReader reader, JsonDeserializationContext ctx);
+  /**
+   * Reads the id and returns it.
+   *
+   * @param reader a {@link JsonReader} reader
+   * @param ctx a {@link JsonDeserializationContext} context of the deserialization process
+   * @return the identifier
+   */
+  Object readId(JsonReader reader, JsonDeserializationContext ctx);
 }

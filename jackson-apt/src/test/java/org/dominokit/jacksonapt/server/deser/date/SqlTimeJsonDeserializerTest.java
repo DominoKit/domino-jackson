@@ -16,29 +16,26 @@
 
 package org.dominokit.jacksonapt.server.deser.date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.sql.Time;
 import org.dominokit.jacksonapt.deser.BaseDateJsonDeserializer.SqlTimeJsonDeserializer;
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-import java.sql.Time;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlTimeJsonDeserializerTest extends AbstractJsonDeserializerTest<Time> {
 
-    @Override
-    protected SqlTimeJsonDeserializer createDeserializer() {
-        return SqlTimeJsonDeserializer.getInstance();
-    }
+  @Override
+  protected SqlTimeJsonDeserializer createDeserializer() {
+    return SqlTimeJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Time(1377543971773l), "1377543971773");
-        Time time = new Time(getUTCTime(2012, 8, 18, 15, 45, 56, 543));
-        assertThat(time.toString()).isEqualTo(deserialize("\"" + time.toString() + "\"").toString());
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Time(1377543971773l), "1377543971773");
+    Time time = new Time(getUTCTime(2012, 8, 18, 15, 45, 56, 543));
+    assertThat(time.toString()).isEqualTo(deserialize("\"" + time.toString() + "\"").toString());
+  }
 }

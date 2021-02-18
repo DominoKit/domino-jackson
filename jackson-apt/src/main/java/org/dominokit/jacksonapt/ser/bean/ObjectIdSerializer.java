@@ -21,35 +21,33 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
- * Contains the id of a bean and a serializer to facilitate the serialization of the next instances of the object.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Contains the id of a bean and a serializer to facilitate the serialization of the next instances
+ * of the object.
  */
 public class ObjectIdSerializer<I> {
 
-    private final I id;
+  private final I id;
 
-    private final JsonSerializer<I> serializer;
+  private final JsonSerializer<I> serializer;
 
-    /**
-     * <p>Constructor for ObjectIdSerializer.</p>
-     *
-     * @param id         a I object.
-     * @param serializer a {@link org.dominokit.jacksonapt.JsonSerializer} object.
-     */
-    public ObjectIdSerializer(I id, JsonSerializer<I> serializer) {
-        this.id = id;
-        this.serializer = serializer;
-    }
+  /**
+   * Constructor for ObjectIdSerializer.
+   *
+   * @param id a I object.
+   * @param serializer a {@link org.dominokit.jacksonapt.JsonSerializer} object.
+   */
+  public ObjectIdSerializer(I id, JsonSerializer<I> serializer) {
+    this.id = id;
+    this.serializer = serializer;
+  }
 
-    /**
-     * <p>serializeId</p>
-     *
-     * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
-     * @param ctx    a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
-     */
-    public void serializeId(JsonWriter writer, JsonSerializationContext ctx) {
-        serializer.serialize(writer, id, ctx);
-    }
+  /**
+   * serializeId
+   *
+   * @param writer a {@link org.dominokit.jacksonapt.stream.JsonWriter} object.
+   * @param ctx a {@link org.dominokit.jacksonapt.JsonSerializationContext} object.
+   */
+  public void serializeId(JsonWriter writer, JsonSerializationContext ctx) {
+    serializer.serialize(writer, id, ctx);
+  }
 }

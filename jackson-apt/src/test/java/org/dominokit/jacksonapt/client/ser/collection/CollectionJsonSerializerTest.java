@@ -16,28 +16,25 @@
 
 package org.dominokit.jacksonapt.client.ser.collection;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.IterableJsonSerializer;
 import org.dominokit.jacksonapt.ser.StringJsonSerializer;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class CollectionJsonSerializerTest extends AbstractJsonSerializerTest<Collection<String>> {
 
-    @Override
-    protected JsonSerializer<Collection<String>> createSerializer() {
-        return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
-    }
+  @Override
+  protected JsonSerializer<Collection<String>> createSerializer() {
+    return (JsonSerializer) IterableJsonSerializer.newInstance(StringJsonSerializer.getInstance());
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("[\"Hello\",\" \",\"World\",\"!\"]", Arrays.asList("Hello", " ", "World", "!"));
-        assertSerialization("[]", Collections.<String>emptyList());
-    }
-
+  public void testSerializeValue() {
+    assertSerialization(
+        "[\"Hello\",\" \",\"World\",\"!\"]", Arrays.asList("Hello", " ", "World", "!"));
+    assertSerialization("[]", Collections.<String>emptyList());
+  }
 }

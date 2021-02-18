@@ -20,22 +20,20 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer.ByteJsonDeseria
 import org.dominokit.jacksonapt.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ByteJsonDeserializerTest extends AbstractJsonDeserializerTest<Byte> {
 
-    @Override
-    protected ByteJsonDeserializer createDeserializer() {
-        return ByteJsonDeserializer.getInstance();
-    }
+  @Override
+  protected ByteJsonDeserializer createDeserializer() {
+    return ByteJsonDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Byte("34"), "34");
-        assertDeserialization(new Byte("1"), "\"1\"");
-        assertDeserialization(Byte.MIN_VALUE, "-128");
-        assertDeserialization(Byte.MAX_VALUE, "127");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Byte("34"), "34");
+    assertDeserialization(new Byte("1"), "\"1\"");
+    assertDeserialization(Byte.MIN_VALUE, "-128");
+    assertDeserialization(Byte.MAX_VALUE, "127");
+  }
 }

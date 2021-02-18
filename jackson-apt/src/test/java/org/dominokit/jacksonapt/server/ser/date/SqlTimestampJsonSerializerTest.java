@@ -16,27 +16,23 @@
 
 package org.dominokit.jacksonapt.server.ser.date;
 
+import java.sql.Timestamp;
 import org.dominokit.jacksonapt.ser.BaseDateJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-import java.sql.Timestamp;
-
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class SqlTimestampJsonSerializerTest extends AbstractJsonSerializerTest<Timestamp> {
 
-    @Override
-    protected BaseDateJsonSerializer.SqlTimestampJsonSerializer createSerializer() {
-        return BaseDateJsonSerializer.SqlTimestampJsonSerializer.getInstance();
-    }
+  @Override
+  protected BaseDateJsonSerializer.SqlTimestampJsonSerializer createSerializer() {
+    return BaseDateJsonSerializer.SqlTimestampJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        // don't know how to deal with the timezone so we just use the same date
-        Timestamp date = new Timestamp(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
-        assertSerialization("" + date.getTime(), date);
-    }
+  @Test
+  public void testSerializeValue() {
+    // don't know how to deal with the timezone so we just use the same date
+    Timestamp date = new Timestamp(getUTCTime(2012, 8, 18, 12, 45, 56, 543));
+    assertSerialization("" + date.getTime(), date);
+  }
 }

@@ -16,54 +16,55 @@
 
 package org.dominokit.jacksonapt.deser.array;
 
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-import java.util.List;
-
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of long.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of long. */
 public class PrimitiveLongArrayJsonDeserializer extends AbstractArrayJsonDeserializer<long[]> {
 
-    private static final PrimitiveLongArrayJsonDeserializer INSTANCE = new PrimitiveLongArrayJsonDeserializer();
+  private static final PrimitiveLongArrayJsonDeserializer INSTANCE =
+      new PrimitiveLongArrayJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.PrimitiveLongArrayJsonDeserializer}
-     */
-    public static PrimitiveLongArrayJsonDeserializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.PrimitiveLongArrayJsonDeserializer}
+   */
+  public static PrimitiveLongArrayJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveLongArrayJsonDeserializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  public long[] doDeserializeArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    List<Long> list =
+        deserializeIntoList(
+            reader, ctx, BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance(), params);
+
+    long[] result = new long[list.size()];
+    int i = 0;
+    for (Long value : list) {
+      if (null != value) {
+        result[i] = value;
+      }
+      i++;
     }
+    return result;
+  }
 
-    private PrimitiveLongArrayJsonDeserializer() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public long[] doDeserializeArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        List<Long> list = deserializeIntoList(reader, ctx, BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance(), params);
-
-        long[] result = new long[list.size()];
-        int i = 0;
-        for (Long value : list) {
-            if (null != value) {
-                result[i] = value;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected long[] doDeserializeSingleArray(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        return new long[]{BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance().deserialize(reader, ctx, params)};
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected long[] doDeserializeSingleArray(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    return new long[] {
+      BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance().deserialize(reader, ctx, params)
+    };
+  }
 }

@@ -16,26 +16,23 @@
 
 package org.dominokit.jacksonapt.server.ser.map.key;
 
+import java.util.Date;
 import org.dominokit.jacksonapt.JacksonContextProvider;
 import org.dominokit.jacksonapt.ser.map.key.DateKeySerializer;
 import org.junit.Test;
 
-import java.util.Date;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class DateKeySerializerTest extends AbstractKeySerializerTest<Date> {
 
-    @Override
-    protected DateKeySerializer createSerializer() {
-        return DateKeySerializer.getInstance();
-    }
+  @Override
+  protected DateKeySerializer createSerializer() {
+    return DateKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        Date date = getUTCDate(2012, 8, 18, 12, 45, 56, 543);
-        String expected = JacksonContextProvider.get().dateFormat().format(date);
-        assertSerialization(expected, date);
-    }
+  @Test
+  public void testSerializeValue() {
+    Date date = getUTCDate(2012, 8, 18, 12, 45, 56, 543);
+    String expected = JacksonContextProvider.get().dateFormat().format(date);
+    assertSerialization(expected, date);
+  }
 }

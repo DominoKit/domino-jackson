@@ -16,24 +16,21 @@
 
 package org.dominokit.jacksonapt.client.ser.number;
 
+import java.math.BigDecimal;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer.BigDecimalJsonSerializer;
 
-import java.math.BigDecimal;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigDecimalJsonSerializerTest extends AbstractJsonSerializerTest<BigDecimal> {
 
-    @Override
-    protected BigDecimalJsonSerializer createSerializer() {
-        return BigDecimalJsonSerializer.getInstance();
-    }
+  @Override
+  protected BigDecimalJsonSerializer createSerializer() {
+    return BigDecimalJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        BigDecimal value = new BigDecimal("15487846511321245665435132032454.1545815468465578451323888744");
-        assertSerialization("15487846511321245665435132032454.1545815468465578451323888744", value);
-    }
-
+  public void testSerializeValue() {
+    BigDecimal value =
+        new BigDecimal("15487846511321245665435132032454.1545815468465578451323888744");
+    assertSerialization("15487846511321245665435132032454.1545815468465578451323888744", value);
+  }
 }

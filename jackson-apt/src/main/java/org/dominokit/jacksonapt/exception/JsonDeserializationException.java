@@ -16,45 +16,37 @@
 
 package org.dominokit.jacksonapt.exception;
 
-/**
- * Base exception for deserialization process
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base exception for deserialization process */
 public class JsonDeserializationException extends JsonMappingException {
 
-    /**
-     * <p>Constructor for JsonDeserializationException.</p>
-     */
-    public JsonDeserializationException() {
-    }
+  /** Constructor for JsonDeserializationException. */
+  public JsonDeserializationException() {}
 
-    /**
-     * <p>Constructor for JsonDeserializationException.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     */
-    public JsonDeserializationException(String message) {
-        super(message);
-    }
+  /**
+   * Constructor for JsonDeserializationException.
+   *
+   * @param message a {@link java.lang.String} object.
+   */
+  public JsonDeserializationException(String message) {
+    super(message);
+  }
 
-    /**
-     * <p>Constructor for JsonDeserializationException.</p>
-     *
-     * @param message a {@link java.lang.String} object.
-     * @param cause   a {@link java.lang.Throwable} object.
-     */
-    public JsonDeserializationException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  /**
+   * Constructor for JsonDeserializationException.
+   *
+   * @param message a {@link java.lang.String} object.
+   * @param cause a {@link java.lang.Throwable} object.
+   */
+  public JsonDeserializationException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    /**
-     * <p>Constructor for JsonDeserializationException.</p>
-     *
-     * @param cause a {@link java.lang.Throwable} object.
-     */
-    public JsonDeserializationException(Throwable cause) {
-        super(cause);
-    }
+  /**
+   * Constructor for JsonDeserializationException.
+   *
+   * @param cause a {@link java.lang.Throwable} object.
+   */
+  public JsonDeserializationException(Throwable cause) {
+    super(cause);
+  }
 }

@@ -20,21 +20,19 @@ import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class DoubleJsonSerializerTest extends AbstractJsonSerializerTest<Double> {
 
-    @Override
-    protected BaseNumberJsonSerializer.DoubleJsonSerializer createSerializer() {
-        return BaseNumberJsonSerializer.DoubleJsonSerializer.getInstance();
-    }
+  @Override
+  protected BaseNumberJsonSerializer.DoubleJsonSerializer createSerializer() {
+    return BaseNumberJsonSerializer.DoubleJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("34.100247", 34.100247);
-        assertSerialization("-784.15454", -784.15454d);
-        assertSerialization("4.9E-324", Double.MIN_VALUE);
-        assertSerialization("1.7976931348623157E308", Double.MAX_VALUE);
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("34.100247", 34.100247);
+    assertSerialization("-784.15454", -784.15454d);
+    assertSerialization("4.9E-324", Double.MIN_VALUE);
+    assertSerialization("1.7976931348623157E308", Double.MAX_VALUE);
+  }
 }

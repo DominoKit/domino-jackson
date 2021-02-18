@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-
 package org.dominokit.jacksonapt.processor.pkg.one;
 
 public class Import extends ExtensionElement {
 
-    public Import() {
+  public Import() {}
 
-    }
-
-    public Import(String name) {
-        super(name);
-    }
-
+  public Import(String name) {
+    super(name);
+  }
 }

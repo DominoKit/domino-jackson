@@ -19,24 +19,22 @@ package org.dominokit.jacksonapt.client.deser.number;
 import org.dominokit.jacksonapt.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer.FloatJsonDeserializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatJsonDeserializerTest extends AbstractJsonDeserializerTest<Float> {
 
-    @Override
-    protected FloatJsonDeserializer createDeserializer() {
-        return FloatJsonDeserializer.getInstance();
-    }
+  @Override
+  protected FloatJsonDeserializer createDeserializer() {
+    return FloatJsonDeserializer.getInstance();
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertDeserialization(new Float("34.10245"), "34.10245");
-        assertDeserialization(new Float("-784.15454"), "\"-784.15454\"");
-        // the float emulation gives slightly different results => use BigDecimal for precision!
-        if (System.getProperty("superdevmode").equals("on")) {
-            assertDeserialization(Float.MIN_VALUE, "1.4e-45");
-            assertDeserialization(Float.MAX_VALUE, "3.4028235e38");
-        }
+  @Override
+  public void testDeserializeValue() {
+    assertDeserialization(new Float("34.10245"), "34.10245");
+    assertDeserialization(new Float("-784.15454"), "\"-784.15454\"");
+    // the float emulation gives slightly different results => use BigDecimal for precision!
+    if (System.getProperty("superdevmode").equals("on")) {
+      assertDeserialization(Float.MIN_VALUE, "1.4e-45");
+      assertDeserialization(Float.MAX_VALUE, "3.4028235e38");
     }
+  }
 }

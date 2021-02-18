@@ -18,18 +18,16 @@ package org.dominokit.jacksonapt.client.ser;
 
 import org.dominokit.jacksonapt.ser.VoidJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class VoidJsonSerializerTest extends AbstractJsonSerializerTest<Void> {
 
-    @Override
-    protected VoidJsonSerializer createSerializer() {
-        return VoidJsonSerializer.getInstance();
-    }
+  @Override
+  protected VoidJsonSerializer createSerializer() {
+    return VoidJsonSerializer.getInstance();
+  }
 
-    @Override
-    public void testSerializeValue() {
-        assertSerialization("null", null);
-    }
+  @Override
+  public void testSerializeValue() {
+    assertSerialization("null", null);
+  }
 }

@@ -16,6 +16,7 @@
 
 package org.dominokit.jacksonapt.deser.map;
 
+import java.util.Map;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
@@ -23,77 +24,75 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-import java.util.Map;
-
 /**
  * Base {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.Map}.
  *
  * @param <M> Type of the {@link java.util.Map}
  * @param <K> Type of the keys inside the {@link java.util.Map}
  * @param <V> Type of the values inside the {@link java.util.Map}
- * @author Nicolas Morel
- * @version $Id: $
  */
-public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V> extends JsonDeserializer<M> {
+public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V>
+    extends JsonDeserializer<M> {
 
-    /**
-     * {@link KeyDeserializer} used to deserialize the keys.
-     */
-    protected final KeyDeserializer<K> keyDeserializer;
+  /** {@link KeyDeserializer} used to deserialize the keys. */
+  protected final KeyDeserializer<K> keyDeserializer;
 
-    /**
-     * {@link JsonDeserializer} used to deserialize the values.
-     */
-    protected final JsonDeserializer<V> valueDeserializer;
+  /** {@link JsonDeserializer} used to deserialize the values. */
+  protected final JsonDeserializer<V> valueDeserializer;
 
-    /**
-     * <p>Constructor for BaseMapJsonDeserializer.</p>
-     *
-     * @param keyDeserializer   {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to deserialize the keys.
-     * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the values.
-     */
-    protected BaseMapJsonDeserializer(KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
-        if (null == keyDeserializer) {
-            throw new IllegalArgumentException("keyDeserializer cannot be null");
-        }
-        if (null == valueDeserializer) {
-            throw new IllegalArgumentException("valueDeserializer cannot be null");
-        }
-        this.keyDeserializer = keyDeserializer;
-        this.valueDeserializer = valueDeserializer;
+  /**
+   * Constructor for BaseMapJsonDeserializer.
+   *
+   * @param keyDeserializer {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} used to
+   *     deserialize the keys.
+   * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize
+   *     the values.
+   */
+  protected BaseMapJsonDeserializer(
+      KeyDeserializer<K> keyDeserializer, JsonDeserializer<V> valueDeserializer) {
+    if (null == keyDeserializer) {
+      throw new IllegalArgumentException("keyDeserializer cannot be null");
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public M doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
-        M result = newMap();
-
-        reader.beginObject();
-        while (JsonToken.END_OBJECT != reader.peek()) {
-            String name = reader.nextName();
-            K key = keyDeserializer.deserialize(name, ctx);
-            V value = valueDeserializer.deserialize(reader, ctx, params);
-            result.put(key, value);
-        }
-        reader.endObject();
-
-        return result;
+    if (null == valueDeserializer) {
+      throw new IllegalArgumentException("valueDeserializer cannot be null");
     }
+    this.keyDeserializer = keyDeserializer;
+    this.valueDeserializer = valueDeserializer;
+  }
 
-    /**
-     * Instantiates a new map for deserialization process.
-     *
-     * @return the new map
-     */
-    protected abstract M newMap();
+  /** {@inheritDoc} */
+  @Override
+  public M doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+    M result = newMap();
 
-    /** {@inheritDoc} */
-    @Override
-    public void setBackReference(String referenceName, Object reference, M value, JsonDeserializationContext ctx) {
-        if (null != value) {
-            for (V val : value.values()) {
-                valueDeserializer.setBackReference(referenceName, reference, val, ctx);
-            }
-        }
+    reader.beginObject();
+    while (JsonToken.END_OBJECT != reader.peek()) {
+      String name = reader.nextName();
+      K key = keyDeserializer.deserialize(name, ctx);
+      V value = valueDeserializer.deserialize(reader, ctx, params);
+      result.put(key, value);
     }
+    reader.endObject();
+
+    return result;
+  }
+
+  /**
+   * Instantiates a new map for deserialization process.
+   *
+   * @return the new map
+   */
+  protected abstract M newMap();
+
+  /** {@inheritDoc} */
+  @Override
+  public void setBackReference(
+      String referenceName, Object reference, M value, JsonDeserializationContext ctx) {
+    if (null != value) {
+      for (V val : value.values()) {
+        valueDeserializer.setBackReference(referenceName, reference, val, ctx);
+      }
+    }
+  }
 }

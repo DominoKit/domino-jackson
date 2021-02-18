@@ -18,9 +18,8 @@ package org.dominokit.jacksonapt.shared;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import junit.framework.Assert;
-
 import java.util.*;
+import junit.framework.Assert;
 
 /**
  * Extends {@link Assert} because GWT does not support {@link org.junit.Assert}
@@ -29,356 +28,350 @@ import java.util.*;
  */
 public abstract class AbstractTester extends Assert {
 
-    /*
-    /**********************************************************
-    /* Shared helper classes
-    /**********************************************************
-     */
+  /*
+  /**********************************************************
+  /* Shared helper classes
+  /**********************************************************
+   */
 
-    /**
-     * Simple wrapper around boolean types, usually to test value
-     * conversions or wrapping
-     */
-    public static class BooleanWrapper {
+  /** Simple wrapper around boolean types, usually to test value conversions or wrapping */
+  public static class BooleanWrapper {
 
-        public Boolean b;
+    public Boolean b;
 
-        @JsonCreator
-        public BooleanWrapper(Boolean value) {
-            b = value;
-        }
-
-        @JsonValue
-        public Boolean value() {
-            return b;
-        }
+    @JsonCreator
+    public BooleanWrapper(Boolean value) {
+      b = value;
     }
 
-    public static class IntWrapper {
+    @JsonValue
+    public Boolean value() {
+      return b;
+    }
+  }
 
-        public int i;
+  public static class IntWrapper {
 
-        public IntWrapper() {
-        }
+    public int i;
 
-        public IntWrapper(int value) {
-            i = value;
-        }
+    public IntWrapper() {}
+
+    public IntWrapper(int value) {
+      i = value;
+    }
+  }
+
+  /** Simple wrapper around String forType, usually to test value conversions or wrapping */
+  public static class StringWrapper {
+
+    public String str;
+
+    public StringWrapper() {}
+
+    public StringWrapper(String value) {
+      str = value;
+    }
+  }
+
+  public static class ObjectWrapper {
+
+    @JsonCreator
+    static ObjectWrapper jsonValue(final Object object) {
+      return new ObjectWrapper(object);
     }
 
-    /**
-     * Simple wrapper around String forType, usually to test value
-     * conversions or wrapping
-     */
-    public static class StringWrapper {
+    private final Object object;
 
-        public String str;
-
-        public StringWrapper() {
-        }
-
-        public StringWrapper(String value) {
-            str = value;
-        }
+    protected ObjectWrapper(final Object object) {
+      this.object = object;
     }
 
-    public static class ObjectWrapper {
+    public Object getObject() {
+      return object;
+    }
+  }
 
-        @JsonCreator
-        static ObjectWrapper jsonValue(final Object object) {
-            return new ObjectWrapper(object);
-        }
+  public static class ListWrapper<T> {
 
-        private final Object object;
+    public List<T> list;
 
-        protected ObjectWrapper(final Object object) {
-            this.object = object;
-        }
+    public ListWrapper(T... values) {
+      list = new ArrayList<T>();
+      for (T value : values) {
+        list.add(value);
+      }
+    }
+  }
 
-        public Object getObject() {
-            return object;
-        }
+  public static class MapWrapper<K, V> {
+
+    public Map<K, V> map;
+
+    public MapWrapper(Map<K, V> m) {
+      map = m;
+    }
+  }
+
+  public static class ArrayWrapper<T> {
+
+    public T[] array;
+
+    public ArrayWrapper(T[] v) {
+      array = v;
+    }
+  }
+
+  @SuppressWarnings("deprecation")
+  public static long getUTCTime(
+      int year, int month, int day, int hour, int minute, int second, int milli) {
+    return Date.UTC(year - 1900, month - 1, day, hour, minute, second) + milli;
+  }
+
+  public static Date getUTCDate(
+      int year, int month, int day, int hour, int minute, int second, int milli) {
+    return new Date(getUTCTime(year, month, day, hour, minute, second, milli));
+  }
+
+  public boolean isArray2dEquals(Object[][] a1, Object[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public static class ListWrapper<T> {
+    for (int i = 0; i < length; i++) {
+      Object[] e1 = a1[i];
+      Object[] e2 = a2[i];
 
-        public List<T> list;
+      if (!Arrays.deepEquals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-        public ListWrapper(T... values) {
-            list = new ArrayList<T>();
-            for (T value : values) {
-                list.add(value);
-            }
-        }
+  public boolean isArray2dEquals(boolean[][] a1, boolean[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public static class MapWrapper<K, V> {
+    for (int i = 0; i < length; i++) {
+      boolean[] e1 = a1[i];
+      boolean[] e2 = a2[i];
 
-        public Map<K, V> map;
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-        public MapWrapper(Map<K, V> m) {
-            map = m;
-        }
+  public boolean isArray2dEquals(byte[][] a1, byte[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public static class ArrayWrapper<T> {
+    for (int i = 0; i < length; i++) {
+      byte[] e1 = a1[i];
+      byte[] e2 = a2[i];
 
-        public T[] array;
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-        public ArrayWrapper(T[] v) {
-            array = v;
-        }
+  public boolean isArray2dEquals(char[][] a1, char[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    @SuppressWarnings("deprecation")
-    public static long getUTCTime(int year, int month, int day, int hour, int minute, int second, int milli) {
-        return Date.UTC(year - 1900, month - 1, day, hour, minute, second) + milli;
+    for (int i = 0; i < length; i++) {
+      char[] e1 = a1[i];
+      char[] e2 = a2[i];
+
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean isArray2dEquals(double[][] a1, double[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public static Date getUTCDate(int year, int month, int day, int hour, int minute, int second, int milli) {
-        return new Date(getUTCTime(year, month, day, hour, minute, second, milli));
+    for (int i = 0; i < length; i++) {
+      double[] e1 = a1[i];
+      double[] e2 = a2[i];
+
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean isArray2dEquals(float[][] a1, float[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public boolean isArray2dEquals(Object[][] a1, Object[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+    for (int i = 0; i < length; i++) {
+      float[] e1 = a1[i];
+      float[] e2 = a2[i];
 
-        for (int i = 0; i < length; i++) {
-            Object[] e1 = a1[i];
-            Object[] e2 = a2[i];
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-            if (!Arrays.deepEquals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
+  public boolean isArray2dEquals(int[][] a1, int[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public boolean isArray2dEquals(boolean[][] a1, boolean[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+    for (int i = 0; i < length; i++) {
+      int[] e1 = a1[i];
+      int[] e2 = a2[i];
 
-        for (int i = 0; i < length; i++) {
-            boolean[] e1 = a1[i];
-            boolean[] e2 = a2[i];
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
+  public boolean isArray2dEquals(long[][] a1, long[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public boolean isArray2dEquals(byte[][] a1, byte[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+    for (int i = 0; i < length; i++) {
+      long[] e1 = a1[i];
+      long[] e2 = a2[i];
 
-        for (int i = 0; i < length; i++) {
-            byte[] e1 = a1[i];
-            byte[] e2 = a2[i];
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
+  public boolean isArray2dEquals(short[][] a1, short[][] a2) {
+    if (a1 == a2) {
+      return true;
+    }
+    if (a1 == null || a2 == null) {
+      return false;
+    }
+    int length = a1.length;
+    if (a2.length != length) {
+      return false;
     }
 
-    public boolean isArray2dEquals(char[][] a1, char[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+    for (int i = 0; i < length; i++) {
+      short[] e1 = a1[i];
+      short[] e2 = a2[i];
 
-        for (int i = 0; i < length; i++) {
-            char[] e1 = a1[i];
-            char[] e2 = a2[i];
-
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
+      if (!Arrays.equals(e1, e2)) {
+        return false;
+      }
     }
+    return true;
+  }
 
-    public boolean isArray2dEquals(double[][] a1, double[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+  public <T> T[][] newArray2d(T[]... arrays) {
+    return arrays;
+  }
 
-        for (int i = 0; i < length; i++) {
-            double[] e1 = a1[i];
-            double[] e2 = a2[i];
+  public boolean[][] newArray2d(boolean[]... arrays) {
+    return arrays;
+  }
 
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
-    }
+  public byte[][] newArray2d(byte[]... arrays) {
+    return arrays;
+  }
 
-    public boolean isArray2dEquals(float[][] a1, float[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+  public char[][] newArray2d(char[]... arrays) {
+    return arrays;
+  }
 
-        for (int i = 0; i < length; i++) {
-            float[] e1 = a1[i];
-            float[] e2 = a2[i];
+  public double[][] newArray2d(double[]... arrays) {
+    return arrays;
+  }
 
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
-    }
+  public float[][] newArray2d(float[]... arrays) {
+    return arrays;
+  }
 
-    public boolean isArray2dEquals(int[][] a1, int[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
+  public int[][] newArray2d(int[]... arrays) {
+    return arrays;
+  }
 
-        for (int i = 0; i < length; i++) {
-            int[] e1 = a1[i];
-            int[] e2 = a2[i];
+  public long[][] newArray2d(long[]... arrays) {
+    return arrays;
+  }
 
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isArray2dEquals(long[][] a1, long[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
-
-        for (int i = 0; i < length; i++) {
-            long[] e1 = a1[i];
-            long[] e2 = a2[i];
-
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isArray2dEquals(short[][] a1, short[][] a2) {
-        if (a1 == a2) {
-            return true;
-        }
-        if (a1 == null || a2 == null) {
-            return false;
-        }
-        int length = a1.length;
-        if (a2.length != length) {
-            return false;
-        }
-
-        for (int i = 0; i < length; i++) {
-            short[] e1 = a1[i];
-            short[] e2 = a2[i];
-
-            if (!Arrays.equals(e1, e2)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public <T> T[][] newArray2d(T[]... arrays) {
-        return arrays;
-    }
-
-    public boolean[][] newArray2d(boolean[]... arrays) {
-        return arrays;
-    }
-
-    public byte[][] newArray2d(byte[]... arrays) {
-        return arrays;
-    }
-
-    public char[][] newArray2d(char[]... arrays) {
-        return arrays;
-    }
-
-    public double[][] newArray2d(double[]... arrays) {
-        return arrays;
-    }
-
-    public float[][] newArray2d(float[]... arrays) {
-        return arrays;
-    }
-
-    public int[][] newArray2d(int[]... arrays) {
-        return arrays;
-    }
-
-    public long[][] newArray2d(long[]... arrays) {
-        return arrays;
-    }
-
-    public short[][] newArray2d(short[]... arrays) {
-        return arrays;
-    }
+  public short[][] newArray2d(short[]... arrays) {
+    return arrays;
+  }
 }

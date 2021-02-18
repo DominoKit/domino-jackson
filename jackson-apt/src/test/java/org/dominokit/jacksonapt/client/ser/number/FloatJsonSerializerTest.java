@@ -19,23 +19,21 @@ package org.dominokit.jacksonapt.client.ser.number;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer.FloatJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatJsonSerializerTest extends AbstractJsonSerializerTest<Float> {
 
-    @Override
-    protected FloatJsonSerializer createSerializer() {
-        return FloatJsonSerializer.getInstance();
-    }
+  @Override
+  protected FloatJsonSerializer createSerializer() {
+    return FloatJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("34.10245", new Float("34.10245"));
-        assertSerialization("-784.15454", new Float("-784.15454"));
-        // the float emulation gives slightly different results => use BigDecimal for precision!
-        if (System.getProperty("superdevmode").equals("on")) {
-            assertSerialization("1.4E-45", Float.MIN_VALUE);
-            assertSerialization("3.4028235E38", Float.MAX_VALUE);
-        }
+  public void testSerializeValue() {
+    assertSerialization("34.10245", new Float("34.10245"));
+    assertSerialization("-784.15454", new Float("-784.15454"));
+    // the float emulation gives slightly different results => use BigDecimal for precision!
+    if (System.getProperty("superdevmode").equals("on")) {
+      assertSerialization("1.4E-45", Float.MIN_VALUE);
+      assertSerialization("3.4028235E38", Float.MAX_VALUE);
     }
+  }
 }

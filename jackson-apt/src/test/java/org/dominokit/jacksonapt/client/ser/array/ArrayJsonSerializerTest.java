@@ -16,24 +16,30 @@
 
 package org.dominokit.jacksonapt.client.ser.array;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.StringJsonSerializer;
 import org.dominokit.jacksonapt.ser.array.ArrayJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ArrayJsonSerializerTest extends AbstractJsonSerializerTest<String[]> {
 
-    @Override
-    protected JsonSerializer<String[]> createSerializer() {
-        return ArrayJsonSerializer.newInstance(StringJsonSerializer.getInstance());
-    }
+  private static final Logger logger = Logger.getLogger(ArrayJsonSerializerTest.class.getName());
 
-    public void testSerializeValue() {
-        assertSerialization("[\"Hello\",\" \",\"World\",\"!\"]", new String[]{"Hello", " ", "World", "!"});
-        assertSerialization("[]", new String[0]);
-    }
+  @Override
+  protected JsonSerializer<String[]> createSerializer() {
+    return ArrayJsonSerializer.newInstance(StringJsonSerializer.getInstance());
+  }
 
+  public void testSerializeValue() {
+    try {
+      assertSerialization(
+          "[\"Hello\",\" \",\"World\",\"!\"]", new String[] {"Hello", " ", "World", "!"});
+    } catch (Exception exception) {
+      logger.log(Level.SEVERE, "", exception);
+    }
+    assertSerialization("[]", new String[0]);
+  }
 }

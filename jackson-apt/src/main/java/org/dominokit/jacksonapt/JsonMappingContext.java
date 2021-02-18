@@ -18,19 +18,13 @@ package org.dominokit.jacksonapt;
 
 import java.util.logging.Logger;
 
-/**
- * Base interface for serialization and deserialization context
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base interface for serialization and deserialization context */
 public interface JsonMappingContext {
 
-    /**
-     * <p>getLogger</p>
-     *
-     * @return a {@link java.util.logging.Logger} object.
-     */
-    Logger getLogger();
-
+  /**
+   * getLogger
+   *
+   * @return a {@link java.util.logging.Logger} object.
+   */
+  Logger getLogger();
 }

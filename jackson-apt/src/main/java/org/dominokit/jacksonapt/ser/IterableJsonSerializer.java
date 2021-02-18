@@ -16,91 +16,93 @@
 
 package org.dominokit.jacksonapt.ser;
 
+import java.util.Iterator;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-import java.util.Iterator;
-
 /**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link java.lang.Iterable}.
+ * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
+ * java.lang.Iterable}.
  *
  * @param <T> Type of the elements inside the {@link java.lang.Iterable}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerializer<I> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.lang.Iterable}
-     * @param  <I> Type of the {@link Iterable}
-     * @return a new instance of {@link org.dominokit.jacksonapt.ser.IterableJsonSerializer}
-     */
-    public static <I extends Iterable<?>> IterableJsonSerializer<I, ?> newInstance(JsonSerializer<?> serializer) {
-        return new IterableJsonSerializer(serializer);
+  /**
+   * newInstance
+   *
+   * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects
+   *     inside the {@link java.lang.Iterable}
+   * @param  <I> Type of the {@link Iterable}
+   * @return a new instance of {@link org.dominokit.jacksonapt.ser.IterableJsonSerializer}
+   */
+  public static <I extends Iterable<?>> IterableJsonSerializer<I, ?> newInstance(
+      JsonSerializer<?> serializer) {
+    return new IterableJsonSerializer(serializer);
+  }
+
+  protected final JsonSerializer<T> serializer;
+
+  /**
+   * Constructor for IterableJsonSerializer.
+   *
+   * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects
+   *     inside the {@link java.lang.Iterable}.
+   */
+  protected IterableJsonSerializer(JsonSerializer<T> serializer) {
+    if (null == serializer) {
+      throw new IllegalArgumentException("serializer cannot be null");
+    }
+    this.serializer = serializer;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(I value) {
+    return null == value || !value.iterator().hasNext();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params) {
+    Iterator<T> iterator = values.iterator();
+
+    if (!iterator.hasNext()) {
+      if (ctx.isWriteEmptyJsonArrays()) {
+        writer.beginArray();
+        writer.endArray();
+      } else {
+        writer.cancelName();
+      }
+      return;
     }
 
-    protected final JsonSerializer<T> serializer;
+    if (ctx.isWriteSingleElemArraysUnwrapped()) {
 
-    /**
-     * <p>Constructor for IterableJsonSerializer.</p>
-     *
-     * @param serializer {@link org.dominokit.jacksonapt.JsonSerializer} used to serialize the objects inside the {@link java.lang.Iterable}.
-     */
-    protected IterableJsonSerializer(JsonSerializer<T> serializer) {
-        if (null == serializer) {
-            throw new IllegalArgumentException("serializer cannot be null");
+      T first = iterator.next();
+
+      if (iterator.hasNext()) {
+        // there is more than one element, we write the array normally
+        writer.beginArray();
+        serializer.serialize(writer, first, ctx, params);
+        while (iterator.hasNext()) {
+          serializer.serialize(writer, iterator.next(), ctx, params);
         }
-        this.serializer = serializer;
+        writer.endArray();
+      } else {
+        // there is only one element, we write it directly
+        serializer.serialize(writer, first, ctx, params);
+      }
+
+    } else {
+      writer.beginArray();
+      while (iterator.hasNext()) {
+        serializer.serialize(writer, iterator.next(), ctx, params);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(I value) {
-        return null == value || !value.iterator().hasNext();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, I values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        Iterator<T> iterator = values.iterator();
-
-        if (!iterator.hasNext()) {
-            if (ctx.isWriteEmptyJsonArrays()) {
-                writer.beginArray();
-                writer.endArray();
-            } else {
-                writer.cancelName();
-            }
-            return;
-        }
-
-        if (ctx.isWriteSingleElemArraysUnwrapped()) {
-
-            T first = iterator.next();
-
-            if (iterator.hasNext()) {
-                // there is more than one element, we write the array normally
-                writer.beginArray();
-                serializer.serialize(writer, first, ctx, params);
-                while (iterator.hasNext()) {
-                    serializer.serialize(writer, iterator.next(), ctx, params);
-                }
-                writer.endArray();
-            } else {
-                // there is only one element, we write it directly
-                serializer.serialize(writer, first, ctx, params);
-            }
-
-        } else {
-            writer.beginArray();
-            while (iterator.hasNext()) {
-                serializer.serialize(writer, iterator.next(), ctx, params);
-            }
-            writer.endArray();
-        }
-    }
+  }
 }

@@ -16,35 +16,31 @@
 
 package org.dominokit.jacksonapt.deser.map.key;
 
+import java.util.UUID;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
-import java.util.UUID;
-
 /**
- * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
+ * java.util.UUID}.
  */
 public final class UUIDKeyDeserializer extends KeyDeserializer<UUID> {
 
-    private static final UUIDKeyDeserializer INSTANCE = new UUIDKeyDeserializer();
+  private static final UUIDKeyDeserializer INSTANCE = new UUIDKeyDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.UUIDKeyDeserializer}
-     */
-    public static UUIDKeyDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link org.dominokit.jacksonapt.deser.map.key.UUIDKeyDeserializer}
+   */
+  public static UUIDKeyDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private UUIDKeyDeserializer() {
-    }
+  private UUIDKeyDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    protected UUID doDeserialize(String key, JsonDeserializationContext ctx) {
-        return UUID.fromString(key);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected UUID doDeserialize(String key, JsonDeserializationContext ctx) {
+    return UUID.fromString(key);
+  }
 }

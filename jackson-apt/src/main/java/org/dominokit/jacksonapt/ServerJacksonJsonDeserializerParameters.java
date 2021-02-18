@@ -17,234 +17,218 @@
 package org.dominokit.jacksonapt;
 
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import java.util.HashSet;
+import java.util.Set;
 import org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo;
 import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * This class includes parameters defined through properties annotations like {@link com.fasterxml.jackson.annotation.JsonIgnoreProperties}. They are specific to one
- * {@link org.dominokit.jacksonapt.JsonDeserializer} and that's why they are not contained inside {@link org.dominokit.jacksonapt.JsonDeserializationContext}.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * This class includes parameters defined through properties annotations like {@link
+ * com.fasterxml.jackson.annotation.JsonIgnoreProperties}. They are specific to one {@link
+ * org.dominokit.jacksonapt.JsonDeserializer} and that's why they are not contained inside {@link
+ * org.dominokit.jacksonapt.JsonDeserializationContext}.
  */
 @GwtIncompatible
 public final class ServerJacksonJsonDeserializerParameters implements JsonDeserializerParameters {
 
-    /**
-     * Constant <code>DEFAULT</code>
-     */
-    public static final JsonDeserializerParameters DEFAULT = new ServerJacksonJsonDeserializerParameters();
+  /** Constant <code>DEFAULT</code> */
+  public static final JsonDeserializerParameters DEFAULT =
+      new ServerJacksonJsonDeserializerParameters();
 
-    /**
-     * Datatype-specific additional piece of configuration that may be used
-     * to further refine formatting aspects. This may, for example, determine
-     * low-level format String used for {@link java.util.Date} serialization;
-     * however, exact use is determined by specific {@link JsonDeserializer}
-     */
-    private String pattern;
+  /**
+   * Datatype-specific additional piece of configuration that may be used to further refine
+   * formatting aspects. This may, for example, determine low-level format String used for {@link
+   * java.util.Date} serialization; however, exact use is determined by specific {@link
+   * JsonDeserializer}
+   */
+  private String pattern;
 
-    /**
-     * Structure to use for serialization: definition of mapping depends on datatype,
-     * but usually has straight-forward counterpart in data format (JSON).
-     * Note that commonly only a subset of shapes is available; and if 'invalid' value
-     * is chosen, defaults are usually used.
-     */
-    private Shape shape = Shape.ANY;
+  /**
+   * Structure to use for serialization: definition of mapping depends on datatype, but usually has
+   * straight-forward counterpart in data format (JSON). Note that commonly only a subset of shapes
+   * is available; and if 'invalid' value is chosen, defaults are usually used.
+   */
+  private Shape shape = Shape.ANY;
 
-    /**
-     * Locale to use for deserialization (if needed).
-     */
-    private String locale;
+  /** Locale to use for deserialization (if needed). */
+  private String locale;
 
-    /**
-     * Names of properties to ignore.
-     */
-    private Set<String> ignoredProperties;
+  /** Names of properties to ignore. */
+  private Set<String> ignoredProperties;
 
-    /**
-     * Property that defines whether it is ok to just ignore any
-     * unrecognized properties during deserialization.
-     * If true, all properties that are unrecognized -- that is,
-     * there are no setters or creators that accept them -- are
-     * ignored without warnings (although handlers for unknown
-     * properties, if any, will still be called) without
-     * exception.
-     */
-    private boolean ignoreUnknown = false;
+  /**
+   * Property that defines whether it is ok to just ignore any unrecognized properties during
+   * deserialization. If true, all properties that are unrecognized -- that is, there are no setters
+   * or creators that accept them -- are ignored without warnings (although handlers for unknown
+   * properties, if any, will still be called) without exception.
+   */
+  private boolean ignoreUnknown = false;
 
-    /**
-     * Bean identity informations
-     */
-    private IdentityDeserializationInfo identityInfo;
+  /** Bean identity informations */
+  private IdentityDeserializationInfo identityInfo;
 
-    /**
-     * Bean type informations
-     */
-    private TypeDeserializationInfo typeInfo;
+  /** Bean type informations */
+  private TypeDeserializationInfo typeInfo;
 
-    public ServerJacksonJsonDeserializerParameters() {
+  public ServerJacksonJsonDeserializerParameters() {}
+
+  public ServerJacksonJsonDeserializerParameters(
+      JsonDeserializerParameters jsonDeserializerParameters) {
+    this.identityInfo = jsonDeserializerParameters.getIdentityInfo();
+    this.ignoredProperties = jsonDeserializerParameters.getIgnoredProperties();
+    this.locale = jsonDeserializerParameters.getLocale();
+    this.pattern = jsonDeserializerParameters.getPattern();
+    this.shape = jsonDeserializerParameters.getShape();
+    this.typeInfo = jsonDeserializerParameters.getTypeInfo();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>pattern</code>.
+   */
+  @Override
+  public String getPattern() {
+    return pattern;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>pattern</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setPattern(String pattern) {
+    this.pattern = pattern;
+    return this;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>shape</code>.
+   */
+  @Override
+  public Shape getShape() {
+    return shape;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>shape</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setShape(Shape shape) {
+    this.shape = shape;
+    return this;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>locale</code>.
+   */
+  @Override
+  public String getLocale() {
+    return locale;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>locale</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setLocale(String locale) {
+    this.locale = locale;
+    return this;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>ignoredProperties</code>.
+   */
+  @Override
+  public Set<String> getIgnoredProperties() {
+    return ignoredProperties;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>addIgnoredProperty
+   */
+  @Override
+  public JsonDeserializerParameters addIgnoredProperty(String ignoredProperty) {
+    if (null == ignoredProperties) {
+      ignoredProperties = new HashSet<String>();
     }
+    ignoredProperties.add(ignoredProperty);
+    return this;
+  }
 
-    public ServerJacksonJsonDeserializerParameters(JsonDeserializerParameters jsonDeserializerParameters) {
-        this.identityInfo = jsonDeserializerParameters.getIdentityInfo();
-        this.ignoredProperties = jsonDeserializerParameters.getIgnoredProperties();
-        this.locale = jsonDeserializerParameters.getLocale();
-        this.pattern = jsonDeserializerParameters.getPattern();
-        this.shape = jsonDeserializerParameters.getShape();
-        this.typeInfo = jsonDeserializerParameters.getTypeInfo();
-    }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isIgnoreUnknown
+   */
+  @Override
+  public boolean isIgnoreUnknown() {
+    return ignoreUnknown;
+  }
 
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>ignoreUnknown</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setIgnoreUnknown(boolean ignoreUnknown) {
+    this.ignoreUnknown = ignoreUnknown;
+    return this;
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>pattern</code>.</p>
-     */
-    @Override
-    public String getPattern() {
-        return pattern;
-    }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>identityInfo</code>.
+   */
+  @Override
+  public IdentityDeserializationInfo getIdentityInfo() {
+    return identityInfo;
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>pattern</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setPattern(String pattern) {
-        this.pattern = pattern;
-        return this;
-    }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>identityInfo</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setIdentityInfo(IdentityDeserializationInfo identityInfo) {
+    this.identityInfo = identityInfo;
+    return this;
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>shape</code>.</p>
-     */
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Getter for the field <code>typeInfo</code>.
+   */
+  @Override
+  public TypeDeserializationInfo getTypeInfo() {
+    return typeInfo;
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>shape</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setShape(Shape shape) {
-        this.shape = shape;
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>locale</code>.</p>
-     */
-    @Override
-    public String getLocale() {
-        return locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>locale</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setLocale(String locale) {
-        this.locale = locale;
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>ignoredProperties</code>.</p>
-     */
-    @Override
-    public Set<String> getIgnoredProperties() {
-        return ignoredProperties;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>addIgnoredProperty</p>
-     */
-    @Override
-    public JsonDeserializerParameters addIgnoredProperty(String ignoredProperty) {
-        if (null == ignoredProperties) {
-            ignoredProperties = new HashSet<String>();
-        }
-        ignoredProperties.add(ignoredProperty);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>isIgnoreUnknown</p>
-     */
-    @Override
-    public boolean isIgnoreUnknown() {
-        return ignoreUnknown;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>ignoreUnknown</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setIgnoreUnknown(boolean ignoreUnknown) {
-        this.ignoreUnknown = ignoreUnknown;
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>identityInfo</code>.</p>
-     */
-    @Override
-    public IdentityDeserializationInfo getIdentityInfo() {
-        return identityInfo;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>identityInfo</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setIdentityInfo(IdentityDeserializationInfo identityInfo) {
-        this.identityInfo = identityInfo;
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Getter for the field <code>typeInfo</code>.</p>
-     */
-    @Override
-    public TypeDeserializationInfo getTypeInfo() {
-        return typeInfo;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Setter for the field <code>typeInfo</code>.</p>
-     */
-    @Override
-    public JsonDeserializerParameters setTypeInfo(TypeDeserializationInfo typeInfo) {
-        this.typeInfo = typeInfo;
-        return this;
-    }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Setter for the field <code>typeInfo</code>.
+   */
+  @Override
+  public JsonDeserializerParameters setTypeInfo(TypeDeserializationInfo typeInfo) {
+    this.typeInfo = typeInfo;
+    return this;
+  }
 }

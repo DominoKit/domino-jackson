@@ -16,23 +16,20 @@
 
 package org.dominokit.jacksonapt.client.ser.map.key;
 
+import java.math.BigDecimal;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 
-import java.math.BigDecimal;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigDecimalKeySerializerTest extends AbstractKeySerializerTest<BigDecimal> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        BigDecimal value = new BigDecimal("15487846511321245665435132032454.1545815468465578451323888744");
-        assertSerialization("15487846511321245665435132032454.1545815468465578451323888744", value);
-    }
-
+  public void testSerializeValue() {
+    BigDecimal value =
+        new BigDecimal("15487846511321245665435132032454.1545815468465578451323888744");
+    assertSerialization("15487846511321245665435132032454.1545815468465578451323888744", value);
+  }
 }

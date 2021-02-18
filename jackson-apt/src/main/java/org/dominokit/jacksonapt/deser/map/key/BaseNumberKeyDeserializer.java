@@ -16,202 +16,159 @@
 
 package org.dominokit.jacksonapt.deser.map.key;
 
-import org.dominokit.jacksonapt.JsonDeserializationContext;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import org.dominokit.jacksonapt.JsonDeserializationContext;
 
 /**
- * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for {@link java.lang.Number}s.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for {@link
+ * java.lang.Number}s.
  */
 public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDeserializer<N> {
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link BigDecimal}
-     */
-    public static final class BigDecimalKeyDeserializer extends BaseNumberKeyDeserializer<BigDecimal> {
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link BigDecimal} */
+  public static final class BigDecimalKeyDeserializer
+      extends BaseNumberKeyDeserializer<BigDecimal> {
 
-        private static final BigDecimalKeyDeserializer INSTANCE = new BigDecimalKeyDeserializer();
+    private static final BigDecimalKeyDeserializer INSTANCE = new BigDecimalKeyDeserializer();
 
-        /**
-         * @return an instance of {@link BigDecimalKeyDeserializer}
-         */
-        public static BigDecimalKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
-
-        private BigDecimalKeyDeserializer() {
-        }
-
-        @Override
-        protected BigDecimal doDeserialize(String key, JsonDeserializationContext ctx) {
-            return new BigDecimal(key);
-        }
+    /** @return an instance of {@link BigDecimalKeyDeserializer} */
+    public static BigDecimalKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link BigInteger}
-     */
-    public static final class BigIntegerKeyDeserializer extends BaseNumberKeyDeserializer<BigInteger> {
+    private BigDecimalKeyDeserializer() {}
 
-        private static final BigIntegerKeyDeserializer INSTANCE = new BigIntegerKeyDeserializer();
+    @Override
+    protected BigDecimal doDeserialize(String key, JsonDeserializationContext ctx) {
+      return new BigDecimal(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link BigIntegerKeyDeserializer}
-         */
-        public static BigIntegerKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link BigInteger} */
+  public static final class BigIntegerKeyDeserializer
+      extends BaseNumberKeyDeserializer<BigInteger> {
 
-        private BigIntegerKeyDeserializer() {
-        }
+    private static final BigIntegerKeyDeserializer INSTANCE = new BigIntegerKeyDeserializer();
 
-        @Override
-        protected BigInteger doDeserialize(String key, JsonDeserializationContext ctx) {
-            return new BigInteger(key);
-        }
+    /** @return an instance of {@link BigIntegerKeyDeserializer} */
+    public static BigIntegerKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Byte}
-     */
-    public static final class ByteKeyDeserializer extends BaseNumberKeyDeserializer<Byte> {
+    private BigIntegerKeyDeserializer() {}
 
-        private static final ByteKeyDeserializer INSTANCE = new ByteKeyDeserializer();
+    @Override
+    protected BigInteger doDeserialize(String key, JsonDeserializationContext ctx) {
+      return new BigInteger(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link ByteKeyDeserializer}
-         */
-        public static ByteKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Byte} */
+  public static final class ByteKeyDeserializer extends BaseNumberKeyDeserializer<Byte> {
 
-        private ByteKeyDeserializer() {
-        }
+    private static final ByteKeyDeserializer INSTANCE = new ByteKeyDeserializer();
 
-        @Override
-        protected Byte doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Byte.valueOf(key);
-        }
+    /** @return an instance of {@link ByteKeyDeserializer} */
+    public static ByteKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Double}
-     */
-    public static final class DoubleKeyDeserializer extends BaseNumberKeyDeserializer<Double> {
+    private ByteKeyDeserializer() {}
 
-        private static final DoubleKeyDeserializer INSTANCE = new DoubleKeyDeserializer();
+    @Override
+    protected Byte doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Byte.valueOf(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link DoubleKeyDeserializer}
-         */
-        public static DoubleKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Double} */
+  public static final class DoubleKeyDeserializer extends BaseNumberKeyDeserializer<Double> {
 
-        private DoubleKeyDeserializer() {
-        }
+    private static final DoubleKeyDeserializer INSTANCE = new DoubleKeyDeserializer();
 
-        @Override
-        protected Double doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Double.valueOf(key);
-        }
-
+    /** @return an instance of {@link DoubleKeyDeserializer} */
+    public static DoubleKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Float}
-     */
-    public static final class FloatKeyDeserializer extends BaseNumberKeyDeserializer<Float> {
+    private DoubleKeyDeserializer() {}
 
-        private static final FloatKeyDeserializer INSTANCE = new FloatKeyDeserializer();
+    @Override
+    protected Double doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Double.valueOf(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link FloatKeyDeserializer}
-         */
-        public static FloatKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Float} */
+  public static final class FloatKeyDeserializer extends BaseNumberKeyDeserializer<Float> {
 
-        private FloatKeyDeserializer() {
-        }
+    private static final FloatKeyDeserializer INSTANCE = new FloatKeyDeserializer();
 
-        @Override
-        protected Float doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Float.valueOf(key);
-        }
+    /** @return an instance of {@link FloatKeyDeserializer} */
+    public static FloatKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Integer}
-     */
-    public static final class IntegerKeyDeserializer extends BaseNumberKeyDeserializer<Integer> {
+    private FloatKeyDeserializer() {}
 
-        private static final IntegerKeyDeserializer INSTANCE = new IntegerKeyDeserializer();
+    @Override
+    protected Float doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Float.valueOf(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link IntegerKeyDeserializer}
-         */
-        public static IntegerKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Integer} */
+  public static final class IntegerKeyDeserializer extends BaseNumberKeyDeserializer<Integer> {
 
-        private IntegerKeyDeserializer() {
-        }
+    private static final IntegerKeyDeserializer INSTANCE = new IntegerKeyDeserializer();
 
-        @Override
-        protected Integer doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Integer.valueOf(key);
-        }
+    /** @return an instance of {@link IntegerKeyDeserializer} */
+    public static IntegerKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Long}
-     */
-    public static final class LongKeyDeserializer extends BaseNumberKeyDeserializer<Long> {
+    private IntegerKeyDeserializer() {}
 
-        private static final LongKeyDeserializer INSTANCE = new LongKeyDeserializer();
+    @Override
+    protected Integer doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Integer.valueOf(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link LongKeyDeserializer}
-         */
-        public static LongKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Long} */
+  public static final class LongKeyDeserializer extends BaseNumberKeyDeserializer<Long> {
 
-        private LongKeyDeserializer() {
-        }
+    private static final LongKeyDeserializer INSTANCE = new LongKeyDeserializer();
 
-        @Override
-        protected Long doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Long.valueOf(key);
-        }
+    /** @return an instance of {@link LongKeyDeserializer} */
+    public static LongKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
-    /**
-     * Default implementation of {@link BaseNumberKeyDeserializer} for {@link Short}
-     */
-    public static final class ShortKeyDeserializer extends BaseNumberKeyDeserializer<Short> {
+    private LongKeyDeserializer() {}
 
-        private static final ShortKeyDeserializer INSTANCE = new ShortKeyDeserializer();
+    @Override
+    protected Long doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Long.valueOf(key);
+    }
+  }
 
-        /**
-         * @return an instance of {@link ShortKeyDeserializer}
-         */
-        public static ShortKeyDeserializer getInstance() {
-            return INSTANCE;
-        }
+  /** Default implementation of {@link BaseNumberKeyDeserializer} for {@link Short} */
+  public static final class ShortKeyDeserializer extends BaseNumberKeyDeserializer<Short> {
 
-        private ShortKeyDeserializer() {
-        }
+    private static final ShortKeyDeserializer INSTANCE = new ShortKeyDeserializer();
 
-        @Override
-        protected Short doDeserialize(String key, JsonDeserializationContext ctx) {
-            return Short.valueOf(key);
-        }
+    /** @return an instance of {@link ShortKeyDeserializer} */
+    public static ShortKeyDeserializer getInstance() {
+      return INSTANCE;
     }
 
+    private ShortKeyDeserializer() {}
+
+    @Override
+    protected Short doDeserialize(String key, JsonDeserializationContext ctx) {
+      return Short.valueOf(key);
+    }
+  }
 }

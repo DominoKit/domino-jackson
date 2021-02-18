@@ -16,38 +16,43 @@
 
 package org.dominokit.jacksonapt.server.deser.map.key;
 
+import static org.assertj.core.api.Fail.fail;
+
 import org.dominokit.jacksonapt.DefaultJsonDeserializationContext;
 import org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer;
 import org.junit.Test;
 
-import static org.assertj.core.api.Fail.fail;
+/** @author Nicolas Morel */
+public class EnumKeyDeserializerTest
+    extends AbstractKeyDeserializerTest<EnumKeyDeserializerTest.EnumTest> {
 
-/**
- * @author Nicolas Morel
- */
-public class EnumKeyDeserializerTest extends AbstractKeyDeserializerTest<EnumKeyDeserializerTest.EnumTest> {
+  protected static enum EnumTest {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
 
-    protected static enum EnumTest {
-        ONE, TWO, THREE, FOUR
+  @Override
+  protected EnumKeyDeserializer<EnumTest> createDeserializer() {
+    return EnumKeyDeserializer.newInstance(EnumTest.class, EnumTest.values());
+  }
+
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(EnumTest.ONE, "ONE");
+    assertDeserialization(EnumTest.TWO, "TWO");
+    assertDeserialization(EnumTest.THREE, "THREE");
+    assertDeserialization(EnumTest.FOUR, "FOUR");
+    try {
+      assertDeserialization(null, "UNKNOWN");
+      fail("IllegalArgumentException should be thrown!");
+    } catch (IllegalArgumentException ex) {
     }
-
-    @Override
-    protected EnumKeyDeserializer<EnumTest> createDeserializer() {
-        return EnumKeyDeserializer.newInstance(EnumTest.class, EnumTest.values());
-    }
-
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(EnumTest.ONE, "ONE");
-        assertDeserialization(EnumTest.TWO, "TWO");
-        assertDeserialization(EnumTest.THREE, "THREE");
-        assertDeserialization(EnumTest.FOUR, "FOUR");
-        try {
-            assertDeserialization(null, "UNKNOWN");
-            fail("IllegalArgumentException should be thrown!");
-        } catch (IllegalArgumentException ex) {
-        }
-        assertDeserialization(DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull(true).build(), null, "UNKNOWN");
-    }
+    assertDeserialization(
+        DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull(true).build(),
+        null,
+        "UNKNOWN");
+  }
 }

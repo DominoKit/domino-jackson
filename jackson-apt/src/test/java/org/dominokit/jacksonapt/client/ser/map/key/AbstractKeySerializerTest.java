@@ -21,25 +21,23 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.client.JacksonTestCase;
 import org.dominokit.jacksonapt.ser.map.key.KeySerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class AbstractKeySerializerTest<T> extends JacksonTestCase {
 
-    protected abstract KeySerializer createSerializer();
+  protected abstract KeySerializer createSerializer();
 
-    public void testSerializeNullValue() {
-        assertSerialization(null, null);
-    }
+  public void testSerializeNullValue() {
+    assertSerialization(null, null);
+  }
 
-    protected String serialize(T value) {
-        JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
-        return createSerializer().serialize(value, ctx);
-    }
+  protected String serialize(T value) {
+    JsonSerializationContext ctx = DefaultJsonSerializationContext.builder().build();
+    return createSerializer().serialize(value, ctx);
+  }
 
-    protected void assertSerialization(String expected, T value) {
-        assertEquals(expected, serialize(value));
-    }
+  protected void assertSerialization(String expected, T value) {
+    assertEquals(expected, serialize(value));
+  }
 
-    public abstract void testSerializeValue();
+  public abstract void testSerializeValue();
 }

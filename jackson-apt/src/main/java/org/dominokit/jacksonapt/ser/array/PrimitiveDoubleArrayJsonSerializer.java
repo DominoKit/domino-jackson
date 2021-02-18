@@ -21,50 +21,50 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of double.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of double. */
 public class PrimitiveDoubleArrayJsonSerializer extends JsonSerializer<double[]> {
 
-    private static final PrimitiveDoubleArrayJsonSerializer INSTANCE = new PrimitiveDoubleArrayJsonSerializer();
+  private static final PrimitiveDoubleArrayJsonSerializer INSTANCE =
+      new PrimitiveDoubleArrayJsonSerializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.ser.array.PrimitiveDoubleArrayJsonSerializer}
-     */
-    public static PrimitiveDoubleArrayJsonSerializer getInstance() {
-        return INSTANCE;
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.ser.array.PrimitiveDoubleArrayJsonSerializer}
+   */
+  public static PrimitiveDoubleArrayJsonSerializer getInstance() {
+    return INSTANCE;
+  }
+
+  private PrimitiveDoubleArrayJsonSerializer() {}
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isEmpty(double[] value) {
+    return null == value || value.length == 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void doSerialize(
+      JsonWriter writer,
+      double[] values,
+      JsonSerializationContext ctx,
+      JsonSerializerParameters params) {
+    if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
+      writer.cancelName();
+      return;
     }
 
-    private PrimitiveDoubleArrayJsonSerializer() {
+    if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
+      writer.value(values[0]);
+    } else {
+      writer.beginArray();
+      for (double value : values) {
+        writer.value(value);
+      }
+      writer.endArray();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean isEmpty(double[] value) {
-        return null == value || value.length == 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void doSerialize(JsonWriter writer, double[] values, JsonSerializationContext ctx, JsonSerializerParameters params) {
-        if (!ctx.isWriteEmptyJsonArrays() && values.length == 0) {
-            writer.cancelName();
-            return;
-        }
-
-        if (ctx.isWriteSingleElemArraysUnwrapped() && values.length == 1) {
-            writer.value(values[0]);
-        } else {
-            writer.beginArray();
-            for (double value : values) {
-                writer.value(value);
-            }
-            writer.endArray();
-        }
-    }
+  }
 }

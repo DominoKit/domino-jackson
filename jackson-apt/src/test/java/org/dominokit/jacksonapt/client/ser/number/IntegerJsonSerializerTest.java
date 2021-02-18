@@ -19,20 +19,18 @@ package org.dominokit.jacksonapt.client.ser.number;
 import org.dominokit.jacksonapt.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jacksonapt.ser.BaseNumberJsonSerializer.IntegerJsonSerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class IntegerJsonSerializerTest extends AbstractJsonSerializerTest<Integer> {
 
-    @Override
-    protected IntegerJsonSerializer createSerializer() {
-        return IntegerJsonSerializer.getInstance();
-    }
+  @Override
+  protected IntegerJsonSerializer createSerializer() {
+    return IntegerJsonSerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("34", 34);
-        assertSerialization("-1", -1);
-        assertSerialization("-2147483648", Integer.MIN_VALUE);
-        assertSerialization("2147483647", Integer.MAX_VALUE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("34", 34);
+    assertSerialization("-1", -1);
+    assertSerialization("-2147483648", Integer.MIN_VALUE);
+    assertSerialization("2147483647", Integer.MAX_VALUE);
+  }
 }

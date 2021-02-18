@@ -16,103 +16,103 @@
 
 package org.dominokit.jacksonapt.deser.array.dd;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.CharacterJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of char.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
-public class PrimitiveCharacterArray2dJsonDeserializer extends AbstractArray2dJsonDeserializer<char[][]> {
+public class PrimitiveCharacterArray2dJsonDeserializer
+    extends AbstractArray2dJsonDeserializer<char[][]> {
 
-    private static final PrimitiveCharacterArray2dJsonDeserializer INSTANCE = new PrimitiveCharacterArray2dJsonDeserializer();
+  private static final PrimitiveCharacterArray2dJsonDeserializer INSTANCE =
+      new PrimitiveCharacterArray2dJsonDeserializer();
 
-    /**
-     * <p>getInstance</p>
-     *
-     * @return an instance of {@link org.dominokit.jacksonapt.deser.array.dd.PrimitiveCharacterArray2dJsonDeserializer}
-     */
-    public static PrimitiveCharacterArray2dJsonDeserializer getInstance() {
-        return INSTANCE;
-    }
+  /**
+   * getInstance
+   *
+   * @return an instance of {@link
+   *     org.dominokit.jacksonapt.deser.array.dd.PrimitiveCharacterArray2dJsonDeserializer}
+   */
+  public static PrimitiveCharacterArray2dJsonDeserializer getInstance() {
+    return INSTANCE;
+  }
 
-    private PrimitiveCharacterArray2dJsonDeserializer() {
-    }
+  private PrimitiveCharacterArray2dJsonDeserializer() {}
 
-    /** {@inheritDoc} */
-    @Override
-    public char[][] doDeserialize(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
+  /** {@inheritDoc} */
+  @Override
+  public char[][] doDeserialize(
+      JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params) {
 
-        char[][] result;
+    char[][] result;
 
-        reader.beginArray();
-        JsonToken token = reader.peek();
+    reader.beginArray();
+    JsonToken token = reader.peek();
 
-        if (JsonToken.END_ARRAY == token) {
+    if (JsonToken.END_ARRAY == token) {
 
-            // empty array
-            result = new char[0][0];
+      // empty array
+      result = new char[0][0];
 
-        } else if (JsonToken.STRING == token) {
+    } else if (JsonToken.STRING == token) {
 
-            // char[] are encoded as String
+      // char[] are encoded as String
 
-            List<char[]> list = new ArrayList<char[]>();
-            int size = 0;
-            while (JsonToken.END_ARRAY != token) {
-                char[] decoded = reader.nextString().toCharArray();
-                size = Math.max(size, decoded.length);
-                list.add(decoded);
-                token = reader.peek();
-            }
+      List<char[]> list = new ArrayList<char[]>();
+      int size = 0;
+      while (JsonToken.END_ARRAY != token) {
+        char[] decoded = reader.nextString().toCharArray();
+        size = Math.max(size, decoded.length);
+        list.add(decoded);
+        token = reader.peek();
+      }
 
-            result = new char[list.size()][size];
-            int i = 0;
-            for (char[] value : list) {
-                if (null != value) {
-                    result[i] = value;
-                }
-                i++;
-            }
-
-        } else {
-
-            List<List<Character>> list = doDeserializeIntoList(reader, ctx, CharacterJsonDeserializer.getInstance(), params, token);
-
-            List<Character> firstList = list.get(0);
-            if (firstList.isEmpty()) {
-
-                result = new char[list.size()][0];
-
-            } else {
-
-                result = new char[list.size()][firstList.size()];
-
-                int i = 0;
-                int j;
-                for (List<Character> innerList : list) {
-                    j = 0;
-                    for (Character value : innerList) {
-                        if (null != value) {
-                            result[i][j] = value;
-                        }
-                        j++;
-                    }
-                    i++;
-                }
-            }
-
+      result = new char[list.size()][size];
+      int i = 0;
+      for (char[] value : list) {
+        if (null != value) {
+          result[i] = value;
         }
+        i++;
+      }
 
-        reader.endArray();
-        return result;
+    } else {
+
+      List<List<Character>> list =
+          doDeserializeIntoList(
+              reader, ctx, CharacterJsonDeserializer.getInstance(), params, token);
+
+      List<Character> firstList = list.get(0);
+      if (firstList.isEmpty()) {
+
+        result = new char[list.size()][0];
+
+      } else {
+
+        result = new char[list.size()][firstList.size()];
+
+        int i = 0;
+        int j;
+        for (List<Character> innerList : list) {
+          j = 0;
+          for (Character value : innerList) {
+            if (null != value) {
+              result[i][j] = value;
+            }
+            j++;
+          }
+          i++;
+        }
+      }
     }
+
+    reader.endArray();
+    return result;
+  }
 }

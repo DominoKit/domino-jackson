@@ -21,22 +21,19 @@ import org.dominokit.jacksonapt.ser.array.PrimitiveByteArrayJsonSerializer;
 import org.dominokit.jacksonapt.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/**
- * Test byte array serialization.
- */
+/** Test byte array serialization. */
 public class ByteArrayJsonSerializerTest extends AbstractJsonSerializerTest<byte[]> {
 
-    @Override
-    protected JsonSerializer<byte[]> createSerializer() {
-        return PrimitiveByteArrayJsonSerializer.getInstance();
-    }
+  @Override
+  protected JsonSerializer<byte[]> createSerializer() {
+    return PrimitiveByteArrayJsonSerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("\"AAsWIQ==\"", new byte[]{0, 11, 22, 33});
-        assertSerialization("\"APXq3w==\"", new byte[]{0, -11, -22, -33});
-        assertSerialization("\"AGScAA==\"", new byte[]{0, 100, -100, 0});
-        assertSerialization("\"\"", new byte[0]);
-    }
-
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("\"AAsWIQ==\"", new byte[] {0, 11, 22, 33});
+    assertSerialization("\"APXq3w==\"", new byte[] {0, -11, -22, -33});
+    assertSerialization("\"AGScAA==\"", new byte[] {0, 100, -100, 0});
+    assertSerialization("\"\"", new byte[0]);
+  }
 }

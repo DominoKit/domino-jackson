@@ -16,10 +16,8 @@
 
 package org.dominokit.jacksonapt.shared;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public interface ObjectWriterTester<T> {
 
-    String write(T input);
+  String write(T input);
 }

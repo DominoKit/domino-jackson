@@ -16,41 +16,43 @@
 
 package org.dominokit.jacksonapt.deser.collection;
 
-import org.dominokit.jacksonapt.JsonDeserializer;
-
 import java.util.SortedSet;
 import java.util.TreeSet;
+import org.dominokit.jacksonapt.JsonDeserializer;
 
 /**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link java.util.SortedSet}. The deserialization process returns a {@link java.util.TreeSet}.
+ * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
+ * java.util.SortedSet}. The deserialization process returns a {@link java.util.TreeSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.SortedSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
-public final class SortedSetJsonDeserializer<T> extends BaseSortedSetJsonDeserializer<SortedSet<T>, T> {
+public final class SortedSetJsonDeserializer<T>
+    extends BaseSortedSetJsonDeserializer<SortedSet<T>, T> {
 
-    /**
-     * <p>newInstance</p>
-     *
-     * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the objects inside the {@link java.util.SortedSet}.
-     * @param <T>          Type of the elements inside the {@link java.util.SortedSet}
-     * @return a new instance of {@link org.dominokit.jacksonapt.deser.collection.SortedSetJsonDeserializer}
-     */
-    public static <T> SortedSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
-        return new SortedSetJsonDeserializer<T>(deserializer);
-    }
+  /**
+   * newInstance
+   *
+   * @param deserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize the
+   *     objects inside the {@link java.util.SortedSet}.
+   * @param <T> Type of the elements inside the {@link java.util.SortedSet}
+   * @return a new instance of {@link
+   *     org.dominokit.jacksonapt.deser.collection.SortedSetJsonDeserializer}
+   */
+  public static <T> SortedSetJsonDeserializer<T> newInstance(JsonDeserializer<T> deserializer) {
+    return new SortedSetJsonDeserializer<T>(deserializer);
+  }
 
-    /**
-     * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link SortedSet}.
-     */
-    private SortedSetJsonDeserializer(JsonDeserializer<T> deserializer) {
-        super(deserializer);
-    }
+  /**
+   * @param deserializer {@link JsonDeserializer} used to deserialize the objects inside the {@link
+   *     SortedSet}.
+   */
+  private SortedSetJsonDeserializer(JsonDeserializer<T> deserializer) {
+    super(deserializer);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    protected SortedSet<T> newCollection() {
-        return new TreeSet<T>();
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected SortedSet<T> newCollection() {
+    return new TreeSet<T>();
+  }
 }

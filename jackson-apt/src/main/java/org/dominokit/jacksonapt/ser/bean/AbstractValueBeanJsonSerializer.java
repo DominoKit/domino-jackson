@@ -16,41 +16,39 @@
 
 package org.dominokit.jacksonapt.ser.bean;
 
+import java.util.Set;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-import java.util.Set;
-
-/**
- * <p>Abstract AbstractValueBeanJsonSerializer class.</p>
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractValueBeanJsonSerializer class. */
 public abstract class AbstractValueBeanJsonSerializer<T> extends AbstractBeanJsonSerializer<T> {
 
-    private final BeanPropertySerializer<T, ?> serializer;
+  private final BeanPropertySerializer<T, ?> serializer;
 
-    /**
-     * <p>Constructor for AbstractValueBeanJsonSerializer.</p>
-     */
-    protected AbstractValueBeanJsonSerializer() {
-        super();
-        this.serializer = initValueSerializer();
-    }
+  /** Constructor for AbstractValueBeanJsonSerializer. */
+  protected AbstractValueBeanJsonSerializer() {
+    super();
+    this.serializer = initValueSerializer();
+  }
 
-    /**
-     * <p>initValueSerializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer} object.
-     */
-    protected abstract BeanPropertySerializer<T, ?> initValueSerializer();
+  /**
+   * initValueSerializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer} object.
+   */
+  protected abstract BeanPropertySerializer<T, ?> initValueSerializer();
 
-    /** {@inheritDoc} */
-    @Override
-    protected void serializeObject(JsonWriter writer, T value, JsonSerializationContext ctx, Set<String> ignoredProperties,
-                                   IdentitySerializationInfo identityInfo, ObjectIdSerializer<?> idWriter, String typeName, String
-                                           typeInformation) {
-        serializer.serialize(writer, value, ctx);
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected void serializeObject(
+      JsonWriter writer,
+      T value,
+      JsonSerializationContext ctx,
+      Set<String> ignoredProperties,
+      IdentitySerializationInfo identityInfo,
+      ObjectIdSerializer<?> idWriter,
+      String typeName,
+      String typeInformation) {
+    serializer.serialize(writer, value, ctx);
+  }
 }

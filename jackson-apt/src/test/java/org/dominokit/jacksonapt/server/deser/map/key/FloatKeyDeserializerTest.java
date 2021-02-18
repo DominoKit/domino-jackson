@@ -19,20 +19,18 @@ package org.dominokit.jacksonapt.server.deser.map.key;
 import org.dominokit.jacksonapt.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class FloatKeyDeserializerTest extends AbstractKeyDeserializerTest<Float> {
 
-    @Override
-    protected BaseNumberKeyDeserializer.FloatKeyDeserializer createDeserializer() {
-        return BaseNumberKeyDeserializer.FloatKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BaseNumberKeyDeserializer.FloatKeyDeserializer createDeserializer() {
+    return BaseNumberKeyDeserializer.FloatKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Float("34.10245"), "34.10245");
-        assertDeserialization(new Float("-784.15454"), "-784.15454");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Float("34.10245"), "34.10245");
+    assertDeserialization(new Float("-784.15454"), "-784.15454");
+  }
 }

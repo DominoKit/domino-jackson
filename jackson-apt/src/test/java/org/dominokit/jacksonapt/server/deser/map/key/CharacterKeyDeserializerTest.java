@@ -19,20 +19,18 @@ package org.dominokit.jacksonapt.server.deser.map.key;
 import org.dominokit.jacksonapt.deser.map.key.CharacterKeyDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class CharacterKeyDeserializerTest extends AbstractKeyDeserializerTest<Character> {
 
-    @Override
-    protected CharacterKeyDeserializer createDeserializer() {
-        return CharacterKeyDeserializer.getInstance();
-    }
+  @Override
+  protected CharacterKeyDeserializer createDeserializer() {
+    return CharacterKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization('e', "e");
-        assertDeserialization('\u00e9', "\u00e9");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization('e', "e");
+    assertDeserialization('\u00e9', "\u00e9");
+  }
 }

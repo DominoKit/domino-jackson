@@ -18,20 +18,24 @@ package org.dominokit.jacksonapt.client.ser.map.key;
 
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class DoubleKeySerializerTest extends AbstractKeySerializerTest<Double> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    public void testSerializeValue() {
-        assertSerialization("34.100247", 34.100247);
-        assertSerialization("-784.15454", -784.15454d);
-        assertSerialization((!System.getProperty("superdevmode").equals("on") ? "5e-324" : "4.9E-324"), Double.MIN_VALUE);
-        assertSerialization((!System.getProperty("superdevmode").equals("on") ? "1.7976931348623157e+308" : "1.7976931348623157E308"), Double.MAX_VALUE);
-    }
+  public void testSerializeValue() {
+    assertSerialization("34.100247", 34.100247);
+    assertSerialization("-784.15454", -784.15454d);
+    assertSerialization(
+        (!System.getProperty("superdevmode").equals("on") ? "5e-324" : "4.9E-324"),
+        Double.MIN_VALUE);
+    assertSerialization(
+        (!System.getProperty("superdevmode").equals("on")
+            ? "1.7976931348623157e+308"
+            : "1.7976931348623157E308"),
+        Double.MAX_VALUE);
+  }
 }

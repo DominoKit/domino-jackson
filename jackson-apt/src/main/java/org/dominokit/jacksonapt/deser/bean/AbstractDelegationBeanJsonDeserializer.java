@@ -20,20 +20,20 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * <p>Abstract AbstractDelegationBeanJsonDeserializer class.</p>
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractDelegationBeanJsonDeserializer class. */
 @SuppressWarnings("UnusedDeclaration")
-public abstract class AbstractDelegationBeanJsonDeserializer<T> extends AbstractBeanJsonDeserializer<T> {
+public abstract class AbstractDelegationBeanJsonDeserializer<T>
+    extends AbstractBeanJsonDeserializer<T> {
 
-    /** {@inheritDoc} */
-    @Override
-    public T deserializeWrapped(JsonReader reader, JsonDeserializationContext ctx, JsonDeserializerParameters params,
-                                IdentityDeserializationInfo identityInfo, TypeDeserializationInfo typeInfo, String typeInformation) {
-        return instanceBuilder.newInstance(reader, ctx, params, null, null).getInstance();
-    }
-
+  /** {@inheritDoc} */
+  @Override
+  public T deserializeWrapped(
+      JsonReader reader,
+      JsonDeserializationContext ctx,
+      JsonDeserializerParameters params,
+      IdentityDeserializationInfo identityInfo,
+      TypeDeserializationInfo typeInfo,
+      String typeInformation) {
+    return instanceBuilder.newInstance(reader, ctx, params, null, null).getInstance();
+  }
 }

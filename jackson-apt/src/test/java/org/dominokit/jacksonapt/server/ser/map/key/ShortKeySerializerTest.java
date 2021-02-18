@@ -19,21 +19,19 @@ package org.dominokit.jacksonapt.server.ser.map.key;
 import org.dominokit.jacksonapt.ser.map.key.ToStringKeySerializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ShortKeySerializerTest extends AbstractKeySerializerTest<Short> {
 
-    @Override
-    protected ToStringKeySerializer createSerializer() {
-        return ToStringKeySerializer.getInstance();
-    }
+  @Override
+  protected ToStringKeySerializer createSerializer() {
+    return ToStringKeySerializer.getInstance();
+  }
 
-    @Test
-	public void testSerializeValue() {
-        assertSerialization("34", new Short("34"));
-        assertSerialization("-1", new Short("-1"));
-        assertSerialization("-32768", Short.MIN_VALUE);
-        assertSerialization("32767", Short.MAX_VALUE);
-    }
+  @Test
+  public void testSerializeValue() {
+    assertSerialization("34", new Short("34"));
+    assertSerialization("-1", new Short("-1"));
+    assertSerialization("-32768", Short.MIN_VALUE);
+    assertSerialization("32767", Short.MAX_VALUE);
+  }
 }

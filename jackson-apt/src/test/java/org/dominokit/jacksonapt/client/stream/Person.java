@@ -16,21 +16,19 @@
 
 package org.dominokit.jacksonapt.client.stream;
 
-
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 @JsType
 public class Person {
 
-    @JsProperty(name = "firstName")
-    public String firstName;
-    @JsProperty(name = "lastName")
-    public String lastName;
-    @JsProperty(name = "bio")
-    public String bio;
-}
+  @JsProperty(name = "firstName")
+  public String firstName;
 
+  @JsProperty(name = "lastName")
+  public String lastName;
+
+  @JsProperty(name = "bio")
+  public String bio;
+}

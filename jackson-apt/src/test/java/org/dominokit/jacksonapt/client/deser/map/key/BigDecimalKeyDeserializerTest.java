@@ -16,25 +16,21 @@
 
 package org.dominokit.jacksonapt.client.deser.map.key;
 
+import java.math.BigDecimal;
 import org.dominokit.jacksonapt.deser.map.key.BaseNumberKeyDeserializer.BigDecimalKeyDeserializer;
 
-import java.math.BigDecimal;
-
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class BigDecimalKeyDeserializerTest extends AbstractKeyDeserializerTest<BigDecimal> {
 
-    @Override
-    protected BigDecimalKeyDeserializer createDeserializer() {
-        return BigDecimalKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BigDecimalKeyDeserializer createDeserializer() {
+    return BigDecimalKeyDeserializer.getInstance();
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        String value = "15487846511321245665435132032454.1545815468465578451323888744";
-        BigDecimal expected = new BigDecimal(value);
-        assertDeserialization(expected, value);
-    }
-
+  @Override
+  public void testDeserializeValue() {
+    String value = "15487846511321245665435132032454.1545815468465578451323888744";
+    BigDecimal expected = new BigDecimal(value);
+    assertDeserialization(expected, value);
+  }
 }

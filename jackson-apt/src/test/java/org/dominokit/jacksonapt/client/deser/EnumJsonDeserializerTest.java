@@ -20,31 +20,36 @@ import org.dominokit.jacksonapt.DefaultJsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.deser.EnumJsonDeserializer;
 
-/**
- * @author Nicolas Morel
- */
-public class EnumJsonDeserializerTest extends AbstractJsonDeserializerTest<EnumJsonDeserializerTest.EnumTest> {
+/** @author Nicolas Morel */
+public class EnumJsonDeserializerTest
+    extends AbstractJsonDeserializerTest<EnumJsonDeserializerTest.EnumTest> {
 
-    protected static enum EnumTest {
-        ONE, TWO, THREE, FOUR
-    }
+  protected static enum EnumTest {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
 
-    @Override
-    protected JsonDeserializer<EnumTest> createDeserializer() {
-        return EnumJsonDeserializer.newInstance(EnumTest.class, EnumTest.values());
-    }
+  @Override
+  protected JsonDeserializer<EnumTest> createDeserializer() {
+    return EnumJsonDeserializer.newInstance(EnumTest.class, EnumTest.values());
+  }
 
-    @Override
-    public void testDeserializeValue() {
-        assertDeserialization(EnumTest.ONE, "\"ONE\"");
-        assertDeserialization(EnumTest.TWO, "\"TWO\"");
-        assertDeserialization(EnumTest.THREE, "\"THREE\"");
-        assertDeserialization(EnumTest.FOUR, "\"FOUR\"");
-        try {
-            assertDeserialization(null, "\"UNKNOWN\"");
-            fail("IllegalArgumentException should be thrown!");
-        } catch (IllegalArgumentException ex) {
-        }
-        assertDeserialization(DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull(true).build(), null, "\"UNKNOWN\"");
+  @Override
+  public void testDeserializeValue() {
+    assertDeserialization(EnumTest.ONE, "\"ONE\"");
+    assertDeserialization(EnumTest.TWO, "\"TWO\"");
+    assertDeserialization(EnumTest.THREE, "\"THREE\"");
+    assertDeserialization(EnumTest.FOUR, "\"FOUR\"");
+    try {
+      assertDeserialization(null, "\"UNKNOWN\"");
+      fail("IllegalArgumentException should be thrown!");
+    } catch (IllegalArgumentException ex) {
     }
+    assertDeserialization(
+        DefaultJsonDeserializationContext.builder().readUnknownEnumValuesAsNull(true).build(),
+        null,
+        "\"UNKNOWN\"");
+  }
 }

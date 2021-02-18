@@ -16,48 +16,40 @@
 
 package org.dominokit.jacksonapt.ser.bean;
 
+import java.util.Map;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.ser.map.MapJsonSerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-import java.util.Map;
-
-/**
- * Serializes a bean's property
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Serializes a bean's property */
 public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySerializer<T, Map> {
 
-    /**
-     * <p>newSerializer</p>
-     *
-     * @return a {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer} object.
-     */
-    protected abstract MapJsonSerializer newSerializer();
+  /**
+   * newSerializer
+   *
+   * @return a {@link org.dominokit.jacksonapt.ser.map.MapJsonSerializer} object.
+   */
+  protected abstract MapJsonSerializer newSerializer();
 
-    /**
-     * <p>Constructor for AnyGetterPropertySerializer.</p>
-     */
-    public AnyGetterPropertySerializer() {
-        super(null);
-    }
+  /** Constructor for AnyGetterPropertySerializer. */
+  public AnyGetterPropertySerializer() {
+    super(null);
+  }
 
-    /** {@inheritDoc} */
-    public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx) {
-        // no-op
-    }
+  /** {@inheritDoc} */
+  public void serializePropertyName(JsonWriter writer, T bean, JsonSerializationContext ctx) {
+    // no-op
+  }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Serializes the property defined for this instance.
-     */
-    public void serialize(JsonWriter writer, T bean, JsonSerializationContext ctx) {
-        Map map = getValue(bean, ctx);
-        if (null != map) {
-            ((MapJsonSerializer) getSerializer()).serializeValues(writer, map, ctx, getParameters());
-        }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Serializes the property defined for this instance.
+   */
+  public void serialize(JsonWriter writer, T bean, JsonSerializationContext ctx) {
+    Map map = getValue(bean, ctx);
+    if (null != map) {
+      ((MapJsonSerializer) getSerializer()).serializeValues(writer, map, ctx, getParameters());
     }
+  }
 }

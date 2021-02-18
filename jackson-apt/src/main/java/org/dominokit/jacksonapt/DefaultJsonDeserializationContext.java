@@ -17,407 +17,408 @@
 package org.dominokit.jacksonapt;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
-import org.dominokit.jacksonapt.exception.JsonDeserializationException;
-import org.dominokit.jacksonapt.stream.JsonReader;
-import org.dominokit.jacksonapt.stream.impl.NonBufferedJsonReader;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.dominokit.jacksonapt.exception.JsonDeserializationException;
+import org.dominokit.jacksonapt.stream.JsonReader;
+import org.dominokit.jacksonapt.stream.impl.NonBufferedJsonReader;
 
-/**
- * Context for the deserialization process.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Context for the deserialization process. */
 public class DefaultJsonDeserializationContext implements JsonDeserializationContext {
 
+  /**
+   * Builder for {@link JsonDeserializationContext}. To override default settings globally, you can
+   * extend this class, modify the default settings inside the constructor and tell the compiler to
+   * use your builder instead in your gwt.xml file :
+   *
+   * <pre>{@code
+   * <replace-with class="your.package.YourBuilder">
+   *   <when-type-assignable class="org.dominokit.jacksonapt.JsonDeserializationContext.Builder" />
+   * </replace-with>
+   *
+   * }</pre>
+   */
+  public static class Builder {
+
+    protected boolean failOnUnknownProperties = true;
+
+    protected boolean unwrapRootValue = false;
+
+    protected boolean acceptSingleValueAsArray = false;
+
+    protected boolean wrapExceptions = true;
+
+    protected boolean useSafeEval = true;
+
+    protected boolean readUnknownEnumValuesAsNull = false;
+
+    protected boolean useBrowserTimezone = false;
+
     /**
-     * Builder for {@link JsonDeserializationContext}. To override default settings globally, you can extend this class, modify the
-     * default settings inside the constructor and tell the compiler to use your builder instead in your gwt.xml file :
-     * <pre>
-     * {@code
-     *
-     * <replace-with class="your.package.YourBuilder">
-     *   <when-type-assignable class="org.dominokit.jacksonapt.JsonDeserializationContext.Builder" />
-     * </replace-with>
-     *
-     * }
-     * </pre>
+     * @deprecated Use {@link DefaultJsonDeserializationContext#builder()} instead. This constructor
+     *     will be made protected in v1.0.
      */
-    public static class Builder {
+    @Deprecated
+    public Builder() {}
 
-        protected boolean failOnUnknownProperties = true;
-
-        protected boolean unwrapRootValue = false;
-
-        protected boolean acceptSingleValueAsArray = false;
-
-        protected boolean wrapExceptions = true;
-
-        protected boolean useSafeEval = true;
-
-        protected boolean readUnknownEnumValuesAsNull = false;
-
-        protected boolean useBrowserTimezone = false;
-
-        /**
-         * @deprecated Use {@link DefaultJsonDeserializationContext#builder()} instead. This constructor will be made protected in v1.0.
-         */
-        @Deprecated
-        public Builder() {
-        }
-
-        /**
-         * Determines whether encountering of unknown
-         * properties (ones that do not map to a property, and there is
-         * no "any setter" or handler that can handle it)
-         * should result in a failure (by throwing a
-         * {@link JsonDeserializationException}) or not.
-         * This setting only takes effect after all other handling
-         * methods for unknown properties have been tried, and
-         * property remains unhandled.
-         * <p>
-         * Feature is enabled by default (meaning that a
-         * {@link JsonDeserializationException} will be thrown if an unknown property
-         * is encountered).
-         * </p>
-         *
-         * @param failOnUnknownProperties true if should fail on unknown properties
-         * @return the builder
-         */
-        public Builder failOnUnknownProperties(boolean failOnUnknownProperties) {
-            this.failOnUnknownProperties = failOnUnknownProperties;
-            return this;
-        }
-
-        /**
-         * Feature to allow "unwrapping" root-level JSON value, to match setting of
-         * {@link DefaultJsonSerializationContext.Builder#wrapRootValue(boolean)} used for serialization.
-         * Will verify that the root JSON value is a JSON Object, and that it has
-         * a single property with expected root name. If not, a
-         * {@link JsonDeserializationException} is thrown; otherwise value of the wrapped property
-         * will be deserialized as if it was the root value.
-         * <p>
-         * Feature is disabled by default.
-         * </p>
-         *
-         * @param unwrapRootValue true if should unwrapRootValue
-         * @return the builder
-         */
-        public Builder unwrapRootValue(boolean unwrapRootValue) {
-            this.unwrapRootValue = unwrapRootValue;
-            return this;
-        }
-
-        /**
-         * Feature that determines whether it is acceptable to coerce non-array
-         * (in JSON) values to work with Java collection (arrays, java.util.Collection)
-         * types. If enabled, collection deserializers will try to handle non-array
-         * values as if they had "implicit" surrounding JSON array.
-         * This feature is meant to be used for compatibility/interoperability reasons,
-         * to work with packages (such as XML-to-JSON converters) that leave out JSON
-         * array in cases where there is just a single element in array.
-         * <p>
-         * Feature is disabled by default.
-         * </p>
-         *
-         * @param acceptSingleValueAsArray true if should acceptSingleValueAsArray
-         * @return the builder
-         */
-        public Builder acceptSingleValueAsArray(boolean acceptSingleValueAsArray) {
-            this.acceptSingleValueAsArray = acceptSingleValueAsArray;
-            return this;
-        }
-
-        /**
-         * Feature that determines whether gwt-jackson code should catch
-         * and wrap {@link RuntimeException}s (but never {@link Error}s!)
-         * to add additional information about
-         * location (within input) of problem or not. If enabled,
-         * exceptions will be caught and re-thrown; this can be
-         * convenient both in that all exceptions will be checked and
-         * declared, and so there is more contextual information.
-         * However, sometimes calling application may just want "raw"
-         * unchecked exceptions passed as is.
-         * <br>
-         * <br>
-         * Feature is enabled by default.
-         *
-         * @param wrapExceptions true if should wrapExceptions
-         * @return the builder
-         */
-        public Builder wrapExceptions(boolean wrapExceptions) {
-            this.wrapExceptions = wrapExceptions;
-            return this;
-        }
-
-        /**
-         * to deserialize JsType
-         * <br>
-         * <br>
-         *
-         * @param useSafeEval true if should useSafeEval
-         * @return the builder
-         */
-        public Builder useSafeEval(boolean useSafeEval) {
-            this.useSafeEval = useSafeEval;
-            return this;
-        }
-
-        /**
-         * Feature that determines whether gwt-jackson should return null for unknown enum values.
-         * Default is false which will throw {@link IllegalArgumentException} when unknown enum value is found.
-         *
-         * @param readUnknownEnumValuesAsNull true if should readUnknownEnumValuesAsNull
-         * @return the builder
-         */
-        public Builder readUnknownEnumValuesAsNull(boolean readUnknownEnumValuesAsNull) {
-            this.readUnknownEnumValuesAsNull = readUnknownEnumValuesAsNull;
-            return this;
-        }
-
-        /**
-         * Feature that specifies whether dates that doesn't contain timezone information
-         * are interpreted using the browser timezone or being relative to UTC (the default).
-         *
-         * @param useBrowserTimezone true if should use browser timezone
-         * @return the builder
-         */
-        public Builder useBrowserTimezone(boolean useBrowserTimezone) {
-            this.useBrowserTimezone = useBrowserTimezone;
-            return this;
-        }
-
-        public final JsonDeserializationContext build() {
-            return new DefaultJsonDeserializationContext(failOnUnknownProperties, unwrapRootValue, acceptSingleValueAsArray, wrapExceptions,
-                    useSafeEval, readUnknownEnumValuesAsNull, useBrowserTimezone);
-        }
-    }
-
-    public static class DefaultBuilder extends Builder {
-
-        private DefaultBuilder() {
-        }
-
+    /**
+     * Determines whether encountering of unknown properties (ones that do not map to a property,
+     * and there is no "any setter" or handler that can handle it) should result in a failure (by
+     * throwing a {@link JsonDeserializationException}) or not. This setting only takes effect after
+     * all other handling methods for unknown properties have been tried, and property remains
+     * unhandled.
+     *
+     * <p>Feature is enabled by default (meaning that a {@link JsonDeserializationException} will be
+     * thrown if an unknown property is encountered).
+     *
+     * @param failOnUnknownProperties true if should fail on unknown properties
+     * @return the builder
+     */
+    public Builder failOnUnknownProperties(boolean failOnUnknownProperties) {
+      this.failOnUnknownProperties = failOnUnknownProperties;
+      return this;
     }
 
     /**
-     * <p>builder</p>
+     * Feature to allow "unwrapping" root-level JSON value, to match setting of {@link
+     * DefaultJsonSerializationContext.Builder#wrapRootValue(boolean)} used for serialization. Will
+     * verify that the root JSON value is a JSON Object, and that it has a single property with
+     * expected root name. If not, a {@link JsonDeserializationException} is thrown; otherwise value
+     * of the wrapped property will be deserialized as if it was the root value.
      *
-     * @return a {@link org.dominokit.jacksonapt.DefaultJsonDeserializationContext.Builder} object.
+     * <p>Feature is disabled by default.
+     *
+     * @param unwrapRootValue true if should unwrapRootValue
+     * @return the builder
      */
-    public static Builder builder() {
-        return new DefaultBuilder();
-    }
-
-    private static final Logger logger = Logger.getLogger("JsonDeserialization");
-
-    private Map<IdKey, Object> idToObject;
-
-    /*
-     * Deserialization options
-     */
-    private final boolean failOnUnknownProperties;
-
-    private final boolean unwrapRootValue;
-
-    private final boolean acceptSingleValueAsArray;
-
-    private final boolean wrapExceptions;
-
-    private final boolean useSafeEval;
-
-    private final boolean readUnknownEnumValuesAsNull;
-
-    private final boolean useBrowserTimezone;
-
-    private DefaultJsonDeserializationContext(boolean failOnUnknownProperties, boolean unwrapRootValue, boolean acceptSingleValueAsArray,
-                                              boolean wrapExceptions, boolean useSafeEval, boolean readUnknownEnumValuesAsNull,
-                                              boolean useBrowserTimezone) {
-        this.failOnUnknownProperties = failOnUnknownProperties;
-        this.unwrapRootValue = unwrapRootValue;
-        this.acceptSingleValueAsArray = acceptSingleValueAsArray;
-        this.wrapExceptions = wrapExceptions;
-        this.useSafeEval = useSafeEval;
-        this.readUnknownEnumValuesAsNull = readUnknownEnumValuesAsNull;
-        this.useBrowserTimezone = useBrowserTimezone;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Logger getLogger() {
-        return logger;
+    public Builder unwrapRootValue(boolean unwrapRootValue) {
+      this.unwrapRootValue = unwrapRootValue;
+      return this;
     }
 
     /**
-     * {@inheritDoc}
+     * Feature that determines whether it is acceptable to coerce non-array (in JSON) values to work
+     * with Java collection (arrays, java.util.Collection) types. If enabled, collection
+     * deserializers will try to handle non-array values as if they had "implicit" surrounding JSON
+     * array. This feature is meant to be used for compatibility/interoperability reasons, to work
+     * with packages (such as XML-to-JSON converters) that leave out JSON array in cases where there
+     * is just a single element in array.
      *
-     * <p>isFailOnUnknownProperties</p>
-     * @see Builder#failOnUnknownProperties(boolean)
+     * <p>Feature is disabled by default.
+     *
+     * @param acceptSingleValueAsArray true if should acceptSingleValueAsArray
+     * @return the builder
      */
-    @Override
-    public boolean isFailOnUnknownProperties() {
-        return failOnUnknownProperties;
+    public Builder acceptSingleValueAsArray(boolean acceptSingleValueAsArray) {
+      this.acceptSingleValueAsArray = acceptSingleValueAsArray;
+      return this;
     }
 
     /**
-     * {@inheritDoc}
+     * Feature that determines whether gwt-jackson code should catch and wrap {@link
+     * RuntimeException}s (but never {@link Error}s!) to add additional information about location
+     * (within input) of problem or not. If enabled, exceptions will be caught and re-thrown; this
+     * can be convenient both in that all exceptions will be checked and declared, and so there is
+     * more contextual information. However, sometimes calling application may just want "raw"
+     * unchecked exceptions passed as is. <br>
+     * <br>
+     * Feature is enabled by default.
      *
-     * <p>isUnwrapRootValue</p>
-     * @see Builder#unwrapRootValue(boolean)
+     * @param wrapExceptions true if should wrapExceptions
+     * @return the builder
      */
-    @Override
-    public boolean isUnwrapRootValue() {
-        return unwrapRootValue;
+    public Builder wrapExceptions(boolean wrapExceptions) {
+      this.wrapExceptions = wrapExceptions;
+      return this;
     }
 
     /**
-     * {@inheritDoc}
+     * to deserialize JsType <br>
+     * <br>
      *
-     * <p>isAcceptSingleValueAsArray</p>
-     * @see Builder#acceptSingleValueAsArray(boolean)
+     * @param useSafeEval true if should useSafeEval
+     * @return the builder
      */
-    @Override
-    public boolean isAcceptSingleValueAsArray() {
-        return acceptSingleValueAsArray;
+    public Builder useSafeEval(boolean useSafeEval) {
+      this.useSafeEval = useSafeEval;
+      return this;
     }
 
     /**
-     * {@inheritDoc}
+     * Feature that determines whether gwt-jackson should return null for unknown enum values.
+     * Default is false which will throw {@link IllegalArgumentException} when unknown enum value is
+     * found.
      *
-     * <p>isUseSafeEval</p>
-     * @see Builder#useSafeEval(boolean)
+     * @param readUnknownEnumValuesAsNull true if should readUnknownEnumValuesAsNull
+     * @return the builder
      */
-    @Override
-    public boolean isUseSafeEval() {
-        return useSafeEval;
+    public Builder readUnknownEnumValuesAsNull(boolean readUnknownEnumValuesAsNull) {
+      this.readUnknownEnumValuesAsNull = readUnknownEnumValuesAsNull;
+      return this;
     }
 
     /**
-     * {@inheritDoc}
+     * Feature that specifies whether dates that doesn't contain timezone information are
+     * interpreted using the browser timezone or being relative to UTC (the default).
      *
-     * <p>isReadUnknownEnumValuesAsNull</p>
-     * @see Builder#readUnknownEnumValuesAsNull(boolean)
+     * @param useBrowserTimezone true if should use browser timezone
+     * @return the builder
      */
-    @Override
-    public boolean isReadUnknownEnumValuesAsNull() {
-        return readUnknownEnumValuesAsNull;
+    public Builder useBrowserTimezone(boolean useBrowserTimezone) {
+      this.useBrowserTimezone = useBrowserTimezone;
+      return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>isUseBrowserTimezone</p>
-     * @see Builder#isUseBrowserTimezone()
-     */
-    @Override
-    public boolean isUseBrowserTimezone() {
-        return useBrowserTimezone;
+    public final JsonDeserializationContext build() {
+      return new DefaultJsonDeserializationContext(
+          failOnUnknownProperties,
+          unwrapRootValue,
+          acceptSingleValueAsArray,
+          wrapExceptions,
+          useSafeEval,
+          readUnknownEnumValuesAsNull,
+          useBrowserTimezone);
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>newJsonReader</p>
-     */
-    @Override
-    public JsonReader newJsonReader(String input) {
-        JsonReader reader = new NonBufferedJsonReader(input);
-        reader.setLenient(true);
-        return reader;
-    }
+  public static class DefaultBuilder extends Builder {
 
-    /**
-     * {@inheritDoc}
-     *
-     * Trace an error with current reader state and returns a corresponding exception.
-     */
-    @Override
-    public JsonDeserializationException traceError(String message) {
-        return traceError(message, null);
-    }
+    private DefaultBuilder() {}
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Trace an error with current reader state and returns a corresponding exception.
-     */
-    @Override
-    public JsonDeserializationException traceError(String message, JsonReader reader) {
-        getLogger().log(Level.SEVERE, message);
-        traceReaderInfo(reader);
-        return new JsonDeserializationException(message);
-    }
+  /**
+   * builder
+   *
+   * @return a {@link org.dominokit.jacksonapt.DefaultJsonDeserializationContext.Builder} object.
+   */
+  public static Builder builder() {
+    return new DefaultBuilder();
+  }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Trace an error and returns a corresponding exception.
-     */
-    @Override
-    public RuntimeException traceError(RuntimeException cause) {
-        getLogger().log(Level.SEVERE, "Error during deserialization", cause);
-        if (wrapExceptions) {
-            return new JsonDeserializationException(cause);
-        } else {
-            return cause;
-        }
-    }
+  private static final Logger logger = Logger.getLogger("JsonDeserialization");
 
-    /**
-     * {@inheritDoc}
-     *
-     * Trace an error with current reader state and returns a corresponding exception.
-     */
-    @Override
-    public RuntimeException traceError(RuntimeException cause, JsonReader reader) {
-        RuntimeException exception = traceError(cause);
-        traceReaderInfo(reader);
-        return exception;
-    }
+  private Map<IdKey, Object> idToObject;
 
-    /**
-     * Trace the current reader state
-     */
-    private void traceReaderInfo(JsonReader reader) {
-        if (null != reader && getLogger().isLoggable(Level.INFO)) {
-            getLogger().log(Level.INFO, "Error at line " + reader.getLineNumber() + " and column " + reader
-                    .getColumnNumber() + " of input <" + reader.getInput() + ">");
-        }
-    }
+  /*
+   * Deserialization options
+   */
+  private final boolean failOnUnknownProperties;
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>addObjectId</p>
-     */
-    @Override
-    public void addObjectId(IdKey id, Object instance) {
-        if (null == idToObject) {
-            idToObject = new HashMap<IdKey, Object>();
-        }
-        idToObject.put(id, instance);
-    }
+  private final boolean unwrapRootValue;
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>getObjectWithId</p>
-     */
-    @Override
-    public Object getObjectWithId(IdKey id) {
-        if (null != idToObject) {
-            return idToObject.get(id);
-        }
-        return null;
-    }
+  private final boolean acceptSingleValueAsArray;
 
-    /** {@inheritDoc} */
-    @Override
-    public JsonDeserializerParameters defaultParameters() {
-        return JacksonContextProvider.get().defaultDeserializerParameters();
+  private final boolean wrapExceptions;
+
+  private final boolean useSafeEval;
+
+  private final boolean readUnknownEnumValuesAsNull;
+
+  private final boolean useBrowserTimezone;
+
+  private DefaultJsonDeserializationContext(
+      boolean failOnUnknownProperties,
+      boolean unwrapRootValue,
+      boolean acceptSingleValueAsArray,
+      boolean wrapExceptions,
+      boolean useSafeEval,
+      boolean readUnknownEnumValuesAsNull,
+      boolean useBrowserTimezone) {
+    this.failOnUnknownProperties = failOnUnknownProperties;
+    this.unwrapRootValue = unwrapRootValue;
+    this.acceptSingleValueAsArray = acceptSingleValueAsArray;
+    this.wrapExceptions = wrapExceptions;
+    this.useSafeEval = useSafeEval;
+    this.readUnknownEnumValuesAsNull = readUnknownEnumValuesAsNull;
+    this.useBrowserTimezone = useBrowserTimezone;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Logger getLogger() {
+    return logger;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isFailOnUnknownProperties
+   *
+   * @see Builder#failOnUnknownProperties(boolean)
+   */
+  @Override
+  public boolean isFailOnUnknownProperties() {
+    return failOnUnknownProperties;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isUnwrapRootValue
+   *
+   * @see Builder#unwrapRootValue(boolean)
+   */
+  @Override
+  public boolean isUnwrapRootValue() {
+    return unwrapRootValue;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isAcceptSingleValueAsArray
+   *
+   * @see Builder#acceptSingleValueAsArray(boolean)
+   */
+  @Override
+  public boolean isAcceptSingleValueAsArray() {
+    return acceptSingleValueAsArray;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isUseSafeEval
+   *
+   * @see Builder#useSafeEval(boolean)
+   */
+  @Override
+  public boolean isUseSafeEval() {
+    return useSafeEval;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isReadUnknownEnumValuesAsNull
+   *
+   * @see Builder#readUnknownEnumValuesAsNull(boolean)
+   */
+  @Override
+  public boolean isReadUnknownEnumValuesAsNull() {
+    return readUnknownEnumValuesAsNull;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>isUseBrowserTimezone
+   *
+   * @see Builder#isUseBrowserTimezone()
+   */
+  @Override
+  public boolean isUseBrowserTimezone() {
+    return useBrowserTimezone;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>newJsonReader
+   */
+  @Override
+  public JsonReader newJsonReader(String input) {
+    JsonReader reader = new NonBufferedJsonReader(input);
+    reader.setLenient(true);
+    return reader;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Trace an error with current reader state and returns a corresponding exception.
+   */
+  @Override
+  public JsonDeserializationException traceError(String message) {
+    return traceError(message, null);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Trace an error with current reader state and returns a corresponding exception.
+   */
+  @Override
+  public JsonDeserializationException traceError(String message, JsonReader reader) {
+    getLogger().log(Level.SEVERE, message);
+    traceReaderInfo(reader);
+    return new JsonDeserializationException(message);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Trace an error and returns a corresponding exception.
+   */
+  @Override
+  public RuntimeException traceError(RuntimeException cause) {
+    getLogger().log(Level.SEVERE, "Error during deserialization", cause);
+    if (wrapExceptions) {
+      return new JsonDeserializationException(cause);
+    } else {
+      return cause;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>Trace an error with current reader state and returns a corresponding exception.
+   */
+  @Override
+  public RuntimeException traceError(RuntimeException cause, JsonReader reader) {
+    RuntimeException exception = traceError(cause);
+    traceReaderInfo(reader);
+    return exception;
+  }
+
+  /** Trace the current reader state */
+  private void traceReaderInfo(JsonReader reader) {
+    if (null != reader && getLogger().isLoggable(Level.INFO)) {
+      getLogger()
+          .log(
+              Level.INFO,
+              "Error at line "
+                  + reader.getLineNumber()
+                  + " and column "
+                  + reader.getColumnNumber()
+                  + " of input <"
+                  + reader.getInput()
+                  + ">");
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>addObjectId
+   */
+  @Override
+  public void addObjectId(IdKey id, Object instance) {
+    if (null == idToObject) {
+      idToObject = new HashMap<IdKey, Object>();
+    }
+    idToObject.put(id, instance);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <p>getObjectWithId
+   */
+  @Override
+  public Object getObjectWithId(IdKey id) {
+    if (null != idToObject) {
+      return idToObject.get(id);
+    }
+    return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public JsonDeserializerParameters defaultParameters() {
+    return JacksonContextProvider.get().defaultDeserializerParameters();
+  }
 }

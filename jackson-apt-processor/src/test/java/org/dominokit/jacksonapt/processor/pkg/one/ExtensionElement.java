@@ -14,50 +14,47 @@
  * limitations under the License.
  */
 
-
 package org.dominokit.jacksonapt.processor.pkg.one;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Import.class, name = "import")
-})
+@JsonSubTypes({@JsonSubTypes.Type(value = Import.class, name = "import")})
 public class ExtensionElement {
 
-    private String name;
+  private String name;
 
-    public ExtensionElement() {
+  public ExtensionElement() {}
+
+  public ExtensionElement(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ExtensionElement)) {
+      return false;
     }
 
-    public ExtensionElement(String name) {
-        this.name = name;
-    }
+    ExtensionElement that = (ExtensionElement) o;
 
-    public String getName() {
-        return name;
-    }
+    return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (!(o instanceof ExtensionElement)) {
-            return false;
-        }
-
-        ExtensionElement that = (ExtensionElement) o;
-
-        return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return getName() != null ? getName().hashCode() : 0;
-    }
-
+  @Override
+  public int hashCode() {
+    return getName() != null ? getName().hashCode() : 0;
+  }
 }

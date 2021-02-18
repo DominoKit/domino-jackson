@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Ahmad Bawaneh
+ * Copyright © 2019 Dominokit
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,28 @@
  */
 package org.dominokit.jacksonapt.deser.bean;
 
-
-import org.dominokit.jacksonapt.GwtIncompatible;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.dominokit.jacksonapt.GwtIncompatible;
 
 /**
- * <p>DefaultMapLike class.</p>
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for a map implementation that works in JVM, this implementation will be stripped out
+ * during GWT/J2CL compilation. for the browser implementation please check {@link JsMapLike}
  */
 @GwtIncompatible
 public class DefaultMapLike<T> implements MapLike<T> {
 
-    private Map<String, T> map = new HashMap<>();
+  private Map<String, T> map = new HashMap<>();
 
-    /** {@inheritDoc} */
-    @Override
-    public T get(String key) {
-        return map.get(key);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public T get(String key) {
+    return map.get(key);
+  }
 
-    /** {@inheritDoc} */
-    @Override
-    public void put(String key, T value) {
-        map.put(key, value);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void put(String key, T value) {
+    map.put(key, value);
+  }
 }

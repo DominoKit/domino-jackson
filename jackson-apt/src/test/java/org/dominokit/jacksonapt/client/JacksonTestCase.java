@@ -21,23 +21,21 @@ import org.dominokit.jacksonapt.DefaultJsonSerializationContext;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public abstract class JacksonTestCase extends GwtJacksonTestCase {
 
-    @Override
-    public String getModuleName() {
-        return "org.dominokit.jacksonapt.GwtJacksonAptJunit";
-    }
+  @Override
+  public String getModuleName() {
+    return "org.dominokit.jacksonapt.GwtJacksonAptJunit";
+  }
 
-    @Override
-    protected JsonDeserializationContext newDefaultDeserializationContext() {
-        return DefaultJsonDeserializationContext.builder().build();
-    }
+  @Override
+  protected JsonDeserializationContext newDefaultDeserializationContext() {
+    return DefaultJsonDeserializationContext.builder().build();
+  }
 
-    @Override
-    protected JsonSerializationContext newDefaultSerializationContext() {
-        return DefaultJsonSerializationContext.builder().build();
-    }
+  @Override
+  protected JsonSerializationContext newDefaultSerializationContext() {
+    return DefaultJsonSerializationContext.builder().build();
+  }
 }

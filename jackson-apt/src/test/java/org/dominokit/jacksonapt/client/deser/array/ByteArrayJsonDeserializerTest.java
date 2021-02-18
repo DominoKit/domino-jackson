@@ -16,55 +16,51 @@
 
 package org.dominokit.jacksonapt.client.deser.array;
 
+import java.util.Arrays;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jacksonapt.deser.array.PrimitiveByteArrayJsonDeserializer;
 
-import java.util.Arrays;
-
-/**
- * Test byte array deserialization.
- */
+/** Test byte array deserialization. */
 public class ByteArrayJsonDeserializerTest extends AbstractJsonDeserializerTest<byte[]> {
 
-    @Override
-    protected JsonDeserializer<byte[]> createDeserializer() {
-        return PrimitiveByteArrayJsonDeserializer.getInstance();
+  @Override
+  protected JsonDeserializer<byte[]> createDeserializer() {
+    return PrimitiveByteArrayJsonDeserializer.getInstance();
+  }
+
+  @Override
+  public void testDeserializeValue() {
+    assertDeserialization(new byte[] {0, 11, 22, 33}, "\"AAsWIQ==\"");
+    assertDeserialization(new byte[] {0, -11, -22, -33}, "\"APXq3w==\"");
+    assertDeserialization(new byte[] {0, 100, -100, 0}, "\"AGScAA==\"");
+    assertDeserialization(new byte[0], "\"\"");
+  }
+
+  protected void assertDeserialization(byte[] expected, String value) {
+    assertEquals(expected, deserialize(value));
+  }
+
+  // GwtTestCase has not assert method for arrays
+  private void assertEquals(byte[] expected, byte[] deserialized) {
+    if (!Arrays.equals(expected, deserialized)) {
+      fail("expected: " + format(expected) + ", actual: " + format(deserialized));
+    }
+  }
+
+  private static String format(byte[] value) {
+    if (value == null) {
+      return "null";
     }
 
-    @Override
-    public void testDeserializeValue() {
-        assertDeserialization(new byte[]{0, 11, 22, 33}, "\"AAsWIQ==\"");
-        assertDeserialization(new byte[]{0, -11, -22, -33}, "\"APXq3w==\"");
-        assertDeserialization(new byte[]{0, 100, -100, 0}, "\"AGScAA==\"");
-        assertDeserialization(new byte[0], "\"\"");
+    StringBuilder builder = new StringBuilder("<");
+    String sep = "";
+    for (byte b : value) {
+      builder.append(sep).append(b);
+      sep = ",";
     }
+    builder.append(">");
 
-    protected void assertDeserialization(byte[] expected, String value) {
-        assertEquals(expected, deserialize(value));
-    }
-
-    // GwtTestCase has not assert method for arrays
-    private void assertEquals(byte[] expected, byte[] deserialized) {
-        if (!Arrays.equals(expected, deserialized)) {
-            fail("expected: " + format(expected) + ", actual: " + format(deserialized));
-        }
-    }
-
-    private static String format(byte[] value) {
-        if (value == null) {
-            return "null";
-        }
-
-        StringBuilder builder = new StringBuilder("<");
-        String sep = "";
-        for (byte b : value) {
-            builder.append(sep).append(b);
-            sep = ",";
-        }
-        builder.append(">");
-
-        return builder.toString();
-    }
-
+    return builder.toString();
+  }
 }

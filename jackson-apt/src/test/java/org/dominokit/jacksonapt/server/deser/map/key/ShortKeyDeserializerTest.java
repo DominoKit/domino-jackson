@@ -19,22 +19,20 @@ package org.dominokit.jacksonapt.server.deser.map.key;
 import org.dominokit.jacksonapt.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-/**
- * @author Nicolas Morel
- */
+/** @author Nicolas Morel */
 public class ShortKeyDeserializerTest extends AbstractKeyDeserializerTest<Short> {
 
-    @Override
-    protected BaseNumberKeyDeserializer.ShortKeyDeserializer createDeserializer() {
-        return BaseNumberKeyDeserializer.ShortKeyDeserializer.getInstance();
-    }
+  @Override
+  protected BaseNumberKeyDeserializer.ShortKeyDeserializer createDeserializer() {
+    return BaseNumberKeyDeserializer.ShortKeyDeserializer.getInstance();
+  }
 
-    @Override
-    @Test
-	public void testDeserializeValue() {
-        assertDeserialization(new Short("34"), "34");
-        assertDeserialization(new Short("-1"), "-1");
-        assertDeserialization(Short.MIN_VALUE, "-32768");
-        assertDeserialization(Short.MAX_VALUE, "32767");
-    }
+  @Override
+  @Test
+  public void testDeserializeValue() {
+    assertDeserialization(new Short("34"), "34");
+    assertDeserialization(new Short("-1"), "-1");
+    assertDeserialization(Short.MIN_VALUE, "-32768");
+    assertDeserialization(Short.MAX_VALUE, "32767");
+  }
 }
