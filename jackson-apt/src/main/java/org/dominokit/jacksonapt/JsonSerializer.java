@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Base class for all the serializer. It handles null values and exceptions. The rest is delegated
  * to implementations.
- *
- * @author Nicolas Morel
- * @version $Id: $Id
  */
 public abstract class JsonSerializer<T> {
 

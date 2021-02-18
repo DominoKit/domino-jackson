@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * DefaultIntegerArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The default JVM implementation for reading a Integer array json */
 @GwtIncompatible
 public class DefaultIntegerArrayReader implements JacksonContext.IntegerArrayReader {
   /** {@inheritDoc} */

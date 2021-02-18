@@ -25,9 +25,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 /**
  * Delegate the deserialization of a subtype to a corresponding {@link
  * org.dominokit.jacksonapt.deser.bean.AbstractBeanJsonDeserializer}
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
     extends HasDeserializer<T, D> implements InternalDeserializer<T, D> {
@@ -35,12 +32,20 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
   /**
    * Delegate the deserialization of a subtype to a corresponding {@link
    * AbstractBeanJsonDeserializer}
-   *
-   * @author Nicolas Morel
    */
   public abstract static class BeanSubtypeDeserializer<T>
       extends SubtypeDeserializer<T, AbstractBeanJsonDeserializer<T>> {
-
+    /**
+     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+     * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo}
+     *     object.
+     * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
+     * @param typeInformation a {@link java.lang.String} object.
+     * @param bufferedProperties a {@link java.util.Map} object.
+     * @return
+     */
     @Override
     public T deserializeInline(
         JsonReader reader,
@@ -55,6 +60,16 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
               reader, ctx, params, identityInfo, typeInfo, typeInformation, bufferedProperties);
     }
 
+    /**
+     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+     * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo}
+     *     object.
+     * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
+     * @param typeInformation a {@link java.lang.String} object.
+     * @return
+     */
     @Override
     public T deserializeWrapped(
         JsonReader reader,
@@ -68,14 +83,21 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
     }
   }
 
-  /**
-   * Delegate the deserialization of a subtype to a corresponding {@link JsonDeserializer}
-   *
-   * @author Nicolas Morel.
-   */
+  /** Delegate the deserialization of a subtype to a corresponding {@link JsonDeserializer} */
   public abstract static class DefaultSubtypeDeserializer<T>
       extends SubtypeDeserializer<T, JsonDeserializer<T>> {
 
+    /**
+     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+     * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo}
+     *     object.
+     * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
+     * @param typeInformation a {@link java.lang.String} object.
+     * @param bufferedProperties a {@link java.util.Map} object.
+     * @return
+     */
     @Override
     public T deserializeInline(
         JsonReader reader,
@@ -89,6 +111,16 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
           "Cannot deserialize into a bean when not using an AbstractBeanJsonDeserializer");
     }
 
+    /**
+     * @param reader a {@link org.dominokit.jacksonapt.stream.JsonReader} object.
+     * @param ctx a {@link org.dominokit.jacksonapt.JsonDeserializationContext} object.
+     * @param params a {@link org.dominokit.jacksonapt.JsonDeserializerParameters} object.
+     * @param identityInfo a {@link org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo}
+     *     object.
+     * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
+     * @param typeInformation a {@link java.lang.String} object.
+     * @return
+     */
     @Override
     public T deserializeWrapped(
         JsonReader reader,

@@ -37,9 +37,6 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 /**
  * Thrown when a reader encounters malformed JSON. Some syntax errors can be ignored by calling
  * {@link org.dominokit.jacksonapt.stream.JsonReader#setLenient(boolean)}.
- *
- * @author nicolasmorel
- * @version $Id: $
  */
 public final class MalformedJsonException extends JsonDeserializationException {
   private static final long serialVersionUID = 1L;

@@ -19,12 +19,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * JsonDeserializationContext interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsonDeserializationContext interface. */
 public interface JsonDeserializationContext extends JsonMappingContext {
   /**
    * isFailOnUnknownProperties.

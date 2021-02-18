@@ -51,12 +51,7 @@ import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * AptDeserializerBuilder class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** Generate a Deserializer for a type. */
 public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
 
   private static final WildcardTypeName DEFAULT_WILDCARD = WildcardTypeName.subtypeOf(Object.class);

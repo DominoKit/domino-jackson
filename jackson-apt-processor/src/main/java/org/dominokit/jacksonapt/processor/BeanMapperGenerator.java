@@ -23,10 +23,8 @@ import javax.lang.model.type.TypeMirror;
 import org.dominokit.jacksonapt.AbstractObjectMapper;
 
 /**
- * BeanMapperGenerator class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * BeanMapperGenerator class. This class will generate a mapper that can Read a json or write a
+ * json.
  */
 public class BeanMapperGenerator extends AbstractMapperGenerator {
   @SuppressWarnings("rawtypes")
@@ -43,11 +41,21 @@ public class BeanMapperGenerator extends AbstractMapperGenerator {
         .collect(Collectors.toList());
   }
 
+  /**
+   * This method will generate a Serializer -writer- implementation for the target bean type.
+   *
+   * @param beanType the {@link TypeMirror} of the target bean.
+   */
   @Override
   protected void generateSerializer(TypeMirror beanType) {
     new SerializerGenerator().generate(beanType);
   }
 
+  /**
+   * This method will generate a Deserializer -reader- implementation for the target bean type.
+   *
+   * @param beanType the {@link TypeMirror} of the target bean.
+   */
   @Override
   protected void generateDeserializer(TypeMirror beanType) {
     new DeserializerGenerator().generate(beanType);

@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of double.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PrimitiveDoubleArray2dJsonDeserializer
     extends AbstractArray2dJsonDeserializer<double[][]> {

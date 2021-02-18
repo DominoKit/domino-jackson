@@ -39,12 +39,7 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.stream.Stack;
 
-/**
- * FastJsonWriter class.
- *
- * @author nicolasmorel
- * @version $Id: $
- */
+/** FastJsonWriter class. */
 public class FastJsonWriter implements JsonWriter {
 
   private static final Logger logger = Logger.getLogger("JsonWriter");

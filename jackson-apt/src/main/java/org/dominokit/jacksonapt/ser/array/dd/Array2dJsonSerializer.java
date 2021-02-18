@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array.
  *
  * @param <T> Type of the elements inside the array
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class Array2dJsonSerializer<T> extends JsonSerializer<T[][]> {
 

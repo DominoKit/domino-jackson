@@ -26,12 +26,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for dates.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for dates. */
 public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeserializer<D> {
 
   /** Default implementation of {@link BaseDateJsonDeserializer} for {@link Date} */

@@ -33,10 +33,8 @@ import org.dominokit.jacksonapt.deser.map.key.DateKeyParser;
 import org.dominokit.jacksonapt.deser.map.key.DefaultDateKeyParser;
 
 /**
- * DefaultDateFormat class.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * A date format wrapper that works in the JVM, this implementation will be stripped out during the
+ * GWT/J2CL compilation. to see the browser implementation please check {@link JsDateFormat}
  */
 @GwtIncompatible
 public final class DefaultDateFormat implements JacksonContext.DateFormat {

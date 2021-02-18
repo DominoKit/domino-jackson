@@ -49,10 +49,10 @@ import org.dominokit.jacksonapt.ser.map.MapJsonSerializer;
 import org.dominokit.jacksonapt.ser.map.key.*;
 
 /**
- * TypeRegistry class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * TypeRegistry class. This class will initially contains a registry of all predefined json
+ * serializers/deserializer for a set of predefined types. and during annotation processing of a a
+ * bean type it will also dynamically register new generated serializers/deserializer for any custom
+ * type.
  */
 public final class TypeRegistry {
 
@@ -924,6 +924,7 @@ public final class TypeRegistry {
     }
   }
 
+  /** Hold information about a specific type serializer/deserializer */
   public static class ClassMapper {
 
     private final String clazz;
@@ -966,26 +967,38 @@ public final class TypeRegistry {
     }
   }
 
+  /** @param typeMirror {@link TypeMirror} */
   public static void addInActiveGenSerializer(TypeMirror typeMirror) {
     inActiveGenSerializers.add(Type.stringifyTypeWithPackage(typeMirror));
   }
 
+  /** @param typeMirror {@link TypeMirror} */
   public static void addInActiveGenDeserializer(TypeMirror typeMirror) {
     inActiveGenDeserializers.add(Type.stringifyTypeWithPackage(typeMirror));
   }
 
+  /** @param typeMirror {@link TypeMirror} */
   public static void removeInActiveGenSerializer(TypeMirror typeMirror) {
     inActiveGenSerializers.remove(Type.stringifyTypeWithPackage(typeMirror));
   }
 
+  /** @param typeMirror {@link TypeMirror} */
   public static void removeInActiveGenDeserializer(TypeMirror typeMirror) {
     inActiveGenDeserializers.remove(Type.stringifyTypeWithPackage(typeMirror));
   }
 
+  /**
+   * @param typeMirror {@link TypeMirror}
+   * @return boolean
+   */
   public static boolean isInActiveGenSerializer(TypeMirror typeMirror) {
     return inActiveGenSerializers.contains(Type.stringifyTypeWithPackage(typeMirror));
   }
 
+  /**
+   * @param typeMirror {@link TypeMirror}
+   * @return boolean
+   */
   public static boolean isInActiveGenDeserializer(TypeMirror typeMirror) {
     return inActiveGenDeserializers.contains(Type.stringifyTypeWithPackage(typeMirror));
   }

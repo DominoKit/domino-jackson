@@ -21,14 +21,13 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * Abstract BaseJsNumberArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The base implementation for reading a number array json */
 public abstract class BaseJsNumberArrayReader {
 
+  /**
+   * @param reader {@link JsonReader}
+   * @return {@link JsArray<JsNumber>}
+   */
   JsArray<JsNumber> readNumberArray(JsonReader reader) {
     JsArray<JsNumber> jsArray = new JsArray<>();
     reader.beginArray();

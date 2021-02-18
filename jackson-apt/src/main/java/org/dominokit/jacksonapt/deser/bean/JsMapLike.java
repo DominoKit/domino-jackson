@@ -20,10 +20,8 @@ import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 
 /**
- * JsMapLike class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for a map implementation that works in the browser. for the JVM implementation please
+ * check {@link DefaultMapLike}
  */
 public class JsMapLike<T> implements MapLike<T> {
 

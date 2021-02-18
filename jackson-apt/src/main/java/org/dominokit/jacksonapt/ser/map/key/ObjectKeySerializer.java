@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 /**
  * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
  * java.lang.Object}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class ObjectKeySerializer extends KeySerializer<Object> {
 

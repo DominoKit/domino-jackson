@@ -28,8 +28,6 @@ import org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer;
  *
  * @param <E> Type of the enum keys inside the {@link java.util.EnumMap}
  * @param <V> Type of the values inside the {@link java.util.EnumMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class EnumMapJsonDeserializer<E extends Enum<E>, V>
     extends BaseMapJsonDeserializer<EnumMap<E, V>, E, V> {

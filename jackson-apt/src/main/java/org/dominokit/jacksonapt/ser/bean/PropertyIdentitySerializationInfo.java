@@ -18,12 +18,7 @@ package org.dominokit.jacksonapt.ser.bean;
 
 import org.dominokit.jacksonapt.JsonSerializationContext;
 
-/**
- * Contains identity informations for serialization process.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Contains identity information for serialization process. */
 public abstract class PropertyIdentitySerializationInfo<T, V> extends BeanPropertySerializer<T, V>
     implements IdentitySerializationInfo<T> {
 

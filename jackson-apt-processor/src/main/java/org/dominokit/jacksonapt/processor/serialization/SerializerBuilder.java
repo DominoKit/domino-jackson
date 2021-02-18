@@ -39,6 +39,7 @@ import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.ser.bean.BeanPropertySerializer;
 import org.dominokit.jacksonapt.stream.impl.DefaultJsonWriter;
 
+/** A class that generates a deserializer for a pojo. */
 class SerializerBuilder extends AccessorsFilter {
 
   private final TypeMirror beanType;

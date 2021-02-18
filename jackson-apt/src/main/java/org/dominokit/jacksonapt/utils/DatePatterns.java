@@ -15,7 +15,10 @@
  */
 package org.dominokit.jacksonapt.utils;
 
+/** A constant class for listing some common date time formatting patterns. */
 public class DatePatterns {
+  /** ISO8601 <b>yyyy-MM-dd'T'HH:mm:ss.SSSZ</b> */
   public static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+  /** SHORT <b>yyyy-MM-dd</b> */
   public static final String SHORT = "yyyy-MM-dd";
 }

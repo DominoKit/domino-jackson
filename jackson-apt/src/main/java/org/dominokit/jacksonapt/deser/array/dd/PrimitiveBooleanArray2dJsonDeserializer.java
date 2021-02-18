@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of boolean.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PrimitiveBooleanArray2dJsonDeserializer
     extends AbstractArray2dJsonDeserializer<boolean[][]> {

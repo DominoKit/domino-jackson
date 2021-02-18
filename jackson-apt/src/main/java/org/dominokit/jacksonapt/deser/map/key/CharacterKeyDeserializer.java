@@ -21,9 +21,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 /**
  * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
  * java.lang.Character}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class CharacterKeyDeserializer extends KeyDeserializer<Character> {
 

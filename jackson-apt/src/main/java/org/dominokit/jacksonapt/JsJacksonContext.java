@@ -23,12 +23,7 @@ import org.dominokit.jacksonapt.deser.bean.JsMapLike;
 import org.dominokit.jacksonapt.stream.impl.JsIntegerStack;
 import org.dominokit.jacksonapt.utils.JsDateFormat;
 
-/**
- * JsJacksonContext class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** An implementation of {@link JacksonContext} that works in the browser */
 public class JsJacksonContext implements JacksonContext {
   /** {@inheritDoc} */
   @Override
@@ -90,11 +85,13 @@ public class JsJacksonContext implements JacksonContext {
     return GwtJacksonJsonDeserializerParameters.DEFAULT;
   }
 
+  /** {@inheritDoc} */
   @Override
   public JsonSerializerParameters newSerializerParameters() {
     return new GwtJacksonJsonSerializerParameters(defaultSerializerParameters());
   }
 
+  /** {@inheritDoc} */
   @Override
   public JsonDeserializerParameters newDeserializerParameters() {
     return new GwtJacksonJsonDeserializerParameters(defaultDeserializerParameters());

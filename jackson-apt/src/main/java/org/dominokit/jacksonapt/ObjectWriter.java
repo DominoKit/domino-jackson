@@ -41,8 +41,6 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
  * </pre>
  *
  * @param <T> Type of the object to write
- * @author Nicolas Morel
- * @version $Id: $
  */
 public interface ObjectWriter<T> {
 

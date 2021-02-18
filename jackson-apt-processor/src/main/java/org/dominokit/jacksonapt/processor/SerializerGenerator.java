@@ -26,8 +26,7 @@ import org.dominokit.jacksonapt.processor.serialization.AptSerializerBuilder;
 /**
  * SerializerGenerator class.
  *
- * @author vegegoku
- * @version $Id: $Id
+ * <p>This class will generate a Serializer to write a json.
  */
 public class SerializerGenerator {
 

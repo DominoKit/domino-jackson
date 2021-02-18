@@ -18,6 +18,7 @@ package org.dominokit.jacksonapt;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
+/** JsInterop implementation to use the browser built in JSON object. */
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class JSON {
   public static native String stringify(Object jsonObj);

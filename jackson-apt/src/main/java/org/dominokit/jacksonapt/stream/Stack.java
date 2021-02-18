@@ -15,12 +15,7 @@
  */
 package org.dominokit.jacksonapt.stream;
 
-/**
- * Stack interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** Stack interface. */
 public interface Stack<T> {
   /**
    * setAt.

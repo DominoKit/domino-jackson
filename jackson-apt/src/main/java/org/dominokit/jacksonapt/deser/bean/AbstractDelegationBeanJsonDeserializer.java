@@ -20,12 +20,7 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Abstract AbstractDelegationBeanJsonDeserializer class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractDelegationBeanJsonDeserializer class. */
 @SuppressWarnings("UnusedDeclaration")
 public abstract class AbstractDelegationBeanJsonDeserializer<T>
     extends AbstractBeanJsonDeserializer<T> {

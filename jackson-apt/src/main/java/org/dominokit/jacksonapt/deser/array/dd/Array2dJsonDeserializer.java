@@ -22,16 +22,15 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array. */
 public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<T[][]> {
 
+  /**
+   * A functional interface for creating a 2 dimensional array.
+   *
+   * @param <T> the type of the array elements.
+   */
   public interface Array2dCreator<T> {
-
     T[][] create(int first, int second);
   }
 
@@ -102,7 +101,14 @@ public class Array2dJsonDeserializer<T> extends AbstractArray2dJsonDeserializer<
     return array;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {
+   *
+   * @param referenceName {@link java.lang.String} name of the reference
+   * @param reference {@link java.lang.Object} reference to set
+   * @param value value to set the reference to.
+   * @param ctx {@link JsonDeserializationContext} Context for the full deserialization process
+   */
   @Override
   public void setBackReference(
       String referenceName, Object reference, T[][] value, JsonDeserializationContext ctx) {

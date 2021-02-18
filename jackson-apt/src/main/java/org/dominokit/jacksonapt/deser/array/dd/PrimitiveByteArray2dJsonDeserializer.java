@@ -27,9 +27,6 @@ import org.dominokit.jacksonapt.utils.Base64Utils;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of byte.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PrimitiveByteArray2dJsonDeserializer
     extends AbstractArray2dJsonDeserializer<byte[][]> {

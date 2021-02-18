@@ -21,15 +21,13 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * JsShortArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The JS implementation for reading a Short array json */
 public class JsShortArrayReader extends BaseJsNumberArrayReader
     implements JacksonContext.ShortArrayReader {
-  /** {@inheritDoc} */
+  /**
+   * @param reader {@link JsonReader}
+   * @return Short[]
+   */
   @Override
   public short[] readArray(JsonReader reader) {
     return reinterpretCast(super.readNumberArray(reader));

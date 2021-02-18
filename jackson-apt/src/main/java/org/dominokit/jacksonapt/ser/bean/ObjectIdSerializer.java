@@ -23,9 +23,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Contains the id of a bean and a serializer to facilitate the serialization of the next instances
  * of the object.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class ObjectIdSerializer<I> {
 

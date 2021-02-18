@@ -27,8 +27,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  * java.lang.Iterable}.
  *
  * @param <T> Type of the elements inside the {@link java.lang.Iterable}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class IterableJsonSerializer<I extends Iterable<T>, T> extends JsonSerializer<I> {
 

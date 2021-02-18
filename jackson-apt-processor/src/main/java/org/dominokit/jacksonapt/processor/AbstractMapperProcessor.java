@@ -32,10 +32,8 @@ import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONWriter;
 
 /**
- * Abstract AbstractMapperProcessor class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Abstract AbstractMapperProcessor class. This abstract class has common utility used in all
+ * annotation processors of this project.
  */
 public abstract class AbstractMapperProcessor extends AbstractProcessor {
 

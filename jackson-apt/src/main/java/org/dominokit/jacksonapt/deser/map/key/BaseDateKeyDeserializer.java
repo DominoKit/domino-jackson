@@ -25,9 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 /**
  * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for dates.
  * It uses both ISO-8601 and RFC-2822 for string-based key and milliseconds for number-based key.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeserializer<D>
     implements DateDeserializer<D> {

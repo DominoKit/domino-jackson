@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.TreeSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.TreeSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class TreeSetJsonDeserializer<T> extends BaseSortedSetJsonDeserializer<TreeSet<T>, T> {
 

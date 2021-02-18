@@ -25,9 +25,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
  * java.lang.Character}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class CharacterJsonDeserializer extends JsonDeserializer<Character> {
 

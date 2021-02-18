@@ -22,12 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Lazy initialize a {@link org.dominokit.jacksonapt.JsonDeserializer}
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Lazy initialize a {@link org.dominokit.jacksonapt.JsonDeserializer} */
 public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer<V>>
     extends HasDeserializer<V, S> {
 
@@ -57,8 +52,8 @@ public abstract class HasDeserializerAndParameters<V, S extends JsonDeserializer
   /**
    * Deserializes the property defined for this instance.
    *
-   * @param reader reader
-   * @param ctx context of the deserialization process
+   * @param reader a {@link JsonReader} reader
+   * @param ctx a {@link JsonDeserializationContext} context of the deserialization process
    * @return a V object.
    */
   public V deserialize(JsonReader reader, JsonDeserializationContext ctx) {

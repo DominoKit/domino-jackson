@@ -224,10 +224,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  *
  * <p>Each {@code JsonReader} may be used to read a single JSON stream. Instances of this class are
  * not thread safe.
- *
- * @author Jesse Wilson
- * @version $Id: $
- * @since 1.6
  */
 public class DefaultJsonReader implements org.dominokit.jacksonapt.stream.JsonReader {
   private static final Logger logger = Logger.getLogger("JsonReader");

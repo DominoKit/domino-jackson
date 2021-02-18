@@ -25,22 +25,17 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array. */
 public abstract class AbstractArray2dJsonDeserializer<T> extends JsonDeserializer<T> {
 
   /**
    * Deserializes the array into a {@link java.util.List}. We need the length of the array before
    * creating it.
    *
-   * @param reader reader
-   * @param ctx context of the deserialization process
-   * @param deserializer deserializer for element inside the array
-   * @param params Parameters for the deserializer
+   * @param reader {@link JsonReader}
+   * @param ctx {@link JsonDeserializationContext} context of the deserialization process
+   * @param deserializer {@link JsonDeserializer} deserializer for element inside the array
+   * @param params {@link JsonDeserializerParameters} Parameters for the deserializer
    * @param <C> type of the element inside the array
    * @return a list containing all the elements of the array
    */

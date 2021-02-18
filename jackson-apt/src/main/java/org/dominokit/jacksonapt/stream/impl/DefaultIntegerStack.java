@@ -19,10 +19,9 @@ import org.dominokit.jacksonapt.GwtIncompatible;
 import org.dominokit.jacksonapt.stream.Stack;
 
 /**
- * DefaultIntegerStack class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for an Integer Stack implementation that works in JVM, this implementation will be
+ * stripped out during GWT/J2CL compilation. for the browser implementation please check {@link
+ * JsIntegerStack}
  */
 @GwtIncompatible
 public class DefaultIntegerStack implements Stack<Integer> {

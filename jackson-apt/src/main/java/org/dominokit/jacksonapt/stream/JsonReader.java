@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.stream;
 
-/**
- * JsonReader interface.
- *
- * @author nicolasmorel
- * @version $Id: $
- */
+/** JsonReader interface. */
 public interface JsonReader {
 
   /**

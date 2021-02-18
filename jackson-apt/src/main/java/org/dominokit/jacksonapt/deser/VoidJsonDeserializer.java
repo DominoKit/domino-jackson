@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
  * java.lang.Void}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class VoidJsonDeserializer extends JsonDeserializer<Void> {
 

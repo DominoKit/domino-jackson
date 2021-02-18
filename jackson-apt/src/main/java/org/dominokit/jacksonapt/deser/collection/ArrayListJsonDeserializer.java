@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.ArrayList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.ArrayList}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class ArrayListJsonDeserializer<T> extends BaseListJsonDeserializer<ArrayList<T>, T> {
 

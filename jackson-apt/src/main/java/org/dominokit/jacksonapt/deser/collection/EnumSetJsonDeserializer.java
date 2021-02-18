@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.deser.EnumJsonDeserializer;
  * java.util.EnumSet}.
  *
  * @param <E> Type of the enumeration inside the {@link java.util.EnumSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class EnumSetJsonDeserializer<E extends Enum<E>>
     extends BaseSetJsonDeserializer<EnumSet<E>, E> {

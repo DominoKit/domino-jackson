@@ -31,9 +31,6 @@ import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
  * com.fasterxml.jackson.annotation.JsonFormat}. They are specific to one {@link
  * org.dominokit.jacksonapt.JsonSerializer} and that's why they are not contained inside {@link
  * org.dominokit.jacksonapt.JsonSerializationContext}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 @GwtIncompatible
 public final class ServerJacksonJsonSerializerParameters implements JsonSerializerParameters {

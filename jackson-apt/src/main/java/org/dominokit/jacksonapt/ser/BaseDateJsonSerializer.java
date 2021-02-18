@@ -26,12 +26,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for dates.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for dates. */
 public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSerializer<D> {
 
   /** Default implementation of {@link BaseDateJsonSerializer} for {@link Date} */
@@ -46,6 +41,7 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private DateJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected void doSerialize(
         JsonWriter writer,
@@ -100,6 +96,7 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private SqlTimeJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected void doSerialize(
         JsonWriter writer,
@@ -122,6 +119,7 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private SqlTimestampJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected void doSerialize(
         JsonWriter writer,

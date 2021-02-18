@@ -20,6 +20,11 @@ import java.util.Collections;
 import java.util.Map;
 import javax.lang.model.type.TypeMirror;
 
+/**
+ * An aggregator class that holds information about a specific Type that is annotated with {@link
+ * com.fasterxml.jackson.annotation.JsonSubTypes} and {@link
+ * com.fasterxml.jackson.annotation.JsonTypeInfo}
+ */
 public class SubTypesInfo {
   private final As include;
   private final String propertyName;

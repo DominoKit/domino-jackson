@@ -26,12 +26,7 @@ import org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.stream.impl.FastJsonWriter;
 
-/**
- * Context for the serialization process.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Context for the serialization process. */
 public class DefaultJsonSerializationContext implements JsonSerializationContext {
 
   /**

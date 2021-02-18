@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.stream.impl;
 
-/**
- * Lexical scoping elements within a JSON reader or writer.
- *
- * @author Jesse Wilson
- * @since 1.6
- */
+/** Lexical scoping elements within a JSON reader or writer. */
 final class JsonScope {
 
   /** An array with no elements requires no separators or newlines before it is closed. */

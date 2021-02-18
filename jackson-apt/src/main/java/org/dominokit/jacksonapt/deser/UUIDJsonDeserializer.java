@@ -25,9 +25,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for {@link
  * java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $Id
  */
 public class UUIDJsonDeserializer extends JsonDeserializer<UUID> {
 

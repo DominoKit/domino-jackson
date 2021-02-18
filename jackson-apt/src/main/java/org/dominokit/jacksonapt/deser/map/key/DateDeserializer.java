@@ -17,12 +17,7 @@ package org.dominokit.jacksonapt.deser.map.key;
 
 import java.util.Date;
 
-/**
- * DateDeserializer interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** DateDeserializer interface. */
 public interface DateDeserializer<D extends Date> {
 
   /**

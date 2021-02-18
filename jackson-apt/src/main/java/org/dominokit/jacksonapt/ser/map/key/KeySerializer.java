@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
 /**
  * Base class for all the {@link java.util.Map} key serializer. It handles null values and
  * exceptions. The rest is delegated to implementations.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class KeySerializer<T> {
 

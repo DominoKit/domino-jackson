@@ -23,20 +23,13 @@ import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.deser.array.AbstractArrayJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of short.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of short. */
 public class PrimitiveShortArrayJsonDeserializer extends AbstractArrayJsonDeserializer<short[]> {
 
   private static final PrimitiveShortArrayJsonDeserializer INSTANCE =
       new PrimitiveShortArrayJsonDeserializer();
 
   /**
-   * getInstance
-   *
    * @return an instance of {@link
    *     org.dominokit.jacksonapt.deser.array.cast.PrimitiveShortArrayJsonDeserializer}
    */

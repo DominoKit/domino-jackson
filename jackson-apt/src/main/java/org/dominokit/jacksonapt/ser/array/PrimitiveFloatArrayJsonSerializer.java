@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of float.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of float. */
 public class PrimitiveFloatArrayJsonSerializer extends JsonSerializer<float[]> {
 
   private static final PrimitiveFloatArrayJsonSerializer INSTANCE =

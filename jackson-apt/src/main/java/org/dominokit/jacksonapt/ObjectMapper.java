@@ -21,7 +21,5 @@ package org.dominokit.jacksonapt;
  * org.dominokit.jacksonapt.ObjectWriter}
  *
  * @param <T> Type of the mapped object
- * @author Nicolas Morel
- * @version $Id: $
  */
 public interface ObjectMapper<T> extends ObjectReader<T>, ObjectWriter<T> {}

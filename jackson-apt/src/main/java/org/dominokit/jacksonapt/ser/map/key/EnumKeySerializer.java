@@ -21,9 +21,6 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 /**
  * Default {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation for {@link
  * java.lang.Enum}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class EnumKeySerializer<E extends Enum<E>> extends KeySerializer<E> {
 

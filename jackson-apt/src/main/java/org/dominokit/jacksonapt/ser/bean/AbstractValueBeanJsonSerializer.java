@@ -20,12 +20,7 @@ import java.util.Set;
 import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Abstract AbstractValueBeanJsonSerializer class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractValueBeanJsonSerializer class. */
 public abstract class AbstractValueBeanJsonSerializer<T> extends AbstractBeanJsonSerializer<T> {
 
   private final BeanPropertySerializer<T, ?> serializer;

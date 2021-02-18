@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of long.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of long. */
 public class PrimitiveLongArray2dJsonSerializer extends JsonSerializer<long[][]> {
 
   private static final PrimitiveLongArray2dJsonSerializer INSTANCE =

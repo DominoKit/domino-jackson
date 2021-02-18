@@ -20,10 +20,8 @@ import java.util.Map;
 import org.dominokit.jacksonapt.GwtIncompatible;
 
 /**
- * DefaultMapLike class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for a map implementation that works in JVM, this implementation will be stripped out
+ * during GWT/J2CL compilation. for the browser implementation please check {@link JsMapLike}
  */
 @GwtIncompatible
 public class DefaultMapLike<T> implements MapLike<T> {

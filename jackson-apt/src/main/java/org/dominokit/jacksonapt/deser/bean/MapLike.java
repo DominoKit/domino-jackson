@@ -15,12 +15,7 @@
  */
 package org.dominokit.jacksonapt.deser.bean;
 
-/**
- * MapLike interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** A wrapper interface for a {@link java.util.Map} */
 public interface MapLike<T> {
 
   /**

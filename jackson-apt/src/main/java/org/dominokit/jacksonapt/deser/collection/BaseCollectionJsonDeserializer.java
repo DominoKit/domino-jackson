@@ -29,8 +29,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
  *
  * @param <C> {@link java.util.Collection} type
  * @param <T> Type of the elements inside the {@link java.util.Collection}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
     extends BaseIterableJsonDeserializer<C, T> {

@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  *
  * @param <S> {@link java.util.Set} type
  * @param <T> Type of the elements inside the {@link java.util.Set}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseSetJsonDeserializer<S extends Set<T>, T>
     extends BaseCollectionJsonDeserializer<S, T> {

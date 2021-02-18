@@ -24,10 +24,11 @@ import org.dominokit.jacksonapt.stream.impl.DefaultIntegerStack;
 import org.dominokit.jacksonapt.utils.DefaultDateFormat;
 
 /**
- * ServerJacksonContext class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * An implementation of {@link JacksonContext} that works in the JVM. This implementation extends
+ * from browser implementation {@link JsJacksonContext} and has all its methods annotated as {@link
+ * GwtIncompatible} The {@link JacksonContextProvider} will always return an instance of this class,
+ * but for a browser environment when we compile the using GWT/J2CL all method are stripped out
+ * leaving only the implementation from the super class thus it works in the browser.
  */
 public class ServerJacksonContext extends JsJacksonContext {
 

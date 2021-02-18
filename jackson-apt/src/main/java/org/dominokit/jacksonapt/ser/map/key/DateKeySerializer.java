@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 
 /**
  * Default implementation of {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} for dates.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class DateKeySerializer<D extends Date> extends KeySerializer<D> {
 

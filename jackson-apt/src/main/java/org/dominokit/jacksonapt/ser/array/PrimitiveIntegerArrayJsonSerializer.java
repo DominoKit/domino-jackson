@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of int.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of int. */
 public class PrimitiveIntegerArrayJsonSerializer extends JsonSerializer<int[]> {
 
   private static final PrimitiveIntegerArrayJsonSerializer INSTANCE =

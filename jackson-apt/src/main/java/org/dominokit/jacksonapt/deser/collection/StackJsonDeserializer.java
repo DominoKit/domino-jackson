@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.Stack}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Stack}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class StackJsonDeserializer<T> extends BaseListJsonDeserializer<Stack<T>, T> {
 

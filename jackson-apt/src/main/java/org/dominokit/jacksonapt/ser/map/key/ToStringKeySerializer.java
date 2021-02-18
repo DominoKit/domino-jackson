@@ -21,9 +21,6 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 /**
  * {@link org.dominokit.jacksonapt.ser.map.key.KeySerializer} implementation that uses {@link
  * java.lang.Object#toString()} method.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class ToStringKeySerializer extends KeySerializer<Object> {
 

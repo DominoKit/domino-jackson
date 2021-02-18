@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  *
  * @param <I> {@link java.lang.Iterable} type
  * @param <T> Type of the elements inside the {@link java.lang.Iterable}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseIterableJsonDeserializer<I extends Iterable<T>, T>
     extends JsonDeserializer<I> {

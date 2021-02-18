@@ -35,16 +35,16 @@ import org.dominokit.jacksonapt.ser.array.dd.Array2dJsonSerializer;
 import org.dominokit.jacksonapt.ser.map.MapJsonSerializer;
 
 /**
- * FieldSerializerChainBuilder class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Generate recursively a chain of Serializers for a specific type. for example for the <code>
+ * List<Long>[]</code> type will result in generating the following Serializers chain <code>
+ * ListJsonDeserializer.newInstance(ArrayJsonDeserializer.newInstance(BaseNumberJsonDeserializer.LongJsonDeserializer.getInstance(), (ArrayJsonDeserializer.ArrayCreator<Long>) Long[]::new))
+ * </code>
  */
 public class FieldSerializerChainBuilder implements MappersChainBuilder {
 
   private static final String GET_INSTANCE = "$T.getInstance()";
   private static final String NEW_INSTANCE = "$T.newInstance(";
-  private boolean rootGenerated = true;
+  private boolean rootGenerated;
 
   private CodeBlock.Builder builder = CodeBlock.builder();
   private Deque<TypeName> serializers = new LinkedList<>();

@@ -39,8 +39,6 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
  * </pre>
  *
  * @param <T> Type of the read object
- * @author Nicolas Morel
- * @version $Id: $
  */
 public interface ObjectReader<T> {
 

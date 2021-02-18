@@ -22,12 +22,7 @@ import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * JsStringArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The JS implementation for reading a String array json */
 public class JsStringArrayReader implements JacksonContext.StringArrayReader {
   /** {@inheritDoc} */
   @Override

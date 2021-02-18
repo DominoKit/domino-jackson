@@ -41,6 +41,11 @@ import org.dominokit.jacksonapt.ObjectWriter;
 import org.dominokit.jacksonapt.processor.deserialization.FieldDeserializersChainBuilder;
 import org.dominokit.jacksonapt.processor.serialization.FieldSerializerChainBuilder;
 
+/**
+ * The implementations of this class will generate a class that represent a high level mapper for
+ * reading or writing a json. the generated mapper can either provide both reader and writer or just
+ * one of them.
+ */
 public abstract class AbstractMapperGenerator implements MapperGenerator {
 
   private String packageName;

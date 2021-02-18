@@ -21,12 +21,7 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * JsIntegerArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The JS implementation for reading a Integer array json */
 public class JsIntegerArrayReader extends BaseJsNumberArrayReader
     implements JacksonContext.IntegerArrayReader {
   /** {@inheritDoc} */

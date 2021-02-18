@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.dominokit.jacksonapt.samples</groupId>
     <artifactId>shared-mappers</artifactId>
-    <version>1.0.0-RC1-SNAPSHOT</version>
+    <version>1.0.0-beta-SNAPSHOT</version>
   </parent>
 
   <artifactId>shared-mappers-server</artifactId>
@@ -29,7 +29,7 @@
     <dependency>
       <groupId>org.dominokit.jackson</groupId>
       <artifactId>jackson-apt-server</artifactId>
-      <version>1.0.0-RC1-SNAPSHOT</version>
+      <version>1.0.0-beta-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

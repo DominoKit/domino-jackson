@@ -35,10 +35,8 @@ import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
 
 /**
- * Abstract AbstractJsonMapperGenerator class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * An abstract Annotation processor to generate mappers for a type. The implementations of this
+ * class will generate either a Serializer of a Deserializer for the target bean type.
  */
 public abstract class AbstractJsonMapperGenerator {
 
@@ -65,7 +63,7 @@ public abstract class AbstractJsonMapperGenerator {
   }
 
   /**
-   * generate.
+   * The entry method for generating a Mapper class.
    *
    * @throws java.io.IOException if any.
    */
@@ -102,28 +100,28 @@ public abstract class AbstractJsonMapperGenerator {
   }
 
   /**
-   * superClass.
+   * The super class for the generated mapper.
    *
    * @return a {@link com.squareup.javapoet.TypeName} object.
    */
   protected abstract TypeName superClass();
 
   /**
-   * namePostfix.
+   * The generated mapper name postfix.
    *
    * @return a {@link java.lang.String} object.
    */
   protected abstract String namePostfix();
 
   /**
-   * targetTypeMethodName.
+   * The generated mapper method name.
    *
    * @return a {@link java.lang.String} object.
    */
   protected abstract String targetTypeMethodName();
 
   /**
-   * moreMethods.
+   * An entry point to generate more methods into the generated mapper.
    *
    * @return a {@link java.util.Set} object.
    */
@@ -132,21 +130,21 @@ public abstract class AbstractJsonMapperGenerator {
   }
 
   /**
-   * initMethod.
+   * The entry point to generate the method for initializing the generated mapper.
    *
    * @return a {@link com.squareup.javapoet.MethodSpec} object.
    */
   protected abstract Optional<MethodSpec> initMethod();
 
   /**
-   * initMethod.
+   * The entry point to generate the method for initializing SubTypes.
    *
    * @return a {@link com.squareup.javapoet.MethodSpec} object.
    */
   protected abstract MethodSpec initSubtypesMethod();
 
   /**
-   * orderedFields.
+   * Search a pop recursively and list all fields that can be part of the mapper.
    *
    * @return a {@link java.util.List} object.
    */
@@ -215,20 +213,35 @@ public abstract class AbstractJsonMapperGenerator {
     return res;
   }
 
+  /** A class that hold a field accessor info */
   public static class AccessorInfo {
 
     public Optional<ExecutableElement> method;
     private String name;
 
+    /**
+     * Constructor
+     *
+     * @param method a {@link Optional<ExecutableElement>} that represent an accessor method.
+     */
     public AccessorInfo(Optional<ExecutableElement> method) {
       this.method = method;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name a {@link String} that represent a field name.
+     */
     public AccessorInfo(String name) {
       this.name = name;
       this.method = Optional.empty();
     }
 
+    /**
+     * @return a {@link String} that represent an accessor name, this is either the field name or an
+     *     accessor method name if exists.
+     */
     public String getName() {
       if (method.isPresent()) {
         return method.get().getSimpleName().toString();
@@ -263,10 +276,26 @@ public abstract class AbstractJsonMapperGenerator {
     return nonNull(annotation) && annotation.value();
   }
 
+  /**
+   * isEligibleForSerializationDeserialization
+   *
+   * <p>Check if given field is not static and is not ignored.
+   *
+   * @param field {@link javax.lang.model.element.Element} object
+   * @return boolean true only if {@link JsonIgnore} present and its value is true
+   */
   protected boolean isEligibleForSerializationDeserialization(Element field) {
     return isNotStatic(field) && !isIgnored(field);
   }
 
+  /**
+   * isAbstract
+   *
+   * <p>Check if given type is abstract.
+   *
+   * @param beanType {@link TypeMirror} object
+   * @return boolean true only if beanType is abstract.
+   */
   public boolean isAbstract(TypeMirror beanType) {
     return typeUtils.asElement(beanType).getModifiers().contains(Modifier.ABSTRACT);
   }

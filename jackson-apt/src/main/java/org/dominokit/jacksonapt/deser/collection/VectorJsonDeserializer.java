@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.Vector}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Vector}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class VectorJsonDeserializer<T> extends BaseListJsonDeserializer<Vector<T>, T> {
 

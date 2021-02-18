@@ -29,8 +29,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
  * java.lang.Iterable}. The deserialization process returns an {@link java.util.ArrayList}.
  *
  * @param <T> Type of the elements inside the {@link java.lang.Iterable}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class IterableJsonDeserializer<T> extends BaseIterableJsonDeserializer<Iterable<T>, T> {
 

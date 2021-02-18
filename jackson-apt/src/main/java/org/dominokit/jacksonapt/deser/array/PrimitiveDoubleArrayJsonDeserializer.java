@@ -22,12 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.BaseNumberJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of double.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of double. */
 public class PrimitiveDoubleArrayJsonDeserializer extends AbstractArrayJsonDeserializer<double[]> {
 
   private static final PrimitiveDoubleArrayJsonDeserializer INSTANCE =

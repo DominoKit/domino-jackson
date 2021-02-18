@@ -15,9 +15,15 @@
  */
 package org.dominokit.jacksonapt.processor;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.util.Optional;
 import javax.lang.model.type.TypeMirror;
 
+/**
+ * An info class that collects information about the identity of a bean type annotated with {@link
+ * JsonIdentityInfo} and {@link JsonIdentityReference}
+ */
 public class BeanIdentityInfo {
 
   private final String propertyName;

@@ -33,10 +33,10 @@ import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.processor.TypeRegistry;
 
 /**
- * FieldDeserializersChainBuilder class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Generate recursively a chain of Deserializers for a specific field. for example for the <code>
+ * List<Long>[]</code> type will result in generating the following Deserializers chain <code>
+ * CollectionJsonSerializer.newInstance(ArrayJsonSerializer.newInstance(BaseNumberJsonSerializer.LongJsonSerializer.getInstance()))
+ * </code>
  */
 public class FieldDeserializersChainBuilder implements MappersChainBuilder {
   private static final String GET_INSTANCE = "$T.getInstance()";

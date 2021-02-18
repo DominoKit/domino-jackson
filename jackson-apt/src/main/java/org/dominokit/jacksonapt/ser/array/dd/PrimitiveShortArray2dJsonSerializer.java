@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of short.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of short. */
 public class PrimitiveShortArray2dJsonSerializer extends JsonSerializer<short[][]> {
 
   private static final PrimitiveShortArray2dJsonSerializer INSTANCE =

@@ -32,8 +32,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  * @param <M> Type of the {@link java.util.Map}
  * @param <K> Type of the keys inside the {@link java.util.Map}
  * @param <V> Type of the values inside the {@link java.util.Map}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class MapJsonSerializer<M extends Map<K, V>, K, V> extends JsonSerializer<M> {
 

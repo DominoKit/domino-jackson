@@ -28,8 +28,6 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  *
  * @param <K> Type of the keys inside the {@link java.util.IdentityHashMap}
  * @param <V> Type of the values inside the {@link java.util.IdentityHashMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class IdentityHashMapJsonDeserializer<K, V>
     extends BaseMapJsonDeserializer<IdentityHashMap<K, V>, K, V> {

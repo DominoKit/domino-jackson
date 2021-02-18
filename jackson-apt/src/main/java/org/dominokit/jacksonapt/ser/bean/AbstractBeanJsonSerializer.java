@@ -25,12 +25,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for beans.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for beans. */
 public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T>
     implements InternalSerializer<T> {
 
@@ -236,12 +231,12 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T>
   /**
    * Serializes all the properties of the bean in a json object.
    *
-   * @param writer writer
+   * @param writer a {@link JsonWriter} writer
    * @param value bean to serialize
-   * @param ctx context of the serialization process
-   * @param ignoredProperties ignored properties
-   * @param identityInfo identity info
-   * @param idWriter identifier writer
+   * @param ctx a {@link JsonSerializationContext} context of the serialization process
+   * @param ignoredProperties a {@link Set} of ignored properties
+   * @param identityInfo a {@link IdentitySerializationInfo} identity info
+   * @param idWriter a {@link ObjectIdSerializer} identifier writer
    */
   private void serializeObject(
       JsonWriter writer,
@@ -256,14 +251,14 @@ public abstract class AbstractBeanJsonSerializer<T> extends JsonSerializer<T>
   /**
    * Serializes all the properties of the bean in a json object.
    *
-   * @param writer writer
+   * @param writer a {@link JsonWriter} writer
    * @param value bean to serialize
-   * @param ctx context of the serialization process
-   * @param ignoredProperties ignored properties
-   * @param identityInfo identity info
-   * @param idWriter identifier writer
-   * @param typeName in case of type info as property, the name of the property
-   * @param typeInformation in case of type info as property, the type information
+   * @param ctx a {@link JsonSerializationContext} context of the serialization process
+   * @param ignoredProperties a {@link Set} of ignored properties
+   * @param identityInfo a {@link IdentitySerializationInfo} identity info
+   * @param idWriter a {@link ObjectIdSerializer} identifier writer
+   * @param typeName a {@link String} in case of type info as property, the name of the property
+   * @param typeInformation a {@link String} in case of type info as property, the type information
    */
   protected void serializeObject(
       JsonWriter writer,

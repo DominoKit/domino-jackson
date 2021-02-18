@@ -27,12 +27,7 @@ import org.dominokit.jacksonapt.deser.map.LinkedHashMapJsonDeserializer;
 import org.dominokit.jacksonapt.deser.map.key.StringKeyDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Abstract AbstractSerializableBeanJsonDeserializer class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractSerializableBeanJsonDeserializer class. */
 @SuppressWarnings("UnusedDeclaration")
 public abstract class AbstractSerializableBeanJsonDeserializer
     extends AbstractBeanJsonDeserializer<Serializable> {

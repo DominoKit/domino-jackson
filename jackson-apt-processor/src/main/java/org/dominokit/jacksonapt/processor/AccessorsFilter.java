@@ -28,6 +28,13 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 
+/**
+ * This class will try to locate recursively all methods that could be a possible accessor method in
+ * a given type accessor methods should be public non-static methods.
+ *
+ * <p>also provides a way to get the actual field name to be used for json
+ * serialization/deserialization in case the field or method is annotated with {@link JsonProperty}
+ */
 public class AccessorsFilter {
 
   protected Types typeUtils;
@@ -36,6 +43,12 @@ public class AccessorsFilter {
     this.typeUtils = typeUtils;
   }
 
+  /**
+   * This method list recursively all possible accessor methods.
+   *
+   * @param beanType the {@link TypeMirror} to be traversed for accessor methods.
+   * @return a {@link Set} of {@link AccessorInfo}
+   */
   protected Set<AccessorInfo> getAccessors(TypeMirror beanType) {
     TypeElement element = (TypeElement) typeUtils.asElement(beanType);
     TypeMirror superclass = element.getSuperclass();
@@ -57,6 +70,14 @@ public class AccessorsFilter {
     return collect;
   }
 
+  /**
+   * Return the property name to be used in the json serialization/deserialization for a specific
+   * field
+   *
+   * @param field an {@link Element} that represent the field which could be annotated with {@link
+   *     JsonProperty}
+   * @return a {@link String} the property name
+   */
   protected String getPropertyName(Element field) {
     JsonProperty annotation = field.getAnnotation(JsonProperty.class);
     if (isNull(annotation) || JsonProperty.USE_DEFAULT_NAME.equals(annotation.value())) {

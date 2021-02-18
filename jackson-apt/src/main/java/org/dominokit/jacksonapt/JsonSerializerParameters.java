@@ -21,12 +21,7 @@ import java.util.Set;
 import org.dominokit.jacksonapt.ser.bean.IdentitySerializationInfo;
 import org.dominokit.jacksonapt.ser.bean.TypeSerializationInfo;
 
-/**
- * JsonSerializerParameters interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsonSerializerParameters interface. */
 public interface JsonSerializerParameters {
   /**
    * getPattern.

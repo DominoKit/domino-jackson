@@ -23,9 +23,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 /**
  * Base class for all the deserializer. It handles null values and exceptions. The rest is delegated
  * to implementations.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class JsonDeserializer<T> {
 

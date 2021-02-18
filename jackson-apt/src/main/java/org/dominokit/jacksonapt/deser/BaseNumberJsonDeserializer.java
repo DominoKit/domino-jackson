@@ -27,9 +27,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 /**
  * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for {@link
  * java.lang.Number}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonDeserializer<N> {
 

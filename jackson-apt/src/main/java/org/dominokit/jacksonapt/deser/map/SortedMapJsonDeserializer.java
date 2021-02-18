@@ -29,8 +29,6 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  *
  * @param <K> Type of the keys inside the {@link java.util.SortedMap}
  * @param <V> Type of the values inside the {@link java.util.SortedMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class SortedMapJsonDeserializer<K, V>
     extends BaseMapJsonDeserializer<SortedMap<K, V>, K, V> {

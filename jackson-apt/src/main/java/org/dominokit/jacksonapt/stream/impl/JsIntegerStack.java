@@ -20,10 +20,8 @@ import elemental2.core.JsNumber;
 import org.dominokit.jacksonapt.stream.Stack;
 
 /**
- * JsIntegerStack class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A wrapper for an Integer Stack implementation that works in the browser. for the JVM
+ * implementation please check {@link DefaultIntegerStack}
  */
 public class JsIntegerStack implements Stack<Integer> {
 

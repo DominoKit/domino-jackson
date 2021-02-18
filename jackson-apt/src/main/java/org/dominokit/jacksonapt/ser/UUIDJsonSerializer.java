@@ -25,9 +25,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
  * java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class UUIDJsonSerializer extends JsonSerializer<UUID> {
 

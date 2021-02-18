@@ -20,12 +20,7 @@ import java.util.Set;
 import org.dominokit.jacksonapt.deser.bean.IdentityDeserializationInfo;
 import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
 
-/**
- * JsonDeserializerParameters interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsonDeserializerParameters interface. */
 public interface JsonDeserializerParameters {
   /**
    * getPattern.

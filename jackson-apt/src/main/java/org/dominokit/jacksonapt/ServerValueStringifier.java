@@ -18,10 +18,9 @@ package org.dominokit.jacksonapt;
 import org.dominokit.jacksonapt.stream.impl.DefaultJsonWriter;
 
 /**
- * ServerValueStringifier class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * An implementation of {@link JacksonContext.ValueStringifier} that works in the JVM, this class
+ * will be stripped out during GWT/J2CL compilation To see the browser implementation please check
+ * {@link JsJacksonContext#stringifier()}
  */
 @GwtIncompatible
 public class ServerValueStringifier implements JacksonContext.ValueStringifier {

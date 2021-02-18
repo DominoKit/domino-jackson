@@ -25,12 +25,7 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.impl.NonBufferedJsonReader;
 
-/**
- * Context for the deserialization process.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Context for the deserialization process. */
 public class DefaultJsonDeserializationContext implements JsonDeserializationContext {
 
   /**

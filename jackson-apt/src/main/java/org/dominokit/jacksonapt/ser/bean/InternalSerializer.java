@@ -20,11 +20,7 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Interface hiding the actual implementation doing the bean serialization.
- *
- * @author Nicolas Morel.
- */
+/** Interface hiding the actual implementation doing the bean serialization. */
 interface InternalSerializer<T> {
 
   /**

@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  *
  * @param <L> {@link java.util.List} type
  * @param <T> Type of the elements inside the {@link java.util.List}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseListJsonDeserializer<L extends List<T>, T>
     extends BaseCollectionJsonDeserializer<L, T> {

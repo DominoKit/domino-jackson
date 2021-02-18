@@ -26,9 +26,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Base implementation of {@link org.dominokit.jacksonapt.ObjectMapper}. It delegates the
  * serialization/deserialization to a serializer/deserializer.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class AbstractObjectMapper<T> implements ObjectMapper<T> {
 

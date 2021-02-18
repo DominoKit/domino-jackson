@@ -24,21 +24,17 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Delegate the serialization of a subtype to a corresponding {@link
  * org.dominokit.jacksonapt.JsonSerializer}
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends HasSerializer<T, S>
     implements InternalSerializer<T> {
 
   /**
    * Delegate the serialization of a subtype to a corresponding {@link AbstractBeanJsonSerializer}
-   *
-   * @author Nicolas Morel
    */
   public abstract static class BeanSubtypeSerializer<T>
       extends SubtypeSerializer<T, AbstractBeanJsonSerializer<T>> {
 
+    /** {@inheritDoc} */
     @Override
     public void serializeInternally(
         JsonWriter writer,
@@ -52,14 +48,11 @@ public abstract class SubtypeSerializer<T, S extends JsonSerializer<T>> extends 
     }
   }
 
-  /**
-   * Delegate the serialization of a subtype to a corresponding {@link JsonSerializer}
-   *
-   * @author Nicolas Morel.
-   */
+  /** Delegate the serialization of a subtype to a corresponding {@link JsonSerializer} */
   public abstract static class DefaultSubtypeSerializer<T>
       extends SubtypeSerializer<T, JsonSerializer<T>> {
 
+    /** {@inheritDoc} */
     @Override
     public void serializeInternally(
         JsonWriter writer,

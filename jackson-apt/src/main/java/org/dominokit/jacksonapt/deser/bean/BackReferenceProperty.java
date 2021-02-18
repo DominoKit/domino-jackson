@@ -18,12 +18,7 @@ package org.dominokit.jacksonapt.deser.bean;
 
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 
-/**
- * BackReferenceProperty interface.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** BackReferenceProperty interface. */
 public interface BackReferenceProperty<T, R> {
 
   /**

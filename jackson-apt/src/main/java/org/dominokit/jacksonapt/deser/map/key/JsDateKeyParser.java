@@ -22,12 +22,7 @@ import java.util.Date;
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 import org.gwtproject.i18n.shared.DateTimeFormat;
 
-/**
- * JsDateKeyParser class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsDateKeyParser class. */
 public class JsDateKeyParser<D extends Date> implements DateKeyParser<D> {
 
   private static final DateTimeFormat ISO_8601_FORMAT = getFormat(PredefinedFormat.ISO_8601);

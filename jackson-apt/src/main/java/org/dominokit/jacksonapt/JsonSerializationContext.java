@@ -20,12 +20,7 @@ import org.dominokit.jacksonapt.exception.JsonSerializationException;
 import org.dominokit.jacksonapt.ser.bean.ObjectIdSerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * JsonSerializationContext interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsonSerializationContext interface. */
 public interface JsonSerializationContext extends JsonMappingContext {
   /**
    * isSerializeNulls.

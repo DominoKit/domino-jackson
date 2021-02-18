@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.SortedSet}. The deserialization process returns a {@link java.util.TreeSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.SortedSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class SortedSetJsonDeserializer<T>
     extends BaseSortedSetJsonDeserializer<SortedSet<T>, T> {

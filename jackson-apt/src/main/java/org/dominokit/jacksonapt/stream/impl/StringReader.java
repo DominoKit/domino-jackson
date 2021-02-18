@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.stream.impl;
 
-/**
- * StringReader class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** StringReader class. */
 public class StringReader {
 
   private final String in;

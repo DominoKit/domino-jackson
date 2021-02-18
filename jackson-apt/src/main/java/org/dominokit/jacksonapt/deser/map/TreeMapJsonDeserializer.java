@@ -28,8 +28,6 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  *
  * @param <K> Type of the keys inside the {@link java.util.TreeMap}
  * @param <V> Type of the values inside the {@link java.util.TreeMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class TreeMapJsonDeserializer<K, V>
     extends BaseMapJsonDeserializer<TreeMap<K, V>, K, V> {

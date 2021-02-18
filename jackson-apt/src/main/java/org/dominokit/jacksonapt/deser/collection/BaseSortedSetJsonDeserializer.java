@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  *
  * @param <S> {@link java.util.SortedSet} type
  * @param <T> Type of the elements inside the {@link java.util.SortedSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseSortedSetJsonDeserializer<S extends SortedSet<T>, T>
     extends BaseSetJsonDeserializer<S, T> {

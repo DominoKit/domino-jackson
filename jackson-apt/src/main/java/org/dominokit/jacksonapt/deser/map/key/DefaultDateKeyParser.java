@@ -24,12 +24,7 @@ import java.util.Date;
 import org.dominokit.jacksonapt.GwtIncompatible;
 import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 
-/**
- * DefaultDateKeyParser class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** DefaultDateKeyParser class. */
 @GwtIncompatible
 public class DefaultDateKeyParser<D extends Date> implements DateKeyParser<D> {
 

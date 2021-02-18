@@ -21,15 +21,13 @@ import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * DefaultShortArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The default JVM implementation for reading a Short array json */
 @GwtIncompatible
 public class DefaultShortArrayReader implements JacksonContext.ShortArrayReader {
-  /** {@inheritDoc} */
+  /**
+   * @param reader {@link JsonReader}
+   * @return short[]
+   */
   @Override
   public short[] readArray(JsonReader reader) {
     Stack<Short> shortStack = new Stack<>();

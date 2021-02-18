@@ -29,8 +29,6 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  *
  * @param <K> Type of the keys inside the {@link java.util.AbstractMap}
  * @param <V> Type of the values inside the {@link java.util.AbstractMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class AbstractMapJsonDeserializer<K, V>
     extends BaseMapJsonDeserializer<AbstractMap<K, V>, K, V> {

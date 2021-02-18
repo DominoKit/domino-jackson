@@ -31,9 +31,6 @@ import org.gwtproject.i18n.client.TimeZone;
  * com.fasterxml.jackson.annotation.JsonFormat}. They are specific to one {@link
  * org.dominokit.jacksonapt.JsonSerializer} and that's why they are not contained inside {@link
  * org.dominokit.jacksonapt.JsonSerializationContext}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class GwtJacksonJsonSerializerParameters implements JsonSerializerParameters {
 

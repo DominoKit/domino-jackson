@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.stream;
 
-/**
- * JsonWriter interface.
- *
- * @author nicolasmorel
- * @version $Id: $
- */
+/** JsonWriter interface. */
 public interface JsonWriter {
 
   /**

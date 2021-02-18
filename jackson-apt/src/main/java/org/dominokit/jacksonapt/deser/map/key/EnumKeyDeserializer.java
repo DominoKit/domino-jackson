@@ -23,8 +23,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
  * java.lang.Enum}.
  *
  * @param <E> Type of the enum
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserializer<E> {
 

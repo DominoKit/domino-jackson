@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.Set}. The deserialization process returns a {@link java.util.LinkedHashSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.AbstractSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class AbstractSetJsonDeserializer<T>
     extends BaseSetJsonDeserializer<AbstractSet<T>, T> {

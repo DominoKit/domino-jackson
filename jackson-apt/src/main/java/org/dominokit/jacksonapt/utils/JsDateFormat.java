@@ -27,10 +27,8 @@ import org.gwtproject.i18n.client.TimeZone;
 import org.gwtproject.i18n.shared.DateTimeFormat;
 
 /**
- * JsDateFormat class.
- *
- * @author Nicolas Morel
- * @version $Id: $
+ * A date format wrapper that works in the browser. to see the JVM implementation please check
+ * {@link DefaultDateFormat}
  */
 public final class JsDateFormat implements JacksonContext.DateFormat {
 

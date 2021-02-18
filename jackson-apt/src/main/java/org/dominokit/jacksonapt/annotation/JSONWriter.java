@@ -21,10 +21,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * JSONWriter class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Marks a pojo or an interface for JSON Serializer generation, this will result in generating a
+ * Serializer and a mapper for the target pojo For an interface it must extends from {@link
+ * org.dominokit.jacksonapt.ObjectWriter}
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

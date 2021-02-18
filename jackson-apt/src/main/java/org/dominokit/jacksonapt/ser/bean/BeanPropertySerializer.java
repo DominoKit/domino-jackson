@@ -22,12 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializer;
 import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Serializes a bean's property
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Serializes a bean's property */
 public abstract class BeanPropertySerializer<T, V> extends HasSerializer<V, JsonSerializer<V>> {
 
   protected final String propertyName;

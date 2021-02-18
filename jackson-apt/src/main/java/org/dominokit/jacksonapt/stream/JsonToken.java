@@ -32,13 +32,7 @@
 
 package org.dominokit.jacksonapt.stream;
 
-/**
- * A structure, name or value type in a JSON-encoded string.
- *
- * @author Jesse Wilson
- * @version $Id: $
- * @since 1.6
- */
+/** A structure, name or value type in a JSON-encoded string. */
 public enum JsonToken {
 
   /**

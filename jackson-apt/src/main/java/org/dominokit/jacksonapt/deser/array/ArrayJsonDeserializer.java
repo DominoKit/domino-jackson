@@ -22,14 +22,14 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array. */
 public class ArrayJsonDeserializer<T> extends AbstractArrayJsonDeserializer<T[]> {
 
+  /**
+   * A Functional interface to create a new array instance in the deserializer
+   *
+   * @param <T> the type of the array elements.
+   */
   @FunctionalInterface
   public interface ArrayCreator<T> {
     T[] create(int length);

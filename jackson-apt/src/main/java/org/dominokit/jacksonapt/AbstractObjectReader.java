@@ -20,9 +20,6 @@ package org.dominokit.jacksonapt;
  * Base implementation of {@link org.dominokit.jacksonapt.ObjectReader}. Extends {@link
  * org.dominokit.jacksonapt.AbstractObjectMapper} to avoid code duplication, trying to write with
  * this reader will result in an {@link java.lang.UnsupportedOperationException}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class AbstractObjectReader<T> extends AbstractObjectMapper<T>
     implements ObjectReader<T> {

@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  *
  * @param <Q> {@link java.util.Queue} type
  * @param <T> Type of the elements inside the {@link java.util.Queue}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseQueueJsonDeserializer<Q extends Queue<T>, T>
     extends BaseCollectionJsonDeserializer<Q, T> {

@@ -18,6 +18,7 @@ package org.dominokit.jacksonapt.processor;
 import java.io.IOException;
 import javax.lang.model.element.Element;
 
+/** An interface for bean mappers generators, mappers, readers, writers. */
 public interface MapperGenerator {
   void generate(Element element) throws IOException;
 }

@@ -37,12 +37,7 @@ import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.SimpleTypeVisitor8;
 import org.dominokit.jacksonapt.annotation.JSONMapper;
 
-/**
- * Type class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** Type class. A utility class used for all type checks and type conversion. */
 public class Type {
 
   private static final int FIRST_ARGUMENT = 0;
@@ -53,7 +48,8 @@ public class Type {
   public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
 
   /**
-   * wrapperType.
+   * wrapperType. This method convert a {@link TypeMirror} to to a {@link TypeName} if the type is a
+   * primitive it returns the TypeName for its wrapper type.
    *
    * @param type a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link com.squareup.javapoet.TypeName} object.
@@ -89,7 +85,7 @@ public class Type {
   }
 
   /**
-   * isPrimitiveArray.
+   * isPrimitiveArray. this method checks if a {@link TypeMirror} is primitive array
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -104,7 +100,7 @@ public class Type {
   }
 
   /**
-   * isArray.
+   * isArray. this method checks if a {@link TypeMirror} is an array.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -114,7 +110,7 @@ public class Type {
   }
 
   /**
-   * is2dArray.
+   * is2dArray. this method checks if a {@link TypeMirror} is a tow dimensional array
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -124,7 +120,7 @@ public class Type {
   }
 
   /**
-   * arrayComponentType.
+   * arrayComponentType. this method returns the component type of an array.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link javax.lang.model.type.TypeMirror} object.
@@ -134,7 +130,7 @@ public class Type {
   }
 
   /**
-   * deepArrayComponentType.
+   * deepArrayComponentType. This method returns the component type for a nested array.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link javax.lang.model.type.TypeMirror} object.
@@ -145,7 +141,7 @@ public class Type {
   }
 
   /**
-   * isEnum.
+   * isEnum. checks if a specific {@link TypeMirror} is an enum
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -160,7 +156,7 @@ public class Type {
   }
 
   /**
-   * isCollection.
+   * isCollection. checks if a specific {@link TypeMirror} is a {@link Collection}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -170,7 +166,7 @@ public class Type {
   }
 
   /**
-   * isIterable.
+   * isIterable. checks if a specific {@link TypeMirror} is an {@link Iterable}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -180,7 +176,8 @@ public class Type {
   }
 
   /**
-   * isAssignableFrom.
+   * isAssignableFrom. checks if a specific {@link TypeMirror} is assignable from a specific {@link
+   * java.lang.Class}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @param targetClass a {@link java.lang.Class} object.
@@ -192,6 +189,14 @@ public class Type {
         typeUtils.getDeclaredType(elementUtils.getTypeElement(targetClass.getCanonicalName())));
   }
 
+  /**
+   * isAssignableFrom. checks if a specific {@link Element} is assignable from a specific {@link
+   * java.lang.Class}.
+   *
+   * @param element a {@link Element} object.
+   * @param targetClass a {@link java.lang.Class} object.
+   * @return a boolean.
+   */
   public static boolean isAssignableFrom(Element element, Class<?> targetClass) {
     return typeUtils.isAssignable(
         element.asType(),
@@ -199,7 +204,7 @@ public class Type {
   }
 
   /**
-   * isMap.
+   * isMap. checks if a specific {@link TypeMirror} is an {@link Map}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -209,7 +214,7 @@ public class Type {
   }
 
   /**
-   * firstTypeArgument.
+   * firstTypeArgument. returns the first type argument from a generic {@link TypeMirror}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link javax.lang.model.type.TypeMirror} object.
@@ -219,7 +224,7 @@ public class Type {
   }
 
   /**
-   * secondTypeArgument.
+   * secondTypeArgument. returns the second type argument from a generic {@link TypeMirror}.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link javax.lang.model.type.TypeMirror} object.
@@ -229,7 +234,8 @@ public class Type {
   }
 
   /**
-   * isBasicType.
+   * isBasicType. checks if a {@link TypeMirror} is one of the types that are registered as a
+   * <b>Basic type</b> in the {@link TypeRegistry}
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a boolean.
@@ -254,7 +260,7 @@ public class Type {
   }
 
   /**
-   * simpleName.
+   * simpleName. returns the simple name of a {@link TypeMirror}
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
    * @return a {@link javax.lang.model.element.Name} object.
@@ -792,10 +798,24 @@ public class Type {
         false);
   }
 
+  /**
+   * Checks if a {@link TypeMirror} is annotated with {@link JSONMapper}
+   *
+   * @param typeMirror {@link javax.lang.model.type.TypeMirror} to be checked.
+   * @return a boolean
+   */
   public static boolean isJsonMapper(TypeMirror typeMirror) {
     return nonNull(typeUtils.asElement(typeMirror).getAnnotation(JSONMapper.class));
   }
 
+  /**
+   * Recursively finds an annotation on a specified {@link Element} and its super types.
+   *
+   * @param classElement the {@link Element} to be checked
+   * @param annotation {@link Class} the represent the annotation
+   * @param <A> the annotation type we are looking for.
+   * @return The annotation if found or else a NULL.
+   */
   public static <A extends Annotation> A findClassAnnotation(
       Element classElement, Class<A> annotation) {
     A result = classElement.getAnnotation(annotation);
@@ -810,6 +830,15 @@ public class Type {
     }
   }
 
+  /**
+   * Recursively finds an annotation on a specified {@link Element} and its super types and return
+   * the value from the specified parameter, where the parameter value is a {@link Class}
+   *
+   * @param classElement classElement the {@link Element} to be checked
+   * @param annotation {@link Class} the represent the annotation
+   * @param paramName The annotation member parameter that holds the value
+   * @return the {@link Optional<TypeMirror>} that represent the value.
+   */
   public static Optional<TypeMirror> findClassValueFromClassAnnotation(
       Element classElement, Class<? extends Annotation> annotation, String paramName) {
     Optional<TypeMirror> result = getClassValueFromAnnotation(classElement, annotation, paramName);
@@ -825,6 +854,15 @@ public class Type {
     }
   }
 
+  /**
+   * gets an annotation on a specified {@link Element} and return the value from the specified
+   * parameter, where the parameter value is a {@link Class}
+   *
+   * @param element classElement the {@link Element} to be checked
+   * @param annotation {@link Class} the represent the annotation
+   * @param paramName The annotation member parameter that holds the value
+   * @return the {@link Optional<TypeMirror>} that represent the value.
+   */
   public static Optional<TypeMirror> getClassValueFromAnnotation(
       Element element, Class<? extends Annotation> annotation, String paramName) {
     for (AnnotationMirror am : element.getAnnotationMirrors()) {
@@ -846,7 +884,12 @@ public class Type {
   /**
    * processIdentity
    *
+   * <p>Reads the information provided in the {@link JsonIdentityInfo} and {@link
+   * JsonIdentityReference} from the specified {@link TypeMirror} and return an {@link
+   * Optional<BeanIdentityInfo>}
+   *
    * @param beanType a {@link TypeMirror} object.
+   * @return {@link Optional<BeanIdentityInfo>}
    */
   public static Optional<BeanIdentityInfo> processIdentity(TypeMirror beanType) {
 
@@ -920,6 +963,12 @@ public class Type {
     return ((TypeElement) typeUtils.asElement(type));
   }
 
+  /**
+   * Returns the qualified name for a specific {@link TypeMirror}
+   *
+   * @param typeMirror the {@link TypeMirror} to ge its qualified name
+   * @return {@link String} the qualified name.
+   */
   public static String getTypeQualifiedName(TypeMirror typeMirror) {
     return ((TypeElement) typeUtils.asElement(typeMirror)).getQualifiedName().toString();
   }

@@ -22,12 +22,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 import org.dominokit.jacksonapt.AbstractObjectReader;
 
-/**
- * BeanReaderGenerator class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** BeanReaderGenerator class. This class will generate a mapper that can only Read a json. */
 public class BeanReaderGenerator extends AbstractMapperGenerator {
   /** {@inheritDoc} */
   @SuppressWarnings("rawtypes")
@@ -42,6 +37,11 @@ public class BeanReaderGenerator extends AbstractMapperGenerator {
     return Stream.of(makeNewDeserializerMethod(element, beanType)).collect(Collectors.toSet());
   }
 
+  /**
+   * This method will generate a Deserializer -reader- implementation for the target bean type.
+   *
+   * @param beanType the {@link TypeMirror} of the target bean.
+   */
   @Override
   protected void generateDeserializer(TypeMirror beanType) {
     new DeserializerGenerator().generate(beanType);

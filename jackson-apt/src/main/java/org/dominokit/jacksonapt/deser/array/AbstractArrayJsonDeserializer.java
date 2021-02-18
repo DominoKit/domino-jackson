@@ -25,12 +25,7 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base implementation of {@link org.dominokit.jacksonapt.JsonDeserializer} for array. */
 public abstract class AbstractArrayJsonDeserializer<T> extends JsonDeserializer<T> {
 
   /** {@inheritDoc} */

@@ -18,10 +18,8 @@ package org.dominokit.jacksonapt;
 import java.lang.annotation.*;
 
 /**
- * GwtIncompatible class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * This annotation is used to mark a class or a method as GWT incompatible, which will result in
+ * stripping out the code annotated during GWT/J2CL compilation
  */
 @Retention(RetentionPolicy.CLASS)
 @Target({

@@ -37,12 +37,7 @@ import org.dominokit.jacksonapt.processor.Type;
 import org.dominokit.jacksonapt.ser.bean.*;
 import org.dominokit.jacksonapt.ser.bean.SubtypeSerializer.BeanSubtypeSerializer;
 
-/**
- * AptSerializerBuilder class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** Generate a serializer for a type */
 public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
 
   /**

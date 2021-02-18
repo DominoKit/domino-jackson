@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonSerializationContext;
 import org.dominokit.jacksonapt.ser.map.MapJsonSerializer;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 
-/**
- * Serializes a bean's property
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Serializes a bean's property */
 public abstract class AnyGetterPropertySerializer<T> extends BeanPropertySerializer<T, Map> {
 
   /**

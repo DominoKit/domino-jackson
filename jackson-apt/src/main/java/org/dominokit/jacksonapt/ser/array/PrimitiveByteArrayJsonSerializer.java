@@ -22,12 +22,7 @@ import org.dominokit.jacksonapt.JsonSerializerParameters;
 import org.dominokit.jacksonapt.stream.JsonWriter;
 import org.dominokit.jacksonapt.utils.Base64Utils;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of byte.
- *
- * @author Nicolas Morel
- * @version $Id: $Id
- */
+/** Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for array of byte. */
 public class PrimitiveByteArrayJsonSerializer extends JsonSerializer<byte[]> {
 
   private static final PrimitiveByteArrayJsonSerializer INSTANCE =

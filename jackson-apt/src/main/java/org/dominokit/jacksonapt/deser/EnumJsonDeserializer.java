@@ -26,8 +26,6 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  * java.lang.Enum}.
  *
  * @param <E> Type of the enum
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E> {
 

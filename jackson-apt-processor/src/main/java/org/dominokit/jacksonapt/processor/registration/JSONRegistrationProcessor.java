@@ -37,10 +37,9 @@ import org.dominokit.jacksonapt.registration.JsonRegistry;
 import org.dominokit.jacksonapt.registration.TypeToken;
 
 /**
- * JSONRegistrationProcessor class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * This processor will generate an implementation of {@link JsonRegistry} that will track and
+ * registers the defined mappers in a specific package the user of the generated class can then
+ * lookup the mappers using the pojo class literal.
  */
 @AutoService(Processor.class)
 public class JSONRegistrationProcessor extends AbstractMapperProcessor {

@@ -26,9 +26,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Base implementation of {@link org.dominokit.jacksonapt.JsonSerializer} for {@link
  * java.lang.Number}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSerializer<N> {
 
@@ -44,6 +41,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private BigDecimalJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(BigDecimal value) {
       return null == value || BigDecimal.ZERO.compareTo(value) == 0;
@@ -62,6 +60,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private BigIntegerJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(BigInteger value) {
       return null == value || BigInteger.ZERO.compareTo(value) == 0;
@@ -82,6 +81,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private ByteJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Byte value) {
       return null == value || defaultValue == value;
@@ -100,11 +100,13 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private DoubleJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Double value) {
       return null == value || value == 0d;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(
         JsonWriter writer,
@@ -128,6 +130,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private FloatJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Float value) {
       return null == value || value == 0f;
@@ -146,6 +149,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private IntegerJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Integer value) {
       return null == value || value == 0;
@@ -164,11 +168,13 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private LongJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Long value) {
       return null == value || value == 0l;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void doSerialize(
         JsonWriter writer,
@@ -194,6 +200,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private ShortJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Short value) {
       return null == value || defaultValue == value;
@@ -212,6 +219,7 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private NumberJsonSerializer() {}
 
+    /** {@inheritDoc} */
     @Override
     protected boolean isDefault(Number value) {
       return null == value || value.intValue() == 0;

@@ -31,6 +31,10 @@ import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.deser.bean.HasDeserializerAndParameters;
 import org.dominokit.jacksonapt.processor.Type;
 
+/**
+ * this class is used with {@link com.fasterxml.jackson.annotation.JsonCreator} to generate the
+ * deserializer based on creator parameters.
+ */
 public class ParameterDeserializerBuilder {
 
   private Types typeUtils;

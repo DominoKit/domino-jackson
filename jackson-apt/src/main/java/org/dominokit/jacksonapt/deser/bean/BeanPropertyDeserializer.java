@@ -20,21 +20,16 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Deserializes a bean's property
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Deserializes a bean's property */
 public abstract class BeanPropertyDeserializer<T, V>
     extends HasDeserializerAndParameters<V, JsonDeserializer<V>> {
 
   /**
    * Deserializes the property defined for this instance.
    *
-   * @param reader reader
+   * @param reader a {@link JsonReader} reader
    * @param bean bean to set the deserialized property to
-   * @param ctx context of the deserialization process
+   * @param ctx a {@link JsonDeserializationContext} context of the deserialization process
    */
   public void deserialize(JsonReader reader, T bean, JsonDeserializationContext ctx) {
     setValue(bean, deserialize(reader, ctx), ctx);

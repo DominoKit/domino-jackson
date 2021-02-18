@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Dummy {@link org.dominokit.jacksonapt.JsonSerializer} that will just output raw values by calling
  * toString() on value to serialize.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class RawValueJsonSerializer<T> extends JsonSerializer<T> {
 

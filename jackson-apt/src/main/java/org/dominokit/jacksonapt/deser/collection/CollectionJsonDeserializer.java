@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.Collection}. The deserialization process returns an {@link java.util.ArrayList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Collection}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class CollectionJsonDeserializer<T>
     extends BaseCollectionJsonDeserializer<Collection<T>, T> {

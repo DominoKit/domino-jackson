@@ -4,7 +4,7 @@
 
   <groupId>org.dominokit.jacksonapt.samples</groupId>
   <artifactId>shared-mappers</artifactId>
-  <version>1.0.0-RC1-SNAPSHOT</version>
+  <version>1.0.0-beta-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>

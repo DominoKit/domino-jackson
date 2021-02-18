@@ -23,12 +23,7 @@ import org.dominokit.jacksonapt.deser.CharacterJsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of char.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of char. */
 public class PrimitiveCharacterArrayJsonDeserializer extends AbstractArrayJsonDeserializer<char[]> {
 
   private static final PrimitiveCharacterArrayJsonDeserializer INSTANCE =

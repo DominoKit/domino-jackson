@@ -21,10 +21,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * JSONMapper class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * Marks a pojo or an interface for JSON mapper generation, this will result in generating both
+ * Serializer and Deserializer and a mapper for the target pojo For an interface it must extends
+ * from {@link org.dominokit.jacksonapt.ObjectMapper}
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

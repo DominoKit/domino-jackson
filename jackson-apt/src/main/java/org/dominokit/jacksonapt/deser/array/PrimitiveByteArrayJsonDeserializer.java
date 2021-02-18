@@ -24,12 +24,7 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 import org.dominokit.jacksonapt.utils.Base64Utils;
 
-/**
- * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of byte.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for array of byte. */
 public class PrimitiveByteArrayJsonDeserializer extends AbstractArrayJsonDeserializer<byte[]> {
 
   private static final PrimitiveByteArrayJsonDeserializer INSTANCE =

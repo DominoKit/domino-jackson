@@ -22,10 +22,8 @@ import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.Stack;
 
 /**
- * JacksonContext interface.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * A context that define which implementation to be used based on the running environment - JVM vs
+ * Browser -
  */
 public interface JacksonContext {
 
@@ -105,6 +103,7 @@ public interface JacksonContext {
    */
   JsonDeserializerParameters newDeserializerParameters();
 
+  /** An interface to wrap different implementations of DateFormat e.g - JVM bs Browser - */
   interface DateFormat {
     String format(Date date);
 
@@ -115,30 +114,40 @@ public interface JacksonContext {
     <D extends Date> DateKeyParser<D> makeDateKeyParser();
   }
 
+  /** An interface to wrap different implementations of IntegerStack e.g - JVM bs Browser - */
   interface IntegerStackFactory {
     Stack<Integer> make();
   }
 
+  /**
+   * An interface to wrap different implementations of ValueStringifier to stringify a json value
+   * e.g - JVM bs Browser -
+   */
   interface ValueStringifier {
     String stringify(String value);
   }
 
+  /** An interface to wrap different implementations of Map e.g - JVM bs Browser - */
   interface MapLikeFactory {
     <T> MapLike<T> make();
   }
 
+  /** An interface to wrap different implementations of StringArrayReader e.g - JVM bs Browser - */
   interface StringArrayReader {
     String[] readArray(JsonReader reader);
   }
 
+  /** An interface to wrap different implementations of ShortArrayReader e.g - JVM bs Browser - */
   interface ShortArrayReader {
     short[] readArray(JsonReader reader);
   }
 
+  /** An interface to wrap different implementations of IntegerArrayReader e.g - JVM bs Browser - */
   interface IntegerArrayReader {
     int[] readArray(JsonReader reader);
   }
 
+  /** An interface to wrap different implementations of DoubleArrayReader e.g - JVM bs Browser - */
   interface DoubleArrayReader {
     double[] readArray(JsonReader reader);
   }

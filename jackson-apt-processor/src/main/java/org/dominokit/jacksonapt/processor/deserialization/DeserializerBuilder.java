@@ -34,6 +34,7 @@ import org.dominokit.jacksonapt.processor.AccessorsFilter;
 import org.dominokit.jacksonapt.processor.ObjectMapperProcessor;
 import org.dominokit.jacksonapt.processor.Type;
 
+/** A class that generates a deserializer for a pojo. */
 class DeserializerBuilder extends AccessorsFilter {
 
   private final TypeMirror beanType;

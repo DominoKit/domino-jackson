@@ -26,9 +26,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonDeserializer} implementation for 2D array of char.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PrimitiveCharacterArray2dJsonDeserializer
     extends AbstractArray2dJsonDeserializer<char[][]> {

@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Abstract AbstractIdentityDeserializationInfo class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Abstract AbstractIdentityDeserializationInfo class. */
 public abstract class AbstractIdentityDeserializationInfo<T, V>
     extends HasDeserializer<V, JsonDeserializer<V>> implements IdentityDeserializationInfo<T> {
 

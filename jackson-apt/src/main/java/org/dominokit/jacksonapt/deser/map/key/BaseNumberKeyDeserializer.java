@@ -23,9 +23,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 /**
  * Base implementation of {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} for {@link
  * java.lang.Number}s.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDeserializer<N> {
 

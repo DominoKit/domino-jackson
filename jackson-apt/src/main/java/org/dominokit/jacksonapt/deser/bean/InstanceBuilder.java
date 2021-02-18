@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * InstanceBuilder interface.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** InstanceBuilder interface. */
 public interface InstanceBuilder<T> {
 
   /**

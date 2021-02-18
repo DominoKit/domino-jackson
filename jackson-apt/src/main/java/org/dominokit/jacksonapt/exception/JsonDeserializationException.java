@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.exception;
 
-/**
- * Base exception for deserialization process
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base exception for deserialization process */
 public class JsonDeserializationException extends JsonMappingException {
 
   /** Constructor for JsonDeserializationException. */

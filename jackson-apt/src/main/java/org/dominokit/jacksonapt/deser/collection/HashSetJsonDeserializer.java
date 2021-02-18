@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.HashSet}.
  *
  * @param <T> Type of the elements inside the {@link java.util.HashSet}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class HashSetJsonDeserializer<T> extends BaseSetJsonDeserializer<HashSet<T>, T> {
 

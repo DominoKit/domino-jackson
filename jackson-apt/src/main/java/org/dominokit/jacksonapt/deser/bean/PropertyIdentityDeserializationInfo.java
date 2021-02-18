@@ -20,12 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 import org.dominokit.jacksonapt.JsonDeserializationContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * PropertyIdentityDeserializationInfo class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** PropertyIdentityDeserializationInfo class. */
 public class PropertyIdentityDeserializationInfo<T> implements IdentityDeserializationInfo<T> {
 
   /** Name of the property holding the identity */

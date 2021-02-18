@@ -27,9 +27,6 @@ import org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo;
  * com.fasterxml.jackson.annotation.JsonIgnoreProperties}. They are specific to one {@link
  * org.dominokit.jacksonapt.JsonDeserializer} and that's why they are not contained inside {@link
  * org.dominokit.jacksonapt.JsonDeserializationContext}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class GwtJacksonJsonDeserializerParameters implements JsonDeserializerParameters {
 

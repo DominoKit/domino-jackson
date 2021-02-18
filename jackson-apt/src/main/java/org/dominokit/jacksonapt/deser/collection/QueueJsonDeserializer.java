@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.Queue}. The deserialization process returns a {@link java.util.LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Queue}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class QueueJsonDeserializer<T> extends BaseQueueJsonDeserializer<Queue<T>, T> {
 

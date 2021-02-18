@@ -19,12 +19,20 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
- * JSONRegistration class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * This will mark a package as a target to generate an implementation of {@link
+ * org.dominokit.jacksonapt.registration.JsonRegistry} the generated implementation will list all
+ * mappers, Readers, Writers and will provide methods to get those classes at runtime by providing a
+ * {@link org.dominokit.jacksonapt.registration.TypeToken}
  */
 @Target(ElementType.PACKAGE)
 public @interface JSONRegistration {
+
+  /**
+   * The name prefix to be used for the json registry class generated from this annotation, the
+   * final class name will use the name returned from this method and appends <b>JsonRegistry</b> to
+   * it.
+   *
+   * @return {@link java.lang.String}
+   */
   String value();
 }

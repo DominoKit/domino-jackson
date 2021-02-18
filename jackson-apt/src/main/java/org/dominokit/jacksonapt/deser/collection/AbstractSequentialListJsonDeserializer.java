@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.AbstractSequentialList}. The deserialization process returns a {@link LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.AbstractSequentialList}
- * @author Nicolas Morel
- * @version $Id: $Id
  */
 public class AbstractSequentialListJsonDeserializer<T>
     extends BaseListJsonDeserializer<AbstractSequentialList<T>, T> {

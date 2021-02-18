@@ -25,8 +25,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.AbstractQueue}. The deserialization process returns a {@link java.util.PriorityQueue}.
  *
  * @param <T> Type of the elements inside the {@link java.util.AbstractQueue}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class AbstractQueueJsonDeserializer<T>
     extends BaseQueueJsonDeserializer<AbstractQueue<T>, T> {

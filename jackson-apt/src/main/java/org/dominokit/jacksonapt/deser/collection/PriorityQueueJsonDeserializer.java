@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.PriorityQueue}.
  *
  * @param <T> Type of the elements inside the {@link java.util.PriorityQueue}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PriorityQueueJsonDeserializer<T>
     extends BaseQueueJsonDeserializer<PriorityQueue<T>, T> {

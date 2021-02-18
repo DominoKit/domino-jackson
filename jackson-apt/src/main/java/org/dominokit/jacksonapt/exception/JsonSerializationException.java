@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.exception;
 
-/**
- * Base exception for serialization process
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base exception for serialization process */
 public class JsonSerializationException extends JsonMappingException {
 
   /** Constructor for JsonSerializationException. */

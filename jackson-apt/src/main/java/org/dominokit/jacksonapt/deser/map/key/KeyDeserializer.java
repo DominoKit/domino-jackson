@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.exception.JsonDeserializationException;
 /**
  * Base class for all the key deserializer. It handles null values and exceptions. The rest is
  * delegated to implementations.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class KeyDeserializer<T> {
 
@@ -48,8 +45,8 @@ public abstract class KeyDeserializer<T> {
   /**
    * Deserializes a non-null key into an object.
    *
-   * @param key key to deserialize
-   * @param ctx Context for the full deserialization process
+   * @param key a {@link String} key to deserialize
+   * @param ctx a {@link JsonDeserializationContext} Context for the full deserialization process
    * @return the deserialized object
    */
   protected abstract T doDeserialize(String key, JsonDeserializationContext ctx);

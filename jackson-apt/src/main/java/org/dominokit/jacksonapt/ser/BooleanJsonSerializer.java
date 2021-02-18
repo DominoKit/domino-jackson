@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
  * java.lang.Boolean}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class BooleanJsonSerializer extends JsonSerializer<Boolean> {
 

@@ -18,12 +18,7 @@ package org.dominokit.jacksonapt;
 
 import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
 
-/**
- * Wrapper to access both key and json deserializer for a type.
- *
- * @author nicolasmorel
- * @version $Id: $
- */
+/** Wrapper to access both key and json deserializer for a type. */
 public abstract class Deserializer<T> {
 
   private KeyDeserializer<T> key;

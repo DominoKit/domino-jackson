@@ -22,9 +22,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 /**
  * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
  * java.util.UUID}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class UUIDKeyDeserializer extends KeyDeserializer<UUID> {
 

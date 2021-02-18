@@ -22,11 +22,7 @@ import org.dominokit.jacksonapt.JsonDeserializer;
 import org.dominokit.jacksonapt.JsonDeserializerParameters;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * Interface hiding the actual implementation doing the bean deserialization.
- *
- * @author Nicolas Morel.
- */
+/** Interface hiding the actual implementation doing the bean deserialization. */
 interface InternalDeserializer<T, S extends JsonDeserializer<T>> {
 
   /**

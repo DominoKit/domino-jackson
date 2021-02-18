@@ -16,12 +16,7 @@
 
 package org.dominokit.jacksonapt.exception;
 
-/**
- * Base exception for mapping process
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Base exception for mapping process */
 public class JsonMappingException extends RuntimeException {
 
   /** Constructor for JsonMappingException. */

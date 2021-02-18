@@ -21,12 +21,7 @@ import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 import org.dominokit.jacksonapt.stream.JsonToken;
 
-/**
- * DefaultDoubleArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The default JVM implementation for reading a Double array json */
 @GwtIncompatible
 public class DefaultDoubleArrayReader implements JacksonContext.DoubleArrayReader {
   /** {@inheritDoc} */

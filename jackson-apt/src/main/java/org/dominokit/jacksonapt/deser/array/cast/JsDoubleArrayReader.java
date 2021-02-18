@@ -21,12 +21,7 @@ import jsinterop.base.Js;
 import org.dominokit.jacksonapt.JacksonContext;
 import org.dominokit.jacksonapt.stream.JsonReader;
 
-/**
- * JsDoubleArrayReader class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** The JS implementation for reading a Double array json */
 public class JsDoubleArrayReader extends BaseJsNumberArrayReader
     implements JacksonContext.DoubleArrayReader {
   /** {@inheritDoc} */

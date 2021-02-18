@@ -28,8 +28,6 @@ import org.dominokit.jacksonapt.deser.map.key.KeyDeserializer;
  *
  * @param <K> Type of the keys inside the {@link java.util.LinkedHashMap}
  * @param <V> Type of the values inside the {@link java.util.LinkedHashMap}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class LinkedHashMapJsonDeserializer<K, V>
     extends BaseMapJsonDeserializer<LinkedHashMap<K, V>, K, V> {

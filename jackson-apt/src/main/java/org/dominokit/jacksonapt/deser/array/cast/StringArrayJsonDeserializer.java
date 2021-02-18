@@ -27,17 +27,12 @@ import org.dominokit.jacksonapt.stream.JsonReader;
  * java.lang.String}.
  *
  * <p>Not working in production mode, cast problem. Can maybe work with disableCastChecking
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class StringArrayJsonDeserializer extends AbstractArrayJsonDeserializer<String[]> {
 
   private static final StringArrayJsonDeserializer INSTANCE = new StringArrayJsonDeserializer();
 
   /**
-   * getInstance
-   *
    * @return an instance of {@link
    *     org.dominokit.jacksonapt.deser.array.cast.StringArrayJsonDeserializer}
    */

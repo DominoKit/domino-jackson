@@ -24,8 +24,6 @@ import org.dominokit.jacksonapt.JsonDeserializer;
  * java.util.LinkedList}.
  *
  * @param <T> Type of the elements inside the {@link java.util.LinkedList}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class LinkedListJsonDeserializer<T> extends BaseListJsonDeserializer<LinkedList<T>, T> {
 

@@ -21,9 +21,6 @@ import org.dominokit.jacksonapt.JsonDeserializationContext;
 /**
  * Default {@link org.dominokit.jacksonapt.deser.map.key.KeyDeserializer} implementation for {@link
  * java.lang.Boolean}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public final class BooleanKeyDeserializer extends KeyDeserializer<Boolean> {
 

@@ -29,10 +29,8 @@ import org.dominokit.jacksonapt.annotation.JSONReader;
 import org.dominokit.jacksonapt.annotation.JSONWriter;
 
 /**
- * ObjectMapperProcessor class.
- *
- * @author vegegoku
- * @version $Id: $Id
+ * ObjectMapperProcessor class. a Delegate class to geneate different types of mappers for all
+ * annotated types.
  */
 @AutoService(Processor.class)
 public class ObjectMapperProcessor extends AbstractMapperProcessor {

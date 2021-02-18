@@ -17,12 +17,7 @@ package org.dominokit.jacksonapt;
 
 import static java.util.Objects.isNull;
 
-/**
- * JacksonContextProvider class.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** A factory class to provide and instance of {@link JacksonContext} */
 public class JacksonContextProvider {
 
   static JacksonContext jacksonContext;

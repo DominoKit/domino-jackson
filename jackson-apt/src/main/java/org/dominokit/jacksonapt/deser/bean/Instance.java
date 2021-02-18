@@ -18,12 +18,7 @@ package org.dominokit.jacksonapt.deser.bean;
 
 import java.util.Map;
 
-/**
- * Instance class.
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Instance class. */
 public class Instance<T> {
 
   private final T instance;

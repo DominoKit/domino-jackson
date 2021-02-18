@@ -19,12 +19,7 @@ import org.dominokit.jacksonapt.ObjectMapper;
 import org.dominokit.jacksonapt.ObjectReader;
 import org.dominokit.jacksonapt.ObjectWriter;
 
-/**
- * JsonRegistry interface.
- *
- * @author vegegoku
- * @version $Id: $Id
- */
+/** JsonRegistry interface. */
 public interface JsonRegistry {
 
   /**

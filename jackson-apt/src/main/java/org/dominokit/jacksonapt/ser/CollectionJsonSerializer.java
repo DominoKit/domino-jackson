@@ -27,8 +27,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
  * java.util.Collection}.
  *
  * @param <T> Type of the elements inside the {@link java.util.Collection}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class CollectionJsonSerializer<C extends Collection<T>, T> extends JsonSerializer<C> {
 

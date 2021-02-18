@@ -30,8 +30,6 @@ import org.dominokit.jacksonapt.stream.JsonToken;
  * @param <M> Type of the {@link java.util.Map}
  * @param <K> Type of the keys inside the {@link java.util.Map}
  * @param <V> Type of the values inside the {@link java.util.Map}
- * @author Nicolas Morel
- * @version $Id: $
  */
 public abstract class BaseMapJsonDeserializer<M extends Map<K, V>, K, V>
     extends JsonDeserializer<M> {

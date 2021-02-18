@@ -17,6 +17,7 @@ package org.dominokit.jacksonapt.processor;
 
 import static org.dominokit.jacksonapt.processor.ObjectMapperProcessor.filer;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.auto.common.MoreElements;
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
@@ -28,14 +29,13 @@ import org.dominokit.jacksonapt.processor.deserialization.AptDeserializerBuilder
 /**
  * DeserializerGenerator class.
  *
- * @author vegegoku
- * @version $Id: $Id
+ * <p>This class will generate a Deserializer to read a json.
  */
 public class DeserializerGenerator {
 
   /**
-   * Generate deserializer for given TypeMirror type. If type is annotated with @JsonSubType
-   * and @JsonTypeInfo, deserializers for all subclasses will be generated too.
+   * Generate deserializer for given TypeMirror type. If type is annotated with @JsonSubType and
+   * {@link JsonTypeInfo}, deserializers for all subclasses will be generated too.
    *
    * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
    * @return fully qualified deserialer name

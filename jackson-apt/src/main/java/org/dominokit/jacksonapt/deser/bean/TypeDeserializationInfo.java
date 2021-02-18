@@ -20,12 +20,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Contains type deserialization informations
- *
- * @author Nicolas Morel
- * @version $Id: $
- */
+/** Contains type deserialization informations */
 public class TypeDeserializationInfo<T> {
 
   /** Inclusion mechanism */

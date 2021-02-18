@@ -23,9 +23,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 
 /**
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for 2D array of double.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class PrimitiveDoubleArray2dJsonSerializer extends JsonSerializer<double[][]> {
 

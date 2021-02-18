@@ -24,9 +24,6 @@ import org.dominokit.jacksonapt.stream.JsonWriter;
 /**
  * Default {@link org.dominokit.jacksonapt.JsonSerializer} implementation for {@link
  * java.lang.Enum}.
- *
- * @author Nicolas Morel
- * @version $Id: $
  */
 public class EnumJsonSerializer<E extends Enum<E>> extends JsonSerializer<E> {
 

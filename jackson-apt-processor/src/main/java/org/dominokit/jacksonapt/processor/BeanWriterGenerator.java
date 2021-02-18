@@ -25,8 +25,7 @@ import org.dominokit.jacksonapt.AbstractObjectWriter;
 /**
  * BeanWriterGenerator class.
  *
- * @author vegegoku
- * @version $Id: $Id
+ * <p>This class will generate a mapper that can only write a json.
  */
 public class BeanWriterGenerator extends AbstractMapperGenerator {
   /** {@inheritDoc} */
@@ -42,6 +41,11 @@ public class BeanWriterGenerator extends AbstractMapperGenerator {
     return Stream.of(makeNewSerializerMethod(beanType)).collect(Collectors.toList());
   }
 
+  /**
+   * This method will generate a Serializer -writer- implementation for the target bean type.
+   *
+   * @param beanType the {@link TypeMirror} of the target bean.
+   */
   @Override
   protected void generateSerializer(TypeMirror beanType) {
     new SerializerGenerator().generate(beanType);
