@@ -49,7 +49,11 @@ import java.util.*;
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnoreProperties {
-  /** Names of properties to ignore. */
+  /**
+   * Names of properties to ignore.
+   *
+   * @return String[]
+   */
   public String[] value() default {};
 
   /**
@@ -59,6 +63,8 @@ public @interface JsonIgnoreProperties {
    * properties, if any, will still be called) without exception.
    *
    * <p>Does not have any effect on serialization.
+   *
+   * @return boolean
    */
   public boolean ignoreUnknown() default false;
 
@@ -72,6 +78,7 @@ public @interface JsonIgnoreProperties {
    * <p>Default value is `false`, which means that getters with matching names will be ignored.
    *
    * @since 2.6
+   * @return boolean
    */
   public boolean allowGetters() default false;
 
@@ -85,6 +92,7 @@ public @interface JsonIgnoreProperties {
    * <p>Default value is `false`, which means that setters with matching names will be ignored.
    *
    * @since 2.6
+   * @return boolean
    */
   public boolean allowSetters() default false;
 
@@ -139,6 +147,10 @@ public @interface JsonIgnoreProperties {
       _merge = merge;
     }
 
+    /**
+     * @param src {@link JsonIgnoreProperties}
+     * @return {@link Value}
+     */
     public static Value from(JsonIgnoreProperties src) {
       if (src == null) {
         return EMPTY; // since 2.9
@@ -159,6 +171,13 @@ public @interface JsonIgnoreProperties {
      * instance from a full set of properties. Most users would be better of starting by {@link
      * #empty()} instance and using `withXxx()`/`withoutXxx()` methods, as this factory method may
      * need to be changed if new properties are added in {@link JsonIgnoreProperties} annotation.
+     *
+     * @param ignored {@link Set} of {@link String}
+     * @param ignoreUnknown boolean
+     * @param allowGetters boolean
+     * @param allowSetters boolean
+     * @param merge boolean
+     * @return {@link Value}
      */
     public static Value construct(
         Set<String> ignored,
@@ -185,6 +204,8 @@ public @interface JsonIgnoreProperties {
      *   <li>Does use merge when combining overrides to base settings, such that `true` settings for
      *       any of the properties results in `true`, and names of fields are combined (union)
      * </ul>
+     *
+     * @return {@link Value}
      */
     public static Value empty() {
       return EMPTY;
@@ -196,12 +217,20 @@ public @interface JsonIgnoreProperties {
      * values are only use if override does not specify a value (matching value is null or logically
      * missing). Note that one or both of value instances may be `null`, directly; if both are
      * `null`, result will also be `null`; otherwise never null.
+     *
+     * @param base {@link Value}
+     * @param overrides {@link Value}
+     * @return {@link Value}
      */
     public static Value merge(Value base, Value overrides) {
       return (base == null) ? overrides : base.withOverrides(overrides);
     }
 
-    /** @since 2.8 */
+    /**
+     * @since 2.8
+     * @param values {@link Value} varargs
+     * @return {@link Value}
+     */
     public static Value mergeAll(Value... values) {
       Value result = null;
       for (Value curr : values) {
@@ -232,6 +261,9 @@ public @interface JsonIgnoreProperties {
      * any explicitly defined inclusion in overrides has precedence over settings of this value
      * instance. If no overrides exist will return <code>this</code> instance; otherwise new {@link
      * Value} with changed inclusion values.
+     *
+     * @param overrides {@link Value}
+     * @return {@link Value}
      */
     public Value withOverrides(Value overrides) {
       if ((overrides == null) || (overrides == EMPTY)) {
@@ -337,6 +369,8 @@ public @interface JsonIgnoreProperties {
      * Method called to find names of properties to ignore when used for serialization: functionally
      * same as {@link #getIgnored} if {@link #getAllowGetters()} is false (that is, there is
      * "allowGetters=false" or equivalent), otherwise returns empty {@link Set}.
+     *
+     * @return {@link Set} of String
      */
     public Set<String> findIgnoredForSerialization() {
       if (_allowGetters) {
@@ -349,6 +383,8 @@ public @interface JsonIgnoreProperties {
      * Method called to find names of properties to ignore when used for serialization: functionally
      * same as {@link #getIgnored} if {@link #getAllowSetters()} is false (that is, there is
      * "allowSetters=false" or equivalent), otherwise returns empty {@link Set}.
+     *
+     * @return {@link Set} of String
      */
     public Set<String> findIgnoredForDeserialization() {
       if (_allowSetters) {

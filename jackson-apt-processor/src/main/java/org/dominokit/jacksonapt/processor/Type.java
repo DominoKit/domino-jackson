@@ -393,8 +393,6 @@ public class Type {
    * If given type is bounded wildcard, remove the wildcard and returns extends bound if exists. If
    * extends bounds is non existing - return the super bound.
    *
-   * <p>
-   *
    * <p>If given type is not wildcard, returns type.
    *
    * @param type TypeMirror to be processed
@@ -837,7 +835,7 @@ public class Type {
    * @param classElement classElement the {@link Element} to be checked
    * @param annotation {@link Class} the represent the annotation
    * @param paramName The annotation member parameter that holds the value
-   * @return the {@link Optional<TypeMirror>} that represent the value.
+   * @return the {@link Optional} of {@link TypeMirror} that represent the value.
    */
   public static Optional<TypeMirror> findClassValueFromClassAnnotation(
       Element classElement, Class<? extends Annotation> annotation, String paramName) {
@@ -861,7 +859,7 @@ public class Type {
    * @param element classElement the {@link Element} to be checked
    * @param annotation {@link Class} the represent the annotation
    * @param paramName The annotation member parameter that holds the value
-   * @return the {@link Optional<TypeMirror>} that represent the value.
+   * @return the {@link Optional} of {@link TypeMirror} that represent the value.
    */
   public static Optional<TypeMirror> getClassValueFromAnnotation(
       Element element, Class<? extends Annotation> annotation, String paramName) {
@@ -885,11 +883,11 @@ public class Type {
    * processIdentity
    *
    * <p>Reads the information provided in the {@link JsonIdentityInfo} and {@link
-   * JsonIdentityReference} from the specified {@link TypeMirror} and return an {@link
-   * Optional<BeanIdentityInfo>}
+   * JsonIdentityReference} from the specified {@link TypeMirror} and return an {@link Optional} of
+   * {@link BeanIdentityInfo}
    *
    * @param beanType a {@link TypeMirror} object.
-   * @return {@link Optional<BeanIdentityInfo>}
+   * @return {@link Optional} of {@link BeanIdentityInfo}
    */
   public static Optional<BeanIdentityInfo> processIdentity(TypeMirror beanType) {
 

@@ -54,6 +54,7 @@ public interface ObjectIdResolver {
    * @param context Deserialization context object used (of type <code>
    *     com.fasterxml.jackson.databind.DeserializationContext</code> ; may be needed by more
    *     complex resolvers to access contextual information such as configuration.
+   * @return {@link ObjectIdResolver}
    */
   ObjectIdResolver newForDeserialization(Object context);
 
@@ -62,6 +63,7 @@ public interface ObjectIdResolver {
    * resolver type; determination is based by passing a configured "blueprint" (prototype) instance;
    * from which the actual instances are created (using {@link #newForDeserialization}).
    *
+   * @param resolverType {@link ObjectIdResolver}
    * @return True if this instance can be used as-is; false if not
    */
   boolean canUseFor(ObjectIdResolver resolverType);

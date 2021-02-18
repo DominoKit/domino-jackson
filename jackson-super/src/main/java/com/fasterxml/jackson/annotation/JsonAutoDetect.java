@@ -78,22 +78,40 @@ public @interface JsonAutoDetect {
     }
   }
 
-  /** Minimum visibility required for auto-detecting regular getter methods. */
+  /**
+   * Minimum visibility required for auto-detecting regular getter methods.
+   *
+   * @return {@link Visibility}
+   */
   Visibility getterVisibility() default Visibility.DEFAULT;
 
-  /** Minimum visibility required for auto-detecting is-getter methods. */
+  /**
+   * Minimum visibility required for auto-detecting is-getter methods.
+   *
+   * @return {@link Visibility}
+   */
   Visibility isGetterVisibility() default Visibility.DEFAULT;
 
-  /** Minimum visibility required for auto-detecting setter methods. */
+  /**
+   * Minimum visibility required for auto-detecting setter methods.
+   *
+   * @return {@link Visibility}
+   */
   Visibility setterVisibility() default Visibility.DEFAULT;
 
   /**
    * Minimum visibility required for auto-detecting Creator methods, except for no-argument
    * constructors (which are always detected no matter what).
+   *
+   * @return {@link Visibility}
    */
   Visibility creatorVisibility() default Visibility.DEFAULT;
 
-  /** Minimum visibility required for auto-detecting member fields. */
+  /**
+   * Minimum visibility required for auto-detecting member fields.
+   *
+   * @return {@link Visibility}
+   */
   Visibility fieldVisibility() default Visibility.DEFAULT;
 
   /*
@@ -168,6 +186,7 @@ public @interface JsonAutoDetect {
       return DEFAULT;
     }
 
+    /** @return {@link Value} */
     public static Value noOverrides() {
       return NO_OVERRIDES;
     }
@@ -185,6 +204,10 @@ public @interface JsonAutoDetect {
      * Factory method for cnstructing instance with visibility of specified accessor (or, in case of
      * <code>ALL</code>, all of them) set as specified; and the rest (if any) set as {@link
      * Visibility#DEFAULT}).
+     *
+     * @param acc {@link PropertyAccessor}
+     * @param visibility {@link Visibility}
+     * @return {@link Value}
      */
     public static Value construct(PropertyAccessor acc, Visibility visibility) {
       Visibility fields = Visibility.DEFAULT;

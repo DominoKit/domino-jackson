@@ -57,6 +57,8 @@ public @interface JsonIdentityInfo {
    * Java Bean Introspection rules).
    *
    * <p>Default value is <code>@id</code>.
+   *
+   * @return {@link String}
    */
   public String property() default "@id";
 
@@ -67,6 +69,8 @@ public @interface JsonIdentityInfo {
    *
    * <p>Note that special type {@link ObjectIdGenerators.None} can be used to disable inclusion of
    * Object Ids.
+   *
+   * @return {@link Class} that extends from {@link ObjectIdGenerator}
    */
   public Class<? extends ObjectIdGenerator<?>> generator();
 
@@ -76,6 +80,7 @@ public @interface JsonIdentityInfo {
    * <p>Default value is {@link SimpleObjectIdResolver}
    *
    * @since 2.4
+   * @return {@link Class}
    */
   public Class<? extends ObjectIdResolver> resolver() default SimpleObjectIdResolver.class;
 
@@ -87,6 +92,8 @@ public @interface JsonIdentityInfo {
    * <p>Scope is used for determining how many generators are needed; more than one scope is
    * typically only needed if external Object Ids have overlapping value domains (i.e. are only
    * unique within some limited scope)
+   *
+   * @return {@link Class}
    */
   public Class<?> scope() default Object.class;
 }

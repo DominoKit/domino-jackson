@@ -44,8 +44,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  * stream, one token at a time. The stream includes both literal values (strings, numbers, booleans
  * and nulls) as well as the begin and end delimiters of objects and arrays.
  *
- * <p>
- *
  * <h3>Encoding JSON</h3>
  *
  * To encode your data as JSON, create a new {@code JsonWriter}. Each JSON document must contain one
@@ -61,8 +59,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  *       property values with the appropriate {@link #value} method or by nesting other objects or
  *       arrays. Finally close the object using {@link #endObject()}.
  * </ul>
- *
- * <p>
  *
  * <h3>Example</h3>
  *
@@ -139,8 +135,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  *     writer.endArray();
  *   }
  * }</pre>
- *
- * <p>
  *
  * <p>Each {@code JsonWriter} may be used to write a single JSON stream. Instances of this class are
  * not thread safe. Calls that would result in a malformed JSON string will fail with an {@link

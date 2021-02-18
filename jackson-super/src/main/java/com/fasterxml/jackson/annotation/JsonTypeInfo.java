@@ -182,11 +182,10 @@ public @interface JsonTypeInfo {
      * output using some other mechanism (like default POJO property serialization, or custom
      * serializer).
      *
-     * <p>Note that this behavior is quite similar to that of using {@link JsonTypeId} annotation;
-     * except that here <code>TypeSerializer</code> is basically suppressed; whereas with {@link
-     * JsonTypeId}, output of regular property is suppressed. This mostly matters with respect to
-     * output order; this choice is the only way to ensure specific placement of type id during
-     * serialization.
+     * <p>Note that this behavior is quite similar to that of using JsonTypeId annotation; except
+     * that here <code>TypeSerializer</code> is basically suppressed; whereas with JsonTypeId,
+     * output of regular property is suppressed. This mostly matters with respect to output order;
+     * this choice is the only way to ensure specific placement of type id during serialization.
      *
      * @since 2.3.0 but databind <b>only since 2.5.0</b>.
      */
@@ -202,6 +201,8 @@ public @interface JsonTypeInfo {
   /**
    * Specifies kind of type metadata to use when serializing type information for instances of
    * annotated type and its subtypes; as well as what is expected during deserialization.
+   *
+   * @return {@link Id}
    */
   public Id use();
 
@@ -211,6 +212,8 @@ public @interface JsonTypeInfo {
    *
    * <p>Note that for type metadata type of {@link Id#CUSTOM}, this setting may or may not have any
    * effect.
+   *
+   * @return {@link As}
    */
   public As include() default As.PROPERTY;
 
@@ -222,6 +225,8 @@ public @interface JsonTypeInfo {
    *
    * <p>Default property name used if this property is not explicitly defined (or is set to empty
    * <code>String</code>) is based on type metadata type ({@link #use}) used.
+   *
+   * @return String
    */
   public String property() default "";
 
@@ -248,6 +253,8 @@ public @interface JsonTypeInfo {
    *       type). For backwards compatibility with earlier versions (2.5 and below), value of {@link
    *       None} may also be used.
    * </ul>
+   *
+   * @return {@link Class}
    */
   public Class<?> defaultImpl() default JsonTypeInfo.class;
 
@@ -260,6 +267,7 @@ public @interface JsonTypeInfo {
    * JSON content that is passed to <code>JsonDeserializer</code>.
    *
    * @since 2.0
+   * @return boolean
    */
   public boolean visible() default false;
 

@@ -93,6 +93,8 @@ public class TypeToken<T> implements Comparable<TypeToken<T>> {
    * When called on {@code TypeToken<List<String>>} it will return {@code List.class}<br>
    * <br>
    * For arrays, this method will return null.
+   *
+   * @return {@link Class}
    */
   public final Class<? super T> getRawType() {
     return rawType;
@@ -107,6 +109,8 @@ public class TypeToken<T> implements Comparable<TypeToken<T>> {
    * TypeToken<String>}<br>
    * When called on {@code TypeToken<String[]>} a single-element array with a type token {@code
    * TypeToken<String>} will be returned as well
+   *
+   * @return {@link TypeToken[]}
    */
   public final TypeToken<?>[] getTypeArguments() {
     return typeArguments;
@@ -115,9 +119,12 @@ public class TypeToken<T> implements Comparable<TypeToken<T>> {
   /**
    * The only reason we define this method (and require implementation of <code>Comparable</code>)
    * is to prevent constructing a reference without type information.
+   *
+   * @param other {@link TypeToken}
+   * @return int
    */
   @Override
-  public final int compareTo(TypeToken<T> o) {
+  public final int compareTo(TypeToken<T> other) {
     return 0;
   }
 

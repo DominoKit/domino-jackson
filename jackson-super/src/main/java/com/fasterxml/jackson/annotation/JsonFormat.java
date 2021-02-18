@@ -15,7 +15,10 @@
  */
 package com.fasterxml.jackson.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * General-purpose annotation used for configuring details of how values of properties are to be
@@ -80,6 +83,8 @@ public @interface JsonFormat {
    * formatting aspects. This may, for example, determine low-level format String used for {@link
    * java.util.Date} serialization; however, exact use is determined by specific <code>
    * JsonSerializer</code>
+   *
+   * @return {@link String}
    */
   public String pattern() default "";
 
@@ -87,6 +92,8 @@ public @interface JsonFormat {
    * Structure to use for serialization: definition of mapping depends on datatype, but usually has
    * straight-forward counterpart in data format (JSON). Note that commonly only a subset of shapes
    * is available; and if 'invalid' value is chosen, defaults are usually used.
+   *
+   * @return {@link Shape}
    */
   public Shape shape() default Shape.ANY;
 
@@ -95,6 +102,8 @@ public @interface JsonFormat {
    * #DEFAULT_LOCALE} can be used to mean "just use the default", where default is specified by the
    * serialization context, which in turn defaults to system defaults ({@link
    * java.util.Locale#getDefault()}) unless explicitly set to another locale.
+   *
+   * @return {@link String}
    */
   public String locale() default DEFAULT_LOCALE;
 
@@ -103,6 +112,8 @@ public @interface JsonFormat {
    * #DEFAULT_TIMEZONE} can be used to mean "just use the default", where default is specified by
    * the serialization context, which in turn defaults to system default (UTC) unless explicitly set
    * to another timezone.
+   *
+   * @return {@link String}
    */
   public String timezone() default DEFAULT_TIMEZONE;
 
@@ -114,6 +125,7 @@ public @interface JsonFormat {
    * it): for most date/time types, default is for leniency to be enabled.
    *
    * @since 2.9
+   * @return {@link OptBoolean}
    */
   public OptBoolean lenient() default OptBoolean.DEFAULT;
 
@@ -122,6 +134,7 @@ public @interface JsonFormat {
    * This will have precedence over possible global configuration.
    *
    * @since 2.6
+   * @return {@link Feature[]}
    */
   public Feature[] with() default {};
 
@@ -130,6 +143,7 @@ public @interface JsonFormat {
    * This will have precedence over possible global configuration.
    *
    * @since 2.6
+   * @return {@link Feature[]}
    */
   public Feature[] without() default {};
 

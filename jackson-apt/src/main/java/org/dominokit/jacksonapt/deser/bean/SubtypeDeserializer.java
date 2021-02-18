@@ -44,7 +44,7 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
      * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      * @param typeInformation a {@link java.lang.String} object.
      * @param bufferedProperties a {@link java.util.Map} object.
-     * @return
+     * @return the deserialized object
      */
     @Override
     public T deserializeInline(
@@ -68,7 +68,7 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
      *     object.
      * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      * @param typeInformation a {@link java.lang.String} object.
-     * @return
+     * @return the deserialized object
      */
     @Override
     public T deserializeWrapped(
@@ -96,7 +96,7 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
      * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      * @param typeInformation a {@link java.lang.String} object.
      * @param bufferedProperties a {@link java.util.Map} object.
-     * @return
+     * @return the deserialized object
      */
     @Override
     public T deserializeInline(
@@ -119,7 +119,7 @@ public abstract class SubtypeDeserializer<T, D extends JsonDeserializer<T>>
      *     object.
      * @param typeInfo a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
      * @param typeInformation a {@link java.lang.String} object.
-     * @return
+     * @return the deserialized object
      */
     @Override
     public T deserializeWrapped(

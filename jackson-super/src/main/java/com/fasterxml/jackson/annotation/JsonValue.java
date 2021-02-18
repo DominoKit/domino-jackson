@@ -60,6 +60,8 @@ public @interface JsonValue {
    * 'false' if for overriding purposes. Overriding may be necessary when used with "mix-in
    * annotations" (aka "annotation overrides"). For most cases, however, default value of "true" is
    * just fine and should be omitted.
+   *
+   * @return boolean
    */
   boolean value() default true;
 }

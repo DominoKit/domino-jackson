@@ -134,9 +134,9 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
    * type, generated code utilize existing deserializers. Otherwise, it creates instances of newly
    * generated ones.
    *
-   * @param element
-   * @param beanType
-   * @return
+   * @param element the {@link Element} that we are generating the deserializer for.
+   * @param beanType the {@link TypeMirror} of the element.
+   * @return {@link MethodSpec}
    */
   protected MethodSpec makeNewDeserializerMethod(Element element, TypeMirror beanType) {
     CodeBlock.Builder builder = CodeBlock.builder();
@@ -166,8 +166,9 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
    * type, generated code utilize existing serializers. Otherwise, it creates instances of newly
    * generated ones.
    *
-   * @param beanType
-   * @return
+   * @param beanType the {@link TypeMirror} the type of the element we are generating the serializer
+   *     for.
+   * @return {@link MethodSpec}
    */
   protected MethodSpec makeNewSerializerMethod(TypeMirror beanType) {
     CodeBlock.Builder builder = CodeBlock.builder();
@@ -255,14 +256,16 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
   /**
    * Generate serializer for given beanType and packageName
    *
-   * @param beanType
+   * @param beanType the {@link TypeMirror} of the element that we are generating the deserializer
+   *     for.
    */
   protected void generateSerializer(TypeMirror beanType) {}
 
   /**
    * Generate deserializer for given beanType and packageName
    *
-   * @param beanType
+   * @param beanType the {@link TypeMirror} of the element that we are generating the serializer
+   *     for.
    */
   protected void generateDeserializer(TypeMirror beanType) {}
 }

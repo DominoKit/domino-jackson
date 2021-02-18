@@ -48,6 +48,7 @@ public class TypeDeserializationInfo<T> {
    *
    * @param clazz a {@link java.lang.Class} object.
    * @param typeInfo a {@link java.lang.String} object.
+   * @param <S> the class
    * @return a {@link org.dominokit.jacksonapt.deser.bean.TypeDeserializationInfo} object.
    */
   public <S extends T> TypeDeserializationInfo<T> addTypeInfo(Class<S> clazz, String typeInfo) {

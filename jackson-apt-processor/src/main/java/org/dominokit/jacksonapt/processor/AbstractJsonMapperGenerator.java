@@ -222,7 +222,8 @@ public abstract class AbstractJsonMapperGenerator {
     /**
      * Constructor
      *
-     * @param method a {@link Optional<ExecutableElement>} that represent an accessor method.
+     * @param method a {@link Optional} of {@link ExecutableElement} that represent an accessor
+     *     method.
      */
     public AccessorInfo(Optional<ExecutableElement> method) {
       this.method = method;

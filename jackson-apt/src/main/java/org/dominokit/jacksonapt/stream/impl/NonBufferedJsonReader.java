@@ -49,14 +49,10 @@ import org.dominokit.jacksonapt.stream.Stack;
  * depth-first order, the same order that they appear in the JSON document. Within JSON objects,
  * name/value pairs are represented by a single token.
  *
- * <p>
- *
  * <h3>Parsing JSON</h3>
  *
  * To create a recursive descent parser for your own JSON streams, first create an entry point
  * method that creates a {@code JsonReader}.
- *
- * <p>
  *
  * <p>Next, create handler methods for each structure in your JSON text. You'll need a method for
  * each object type and for each array type.
@@ -74,18 +70,12 @@ import org.dominokit.jacksonapt.stream.Stack;
  *
  * <p>When a nested object or array is encountered, delegate to the corresponding handler method.
  *
- * <p>
- *
  * <p>When an unknown name is encountered, strict parsers should fail with an exception. Lenient
  * parsers should call {@link #skipValue()} to recursively skip the value's nested tokens, which may
  * otherwise conflict.
  *
- * <p>
- *
  * <p>If a value may be null, you should first check using {@link #peek()}. Null literals can be
  * consumed using either {@link #nextNull()} or {@link #skipValue()}.
- *
- * <p>
  *
  * <h3>Example</h3>
  *
@@ -194,8 +184,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  *   }
  * }</pre>
  *
- * <p>
- *
  * <h3>Number Handling</h3>
  *
  * This reader permits numeric values to be read as strings and string values to be read as numbers.
@@ -205,8 +193,6 @@ import org.dominokit.jacksonapt.stream.Stack;
  * cannot be represented exactly on that platform. To minimize precision loss, extremely large
  * values should be written and read as strings in JSON.
  *
- * <p>
- *
  * <h3>Non-Execute Prefix</h3>
  *
  * Web servers that serve private data using JSON may be vulnerable to <a
@@ -214,14 +200,10 @@ import org.dominokit.jacksonapt.stream.Stack;
  * forgery</a> attacks. In such an attack, a malicious site gains access to a private JSON file by
  * executing it with an HTML {@code <script>} tag.
  *
- * <p>
- *
  * <p>Prefixing JSON files with <code>")]}'\n"</code> makes them non-executable by {@code <script>}
  * tags, disarming the attack. Since the prefix is malformed JSON, strict parsing fails when it is
  * encountered. This class permits the non-execute prefix when {@link #setLenient(boolean) lenient
  * parsing} is enabled.
- *
- * <p>
  *
  * <p>Each {@code JsonReader} may be used to read a single JSON stream. Instances of this class are
  * not thread safe.
@@ -339,8 +321,6 @@ public class NonBufferedJsonReader implements JsonReader {
    * <p>Configure this parser to be be liberal in what it accepts. By default, this parser is strict
    * and only accepts JSON as specified by <a href="http://www.ietf.org/rfc/rfc4627.txt">RFC
    * 4627</a>. Setting the parser to lenient causes it to ignore the following syntax errors:
-   *
-   * <p>
    *
    * <ul>
    *   <li>Streams that start with the <a href="#nonexecuteprefix">non-execute prefix</a>, <code>

@@ -58,6 +58,8 @@ public @interface JsonPOJOBuilder {
    * be instantiated.
    *
    * <p>Default value is "build".
+   *
+   * @return String
    */
   public String buildMethodName() default DEFAULT_BUILD_METHOD;
 
@@ -67,10 +69,12 @@ public @interface JsonPOJOBuilder {
    * new builder instance to use (which may be 'this', or a new modified builder instance). Note
    * that in addition to this prefix, it is also possible to use {@link
    * com.fasterxml.jackson.annotation.JsonProperty} annotation to indicate "with-methods" (as well
-   * as {@link com.fasterxml.jackson.annotation.JsonSetter}).
+   * as com.fasterxml.jackson.annotation.JsonSetter).
    *
    * <p>Default value is "with", so that method named "withValue()" would be used for binding JSON
    * property "value" (using type indicated by the argument; or one defined with annotations.
+   *
+   * @return String
    */
   public String withPrefix() default DEFAULT_WITH_PREFIX;
 

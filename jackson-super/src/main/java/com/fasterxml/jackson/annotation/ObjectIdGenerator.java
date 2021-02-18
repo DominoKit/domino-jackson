@@ -38,6 +38,7 @@ public abstract class ObjectIdGenerator<T> implements java.io.Serializable {
    * (prototype) instance; from which the actual instances are created (using {@link
    * #newForSerialization}).
    *
+   * @param gen {@link ObjectIdGenerator}
    * @return True if this instance can be used as-is; false if not
    */
   public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
@@ -53,6 +54,7 @@ public abstract class ObjectIdGenerator<T> implements java.io.Serializable {
    * Object-producing generators.
    *
    * @since 2.5
+   * @return boolean
    */
   public boolean maySerializeAsObject() {
     return false;
@@ -67,6 +69,7 @@ public abstract class ObjectIdGenerator<T> implements java.io.Serializable {
    *     (note: untyped, because <code>JsonParser</code> is defined in `jackson-core`, and this
    *     package does not depend on it).
    * @since 2.5
+   * @return boolean
    */
   public boolean isValidReferencePropertyName(String name, Object parser) {
     return false;
@@ -81,6 +84,9 @@ public abstract class ObjectIdGenerator<T> implements java.io.Serializable {
   /**
    * Factory method to create a blueprint instance for specified scope. Generators that do not use
    * scope may return 'this'.
+   *
+   * @param scope {@link Class}
+   * @return {@link ObjectIdGenerator}
    */
   public abstract ObjectIdGenerator<T> forScope(Class<?> scope);
 
@@ -95,10 +101,16 @@ public abstract class ObjectIdGenerator<T> implements java.io.Serializable {
    * @param context Serialization context object used (of type <code>
    *     com.fasterxml.jackson.databind.SerializerProvider</code>; may be needed by more complex
    *     generators to access contextual information such as configuration.
+   * @return {@link ObjectIdGenerator}
    */
   public abstract ObjectIdGenerator<T> newForSerialization(Object context);
 
-  /** Method for constructing key to use for ObjectId-to-POJO maps. */
+  /**
+   * Method for constructing key to use for ObjectId-to-POJO maps.
+   *
+   * @param key {@link Object}
+   * @return {@link IdKey}
+   */
   public abstract IdKey key(Object key);
 
   /*

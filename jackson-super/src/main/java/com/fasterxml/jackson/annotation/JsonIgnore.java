@@ -64,6 +64,8 @@ public @interface JsonIgnore {
    * 'false' if for overriding purposes (which is not needed often); most likely it is needed for
    * use with "mix-in annotations" (aka "annotation overrides"). For most cases, however, default
    * value of "true" is just fine and should be omitted.
+   *
+   * @return boolean
    */
   boolean value() default true;
 }

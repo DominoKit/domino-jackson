@@ -40,6 +40,7 @@ public final class EnumMapJsonDeserializer<E extends Enum<E>, V>
    * @param valueDeserializer {@link org.dominokit.jacksonapt.JsonDeserializer} used to deserialize
    *     the values.
    * @param <V> Type of the values inside the {@link java.util.EnumMap}
+   * @param <E> the enum type
    * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.EnumMapJsonDeserializer}
    */
   public static <E extends Enum<E>, V> EnumMapJsonDeserializer<E, V> newInstance(

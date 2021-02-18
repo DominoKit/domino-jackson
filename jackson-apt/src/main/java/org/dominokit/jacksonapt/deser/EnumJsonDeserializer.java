@@ -33,6 +33,8 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
    * newInstance
    *
    * @param enumClass class of the enumeration
+   * @param values {@link E[]}
+   * @param <E> the enum type
    * @return a new instance of {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer}
    */
   public static <E extends Enum<E>> EnumJsonDeserializer<E> newInstance(
@@ -47,6 +49,7 @@ public class EnumJsonDeserializer<E extends Enum<E>> extends JsonDeserializer<E>
    * Constructor for EnumJsonDeserializer.
    *
    * @param enumClass class of the enumeration
+   * @param values {@link E[]} enum values
    */
   protected EnumJsonDeserializer(Class<E> enumClass, E[] values) {
     if (null == enumClass) {

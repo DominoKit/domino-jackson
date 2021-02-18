@@ -52,13 +52,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonPropertyOrder {
-  /** Order in which properties of annotated object are to be serialized in. */
+  /**
+   * Order in which properties of annotated object are to be serialized in.
+   *
+   * @return String[]
+   */
   public String[] value() default {};
 
   /**
    * Property that defines what to do regarding ordering of properties not explicitly included in
    * annotation instance. If set to true, they will be alphabetically ordered; if false, order is
    * undefined (default setting)
+   *
+   * @return boolean
    */
   public boolean alphabetic() default false;
 }

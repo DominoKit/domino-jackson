@@ -34,7 +34,7 @@ import org.dominokit.jacksonapt.processor.TypeRegistry;
 
 /**
  * Generate recursively a chain of Deserializers for a specific field. for example for the <code>
- * List<Long>[]</code> type will result in generating the following Deserializers chain <code>
+ * List&lt;Long&gt;[]</code> type will result in generating the following Deserializers chain <code>
  * CollectionJsonSerializer.newInstance(ArrayJsonSerializer.newInstance(BaseNumberJsonSerializer.LongJsonSerializer.getInstance()))
  * </code>
  */
@@ -61,6 +61,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
    * Constructor for FieldDeserializersChainBuilder.
    *
    * @param beanType a {@link javax.lang.model.type.TypeMirror} object.
+   * @param rootGenerated boolean
    */
   public FieldDeserializersChainBuilder(TypeMirror beanType, boolean rootGenerated) {
     this.beanType = beanType;

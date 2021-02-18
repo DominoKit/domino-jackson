@@ -66,6 +66,8 @@ public @interface JsonProperty {
    * value is empty String (which is the default), will try to use name of the field that is
    * annotated. Note that there is <b>no default name available for constructor arguments</b>,
    * meaning that <b>Empty String is not a valid value for constructor arguments</b>.
+   *
+   * @return String
    */
   String value() default USE_DEFAULT_NAME;
 
@@ -82,6 +84,7 @@ public @interface JsonProperty {
    * generators, such as one for JSON Schema.
    *
    * @since 2.0
+   * @return boolean
    */
   boolean required() default false;
 
@@ -91,6 +94,7 @@ public @interface JsonProperty {
    * useful for schema languages and other tools.
    *
    * @since 2.4
+   * @return int
    */
   int index() default INDEX_UNKNOWN;
 
@@ -106,6 +110,7 @@ public @interface JsonProperty {
    * 2.6 and above.
    *
    * @since 2.5
+   * @return String
    */
   String defaultValue() default "";
 
@@ -119,6 +124,7 @@ public @interface JsonProperty {
    * visibility and other annotations.
    *
    * @since 2.6
+   * @return {@link Access}
    */
   Access access() default Access.AUTO;
 

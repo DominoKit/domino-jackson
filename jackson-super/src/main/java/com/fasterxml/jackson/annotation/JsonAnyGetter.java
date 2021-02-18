@@ -41,6 +41,7 @@ public @interface JsonAnyGetter {
    * just fine and should be omitted.
    *
    * @since 2.9
+   * @return boolean
    */
   boolean enabled() default true;
 }

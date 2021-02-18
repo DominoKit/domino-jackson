@@ -69,6 +69,8 @@ public @interface JsonInclude {
   /**
    * Inclusion rule to use for instances (values) of types (Classes) or properties annotated;
    * defaults to {@link Include#ALWAYS}.
+   *
+   * @return {@link Include}
    */
   public Include value() default Include.ALWAYS;
 
@@ -78,6 +80,7 @@ public @interface JsonInclude {
    * {@link Include#ALWAYS}.
    *
    * @since 2.5
+   * @return {@link Include}
    */
   public Include content() default Include.ALWAYS;
 
@@ -87,6 +90,7 @@ public @interface JsonInclude {
    * </code>), which by default simply calls zero-argument constructor of the Filter Class.
    *
    * @since 2.9
+   * @return {@link Class}
    */
   public Class<?> valueFilter() default Void.class;
 
@@ -96,6 +100,7 @@ public @interface JsonInclude {
    * </code>), which by default simply calls zero-argument constructor of the Filter Class.
    *
    * @since 2.9
+   * @return {@link Class}
    */
   public Class<?> contentFilter() default Void.class;
 
@@ -277,12 +282,19 @@ public @interface JsonInclude {
      * `null`, result will also be `null`; otherwise never null.
      *
      * @since 2.8
+     * @param base {@link Value}
+     * @param overrides {@link Value}
+     * @return {@link Value}
      */
     public static Value merge(Value base, Value overrides) {
       return (base == null) ? overrides : base.withOverrides(overrides);
     }
 
-    /** @since 2.8 */
+    /**
+     * @since 2.8
+     * @param values {@link Value} varargs
+     * @return {@link Value}
+     */
     public static Value mergeAll(Value... values) {
       Value result = null;
       for (Value curr : values) {
@@ -309,6 +321,9 @@ public @interface JsonInclude {
      * any explicitly defined inclusion in overrides has precedence over settings of this value
      * instance. If no overrides exist will return <code>this</code> instance; otherwise new {@link
      * Value} with changed inclusion values.
+     *
+     * @param overrides {@link Value}
+     * @return {@link Value}
      */
     public Value withOverrides(Value overrides) {
       if ((overrides == null) || (overrides == EMPTY)) {
@@ -336,7 +351,13 @@ public @interface JsonInclude {
       return this;
     }
 
-    /** Factory method to use for constructing an instance for components */
+    /**
+     * Factory method to use for constructing an instance for components
+     *
+     * @param valueIncl {@link Include}
+     * @param contentIncl {@link Include}
+     * @return {@link Value}
+     */
     public static Value construct(Include valueIncl, Include contentIncl) {
       if (((valueIncl == Include.USE_DEFAULTS) || (valueIncl == null))
           && ((contentIncl == Include.USE_DEFAULTS) || (contentIncl == null))) {
@@ -349,6 +370,11 @@ public @interface JsonInclude {
      * Factory method to use for constructing an instance for components
      *
      * @since 2.9
+     * @param valueIncl {@link Include}
+     * @param contentIncl {@link Include}
+     * @param valueFilter {@link Class}
+     * @param contentFilter {@link Class}
+     * @return {@link Value}
      */
     public static Value construct(
         Include valueIncl, Include contentIncl, Class<?> valueFilter, Class<?> contentFilter) {
@@ -367,7 +393,12 @@ public @interface JsonInclude {
       return new Value(valueIncl, contentIncl, valueFilter, contentFilter);
     }
 
-    /** Factory method to use for constructing an instance from instance of {@link JsonInclude} */
+    /**
+     * Factory method to use for constructing an instance from instance of {@link JsonInclude}
+     *
+     * @param src {@link JsonInclude}
+     * @return {@link Value}
+     */
     public static Value from(JsonInclude src) {
       if (src == null) {
         return EMPTY;
@@ -405,6 +436,8 @@ public @interface JsonInclude {
      * </ul>
      *
      * @since 2.9
+     * @param filter {@link Class}
+     * @return {@link Value}
      */
     public Value withValueFilter(Class<?> filter) {
       Include incl;
@@ -427,6 +460,8 @@ public @interface JsonInclude {
      * </ul>
      *
      * @since 2.9
+     * @param filter {@link Class}
+     * @return {@link Value}
      */
     public Value withContentFilter(Class<?> filter) {
       Include incl;

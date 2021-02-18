@@ -33,6 +33,7 @@ public class EnumSetJsonDeserializer<E extends Enum<E>>
    *
    * @param deserializer {@link org.dominokit.jacksonapt.deser.EnumJsonDeserializer} used to
    *     deserialize the enums inside the {@link java.util.EnumSet}.
+   * @param <E> enum type
    * @return a new instance of {@link
    *     org.dominokit.jacksonapt.deser.collection.EnumSetJsonDeserializer}
    */

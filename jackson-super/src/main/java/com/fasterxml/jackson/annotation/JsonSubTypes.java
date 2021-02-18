@@ -39,19 +39,29 @@ public @interface JsonSubTypes {
    * Subtypes of the annotated type (annotated class, or property value type associated with the
    * annotated method). These will be checked recursively so that types can be defined by only
    * including direct subtypes.
+   *
+   * @return {@link Type[]}
    */
   public Type[] value();
 
   /**
    * Definition of a subtype, along with optional name. If name is missing, class of the type will
-   * be checked for {@link JsonTypeName} annotation; and if that is also missing or empty, a default
-   * name will be constructed by type id mechanism. Default name is usually based on class name.
+   * be checked for JsonTypeName annotation; and if that is also missing or empty, a default name
+   * will be constructed by type id mechanism. Default name is usually based on class name.
    */
   public @interface Type {
-    /** Class of the subtype */
+    /**
+     * Class of the subtype
+     *
+     * @return {@link Class}
+     */
     public Class<?> value();
 
-    /** Logical type name used as the type identifier for the class */
+    /**
+     * Logical type name used as the type identifier for the class
+     *
+     * @return String
+     */
     public String name() default "";
   }
 }

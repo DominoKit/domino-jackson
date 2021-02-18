@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  *       JSON into type of the argument, and then calls creator. This is often used in conjunction
  *       with {@link JsonValue} (used for serialization).
  *   <li>Constructor/factory method where <b>every argument</b> is annotated with either {@link
- *       JsonProperty} or {@link JacksonInject}, to indicate name of property to bind to
+ *       JsonProperty} or JacksonInject, to indicate name of property to bind to
  * </ul>
  *
  * Also note that all {@link JsonProperty} annotations must specify actual name (NOT empty String
@@ -65,6 +65,7 @@ public @interface JsonCreator {
    * choosing mode to use.
    *
    * @since 2.5
+   * @return {@link Mode}
    */
   public Mode mode() default Mode.DEFAULT;
 

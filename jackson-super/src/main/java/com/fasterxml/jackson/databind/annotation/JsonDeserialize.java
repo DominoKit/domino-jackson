@@ -61,6 +61,8 @@ public @interface JsonDeserialize {
    * <p>Deserializer class to use for deserializing associated value. Depending on what is
    * annotated, value is either an instance of annotated class (used globablly anywhere where class
    * deserializer is needed); or only used for deserializing property access via a setter method.
+   *
+   * @return {@link Class}
    */
   Class<?> using() default Void.class;
 
@@ -71,6 +73,8 @@ public @interface JsonDeserialize {
    * <p>Deserializer class to use for deserializing contents (elements of a Collection/array, values
    * of Maps) of annotated property. Can only be used on instances (methods, fields, constructors),
    * and not value classes themselves.
+   *
+   * @return {@link Class}
    */
   Class<?> contentUsing() default Void.class;
 
@@ -80,6 +84,8 @@ public @interface JsonDeserialize {
    *
    * <p>Deserializer class to use for deserializing Map keys of annotated property. Can only be used
    * on instances (methods, fields, constructors), and not value classes themselves.
+   *
+   * @return {@link Class}
    */
   Class<?> keyUsing() default Void.class;
 
@@ -95,6 +101,7 @@ public @interface JsonDeserialize {
    * intermediate type (like Tree representation), and converter then builds actual property type.
    *
    * @since 2.2
+   * @return {@link Class}
    */
   Class<?> converter() default Void.class;
 
@@ -105,6 +112,7 @@ public @interface JsonDeserialize {
    * <p>Similar to {@link #converter}, but used for values of structures types (List, arrays, Maps).
    *
    * @since 2.2
+   * @return {@link Class}
    */
   Class<?> contentConverter() default Void.class;
 
@@ -119,6 +127,8 @@ public @interface JsonDeserialize {
    * <p>Note: if {@link #using} is also used it has precedence (since it directly specified
    * deserializer, whereas this would only be used to locate the deserializer) and value of this
    * annotation property is ignored.
+   *
+   * @return {@link Class}
    */
   Class<?> as() default Void.class;
 
@@ -126,6 +136,8 @@ public @interface JsonDeserialize {
    * Concrete type to deserialize keys of {@link java.util.Map} as, instead of type otherwise
    * declared. Must be a subtype of declared type; otherwise an exception may be thrown by
    * deserializer.
+   *
+   * @return {@link Class}
    */
   Class<?> keyAs() default Void.class;
 
@@ -133,6 +145,8 @@ public @interface JsonDeserialize {
    * Concrete type to deserialize content (elements of a Collection/array, values of Maps) values
    * as, instead of type otherwise declared. Must be a subtype of declared type; otherwise an
    * exception may be thrown by deserializer.
+   *
+   * @return {@link Class}
    */
   Class<?> contentAs() default Void.class;
 
@@ -142,6 +156,8 @@ public @interface JsonDeserialize {
    * constructed (possibly using a Creator method; or if none defined, using default constructor),
    * and its "with-methods" are used for populating fields; and finally "build-method" is invoked to
    * complete deserialization.
+   *
+   * @return {@link Class}
    */
   Class<?> builder() default Void.class;
 }

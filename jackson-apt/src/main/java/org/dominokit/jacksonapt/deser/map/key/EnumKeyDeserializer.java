@@ -30,6 +30,8 @@ public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserialize
    * newInstance
    *
    * @param enumClass class of the enumeration
+   * @param values enum values
+   * @param <E> the enum type
    * @return a new instance of {@link org.dominokit.jacksonapt.deser.map.key.EnumKeyDeserializer}
    */
   public static <E extends Enum<E>> EnumKeyDeserializer<E> newInstance(

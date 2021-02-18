@@ -47,6 +47,7 @@ public @interface JsonIdentityReference {
    * sufficient.
    *
    * @since 2.1
+   * @return boolean
    */
   public boolean alwaysAsId() default false;
 }

@@ -19,8 +19,6 @@ package org.dominokit.jacksonapt.utils;
 /**
  * A utility to decode and encode byte arrays as Strings, using only "safe" characters.
  *
- * <p>
- *
  * <p>Copy of com.google.gwt.user.server.Base64Utils.<br>
  * Modify to use MIME-Base64 encoding like the default Base64 encoding in <a
  * href="https://github.com/FasterXML/jackson-core/blob/master/src/main/java/com/fasterxml/jackson/core/Base64Variants.java">jackson</a>.
