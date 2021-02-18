@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit.jackson</groupId>
         <artifactId>domino-jackson</artifactId>
-        <version>1.0.0-beta-SNAPSHOT</version>
+        <version>1.0.0-beta</version>
     </parent>
 
     <artifactId>jackson-apt-processor</artifactId>
