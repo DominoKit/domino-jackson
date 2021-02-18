@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit.jackson</groupId>
         <artifactId>domino-jackson</artifactId>
-        <version>1.0.0-beta</version>
+        <version>1.0.1-beta-SNAPSHOT</version>
     </parent>
 
     <artifactId>jackson-super</artifactId>
