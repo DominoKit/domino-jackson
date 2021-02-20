@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.dominokit.jackson</groupId>
-    <artifactId>domino-jackson</artifactId>
+    <groupId>org.dominokit</groupId>
+    <artifactId>domino-jackson-parent</artifactId>
     <version>1.0.1-beta-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>domino-jackson</name>
+    <name>domino-jackson-parent</name>
     <description>APT Based Jackson JSON Mappers</description>
-    <url>https://github.com/DominoKit/gwt-jackson-apt</url>
+    <url>https://github.com/DominoKit/domino-jackson</url>
 
     <organization>
         <name>Dominokit</name>
@@ -36,16 +36,16 @@
     </developers>
 
     <issueManagement>
-        <url>https://github.com/DominoKit/gwt-jackson-apt/issues</url>
+        <url>https://github.com/DominoKit/domino-jackson/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
     <inceptionYear>2019</inceptionYear>
 
     <scm>
-        <connection>scm:git:https://github.com/DominoKit/gwt-jackson-apt.git</connection>
-        <developerConnection>scm:git:git@github.com:DominoKit/gwt-jackson-apt.git</developerConnection>
-        <url>https://github.com/DominoKit/gwt-jackson-apt</url>
+        <connection>scm:git:https://github.com/DominoKit/domino-jackson.git</connection>
+        <developerConnection>scm:git:git@github.com:DominoKit/domino-jackson.git</developerConnection>
+        <url>https://github.com/DominoKit/domino-jackson</url>
     </scm>
 
     <distributionManagement>
@@ -60,9 +60,9 @@
     </distributionManagement>
 
     <modules>
-        <module>jackson-apt</module>
-        <module>jackson-apt-processor</module>
-        <module>jackson-super</module>
+        <module>domino-jackson</module>
+        <module>domino-jackson-processor</module>
+        <module>domino-jackson-super</module>
     </modules>
 
     <properties>
@@ -195,6 +195,7 @@
                         <exclude>**/pom.xml</exclude>
                         <exclude>**/.flattened-pom.xml</exclude>
                         <exclude>**/gwt-unitcache</exclude>
+                        <exclude>**/.mvn/*.*</exclude>
                     </excludes>
                     <properties>
                         <year>${project.inceptionYear}</year>

@@ -1,0 +1,43 @@
+/*
+ * Copyright © 2019 Dominokit
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.dominokit.jackson.processor;
+
+import com.squareup.javapoet.CodeBlock;
+import javax.lang.model.element.Element;
+import javax.lang.model.type.TypeMirror;
+
+/**
+ * MappersChainBuilder interface. A common interface for all class that needs to generate a chain of
+ * Serializers/Deserializers for a specific bean type.
+ */
+public interface MappersChainBuilder {
+  /**
+   * Creates a CodeBlock for creating instances of all (de)serializers corresponding for given
+   * element.
+   *
+   * @param field a {@link javax.lang.model.element.Element} object.
+   * @return a {@link com.squareup.javapoet.CodeBlock} object.
+   */
+  CodeBlock getInstance(Element field);
+
+  /**
+   * Creates a CodeBlock for creating instances of all (de)serializers corresponding for given type.
+   *
+   * @param fieldType a {@link javax.lang.model.type.TypeMirror} object.
+   * @return a {@link com.squareup.javapoet.CodeBlock} object.
+   */
+  CodeBlock getInstance(TypeMirror fieldType);
+}

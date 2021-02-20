@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.dominokit</groupId>
+        <artifactId>domino-jackson-parent</artifactId>
+        <version>1.0.1-beta-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>domino-jackson</artifactId>
+    <packaging>gwt-lib</packaging>
+
+    <name>domino-jackson</name>
+    <url>https://github.com/DominoKit/domino-jackson</url>
+    <description>Apt based jackson</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.elemental2</groupId>
+            <artifactId>elemental2-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.dominokit</groupId>
+            <artifactId>domino-jackson-super</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.i18n</groupId>
+            <artifactId>gwt-cldr</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.i18n</groupId>
+            <artifactId>gwt-datetimeformat</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.9.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ltgt.gwt.maven</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <configuration>
+                    <moduleName>org.dominokit.jackson.Jackson</moduleName>
+                    <moduleShortName>jackson</moduleShortName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
