@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit</groupId>
         <artifactId>domino-jackson-parent</artifactId>
-        <version>1.0.0-RC1</version>
+        <version>1.0.0-RC2</version>
     </parent>
 
     <artifactId>domino-jackson-processor</artifactId>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.dominokit</groupId>
             <artifactId>domino-apt-commons</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
