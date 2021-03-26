@@ -20,7 +20,6 @@ import com.google.auto.service.AutoService;
 import com.squareup.javapoet.*;
 import java.io.IOException;
 import java.util.*;
-import javax.annotation.Generated;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -88,10 +87,6 @@ public class JSONRegistrationProcessor extends AbstractMapperProcessor {
         TypeSpec.classBuilder(className)
             .addJavadoc(CodeBlock.of("This is generated class, please don't modify\n"))
             .addSuperinterface(JsonRegistry.class)
-            .addAnnotation(
-                AnnotationSpec.builder(Generated.class)
-                    .addMember("value", "\"" + getClass().getCanonicalName() + "\"")
-                    .build())
             .addModifiers(Modifier.PUBLIC)
             .addField(mappersMap)
             .addField(readersMap)
