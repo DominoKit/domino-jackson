@@ -67,7 +67,7 @@
 
     <properties>
         <snapshot.version>HEAD-SNAPSHOT</snapshot.version>
-        <next.release.version>1.0.0-RC2</next.release.version>
+        <next.release.version>1.0.0-RC3</next.release.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -317,6 +317,10 @@
                     <version>1.0.0</version>
                     <extensions>true</extensions>
                     <configuration>
+<<<<<<< HEAD
+=======
+                        <!--Only required due to a GWT DateTimeFormat issue see https://github.com/gwtproject/gwt/issues/8259-->
+>>>>>>> 22eb340caac54de4f81ed3e9359a64402a17fc0d
                         <argLine>-Duser.timezone=UTC</argLine>
                         <sourceLevel>1.8</sourceLevel>
                         <failOnError>true</failOnError>
