@@ -317,10 +317,7 @@
                     <version>1.0.0</version>
                     <extensions>true</extensions>
                     <configuration>
-<<<<<<< HEAD
-=======
                         <!--Only required due to a GWT DateTimeFormat issue see https://github.com/gwtproject/gwt/issues/8259-->
->>>>>>> 22eb340caac54de4f81ed3e9359a64402a17fc0d
                         <argLine>-Duser.timezone=UTC</argLine>
                         <sourceLevel>1.8</sourceLevel>
                         <failOnError>true</failOnError>
