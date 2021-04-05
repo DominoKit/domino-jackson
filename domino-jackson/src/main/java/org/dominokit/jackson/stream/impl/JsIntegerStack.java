@@ -27,26 +27,58 @@ public class JsIntegerStack implements Stack<Integer> {
 
   private JsArray<JsNumber> stack = new JsArray<>();
 
-  /** {@inheritDoc} */
-  @Override
-  public Integer getAt(int index) {
+  private Integer getAt(int index) {
     return new Double(get(index).valueOf()).intValue();
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public void setAt(int index, Integer value) {
-    stack.setAt(index, new JsNumber(value));
+  private JsNumber get(int index) {
+    JsArray<JsNumber> slice = stack.slice();
+    JsNumber[] jsNumbers = slice.asArray(new JsNumber[slice.length]);
+    return jsNumbers[index];
   }
 
-  /**
-   * get.
-   *
-   * @param index a int.
-   * @return a {@link elemental2.core.JsNumber} object.
-   */
-  public JsNumber get(int index) {
-    JsArray<JsNumber> slice = stack.slice();
-    return slice.asArray(new JsNumber[slice.length])[index];
+  /** {@inheritDoc} */
+  @Override
+  public Integer pop() {
+    Integer value = getAt(stack.length - 1);
+    stack.pop();
+    return value;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void push(Integer value) {
+    stack.push(new JsNumber(value));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void replaceTop(Integer newTop) {
+    stack.pop();
+    stack.push(new JsNumber(newTop));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void insertFirst(Integer value) {
+    stack.unshift(new JsNumber(value));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Integer peek() {
+    return getAt(stack.length - 1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int size() {
+    return stack.length;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void clear() {
+    stack = new JsArray<>();
   }
 }

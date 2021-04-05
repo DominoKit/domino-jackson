@@ -17,19 +17,32 @@ package org.dominokit.jackson.stream;
 
 /** Stack interface. */
 public interface Stack<T> {
-  /**
-   * setAt.
-   *
-   * @param index a int.
-   * @param value a T object.
-   */
-  void setAt(int index, T value);
+
+  /** @return remove the top of the stack and return the value */
+  T pop();
+
+  /** @return the top of the stack without removing it */
+  T peek();
+
+  /** @return int size of the stack */
+  int size();
+
+  /** Removes all elements of the stack */
+  void clear();
 
   /**
-   * getAt.
+   * add the value to the top of the stack
    *
-   * @param index a int.
-   * @return a T object.
+   * @param value to be placed at the top of the stack
    */
-  T getAt(int index);
+  void push(T value);
+
+  /** @param newTop the value to replace the top of the stack, the stack size remain the same */
+  void replaceTop(T newTop);
+
+  /**
+   * @param value the value to be inserted the start of the stack, this means it will be popped
+   *     last.
+   */
+  void insertFirst(T value);
 }

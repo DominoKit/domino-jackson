@@ -68,12 +68,29 @@ public abstract class AbstractJsonMapperGenerator {
    * @throws java.io.IOException if any.
    */
   protected void generate() throws IOException {
+    String classNameString = Type.stringifyType(beanType) + namePostfix();
+    FieldSpec instance =
+        FieldSpec.builder(ClassName.bestGuess(classNameString), "INSTANCE")
+            .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+            .initializer(
+                CodeBlock.builder().add("new $T()", ClassName.bestGuess(classNameString)).build())
+            .build();
+
+    MethodSpec getInstanceMethod =
+        MethodSpec.methodBuilder("getInstance")
+            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .returns(ClassName.bestGuess(classNameString))
+            .addStatement("return INSTANCE")
+            .build();
+
     MethodSpec constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();
 
     final TypeSpec.Builder builder =
-        TypeSpec.classBuilder(Type.stringifyType(beanType) + namePostfix())
+        TypeSpec.classBuilder(classNameString)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .superclass(superClass())
+            .addField(instance)
+            .addMethod(getInstanceMethod)
             .addMethod(constructor)
             .addMethod(targetTypeMethod());
 

@@ -297,10 +297,10 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
    * The nesting stack. Using a manual array rather than an ArrayList saves 20%.
    */
   private Stack<Integer> stack = JacksonContextProvider.get().integerStackFactory().make();
-  private int stackSize = 0;
+  //  private int stackSize = 0;
 
   {
-    stack.setAt(stackSize++, JsonScope.EMPTY_DOCUMENT);
+    stack.push(JsonScope.EMPTY_DOCUMENT);
   }
 
   /**
@@ -359,7 +359,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
       p = doPeek();
     }
     if (p == PEEKED_END_ARRAY) {
-      stackSize--;
+      stack.pop();
       peeked = PEEKED_NONE;
     } else {
       throw new IllegalStateException(
@@ -401,7 +401,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
       p = doPeek();
     }
     if (p == PEEKED_END_OBJECT) {
-      stackSize--;
+      stack.pop();
       peeked = PEEKED_NONE;
     } else {
       throw new IllegalStateException(
@@ -467,9 +467,9 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
 
   private int doPeek() {
 
-    final int peekStack = stack.getAt(stackSize - 1);
+    final int peekStack = stack.peek();
     if (peekStack == JsonScope.EMPTY_ARRAY) {
-      stack.setAt(stackSize - 1, JsonScope.NONEMPTY_ARRAY);
+      stack.replaceTop(JsonScope.NONEMPTY_ARRAY);
     } else if (peekStack == JsonScope.NONEMPTY_ARRAY) {
       // Look for a comma before the next element.
       int c = nextNonWhitespace(true);
@@ -484,7 +484,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
           throw syntaxError("Unterminated array");
       }
     } else if (peekStack == JsonScope.EMPTY_OBJECT || peekStack == JsonScope.NONEMPTY_OBJECT) {
-      stack.setAt(stackSize - 1, JsonScope.DANGLING_NAME);
+      stack.replaceTop(JsonScope.DANGLING_NAME);
       // Look for a comma before the next element.
       if (peekStack == JsonScope.NONEMPTY_OBJECT) {
         int c = nextNonWhitespace(true);
@@ -522,7 +522,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
           }
       }
     } else if (peekStack == JsonScope.DANGLING_NAME) {
-      stack.setAt(stackSize - 1, JsonScope.NONEMPTY_OBJECT);
+      stack.replaceTop(JsonScope.NONEMPTY_OBJECT);
       // Look for a colon before the value.
       int c = nextNonWhitespace(true);
       switch (c) {
@@ -541,7 +541,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
       if (lenient) {
         consumeNonExecutePrefix();
       }
-      stack.setAt(stackSize - 1, JsonScope.NONEMPTY_DOCUMENT);
+      stack.replaceTop(JsonScope.NONEMPTY_DOCUMENT);
     } else if (peekStack == JsonScope.NONEMPTY_DOCUMENT) {
       int c = nextNonWhitespace(false);
       if (c == -1) {
@@ -575,7 +575,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
         checkLenient();
         return peeked = PEEKED_SINGLE_QUOTED;
       case '"':
-        if (stackSize == 1) {
+        if (stack.size() == 1) {
           checkLenient();
         }
         return peeked = PEEKED_DOUBLE_QUOTED;
@@ -587,7 +587,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
         pos--; // Don't consume the first character in a literal value.
     }
 
-    if (stackSize == 1) {
+    if (stack.size() == 1) {
       checkLenient(); // Top-level value isn't an array or an object.
     }
 
@@ -1211,8 +1211,8 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
   @Override
   public void close() {
     peeked = PEEKED_NONE;
-    stack.setAt(0, JsonScope.CLOSED);
-    stackSize = 1;
+    stack.clear();
+    stack.push(JsonScope.CLOSED);
   }
 
   /** {@inheritDoc} */
@@ -1232,10 +1232,10 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
         push(JsonScope.EMPTY_OBJECT);
         count++;
       } else if (p == PEEKED_END_ARRAY) {
-        stackSize--;
+        stack.pop();
         count--;
       } else if (p == PEEKED_END_OBJECT) {
-        stackSize--;
+        stack.pop();
         count--;
       } else if (p == PEEKED_UNQUOTED_NAME || p == PEEKED_UNQUOTED) {
         skipUnquotedValue();
@@ -1251,7 +1251,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
   }
 
   private void push(int newTop) {
-    stack.setAt(stackSize++, newTop);
+    stack.push(newTop);
   }
 
   /**
@@ -1575,11 +1575,11 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
         count++;
         writer.beginObject();
       } else if (p == PEEKED_END_ARRAY) {
-        stackSize--;
+        stack.pop();
         count--;
         writer.endArray();
       } else if (p == PEEKED_END_OBJECT) {
-        stackSize--;
+        stack.pop();
         count--;
         writer.endObject();
       } else if (p == PEEKED_UNQUOTED_NAME) {
