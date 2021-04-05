@@ -15,8 +15,7 @@
  */
 package org.dominokit.jackson.processor;
 
-import static org.dominokit.jackson.processor.AbstractMapperProcessor.filer;
-import static org.dominokit.jackson.processor.AbstractMapperProcessor.typeUtils;
+import static org.dominokit.jackson.processor.AbstractMapperProcessor.*;
 import static org.dominokit.jackson.processor.ObjectMapperProcessor.DEFAULT_WILDCARD;
 
 import com.google.auto.common.MoreElements;
@@ -146,7 +145,12 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
           new FieldDeserializersChainBuilder(getElementType(element))
               .getInstance(getElementType(element)));
     } else {
-      builder.addStatement("return new " + deserializerName(beanType));
+      builder.addStatement(
+          "return $T.getInstance()",
+          ClassName.bestGuess(
+              elementUtils.getPackageOf(typeUtils.asElement(beanType)).getQualifiedName().toString()
+                  + "."
+                  + deserializerName(beanType)));
     }
 
     return MethodSpec.methodBuilder("newDeserializer")
@@ -176,7 +180,12 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
       builder.addStatement(
           "return $L", new FieldSerializerChainBuilder(beanType).getInstance(beanType));
     } else {
-      builder.addStatement("return new " + serializerName(beanType));
+      builder.addStatement(
+          "return $T.getInstance()",
+          ClassName.bestGuess(
+              elementUtils.getPackageOf(typeUtils.asElement(beanType)).getQualifiedName().toString()
+                  + "."
+                  + serializerName(beanType)));
     }
 
     return MethodSpec.methodBuilder("newSerializer")
@@ -196,7 +205,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
    * @return deserializer name as String
    */
   private String deserializerName(TypeMirror type) {
-    return Type.stringifyType(type) + "BeanJsonDeserializerImpl()";
+    return Type.stringifyType(type) + "BeanJsonDeserializerImpl";
   }
 
   /**
@@ -208,7 +217,7 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
    * @return serializer name as String
    */
   private String serializerName(TypeMirror type) {
-    return Type.stringifyType(type) + "BeanJsonSerializerImpl()";
+    return Type.stringifyType(type) + "BeanJsonSerializerImpl";
   }
 
   /**

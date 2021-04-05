@@ -49,7 +49,6 @@ public class FastJsonWriter implements JsonWriter {
 
   // Change by Ahmad Bawaneh, replace JSNI types with IsInterop types
   private Stack<Integer> stack = JacksonContextProvider.get().integerStackFactory().make();
-  private int stackSize = 0;
 
   {
     push(JsonScope.EMPTY_DOCUMENT);
@@ -173,7 +172,7 @@ public class FastJsonWriter implements JsonWriter {
           "Dangling name: " + (deferredUnescapeName == null ? deferredName : deferredUnescapeName));
     }
 
-    stackSize--;
+    stack.pop();
     if (context == nonempty) {
       newline();
     }
@@ -182,20 +181,20 @@ public class FastJsonWriter implements JsonWriter {
   }
 
   private void push(int newTop) {
-    stack.setAt(stackSize++, newTop);
+    stack.push(newTop);
   }
 
   /** Returns the value on the top of the stack. */
   private int peek() {
-    if (stackSize == 0) {
+    if (stack.size() == 0) {
       throw new IllegalStateException("JsonWriter is closed.");
     }
-    return stack.getAt(stackSize - 1);
+    return stack.peek();
   }
 
   /** Replace the value on the top of the stack with the given value. */
   private void replaceTop(int topOfStack) {
-    stack.setAt(stackSize - 1, topOfStack);
+    stack.replaceTop(topOfStack);
   }
 
   /** {@inheritDoc} */
@@ -221,7 +220,7 @@ public class FastJsonWriter implements JsonWriter {
     if (deferredUnescapeName != null || deferredName != null) {
       throw new IllegalStateException();
     }
-    if (stackSize == 0) {
+    if (stack.size() == 0) {
       throw new IllegalStateException("JsonWriter is closed.");
     }
   }
@@ -307,7 +306,7 @@ public class FastJsonWriter implements JsonWriter {
     }
     writeDeferredName();
     beforeValue(false);
-    out.append(Double.toString(value));
+    out.append(value);
     return this;
   }
 
@@ -316,7 +315,7 @@ public class FastJsonWriter implements JsonWriter {
   public FastJsonWriter value(long value) {
     writeDeferredName();
     beforeValue(false);
-    out.append(Long.toString(value));
+    out.append(value);
     return this;
   }
 
@@ -353,7 +352,7 @@ public class FastJsonWriter implements JsonWriter {
   /** {@inheritDoc} */
   @Override
   public void flush() {
-    if (stackSize == 0) {
+    if (stack.size() == 0) {
       throw new IllegalStateException("JsonWriter is closed.");
     }
   }
@@ -361,12 +360,12 @@ public class FastJsonWriter implements JsonWriter {
   /** {@inheritDoc} */
   @Override
   public void close() {
-    int size = stackSize;
-    if (size > 1 || size == 1 && stack.getAt(size - 1) != JsonScope.NONEMPTY_DOCUMENT) {
+    int size = stack.size();
+    if (size > 1 || size == 1 && stack.peek() != JsonScope.NONEMPTY_DOCUMENT) {
       logger.log(Level.SEVERE, "Incomplete document");
       throw new JsonSerializationException("Incomplete document");
     }
-    stackSize = 0;
+    stack.clear();
   }
 
   private void string(String value) {
@@ -379,7 +378,7 @@ public class FastJsonWriter implements JsonWriter {
     }
 
     out.append("\n");
-    for (int i = 1, size = stackSize; i < size; i++) {
+    for (int i = 1, size = stack.size(); i < size; i++) {
       out.append(indent);
     }
   }

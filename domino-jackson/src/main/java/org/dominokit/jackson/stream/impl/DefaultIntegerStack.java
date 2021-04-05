@@ -15,6 +15,8 @@
  */
 package org.dominokit.jackson.stream.impl;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import org.dominokit.jackson.GwtIncompatible;
 import org.dominokit.jackson.stream.Stack;
 
@@ -26,18 +28,49 @@ import org.dominokit.jackson.stream.Stack;
 @GwtIncompatible
 public class DefaultIntegerStack implements Stack<Integer> {
 
-  private java.util.Stack<Integer> stack = new java.util.Stack<>();
+  private Deque<Integer> stack = new ArrayDeque<>();
 
   /** {@inheritDoc} */
   @Override
-  public Integer getAt(int index) {
-    return stack.get(index);
+  public Integer pop() {
+    return stack.pop();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setAt(int index, Integer value) {
-    if (stack.empty() || index >= stack.size()) stack.push(value);
-    else stack.set(index, value);
+  public Integer peek() {
+    return stack.peek();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int size() {
+    return stack.size();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void clear() {
+    stack.clear();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void push(Integer value) {
+    stack.push(value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void replaceTop(Integer newTop) {
+    stack.pop();
+    stack.push(newTop);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void insertFirst(Integer value) {
+    stack.pollLast();
+    stack.offerLast(value);
   }
 }
