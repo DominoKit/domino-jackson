@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit</groupId>
         <artifactId>domino-jackson-parent</artifactId>
-        <version>1.0.0-RC3</version>
+        <version>1.0.0-RC4</version>
     </parent>
 
     <artifactId>domino-jackson-super</artifactId>
@@ -22,5 +22,28 @@
                 <directory>src/main/java</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>remove-emu-classes</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}/classes/java</directory>
+                                    <includes><include>**/*.class</include></includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
