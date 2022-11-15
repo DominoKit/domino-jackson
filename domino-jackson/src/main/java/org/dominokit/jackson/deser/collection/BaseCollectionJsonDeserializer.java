@@ -95,9 +95,7 @@ public abstract class BaseCollectionJsonDeserializer<C extends Collection<T>, T>
   public void setBackReference(
       String referenceName, Object reference, C value, JsonDeserializationContext ctx) {
     if (null != value && !value.isEmpty()) {
-      for (T val : value) {
-        deserializer.setBackReference(referenceName, reference, val, ctx);
-      }
+      value.forEach(val -> deserializer.setBackReference(referenceName, reference, val, ctx));
     }
   }
 }
