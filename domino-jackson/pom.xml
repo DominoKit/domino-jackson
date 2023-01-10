@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.dominokit.i18n</groupId>
             <artifactId>gwt-datetimeformat</artifactId>
-            <version>1.0</version>
+            <version>${gwt.i18n.version}</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
