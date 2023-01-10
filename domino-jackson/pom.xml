@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dominokit</groupId>
         <artifactId>domino-jackson-parent</artifactId>
-        <version>1.0.0-RC5</version>
+        <version>1.0.0-RC6</version>
     </parent>
 
     <artifactId>domino-jackson</artifactId>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.dominokit.i18n</groupId>
             <artifactId>gwt-datetimeformat</artifactId>
-            <version>1.0</version>
+            <version>${gwt.i18n.version}</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
