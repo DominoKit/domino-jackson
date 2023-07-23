@@ -18,7 +18,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master , development ]
+    branches: [ 1.x.x , 1.x.x-development ]
 
 jobs:
   verify:
