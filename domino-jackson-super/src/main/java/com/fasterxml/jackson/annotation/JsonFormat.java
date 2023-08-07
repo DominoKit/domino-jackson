@@ -238,15 +238,50 @@ public @interface JsonFormat {
     ACCEPT_SINGLE_VALUE_AS_ARRAY,
 
     /**
-     * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>. Only affects
-     * deserialization, has no effect on serialization.
+     * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>, which allows
+     * case-insensitive matching of property names (but NOT values, see {@link
+     * #ACCEPT_CASE_INSENSITIVE_VALUES} for that).
      *
-     * <p>NOTE: starting with 2.9 can also effect Enum handling (and potentially other places where
-     * case-insensitive property values are accepted).
+     * <p>Only affects deserialization, has no effect on serialization.
      *
      * @since 2.8
      */
     ACCEPT_CASE_INSENSITIVE_PROPERTIES,
+
+    /**
+     * Override for <code>DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL</code>, which
+     * allows unknown Enum values to be parsed as null values.
+     *
+     * @since 2.15
+     */
+    READ_UNKNOWN_ENUM_VALUES_AS_NULL,
+
+    /**
+     * Override for <code>DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE</code>
+     * , which allows unknown Enum values to be ignored and a predefined value specified through
+     * {@link com.fasterxml.jackson.annotation.JsonEnumDefaultValue @JsonEnumDefaultValue}
+     * annotation.
+     *
+     * @since 2.15
+     */
+    READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
+
+    /**
+     * Override for {@code DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE},
+     * (counterpart to {@link #WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS}), similar constraints apply.
+     *
+     * @since 2.15
+     */
+    READ_DATE_TIMESTAMPS_AS_NANOSECONDS,
+
+    /**
+     * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>, which allows
+     * case-sensitive matching of (some) property values, such as {@code Enum}s. Only affects
+     * deserialization, has no effect on serialization.
+     *
+     * @since 2.10
+     */
+    ACCEPT_CASE_INSENSITIVE_VALUES,
 
     /**
      * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>, similar
@@ -272,6 +307,20 @@ public @interface JsonFormat {
      * will force sorting of {@link java.util.Map} keys before serialization.
      */
     WRITE_SORTED_MAP_ENTRIES,
-    ;
+
+    /**
+     * Override for <code>DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIMEZONE</code> that
+     * specifies whether context provided timezone <code>DeserializationContext.getTimeZone()</code>
+     * should be used to adjust Date/Time values on deserialization, even if value itself contains
+     * timezone information
+     *
+     * <p>NOTE: due to limitations of "old" JDK date/time types (that is, {@link java.util.Date} and
+     * {@link java.util.Calendar}), this setting is only applicable to <code>Joda</code> and <code>
+     * Java 8 date/time</code> values, but not to <code>java.util.Date</code> or <code>
+     * java.util.Calendar</code>.
+     *
+     * @since 2.8
+     */
+    ADJUST_DATES_TO_CONTEXT_TIME_ZONE
   }
 }
