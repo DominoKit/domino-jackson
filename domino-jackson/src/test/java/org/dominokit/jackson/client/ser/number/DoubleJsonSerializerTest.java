@@ -38,5 +38,7 @@ public class DoubleJsonSerializerTest extends AbstractJsonSerializerTest<Double>
             ? "1.7976931348623157e+308"
             : "1.7976931348623157E308"),
         Double.MAX_VALUE);
+    assertSerialization("\"NaN\"", Double.NaN);
+    assertSerialization("\"-Infinity\"", Double.NEGATIVE_INFINITY);
   }
 }

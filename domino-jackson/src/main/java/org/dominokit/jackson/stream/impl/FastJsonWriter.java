@@ -301,12 +301,17 @@ public class FastJsonWriter implements JsonWriter {
   /** {@inheritDoc} */
   @Override
   public FastJsonWriter value(double value) {
-    if (Double.isNaN(value) || Double.isInfinite(value)) {
+    final boolean isNaNorInfinity = Double.isNaN(value) || Double.isInfinite(value);
+    if (!lenient && isNaNorInfinity) {
       throw new IllegalArgumentException("Numeric values must be finite, but was " + value);
     }
     writeDeferredName();
     beforeValue(false);
-    out.append(value);
+    if (isNaNorInfinity) {
+      string(Double.toString(value));
+    } else {
+      out.append(value);
+    }
     return this;
   }
 
