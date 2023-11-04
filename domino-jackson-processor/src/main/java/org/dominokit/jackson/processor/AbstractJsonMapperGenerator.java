@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.squareup.javapoet.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,6 +33,7 @@ import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
 import org.dominokit.jackson.deser.bean.TypeDeserializationInfo;
 import org.dominokit.jackson.ser.bean.TypeSerializationInfo;
 
@@ -103,7 +106,19 @@ public abstract class AbstractJsonMapperGenerator {
       builder.addMethod(initSubtypesMethod());
     }
 
-    JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
+    // XXX suppress errors from repeated calls to generate source files
+    try {
+      JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
+    } catch (IOException e) {
+      handleError(e);
+    }
+  }
+
+  protected void handleError(Exception e) {
+    StringWriter out = new StringWriter();
+    e.printStackTrace(new PrintWriter(out));
+    AbstractMapperProcessor.messager.printMessage(
+        Diagnostic.Kind.WARNING, "error while creating source file " + out.getBuffer().toString());
   }
 
   private MethodSpec targetTypeMethod() {
