@@ -60,28 +60,35 @@ public abstract class AbstractMapperGenerator implements MapperGenerator {
     Name beanName = typeUtils.asElement(beanType).getSimpleName();
 
     generateJsonMappers(beanType);
+    if (!GeneratedMappersRegistry.INSTANCE.hasTypeToken(getCategory(), beanType)) {
+      GeneratedMappersRegistry.INSTANCE.addTypeToken(getCategory(), beanType);
 
-    TypeSpec.Builder builder =
-        TypeSpec.classBuilder(className)
-            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-            .superclass(abstractObjectMapper(element))
-            .addField(
-                FieldSpec.builder(ClassName.bestGuess(className), "INSTANCE")
-                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                    .initializer(
-                        CodeBlock.builder().add("new $T()", ClassName.bestGuess(className)).build())
-                    .build())
-            .addMethod(makeConstructor(beanName))
-            .addMethods(getMapperMethods(element, beanType));
+      TypeSpec.Builder builder =
+          TypeSpec.classBuilder(className)
+              .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+              .superclass(abstractObjectMapper(element))
+              .addField(
+                  FieldSpec.builder(ClassName.bestGuess(className), "INSTANCE")
+                      .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                      .initializer(
+                          CodeBlock.builder()
+                              .add("new $T()", ClassName.bestGuess(className))
+                              .build())
+                      .build())
+              .addMethod(makeConstructor(beanName))
+              .addMethods(getMapperMethods(element, beanType));
 
-    if (useInterface(element)) {
-      builder.addSuperinterface(TypeName.get(element.asType()));
+      if (useInterface(element)) {
+        builder.addSuperinterface(TypeName.get(element.asType()));
+      }
+
+      TypeSpec classSpec = builder.build();
+
+      JavaFile.builder(packageName, classSpec).build().writeTo(filer);
     }
-
-    TypeSpec classSpec = builder.build();
-
-    JavaFile.builder(packageName, classSpec).build().writeTo(filer);
   }
+
+  protected abstract GeneratedMappersRegistry.Category getCategory();
 
   protected static TypeMirror getElementType(Element element) {
     if (useInterface(element)) {

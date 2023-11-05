@@ -45,7 +45,11 @@ public class DeserializerGenerator {
         MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).getQualifiedName().toString();
     String deserializerName = Type.deserializerName(packageName, beanType);
 
-    if (!TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {
+    if (!GeneratedMappersRegistry.INSTANCE.hasTypeToken(
+            GeneratedMappersRegistry.Category.DESERIALIZER, beanType)
+        && !TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(beanType))) {
+      GeneratedMappersRegistry.INSTANCE.addTypeToken(
+          GeneratedMappersRegistry.Category.DESERIALIZER, beanType);
       try {
         generateSubTypesDeserializers(beanType);
         TypeRegistry.addInActiveGenDeserializer(beanType);
@@ -54,7 +58,8 @@ public class DeserializerGenerator {
             Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(deserializerName));
         TypeRegistry.removeInActiveGenDeserializer(beanType);
       } catch (IOException e) {
-        throw new DeserializerGenerator.DeserializerGenerationFailedException(beanType.toString());
+        throw new DeserializerGenerator.DeserializerGenerationFailedException(
+            beanType.toString(), e);
       }
     }
     return deserializerName;
@@ -69,6 +74,10 @@ public class DeserializerGenerator {
 
   private class DeserializerGenerationFailedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
+
+    public DeserializerGenerationFailedException(String message, Throwable cause) {
+      super(message, cause);
+    }
 
     DeserializerGenerationFailedException(String type) {
       super(type);

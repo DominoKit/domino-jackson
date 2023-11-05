@@ -41,7 +41,11 @@ public class SerializerGenerator {
     String packageName =
         MoreElements.getPackage(MoreTypes.asTypeElement(beanType)).getQualifiedName().toString();
     String serializerName = Type.serializerName(packageName, beanType);
-    if (!TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(beanType))) {
+    if (!GeneratedMappersRegistry.INSTANCE.hasTypeToken(
+            GeneratedMappersRegistry.Category.SERIALIZER, beanType)
+        && !TypeRegistry.containsSerializer(Type.stringifyTypeWithPackage(beanType))) {
+      GeneratedMappersRegistry.INSTANCE.addTypeToken(
+          GeneratedMappersRegistry.Category.SERIALIZER, beanType);
       try {
         generateSubTypeSerializers(beanType);
         TypeRegistry.addInActiveGenSerializer(beanType);
