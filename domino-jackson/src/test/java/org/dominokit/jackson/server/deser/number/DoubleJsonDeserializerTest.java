@@ -16,6 +16,8 @@
 
 package org.dominokit.jackson.server.deser.number;
 
+import static org.junit.Assert.assertTrue;
+
 import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.DoubleJsonDeserializer;
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
