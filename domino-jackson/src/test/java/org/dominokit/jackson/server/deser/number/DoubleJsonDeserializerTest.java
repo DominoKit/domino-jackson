@@ -16,6 +16,8 @@
 
 package org.dominokit.jackson.server.deser.number;
 
+import static org.junit.Assert.assertTrue;
+
 import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.DoubleJsonDeserializer;
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
@@ -36,5 +38,7 @@ public class DoubleJsonDeserializerTest extends AbstractJsonDeserializerTest<Dou
     assertDeserialization(-784.15454d, "\"-784.15454\"");
     assertDeserialization(Double.MIN_VALUE, "4.9E-324");
     assertDeserialization(Double.MAX_VALUE, "1.7976931348623157e+308");
+    assertTrue(Double.isNaN(deserialize("\"NaN\"")));
+    assertDeserialization(Double.NEGATIVE_INFINITY, "-Infinity");
   }
 }
