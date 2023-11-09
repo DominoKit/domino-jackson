@@ -60,4 +60,9 @@ public class BeanMapperGenerator extends AbstractMapperGenerator {
   protected void generateDeserializer(TypeMirror beanType) {
     new DeserializerGenerator().generate(beanType);
   }
+
+  @Override
+  protected GeneratedMappersRegistry.Category getCategory() {
+    return GeneratedMappersRegistry.Category.MAPPER;
+  }
 }

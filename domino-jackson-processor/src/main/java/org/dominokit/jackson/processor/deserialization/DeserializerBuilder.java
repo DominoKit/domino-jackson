@@ -19,6 +19,7 @@ import static java.util.Objects.nonNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.squareup.javapoet.*;
+import java.beans.Introspector;
 import java.util.Optional;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -119,17 +120,15 @@ class DeserializerBuilder extends AccessorsFilter {
   }
 
   private AccessorInfo setterInfo(Element field) {
-    final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
-
     Optional<AccessorInfo> accessor =
         getAccessors(beanType).stream()
-            .filter(accessorInfo -> accessorInfo.getName().equals("set" + upperCaseFirstLetter))
+            .filter(accessorInfo -> accessorInfo.getName().startsWith("set"))
+            .filter(
+                accessorInfo ->
+                    Introspector.decapitalize(accessorInfo.getName().substring(3))
+                        .equals(field.getSimpleName().toString()))
             .findFirst();
 
     return accessor.orElseGet(() -> new AccessorInfo(field.getSimpleName().toString()));
-  }
-
-  private String upperCaseFirstLetter(String name) {
-    return name.substring(0, 1).toUpperCase() + name.substring(1);
   }
 }

@@ -29,7 +29,7 @@ import org.dominokit.jackson.annotation.JSONReader;
 import org.dominokit.jackson.annotation.JSONWriter;
 
 /**
- * ObjectMapperProcessor class. a Delegate class to geneate different types of mappers for all
+ * ObjectMapperProcessor class. a Delegate class to generate different types of mappers for all
  * annotated types.
  */
 @AutoService(Processor.class)

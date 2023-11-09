@@ -20,6 +20,7 @@ import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.squareup.javapoet.*;
+import java.beans.Introspector;
 import java.util.Optional;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -160,17 +161,19 @@ class SerializerBuilder extends AccessorsFilter {
   }
 
   AbstractJsonMapperGenerator.AccessorInfo getterInfo() {
-    final String upperCaseFirstLetter = upperCaseFirstLetter(field.getSimpleName().toString());
     String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
     Optional<AbstractJsonMapperGenerator.AccessorInfo> accessor =
         getAccessors(beanType).stream()
-            .filter(accessorInfo -> accessorInfo.getName().equals(prefix + upperCaseFirstLetter))
+            .filter(
+                accessorInfo ->
+                    accessorInfo.getName().startsWith("is")
+                        || accessorInfo.getName().startsWith("get"))
+            .filter(
+                accessorInfo ->
+                    Introspector.decapitalize(accessorInfo.getName().substring(prefix.length()))
+                        .equals(field.getSimpleName().toString()))
             .findFirst();
     return accessor.orElseGet(
         () -> new AbstractJsonMapperGenerator.AccessorInfo(field.getSimpleName().toString()));
-  }
-
-  private String upperCaseFirstLetter(String name) {
-    return name.substring(0, 1).toUpperCase() + name.substring(1);
   }
 }

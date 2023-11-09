@@ -67,7 +67,7 @@ public class TypeToken<T> implements Comparable<TypeToken<T>> {
   private TypeToken<?>[] typeArguments;
 
   public static <T> TypeToken<T> of(Class<T> type) {
-    return new TypeToken<T>(type, new TypeToken<?>[0]);
+    return new TypeToken<>(type);
   }
 
   protected TypeToken(Class<? super T> rawType, TypeToken<?>... typeArguments) {
@@ -77,7 +77,7 @@ public class TypeToken<T> implements Comparable<TypeToken<T>> {
       // and the array component type is in the type arguments
       if (typeArguments.length > 0)
         throw new IllegalArgumentException(
-            "To create a type token for an array, either pass the non-generic array class instance as the raw type and keep the type argumetns empty, or pass null as raw type and provide a single type argument for the component type of the (possibly generic) array");
+            "To create a type token for an array, either pass the non-generic array class instance as the raw type and keep the type arguments empty, or pass null as raw type and provide a single type argument for the component type of the (possibly generic) array");
 
       typeArguments = new TypeToken<?>[] {TypeToken.of(rawType.getComponentType())};
       rawType = null;

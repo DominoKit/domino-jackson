@@ -50,4 +50,9 @@ public class BeanWriterGenerator extends AbstractMapperGenerator {
   protected void generateSerializer(TypeMirror beanType) {
     new SerializerGenerator().generate(beanType);
   }
+
+  @Override
+  protected GeneratedMappersRegistry.Category getCategory() {
+    return GeneratedMappersRegistry.Category.WRITER;
+  }
 }
