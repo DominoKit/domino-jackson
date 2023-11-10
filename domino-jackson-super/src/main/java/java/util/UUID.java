@@ -29,7 +29,7 @@ public class UUID implements Serializable, Comparable<UUID> {
   private static final char[] CHARS =
       "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
-  protected String value;
+  private String value;
 
   /** */
   private UUID() {}
