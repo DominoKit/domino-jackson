@@ -45,6 +45,15 @@ public @interface JsonSubTypes {
   public Type[] value();
 
   /**
+   * Subtypes of the annotated type may have logical type name and names properties. When set to
+   * true, logical type name and names are going to be checked for repeated values. Repeated values
+   * are considered a definition violation during that check.
+   *
+   * @since 2.14
+   */
+  public boolean failOnRepeatedNames() default false;
+
+  /**
    * Definition of a subtype, along with optional name. If name is missing, class of the type will
    * be checked for JsonTypeName annotation; and if that is also missing or empty, a default name
    * will be constructed by type id mechanism. Default name is usually based on class name.
@@ -63,5 +72,13 @@ public @interface JsonSubTypes {
      * @return String
      */
     public String name() default "";
+
+    /**
+     * (optional) Logical type names used as the type identifier for the class: used if more than
+     * one type name should be associated with the same type.
+     *
+     * @since 2.12
+     */
+    public String[] names() default {};
   }
 }

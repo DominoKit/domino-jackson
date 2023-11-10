@@ -72,6 +72,14 @@ public @interface JsonProperty {
   String value() default USE_DEFAULT_NAME;
 
   /**
+   * Optional namespace to use with data formats that support such concept (specifically XML); if
+   * so, used with {@link #value} to construct fully-qualified name.
+   *
+   * @since 2.12
+   */
+  String namespace() default "";
+
+  /**
    * Property that indicates whether a value (which may be explicit null) is expected for property
    * during deserialization or not. If expected, <code>BeanDeserialized</code> should indicate this
    * as a validity problem (usually by throwing an exception, but this may be sent via problem
