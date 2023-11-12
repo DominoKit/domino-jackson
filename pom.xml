@@ -83,7 +83,7 @@
         <maven.install.plugin>3.0.0-M1</maven.install.plugin>
         <maven.license.plugin>3.0</maven.license.plugin>
         <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
-        <maven.gwt.plugin>1.0.0</maven.gwt.plugin>
+        <maven.gwt.plugin>1.1.0</maven.gwt.plugin>
         <elemental2.version>1.2.1</elemental2.version>
         <gwt.i18n.version>1.0.1</gwt.i18n.version>
     </properties>
