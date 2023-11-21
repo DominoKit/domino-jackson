@@ -18,12 +18,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.gwt</groupId>
+            <groupId>org.gwtproject</groupId>
             <artifactId>gwt-dev</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.gwt</groupId>
+            <groupId>org.gwtproject</groupId>
             <artifactId>gwt-user</artifactId>
             <scope>test</scope>
         </dependency>
@@ -38,14 +38,12 @@
         </dependency>
 
         <dependency>
-            <groupId>org.dominokit</groupId>
-            <artifactId>domino-jackson-super</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.dominokit.i18n</groupId>
-            <artifactId>gwt-cldr</artifactId>
-            <version>1.0</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
             <groupId>org.dominokit.i18n</groupId>
