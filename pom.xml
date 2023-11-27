@@ -72,8 +72,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jackson.version>2.16.0</jackson.version>
-
         <maven.compiler.plugin>3.11.0</maven.compiler.plugin>
         <maven.source.plugin>3.0.1</maven.source.plugin>
         <maven.javadoc.plugin>2.10.4</maven.javadoc.plugin>
@@ -85,6 +83,8 @@
         <maven.license.plugin>3.0</maven.license.plugin>
         <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
         <maven.gwt.plugin>1.1.0</maven.gwt.plugin>
+
+        <jackson.version>2.16.0</jackson.version>
         <elemental2.version>1.2.1</elemental2.version>
         <gwt.i18n.version>1.0.2</gwt.i18n.version>
     </properties>
@@ -98,12 +98,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- fix inconsistent versions in gwt-dev -->
+            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
-                <version>1.10</version>
+                <version>1.16.0</version>
             </dependency>
+
             <dependency>
                 <groupId>xml-apis</groupId>
                 <artifactId>xml-apis</artifactId>

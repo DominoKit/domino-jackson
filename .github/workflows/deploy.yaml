@@ -55,7 +55,7 @@ jobs:
         name: Install gpg secret key
         run: |
           cat <(echo -e "${{ secrets.gpg_private_key }}") | gpg --batch --import
-      - name: publish to snapshot
+      - name: publish
         run: mvn --no-transfer-progress clean deploy -B -e -Dci=true -Dgpg.passphrase=${{ secrets.gpg_passphrase }}
         env:
           SONATYPE_USERNAME: ${{ secrets.nexus_username }}
