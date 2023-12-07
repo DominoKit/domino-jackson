@@ -1883,7 +1883,8 @@ public class SerializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         ClassName.bestGuess("org.dominokit.jackson.processor.TestBeanBeanJsonSerializerImpl");
     TypeRegistry.registerSerializer("org.dominokit.jackson.processor.TestBean", serializer);
     addFieldTest(
-        "testBean", result -> assertEquals(buildTestString("new $T()", serializer), result));
+        "testBean",
+        result -> assertEquals(buildTestString("$T.getInstance()", serializer), result));
 
     runTests();
   }

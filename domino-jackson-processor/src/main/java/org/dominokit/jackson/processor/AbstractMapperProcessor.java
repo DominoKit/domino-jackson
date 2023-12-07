@@ -27,6 +27,8 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
+import org.dominokit.jackson.annotation.CustomDeserializer;
+import org.dominokit.jackson.annotation.CustomSerializer;
 import org.dominokit.jackson.annotation.JSONMapper;
 import org.dominokit.jackson.annotation.JSONReader;
 import org.dominokit.jackson.annotation.JSONWriter;
@@ -50,6 +52,8 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
   protected Set<? extends Element> mappers;
   protected Set<? extends Element> readers;
   protected Set<? extends Element> writers;
+  protected Set<? extends Element> customSerializers;
+  protected Set<? extends Element> customDeserializers;
 
   /** {@inheritDoc} */
   @Override
@@ -69,6 +73,9 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
       TypeRegistry.resetTypeRegistry();
       return false;
     }
+
+    customSerializers = roundEnv.getElementsAnnotatedWith(CustomSerializer.class);
+    customDeserializers = roundEnv.getElementsAnnotatedWith(CustomDeserializer.class);
 
     mappers = roundEnv.getElementsAnnotatedWith(JSONMapper.class);
     readers = roundEnv.getElementsAnnotatedWith(JSONReader.class);

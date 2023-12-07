@@ -119,7 +119,7 @@ public class FieldSerializerChainBuilder implements MappersChainBuilder {
         this.rootGenerated = true;
       }
     }
-    return "new $T()";
+    return "$T.getInstance()";
   }
 
   private String getPackageName(TypeMirror typeMirror) {
