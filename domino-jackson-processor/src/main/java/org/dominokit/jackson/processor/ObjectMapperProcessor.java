@@ -16,14 +16,24 @@
 package org.dominokit.jackson.processor;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.WildcardTypeName;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.Set;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
+import org.dominokit.jackson.CustomMappersLoader;
+import org.dominokit.jackson.JsonDeserializer;
+import org.dominokit.jackson.JsonSerializer;
+import org.dominokit.jackson.annotation.CustomDeserializer;
+import org.dominokit.jackson.annotation.CustomSerializer;
 import org.dominokit.jackson.annotation.JSONMapper;
 import org.dominokit.jackson.annotation.JSONReader;
 import org.dominokit.jackson.annotation.JSONWriter;
@@ -41,10 +51,59 @@ public class ObjectMapperProcessor extends AbstractMapperProcessor {
   /** {@inheritDoc} */
   @Override
   protected boolean doProcess(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
+    customSerializers.forEach(this::registerSerializer);
+    customDeserializers.forEach(this::registerDeserializer);
+
+    ServiceLoader.load(CustomMappersLoader.class, ObjectMapperProcessor.class.getClassLoader())
+        .stream()
+        .map(ServiceLoader.Provider::get)
+        .forEach(loader -> loader.register(TypeRegistry.INSTANCE));
+
     mappers.forEach(this::generateMappers);
     readers.forEach(this::generateMapperForReader);
     writers.forEach(this::generateMapperForWriter);
     return false;
+  }
+
+  private void registerSerializer(Element element) {
+    if (!Type.isAssignableFrom(element, JsonSerializer.class)) {
+      messager.printMessage(
+          Diagnostic.Kind.ERROR,
+          "Custom serializer ["
+              + element.getSimpleName()
+              + "] must extend from "
+              + JsonSerializer.class.getCanonicalName(),
+          element);
+      return;
+    }
+    Optional<TypeMirror> targetType =
+        Type.getClassValueFromAnnotation(element, CustomSerializer.class, "value");
+    targetType.ifPresent(
+        typeMirror -> {
+          TypeRegistry.registerSerializer(
+              Type.stringifyTypeWithPackage(typeMirror), TypeName.get(element.asType()));
+        });
+  }
+
+  private void registerDeserializer(Element element) {
+    if (!Type.isAssignableFrom(element, JsonDeserializer.class)) {
+      messager.printMessage(
+          Diagnostic.Kind.ERROR,
+          "Custom deserializer ["
+              + element.getSimpleName()
+              + "] must extend from "
+              + JsonDeserializer.class.getCanonicalName(),
+          element);
+      return;
+    }
+    Optional<TypeMirror> targetType =
+        Type.getClassValueFromAnnotation(element, CustomDeserializer.class, "value");
+    targetType.ifPresent(
+        typeMirror -> {
+          TypeRegistry.registerDeserializer(
+              Type.stringifyTypeWithPackage(typeMirror), TypeName.get(element.asType()));
+        });
   }
 
   private void generateMappers(Element element) {

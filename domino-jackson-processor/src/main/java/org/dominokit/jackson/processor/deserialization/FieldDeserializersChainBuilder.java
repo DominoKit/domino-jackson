@@ -115,7 +115,7 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
         rootGenerated = true;
       }
     }
-    return "new $T()";
+    return "$T.getInstance()";
   }
 
   private String getPackageName(TypeMirror typeMirror) {

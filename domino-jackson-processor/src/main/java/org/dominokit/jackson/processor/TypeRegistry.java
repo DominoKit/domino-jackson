@@ -26,6 +26,9 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
 import javax.lang.model.type.TypeMirror;
+import org.dominokit.jackson.JsonDeserializer;
+import org.dominokit.jackson.JsonSerializer;
+import org.dominokit.jackson.RegistryWrapper;
 import org.dominokit.jackson.deser.*;
 import org.dominokit.jackson.deser.BaseDateJsonDeserializer.DateJsonDeserializer;
 import org.dominokit.jackson.deser.BaseDateJsonDeserializer.SqlDateJsonDeserializer;
@@ -54,7 +57,9 @@ import org.dominokit.jackson.ser.map.key.*;
  * bean type it will also dynamically register new generated serializers/deserializer for any custom
  * type.
  */
-public final class TypeRegistry {
+public final class TypeRegistry implements RegistryWrapper {
+
+  public static final TypeRegistry INSTANCE = new TypeRegistry();
 
   private static Map<String, ClassMapper> simpleTypes = new HashMap<>();
   private static Map<String, ClassMapper> keysMappers = new HashMap<>();
@@ -66,7 +71,7 @@ public final class TypeRegistry {
 
   static final ClassMapperFactory MAPPER = new ClassMapperFactory();
 
-  // bas types mappers
+  // base types mappers
   static {
     MAPPER
         .forType(boolean.class)
@@ -722,6 +727,16 @@ public final class TypeRegistry {
     }
   }
 
+  @Override
+  public void registerSerializer(String type, Class<? extends JsonSerializer<?>> serializer) {
+    registerSerializer(type, TypeName.get(serializer));
+  }
+
+  @Override
+  public void registerDeserializer(String type, Class<? extends JsonDeserializer<?>> deserializer) {
+    registerDeserializer(type, TypeName.get(deserializer));
+  }
+
   /**
    * registerDeserializer.
    *
@@ -918,7 +933,7 @@ public final class TypeRegistry {
     return containsDeserializer(Type.stringifyTypeWithPackage(typeMirror));
   }
 
-  static class ClassMapperFactory {
+  public static class ClassMapperFactory {
     ClassMapper forType(Class<?> clazz) {
       return new ClassMapper(clazz);
     }

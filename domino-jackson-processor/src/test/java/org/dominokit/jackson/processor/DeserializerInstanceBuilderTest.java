@@ -2271,7 +2271,8 @@ public class DeserializerInstanceBuilderTest extends BaseInstanceBuilderTest {
         ClassName.bestGuess("org.dominokit.jackson.processor.TestBeanBeanJsonDeserializerImpl");
     TypeRegistry.registerSerializer("org.dominokit.jackson.processor.TestBean", deserializer);
     addFieldTest(
-        "testBean", result -> assertEquals(buildTestString("new $T()", deserializer), result));
+        "testBean",
+        result -> assertEquals(buildTestString("$T.getInstance()", deserializer), result));
 
     runTests();
   }
