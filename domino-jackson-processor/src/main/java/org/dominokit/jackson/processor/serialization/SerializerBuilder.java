@@ -161,18 +161,28 @@ class SerializerBuilder extends AccessorsFilter {
   }
 
   AbstractJsonMapperGenerator.AccessorInfo getterInfo() {
-    String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
-    Optional<AbstractJsonMapperGenerator.AccessorInfo> accessor =
-        getAccessors(beanType).stream()
-            .filter(
-                accessorInfo ->
-                    accessorInfo.getName().startsWith("is")
-                        || accessorInfo.getName().startsWith("get"))
-            .filter(
-                accessorInfo ->
-                    Introspector.decapitalize(accessorInfo.getName().substring(prefix.length()))
-                        .equals(field.getSimpleName().toString()))
-            .findFirst();
+    Optional<AbstractJsonMapperGenerator.AccessorInfo> accessor;
+    if (Type.isRecord(beanType)) {
+      accessor =
+          getAccessors(beanType).stream()
+              .filter(
+                  accessorInfo -> accessorInfo.getName().equals(field.getSimpleName().toString()))
+              .findFirst();
+    } else {
+      String prefix = field.asType().getKind() == TypeKind.BOOLEAN ? "is" : "get";
+      accessor =
+          getAccessors(beanType).stream()
+              .filter(
+                  accessorInfo ->
+                      accessorInfo.getName().startsWith("is")
+                          || accessorInfo.getName().startsWith("get"))
+              .filter(
+                  accessorInfo ->
+                      Introspector.decapitalize(accessorInfo.getName().substring(prefix.length()))
+                          .equals(field.getSimpleName().toString()))
+              .findFirst();
+    }
+
     return accessor.orElseGet(
         () -> new AbstractJsonMapperGenerator.AccessorInfo(field.getSimpleName().toString()));
   }

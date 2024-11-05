@@ -120,14 +120,23 @@ class DeserializerBuilder extends AccessorsFilter {
   }
 
   private AccessorInfo setterInfo(Element field) {
-    Optional<AccessorInfo> accessor =
-        getAccessors(beanType).stream()
-            .filter(accessorInfo -> accessorInfo.getName().startsWith("set"))
-            .filter(
-                accessorInfo ->
-                    Introspector.decapitalize(accessorInfo.getName().substring(3))
-                        .equals(field.getSimpleName().toString()))
-            .findFirst();
+    Optional<AccessorInfo> accessor;
+    if (Type.isRecord(beanType)) {
+      accessor =
+          getAccessors(beanType).stream()
+              .filter(
+                  accessorInfo -> accessorInfo.getName().equals(field.getSimpleName().toString()))
+              .findFirst();
+    } else {
+      accessor =
+          getAccessors(beanType).stream()
+              .filter(accessorInfo -> accessorInfo.getName().startsWith("set"))
+              .filter(
+                  accessorInfo ->
+                      Introspector.decapitalize(accessorInfo.getName().substring(3))
+                          .equals(field.getSimpleName().toString()))
+              .findFirst();
+    }
 
     return accessor.orElseGet(() -> new AccessorInfo(field.getSimpleName().toString()));
   }

@@ -27,22 +27,51 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.auto.common.MoreElements;
 import com.google.auto.common.MoreTypes;
-import com.squareup.javapoet.*;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.WildcardTypeName;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Filer;
-import javax.lang.model.element.*;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.ElementFilter;
 import org.dominokit.jackson.JacksonContextProvider;
 import org.dominokit.jackson.JsonDeserializationContext;
 import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.JsonDeserializerParameters;
-import org.dominokit.jackson.deser.bean.*;
+import org.dominokit.jackson.deser.bean.AbstractBeanJsonDeserializer;
+import org.dominokit.jackson.deser.bean.AbstractIdentityDeserializationInfo;
+import org.dominokit.jackson.deser.bean.BeanPropertyDeserializer;
+import org.dominokit.jackson.deser.bean.HasDeserializerAndParameters;
+import org.dominokit.jackson.deser.bean.IdentityDeserializationInfo;
+import org.dominokit.jackson.deser.bean.Instance;
+import org.dominokit.jackson.deser.bean.InstanceBuilder;
+import org.dominokit.jackson.deser.bean.MapLike;
+import org.dominokit.jackson.deser.bean.PropertyIdentityDeserializationInfo;
+import org.dominokit.jackson.deser.bean.SubtypeDeserializer;
 import org.dominokit.jackson.deser.bean.SubtypeDeserializer.BeanSubtypeDeserializer;
+import org.dominokit.jackson.deser.bean.TypeDeserializationInfo;
 import org.dominokit.jackson.exception.JsonDeserializationException;
 import org.dominokit.jackson.processor.AbstractJsonMapperGenerator;
 import org.dominokit.jackson.processor.AbstractMapperProcessor;
@@ -167,7 +196,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
     // Object instance can be created by InstanceBuilder
     // only for non-abstract classes
     if (beanType.getKind() == TypeKind.DECLARED
-        && ((DeclaredType) beanType).asElement().getKind() == ElementKind.CLASS
+        && (((DeclaredType) beanType).asElement().getKind() == ElementKind.CLASS || isRecord())
         && !((DeclaredType) beanType).asElement().getModifiers().contains(Modifier.ABSTRACT)) {
       methods.add(buildInitInstanceBuilderMethod());
     }
@@ -261,6 +290,10 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             .anyMatch(o -> o.getAnnotation(JsonCreator.class) != null);
   }
 
+  private boolean isRecord() {
+    return Type.isRecord(beanType);
+  }
+
   private ExecutableElement getCreator() {
     return ((DeclaredType) beanType)
         .asElement().getEnclosedElements().stream()
@@ -268,6 +301,40 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             .map(o -> (ExecutableElement) o)
             .findFirst()
             .orElse(null);
+  }
+
+  public Optional<ExecutableElement> getRecordCanonicalConstructor() {
+    TypeElement typeElement = (TypeElement) typeUtils.asElement(beanType);
+    // Get all fields declared in the class itself (assuming these are the record components)
+    List<VariableElement> recordFields =
+        ElementFilter.fieldsIn(typeElement.getEnclosedElements()).stream()
+            .filter(
+                field ->
+                    field.getModifiers().contains(Modifier.FINAL)
+                        && !field.getModifiers().contains(Modifier.STATIC))
+            .collect(Collectors.toList());
+
+    // Find a constructor whose parameters match the record fields
+    for (ExecutableElement constructor :
+        ElementFilter.constructorsIn(typeElement.getEnclosedElements())) {
+      List<? extends VariableElement> parameters = constructor.getParameters();
+
+      if (parameters.size() == recordFields.size()) {
+        boolean matches = true;
+
+        // Check if parameter types match field types in order
+        for (int i = 0; i < parameters.size(); i++) {
+          if (!typeUtils.isSameType(parameters.get(i).asType(), recordFields.get(i).asType())) {
+            matches = false;
+            break;
+          }
+        }
+        if (matches) {
+          return Optional.of(constructor); // Canonical constructor found
+        }
+      }
+    }
+    return Optional.empty(); // Canonical constructor not found
   }
 
   private boolean isUseBuilder() {
@@ -359,8 +426,16 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
                 ParameterizedTypeName.get(
                     ClassName.get(InstanceBuilder.class), ClassName.get(beanType)));
 
-    if (isUseJsonCreator()) {
-      ExecutableElement creator = getCreator();
+    boolean jsonCreator = isUseJsonCreator();
+    boolean record = isRecord();
+
+    if (jsonCreator || record) {
+      ExecutableElement creator;
+      if (jsonCreator) {
+        creator = getCreator();
+      } else {
+        creator = getRecordCanonicalConstructor().get();
+      }
       List<? extends VariableElement> parameterTypes = creator.getParameters();
       parameterBuilders =
           parameterTypes.stream()
@@ -424,7 +499,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
             .addModifiers(Modifier.PRIVATE)
             .returns(ClassName.get(beanType));
 
-    if (isUseJsonCreator()) {
+    if (isUseJsonCreator() || isRecord()) {
       for (ParameterDeserializerBuilder parameterBuilder : parameterBuilders) {
         createMethodBuilder.addParameter(
             Type.wrapperType(parameterBuilder.getParameterType()),
@@ -493,7 +568,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
               + buildMethodName
               + "(), bufferedProperties)",
           ParameterizedTypeName.get(ClassName.get(Instance.class), ClassName.get(beanType)));
-    } else if (isUseJsonCreator()) {
+    } else if (isUseJsonCreator() || isRecord()) {
       buildAssignProperties(beanType, createMethod, builder);
     } else {
       builder.addStatement(
@@ -549,7 +624,7 @@ public class AptDeserializerBuilder extends AbstractJsonMapperGenerator {
   }
 
   private Optional<MethodSpec> buildInitDeserializersMethod(TypeMirror beanType) {
-    if (isUseBuilder() || isUseJsonCreator() || isAbstract(beanType)) {
+    if (isUseBuilder() || isUseJsonCreator() || isAbstract(beanType) || isRecord()) {
       return Optional.empty();
     }
     TypeName resultType =
