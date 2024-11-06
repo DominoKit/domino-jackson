@@ -970,4 +970,14 @@ public class Type {
   public static String getTypeQualifiedName(TypeMirror typeMirror) {
     return ((TypeElement) typeUtils.asElement(typeMirror)).getQualifiedName().toString();
   }
+
+  public static boolean isRecord(TypeMirror type) {
+    boolean result = false;
+    TypeElement recordElement = elementUtils.getTypeElement("java.lang.Record");
+    if (recordElement != null) { // If running on Java 16+
+      TypeMirror recordType = recordElement.asType();
+      result = typeUtils.isSubtype(type, recordType);
+    }
+    return result;
+  }
 }
