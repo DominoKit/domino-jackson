@@ -23,7 +23,9 @@ import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.Map;
+import javax.annotation.processing.FilerException;
 import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
 import org.dominokit.jackson.processor.deserialization.AptDeserializerBuilder;
 
 /**
@@ -58,8 +60,15 @@ public class DeserializerGenerator {
             Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(deserializerName));
         TypeRegistry.removeInActiveGenDeserializer(beanType);
       } catch (IOException e) {
-        throw new DeserializerGenerator.DeserializerGenerationFailedException(
-            beanType.toString(), e);
+        if (e instanceof FilerException) {
+          ObjectMapperProcessor.messager.printMessage(
+              Diagnostic.Kind.WARNING,
+              e.getMessage(),
+              ObjectMapperProcessor.typeUtils.asElement(beanType));
+        } else {
+          throw new DeserializerGenerator.DeserializerGenerationFailedException(
+              beanType.toString(), e);
+        }
       }
     }
     return deserializerName;
