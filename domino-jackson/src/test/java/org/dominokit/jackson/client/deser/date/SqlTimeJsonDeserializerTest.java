@@ -20,7 +20,9 @@ import java.sql.Time;
 import org.dominokit.jackson.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jackson.deser.BaseDateJsonDeserializer.SqlTimeJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimeJsonDeserializerTest extends AbstractJsonDeserializerTest<Time> {
 
   @Override

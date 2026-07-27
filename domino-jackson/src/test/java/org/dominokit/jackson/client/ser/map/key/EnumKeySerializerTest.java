@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.ser.map.key;
 
 import org.dominokit.jackson.ser.map.key.EnumKeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumKeySerializerTest
     extends AbstractKeySerializerTest<EnumKeySerializerTest.EnumTest> {
 

@@ -20,7 +20,9 @@ import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.Map;
+import javax.annotation.processing.FilerException;
 import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
 import org.dominokit.jackson.processor.serialization.AptSerializerBuilder;
 
 /**
@@ -54,7 +56,14 @@ public class SerializerGenerator {
             Type.stringifyTypeWithPackage(beanType), ClassName.bestGuess(serializerName));
         TypeRegistry.removeInActiveGenSerializer(beanType);
       } catch (IOException e) {
-        throw new SerializerGenerationFailedException(beanType.toString());
+        if (e instanceof FilerException) {
+          ObjectMapperProcessor.messager.printMessage(
+              Diagnostic.Kind.WARNING,
+              e.getMessage(),
+              ObjectMapperProcessor.typeUtils.asElement(beanType));
+        } else {
+          throw new SerializerGenerationFailedException(beanType.toString());
+        }
       }
     }
     return serializerName;

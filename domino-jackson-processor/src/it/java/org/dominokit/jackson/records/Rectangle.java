@@ -19,6 +19,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.dominokit.jackson.annotation.JSONMapper;
 
 @JSONMapper
-public record Rectangle(@JsonProperty("bottomLeft") Point a, @JsonProperty("topRight") Point b) {
-
-}
+public record Rectangle(@JsonProperty("bottomLeft") Point a, @JsonProperty("topRight") Point b) {}

@@ -23,7 +23,9 @@ import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.StringJsonSerializer;
 import org.dominokit.jackson.ser.array.ArrayJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ArrayJsonSerializerTest extends AbstractJsonSerializerTest<String[]> {
 
   private static final Logger logger = Logger.getLogger(ArrayJsonSerializerTest.class.getName());

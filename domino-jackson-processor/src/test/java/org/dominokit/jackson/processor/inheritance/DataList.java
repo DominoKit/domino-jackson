@@ -18,7 +18,9 @@ package org.dominokit.jackson.processor.inheritance;
 import java.util.List;
 import org.dominokit.jackson.annotation.JSONMapper;
 
-/** @author Dmitrii Tikhomirov Created by treblereel 9/25/20 */
+/**
+ * @author Dmitrii Tikhomirov Created by treblereel 9/25/20
+ */
 @JSONMapper
 public class DataList {
 

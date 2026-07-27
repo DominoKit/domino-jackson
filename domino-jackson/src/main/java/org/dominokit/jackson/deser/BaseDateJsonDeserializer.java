@@ -34,7 +34,9 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
 
     private static final DateJsonDeserializer INSTANCE = new DateJsonDeserializer();
 
-    /** @return an instance of {@link DateJsonDeserializer} */
+    /**
+     * @return an instance of {@link DateJsonDeserializer}
+     */
     public static DateJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -63,7 +65,9 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
 
     private static final String SQL_DATE_FORMAT = "yyyy-MM-dd";
 
-    /** @return an instance of {@link SqlDateJsonDeserializer} */
+    /**
+     * @return an instance of {@link SqlDateJsonDeserializer}
+     */
     public static SqlDateJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -91,7 +95,9 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
 
     private static final SqlTimeJsonDeserializer INSTANCE = new SqlTimeJsonDeserializer();
 
-    /** @return an instance of {@link SqlTimeJsonDeserializer} */
+    /**
+     * @return an instance of {@link SqlTimeJsonDeserializer}
+     */
     public static SqlTimeJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -116,7 +122,9 @@ public abstract class BaseDateJsonDeserializer<D extends Date> extends JsonDeser
 
     private static final SqlTimestampJsonDeserializer INSTANCE = new SqlTimestampJsonDeserializer();
 
-    /** @return an instance of {@link SqlTimestampJsonDeserializer} */
+    /**
+     * @return an instance of {@link SqlTimestampJsonDeserializer}
+     */
     public static SqlTimestampJsonDeserializer getInstance() {
       return INSTANCE;
     }

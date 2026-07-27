@@ -21,7 +21,9 @@ import org.dominokit.jackson.ser.BaseNumberJsonSerializer;
 import org.dominokit.jackson.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigDecimalJsonSerializerTest extends AbstractJsonSerializerTest<BigDecimal> {
 
   @Override

@@ -16,5 +16,7 @@
 
 package org.dominokit.jackson.shared;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public interface ObjectMapperTester<T> extends ObjectReaderTester<T>, ObjectWriterTester<T> {}

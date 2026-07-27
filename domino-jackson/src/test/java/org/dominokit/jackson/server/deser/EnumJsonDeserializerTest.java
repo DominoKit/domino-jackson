@@ -23,7 +23,9 @@ import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.EnumJsonDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumJsonDeserializerTest
     extends AbstractJsonDeserializerTest<EnumJsonDeserializerTest.EnumTest> {
 

@@ -24,7 +24,9 @@ import org.dominokit.jackson.shared.ObjectMapperTester;
 import org.dominokit.jackson.shared.ObjectReaderTester;
 import org.dominokit.jackson.shared.ObjectWriterTester;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class GwtJacksonTestCase extends GWTTestCase {
 
   @SuppressWarnings("deprecation")

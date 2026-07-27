@@ -34,7 +34,9 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private static final DateJsonSerializer INSTANCE = new DateJsonSerializer();
 
-    /** @return an instance of {@link DateJsonSerializer} */
+    /**
+     * @return an instance of {@link DateJsonSerializer}
+     */
     public static DateJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -67,7 +69,9 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private static final SqlDateJsonSerializer INSTANCE = new SqlDateJsonSerializer();
 
-    /** @return an instance of {@link SqlDateJsonSerializer} */
+    /**
+     * @return an instance of {@link SqlDateJsonSerializer}
+     */
     public static SqlDateJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -89,7 +93,9 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private static final SqlTimeJsonSerializer INSTANCE = new SqlTimeJsonSerializer();
 
-    /** @return an instance of {@link SqlTimeJsonSerializer} */
+    /**
+     * @return an instance of {@link SqlTimeJsonSerializer}
+     */
     public static SqlTimeJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -112,7 +118,9 @@ public abstract class BaseDateJsonSerializer<D extends Date> extends JsonSeriali
 
     private static final SqlTimestampJsonSerializer INSTANCE = new SqlTimestampJsonSerializer();
 
-    /** @return an instance of {@link SqlTimestampJsonSerializer} */
+    /**
+     * @return an instance of {@link SqlTimestampJsonSerializer}
+     */
     public static SqlTimestampJsonSerializer getInstance() {
       return INSTANCE;
     }

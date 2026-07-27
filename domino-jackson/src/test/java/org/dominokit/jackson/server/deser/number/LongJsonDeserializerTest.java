@@ -20,7 +20,9 @@ import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.LongJsonDeserializ
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class LongJsonDeserializerTest extends AbstractJsonDeserializerTest<Long> {
 
   @Override

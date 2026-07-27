@@ -16,7 +16,9 @@
 
 package org.dominokit.jackson.processor;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public enum AnEnum {
   A,
   B,

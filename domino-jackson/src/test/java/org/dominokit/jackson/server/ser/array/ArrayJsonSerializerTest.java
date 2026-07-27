@@ -22,7 +22,9 @@ import org.dominokit.jackson.ser.array.ArrayJsonSerializer;
 import org.dominokit.jackson.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ArrayJsonSerializerTest extends AbstractJsonSerializerTest<String[]> {
 
   @Override

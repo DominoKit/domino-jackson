@@ -19,7 +19,9 @@ package org.dominokit.jackson.server.deser.map.key;
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ShortKeyDeserializerTest extends AbstractKeyDeserializerTest<Short> {
 
   @Override

@@ -26,7 +26,9 @@ import org.dominokit.jackson.deser.collection.SetJsonDeserializer;
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SetJsonDeserializerTest extends AbstractJsonDeserializerTest<Set<String>> {
 
   @Override

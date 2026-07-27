@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.map.key;
 import java.sql.Timestamp;
 import org.dominokit.jackson.deser.map.key.BaseDateKeyDeserializer.SqlTimestampKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimestampKeyDeserializerTest extends AbstractKeyDeserializerTest<Timestamp> {
 
   @Override

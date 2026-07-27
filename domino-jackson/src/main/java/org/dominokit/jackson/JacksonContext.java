@@ -33,48 +33,56 @@ public interface JacksonContext {
    * @return a {@link org.dominokit.jackson.JacksonContext.DateFormat} object.
    */
   DateFormat dateFormat();
+
   /**
    * integerStackFactory.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.IntegerStackFactory} object.
    */
   IntegerStackFactory integerStackFactory();
+
   /**
    * mapLikeFactory.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.MapLikeFactory} object.
    */
   MapLikeFactory mapLikeFactory();
+
   /**
    * stringifier.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.ValueStringifier} object.
    */
   ValueStringifier stringifier();
+
   /**
    * stringArrayReader.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.StringArrayReader} object.
    */
   StringArrayReader stringArrayReader();
+
   /**
    * shortArrayReader.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.ShortArrayReader} object.
    */
   ShortArrayReader shortArrayReader();
+
   /**
    * integerArrayReader.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.IntegerArrayReader} object.
    */
   IntegerArrayReader integerArrayReader();
+
   /**
    * doubleArrayReader.
    *
    * @return a {@link org.dominokit.jackson.JacksonContext.DoubleArrayReader} object.
    */
   DoubleArrayReader doubleArrayReader();
+
   /**
    * defaultSerializerParameters.
    *

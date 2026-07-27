@@ -18,5 +18,4 @@ package org.dominokit.jackson.records;
 import org.dominokit.jackson.annotation.JSONMapper;
 
 @JSONMapper
-public record Point(int x, int y) {
-}
+public record Point(int x, int y) {}

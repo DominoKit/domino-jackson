@@ -21,7 +21,9 @@ import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.BigIntegerJsonDese
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigIntegerJsonDeserializerTest extends AbstractJsonDeserializerTest<BigInteger> {
 
   @Override

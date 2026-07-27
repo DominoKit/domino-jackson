@@ -21,7 +21,9 @@ import org.dominokit.jackson.ser.BaseDateJsonSerializer;
 import org.dominokit.jackson.server.ser.AbstractJsonSerializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class DateJsonSerializerTest extends AbstractJsonSerializerTest<Date> {
 
   @Override

@@ -20,7 +20,9 @@ import java.util.Date;
 import org.dominokit.jackson.deser.map.key.BaseDateKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class DateKeyDeserializerTest extends AbstractKeyDeserializerTest<Date> {
 
   @Override

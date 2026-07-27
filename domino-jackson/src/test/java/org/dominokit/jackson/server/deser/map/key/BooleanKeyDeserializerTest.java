@@ -21,7 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.dominokit.jackson.deser.map.key.BooleanKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BooleanKeyDeserializerTest extends AbstractKeyDeserializerTest<Boolean> {
 
   @Override

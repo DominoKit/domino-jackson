@@ -20,7 +20,9 @@ import java.sql.Date;
 import org.dominokit.jackson.JacksonContextProvider;
 import org.dominokit.jackson.ser.map.key.DateKeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlDateKeySerializerTest extends AbstractKeySerializerTest<Date> {
 
   @Override

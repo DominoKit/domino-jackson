@@ -25,7 +25,9 @@ import org.dominokit.jackson.server.ServerJacksonTestCase;
 import org.dominokit.jackson.stream.JsonReader;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class AbstractJsonDeserializerTest<T> extends ServerJacksonTestCase {
 
   protected abstract JsonDeserializer<T> createDeserializer();

@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.ser;
 
 import org.dominokit.jackson.ser.CharacterJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class CharacterJsonSerializerTest extends AbstractJsonSerializerTest<Character> {
 
   @Override

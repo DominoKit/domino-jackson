@@ -20,7 +20,9 @@ import java.sql.Time;
 import org.dominokit.jackson.JacksonContextProvider;
 import org.dominokit.jackson.ser.map.key.DateKeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimeKeySerializerTest extends AbstractKeySerializerTest<Time> {
 
   @Override

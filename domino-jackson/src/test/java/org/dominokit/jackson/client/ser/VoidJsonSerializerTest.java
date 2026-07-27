@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.ser;
 
 import org.dominokit.jackson.ser.VoidJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class VoidJsonSerializerTest extends AbstractJsonSerializerTest<Void> {
 
   @Override

@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser;
 import org.dominokit.jackson.JsonSerializer;
 import org.dominokit.jackson.ser.EnumJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumJsonSerializerTest
     extends AbstractJsonSerializerTest<EnumJsonSerializerTest.EnumTest> {
 

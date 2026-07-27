@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.deser.map.key;
 
 import org.dominokit.jackson.deser.map.key.BooleanKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BooleanKeyDeserializerTest extends AbstractKeyDeserializerTest<Boolean> {
 
   @Override

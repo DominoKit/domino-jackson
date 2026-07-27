@@ -32,7 +32,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final BigDecimalKeyDeserializer INSTANCE = new BigDecimalKeyDeserializer();
 
-    /** @return an instance of {@link BigDecimalKeyDeserializer} */
+    /**
+     * @return an instance of {@link BigDecimalKeyDeserializer}
+     */
     public static BigDecimalKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -51,7 +53,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final BigIntegerKeyDeserializer INSTANCE = new BigIntegerKeyDeserializer();
 
-    /** @return an instance of {@link BigIntegerKeyDeserializer} */
+    /**
+     * @return an instance of {@link BigIntegerKeyDeserializer}
+     */
     public static BigIntegerKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -69,7 +73,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final ByteKeyDeserializer INSTANCE = new ByteKeyDeserializer();
 
-    /** @return an instance of {@link ByteKeyDeserializer} */
+    /**
+     * @return an instance of {@link ByteKeyDeserializer}
+     */
     public static ByteKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -87,7 +93,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final DoubleKeyDeserializer INSTANCE = new DoubleKeyDeserializer();
 
-    /** @return an instance of {@link DoubleKeyDeserializer} */
+    /**
+     * @return an instance of {@link DoubleKeyDeserializer}
+     */
     public static DoubleKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -105,7 +113,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final FloatKeyDeserializer INSTANCE = new FloatKeyDeserializer();
 
-    /** @return an instance of {@link FloatKeyDeserializer} */
+    /**
+     * @return an instance of {@link FloatKeyDeserializer}
+     */
     public static FloatKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -123,7 +133,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final IntegerKeyDeserializer INSTANCE = new IntegerKeyDeserializer();
 
-    /** @return an instance of {@link IntegerKeyDeserializer} */
+    /**
+     * @return an instance of {@link IntegerKeyDeserializer}
+     */
     public static IntegerKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -141,7 +153,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final LongKeyDeserializer INSTANCE = new LongKeyDeserializer();
 
-    /** @return an instance of {@link LongKeyDeserializer} */
+    /**
+     * @return an instance of {@link LongKeyDeserializer}
+     */
     public static LongKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -159,7 +173,9 @@ public abstract class BaseNumberKeyDeserializer<N extends Number> extends KeyDes
 
     private static final ShortKeyDeserializer INSTANCE = new ShortKeyDeserializer();
 
-    /** @return an instance of {@link ShortKeyDeserializer} */
+    /**
+     * @return an instance of {@link ShortKeyDeserializer}
+     */
     public static ShortKeyDeserializer getInstance() {
       return INSTANCE;
     }

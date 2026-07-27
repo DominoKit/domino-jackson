@@ -25,7 +25,9 @@ import org.dominokit.jackson.server.ServerJacksonTestCase;
 import org.dominokit.jackson.stream.JsonWriter;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class AbstractJsonSerializerTest<T> extends ServerJacksonTestCase {
 
   protected abstract JsonSerializer<T> createSerializer();

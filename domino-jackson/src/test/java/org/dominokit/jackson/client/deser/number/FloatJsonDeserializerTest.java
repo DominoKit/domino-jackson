@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.number;
 import org.dominokit.jackson.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.FloatJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class FloatJsonDeserializerTest extends AbstractJsonDeserializerTest<Float> {
 
   @Override

@@ -19,7 +19,9 @@ package org.dominokit.jackson.server.deser.map.key;
 import org.dominokit.jackson.deser.map.key.StringKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class StringKeyDeserializerTest extends AbstractKeyDeserializerTest<String> {
 
   @Override

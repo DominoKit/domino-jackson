@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.ser;
 
 import org.dominokit.jackson.ser.BooleanJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BooleanJsonSerializerTest extends AbstractJsonSerializerTest<Boolean> {
 
   @Override

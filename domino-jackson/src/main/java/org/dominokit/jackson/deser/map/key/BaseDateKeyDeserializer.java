@@ -34,7 +34,9 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
 
     private static final DateKeyDeserializer INSTANCE = new DateKeyDeserializer();
 
-    /** @return an instance of {@link DateKeyDeserializer} */
+    /**
+     * @return an instance of {@link DateKeyDeserializer}
+     */
     public static DateKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -57,7 +59,9 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
 
     private static final SqlDateKeyDeserializer INSTANCE = new SqlDateKeyDeserializer();
 
-    /** @return an instance of {@link SqlDateKeyDeserializer} */
+    /**
+     * @return an instance of {@link SqlDateKeyDeserializer}
+     */
     public static SqlDateKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -80,7 +84,9 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
 
     private static final SqlTimeKeyDeserializer INSTANCE = new SqlTimeKeyDeserializer();
 
-    /** @return an instance of {@link SqlTimeKeyDeserializer} */
+    /**
+     * @return an instance of {@link SqlTimeKeyDeserializer}
+     */
     public static SqlTimeKeyDeserializer getInstance() {
       return INSTANCE;
     }
@@ -103,7 +109,9 @@ public abstract class BaseDateKeyDeserializer<D extends Date> extends KeyDeseria
 
     private static final SqlTimestampKeyDeserializer INSTANCE = new SqlTimestampKeyDeserializer();
 
-    /** @return an instance of {@link SqlTimestampKeyDeserializer} */
+    /**
+     * @return an instance of {@link SqlTimestampKeyDeserializer}
+     */
     public static SqlTimestampKeyDeserializer getInstance() {
       return INSTANCE;
     }

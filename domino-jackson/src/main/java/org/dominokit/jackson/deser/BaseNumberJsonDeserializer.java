@@ -36,7 +36,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final BigDecimalJsonDeserializer INSTANCE = new BigDecimalJsonDeserializer();
 
-    /** @return an instance of {@link BigDecimalJsonDeserializer} */
+    /**
+     * @return an instance of {@link BigDecimalJsonDeserializer}
+     */
     public static BigDecimalJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -56,7 +58,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final BigIntegerJsonDeserializer INSTANCE = new BigIntegerJsonDeserializer();
 
-    /** @return an instance of {@link BigIntegerJsonDeserializer} */
+    /**
+     * @return an instance of {@link BigIntegerJsonDeserializer}
+     */
     public static BigIntegerJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -75,7 +79,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final ByteJsonDeserializer INSTANCE = new ByteJsonDeserializer();
 
-    /** @return an instance of {@link ByteJsonDeserializer} */
+    /**
+     * @return an instance of {@link ByteJsonDeserializer}
+     */
     public static ByteJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -94,7 +100,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final DoubleJsonDeserializer INSTANCE = new DoubleJsonDeserializer();
 
-    /** @return an instance of {@link DoubleJsonDeserializer} */
+    /**
+     * @return an instance of {@link DoubleJsonDeserializer}
+     */
     public static DoubleJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -113,7 +121,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final FloatJsonDeserializer INSTANCE = new FloatJsonDeserializer();
 
-    /** @return an instance of {@link FloatJsonDeserializer} */
+    /**
+     * @return an instance of {@link FloatJsonDeserializer}
+     */
     public static FloatJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -132,7 +142,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final IntegerJsonDeserializer INSTANCE = new IntegerJsonDeserializer();
 
-    /** @return an instance of {@link IntegerJsonDeserializer} */
+    /**
+     * @return an instance of {@link IntegerJsonDeserializer}
+     */
     public static IntegerJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -155,7 +167,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final LongJsonDeserializer INSTANCE = new LongJsonDeserializer();
 
-    /** @return an instance of {@link LongJsonDeserializer} */
+    /**
+     * @return an instance of {@link LongJsonDeserializer}
+     */
     public static LongJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -174,7 +188,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final ShortJsonDeserializer INSTANCE = new ShortJsonDeserializer();
 
-    /** @return an instance of {@link ShortJsonDeserializer} */
+    /**
+     * @return an instance of {@link ShortJsonDeserializer}
+     */
     public static ShortJsonDeserializer getInstance() {
       return INSTANCE;
     }
@@ -197,7 +213,9 @@ public abstract class BaseNumberJsonDeserializer<N extends Number> extends JsonD
 
     private static final NumberJsonDeserializer INSTANCE = new NumberJsonDeserializer();
 
-    /** @return an instance of {@link NumberJsonDeserializer} */
+    /**
+     * @return an instance of {@link NumberJsonDeserializer}
+     */
     public static NumberJsonDeserializer getInstance() {
       return INSTANCE;
     }

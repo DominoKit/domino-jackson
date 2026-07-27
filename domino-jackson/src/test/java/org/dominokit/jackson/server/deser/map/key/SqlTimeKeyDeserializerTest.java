@@ -20,7 +20,9 @@ import java.sql.Time;
 import org.dominokit.jackson.deser.map.key.BaseDateKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimeKeyDeserializerTest extends AbstractKeyDeserializerTest<Time> {
 
   @Override

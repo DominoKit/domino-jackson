@@ -23,7 +23,9 @@ import org.dominokit.jackson.deser.BaseDateJsonDeserializer.SqlTimeJsonDeseriali
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimeJsonDeserializerTest extends AbstractJsonDeserializerTest<Time> {
 
   @Override

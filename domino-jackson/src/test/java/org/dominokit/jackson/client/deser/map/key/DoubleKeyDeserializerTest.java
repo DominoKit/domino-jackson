@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.deser.map.key;
 
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer.DoubleKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class DoubleKeyDeserializerTest extends AbstractKeyDeserializerTest<Double> {
 
   @Override

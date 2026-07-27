@@ -21,7 +21,9 @@ import org.dominokit.jackson.JsonSerializationContext;
 import org.dominokit.jackson.client.JacksonTestCase;
 import org.dominokit.jackson.ser.map.key.KeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class AbstractKeySerializerTest<T> extends JacksonTestCase {
 
   protected abstract KeySerializer createSerializer();

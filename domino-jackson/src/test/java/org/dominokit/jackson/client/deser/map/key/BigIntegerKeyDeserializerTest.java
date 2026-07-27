@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.map.key;
 import java.math.BigInteger;
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer.BigIntegerKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigIntegerKeyDeserializerTest extends AbstractKeyDeserializerTest<BigInteger> {
 
   @Override

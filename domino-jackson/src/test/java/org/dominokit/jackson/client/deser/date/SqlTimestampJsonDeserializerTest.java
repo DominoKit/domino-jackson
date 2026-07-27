@@ -20,7 +20,9 @@ import java.sql.Timestamp;
 import org.dominokit.jackson.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jackson.deser.BaseDateJsonDeserializer.SqlTimestampJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimestampJsonDeserializerTest extends AbstractJsonDeserializerTest<Timestamp> {
 
   @Override

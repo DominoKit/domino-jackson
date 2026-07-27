@@ -21,7 +21,9 @@ import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.UUIDJsonDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class UUIDJsonDeserializerTest extends AbstractJsonDeserializerTest<UUID> {
 
   private static String uuid = "550e8400-e29b-41d4-a716-446655440000";

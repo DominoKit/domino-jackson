@@ -19,11 +19,11 @@ import org.dominokit.jackson.annotation.JSONMapper;
 
 @JSONMapper
 public record ComplexNumber(double real, double imaginary) {
-    public ComplexNumber(double real) {
-        this(real, 0); // Calls the canonical constructor with 0 for the imaginary part
-    }
+  public ComplexNumber(double real) {
+    this(real, 0); // Calls the canonical constructor with 0 for the imaginary part
+  }
 
-    public double magnitude() {
-        return Math.sqrt(real * real + imaginary * imaginary);
-    }
+  public double magnitude() {
+    return Math.sqrt(real * real + imaginary * imaginary);
+  }
 }

@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.ser.map.key;
 
 import org.dominokit.jackson.ser.map.key.ToStringKeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class IntegerKeySerializerTest extends AbstractKeySerializerTest<Integer> {
 
   @Override

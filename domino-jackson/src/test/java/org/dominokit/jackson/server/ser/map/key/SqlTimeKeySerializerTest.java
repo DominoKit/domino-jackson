@@ -21,7 +21,9 @@ import org.dominokit.jackson.JacksonContextProvider;
 import org.dominokit.jackson.ser.map.key.DateKeySerializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlTimeKeySerializerTest extends AbstractKeySerializerTest<Time> {
 
   @Override
