@@ -22,7 +22,9 @@ import org.dominokit.jackson.DefaultJsonDeserializationContext;
 import org.dominokit.jackson.deser.map.key.EnumKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumKeyDeserializerTest
     extends AbstractKeyDeserializerTest<EnumKeyDeserializerTest.EnumTest> {
 

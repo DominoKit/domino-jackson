@@ -20,7 +20,9 @@ import org.dominokit.jackson.server.stream.AbstractJsonReaderTest;
 import org.dominokit.jackson.stream.JsonReader;
 import org.dominokit.jackson.stream.impl.NonBufferedJsonReader;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class NonBufferedJsonReaderTest extends AbstractJsonReaderTest {
 
   @Override

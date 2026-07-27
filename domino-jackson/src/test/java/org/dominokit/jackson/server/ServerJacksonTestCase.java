@@ -21,7 +21,9 @@ import org.dominokit.jackson.DefaultJsonSerializationContext;
 import org.dominokit.jackson.JsonDeserializationContext;
 import org.dominokit.jackson.JsonSerializationContext;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class ServerJacksonTestCase extends BaseJacksonTestCase {
 
   @Override

@@ -22,7 +22,9 @@ import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.client.JacksonTestCase;
 import org.dominokit.jackson.stream.JsonReader;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public abstract class AbstractJsonDeserializerTest<T> extends JacksonTestCase {
 
   protected abstract JsonDeserializer<T> createDeserializer();

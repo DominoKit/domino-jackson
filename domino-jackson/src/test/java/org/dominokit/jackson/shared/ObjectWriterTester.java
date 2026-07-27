@@ -16,7 +16,9 @@
 
 package org.dominokit.jackson.shared;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public interface ObjectWriterTester<T> {
 
   String write(T input);

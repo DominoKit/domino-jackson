@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser.number;
 import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.BaseNumberJsonSerializer.ShortJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ShortJsonSerializerTest extends AbstractJsonSerializerTest<Short> {
 
   @Override

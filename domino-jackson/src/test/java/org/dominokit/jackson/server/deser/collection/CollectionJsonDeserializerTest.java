@@ -25,7 +25,9 @@ import org.dominokit.jackson.deser.collection.CollectionJsonDeserializer;
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class CollectionJsonDeserializerTest
     extends AbstractJsonDeserializerTest<Collection<String>> {
 

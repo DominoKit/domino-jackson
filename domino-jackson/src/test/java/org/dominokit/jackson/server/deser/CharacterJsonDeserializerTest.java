@@ -20,7 +20,9 @@ import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.CharacterJsonDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class CharacterJsonDeserializerTest extends AbstractJsonDeserializerTest<Character> {
 
   @Override

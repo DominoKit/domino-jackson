@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.number;
 import org.dominokit.jackson.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jackson.deser.BaseNumberJsonDeserializer.ShortJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ShortJsonDeserializerTest extends AbstractJsonDeserializerTest<Short> {
 
   @Override

@@ -19,15 +19,15 @@ import org.dominokit.jackson.annotation.JSONMapper;
 
 @JSONMapper
 public record Circle(double radius) {
-    public static final double PI = 3.14159;
+  public static final double PI = 3.14159;
 
-    public Circle {
-        if (radius < 0) {
-            throw new IllegalArgumentException("Radius cannot be negative");
-        }
+  public Circle {
+    if (radius < 0) {
+      throw new IllegalArgumentException("Radius cannot be negative");
     }
+  }
 
-    public double area() {
-        return PI * radius * radius;
-    }
+  public double area() {
+    return PI * radius * radius;
+  }
 }

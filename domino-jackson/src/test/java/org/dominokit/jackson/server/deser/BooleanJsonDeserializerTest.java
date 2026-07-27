@@ -22,7 +22,9 @@ import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.BooleanJsonDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BooleanJsonDeserializerTest extends AbstractJsonDeserializerTest<Boolean> {
 
   @Override

@@ -22,7 +22,9 @@ import org.dominokit.jackson.client.deser.AbstractJsonDeserializerTest;
 import org.dominokit.jackson.deser.StringJsonDeserializer;
 import org.dominokit.jackson.deser.array.ArrayJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ArrayJsonDeserializerTest extends AbstractJsonDeserializerTest<String[]> {
 
   @Override

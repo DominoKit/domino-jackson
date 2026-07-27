@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser;
 import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.CharacterJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class CharacterJsonDeserializerTest extends AbstractJsonDeserializerTest<Character> {
 
   @Override

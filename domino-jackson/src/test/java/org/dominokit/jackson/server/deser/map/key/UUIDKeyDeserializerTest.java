@@ -20,7 +20,9 @@ import java.util.UUID;
 import org.dominokit.jackson.deser.map.key.UUIDKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class UUIDKeyDeserializerTest extends AbstractKeyDeserializerTest<UUID> {
 
   private static String uuid = "550e8400-e29b-41d4-a716-446655440000";

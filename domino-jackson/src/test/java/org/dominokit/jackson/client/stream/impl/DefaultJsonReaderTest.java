@@ -22,7 +22,9 @@ import org.dominokit.jackson.stream.impl.DefaultJsonReader;
 import org.dominokit.jackson.stream.impl.MalformedJsonException;
 import org.dominokit.jackson.stream.impl.StringReader;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class DefaultJsonReaderTest extends AbstractJsonReaderTest {
 
   @Override

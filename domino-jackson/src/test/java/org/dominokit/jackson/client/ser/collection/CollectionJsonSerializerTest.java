@@ -24,7 +24,9 @@ import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.IterableJsonSerializer;
 import org.dominokit.jackson.ser.StringJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class CollectionJsonSerializerTest extends AbstractJsonSerializerTest<Collection<String>> {
 
   @Override

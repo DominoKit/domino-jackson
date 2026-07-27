@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.map.key;
 import org.dominokit.jackson.DefaultJsonDeserializationContext;
 import org.dominokit.jackson.deser.map.key.EnumKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumKeyDeserializerTest
     extends AbstractKeyDeserializerTest<EnumKeyDeserializerTest.EnumTest> {
 

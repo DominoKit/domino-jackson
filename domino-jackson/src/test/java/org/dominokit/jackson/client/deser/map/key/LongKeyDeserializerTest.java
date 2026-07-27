@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.deser.map.key;
 
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer.LongKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class LongKeyDeserializerTest extends AbstractKeyDeserializerTest<Long> {
 
   @Override

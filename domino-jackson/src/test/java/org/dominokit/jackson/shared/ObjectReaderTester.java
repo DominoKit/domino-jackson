@@ -16,7 +16,9 @@
 
 package org.dominokit.jackson.shared;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public interface ObjectReaderTester<T> {
 
   T read(String input);

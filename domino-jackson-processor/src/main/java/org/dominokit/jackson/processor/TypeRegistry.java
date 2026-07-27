@@ -982,22 +982,30 @@ public final class TypeRegistry implements RegistryWrapper {
     }
   }
 
-  /** @param typeMirror {@link TypeMirror} */
+  /**
+   * @param typeMirror {@link TypeMirror}
+   */
   public static void addInActiveGenSerializer(TypeMirror typeMirror) {
     inActiveGenSerializers.add(Type.stringifyTypeWithPackage(typeMirror));
   }
 
-  /** @param typeMirror {@link TypeMirror} */
+  /**
+   * @param typeMirror {@link TypeMirror}
+   */
   public static void addInActiveGenDeserializer(TypeMirror typeMirror) {
     inActiveGenDeserializers.add(Type.stringifyTypeWithPackage(typeMirror));
   }
 
-  /** @param typeMirror {@link TypeMirror} */
+  /**
+   * @param typeMirror {@link TypeMirror}
+   */
   public static void removeInActiveGenSerializer(TypeMirror typeMirror) {
     inActiveGenSerializers.remove(Type.stringifyTypeWithPackage(typeMirror));
   }
 
-  /** @param typeMirror {@link TypeMirror} */
+  /**
+   * @param typeMirror {@link TypeMirror}
+   */
   public static void removeInActiveGenDeserializer(TypeMirror typeMirror) {
     inActiveGenDeserializers.remove(Type.stringifyTypeWithPackage(typeMirror));
   }

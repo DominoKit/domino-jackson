@@ -281,6 +281,8 @@ Typical commands:
 - `mvn test` to run the default unit tests.
 - `mvn -pl domino-jackson -am test` to focus on runtime tests.
 - `mvn -pl domino-jackson-processor -am test` to focus on annotation processor tests.
+- `mvn spotless:check` to verify Java formatting.
+- `mvn spotless:apply` to rewrite sources using the configured formatter.
 
 There are additional profiles such as `java17-tests` (adds `src/it/java`) and `java23-processors`
 for newer JDK-specific processor behavior.
@@ -294,4 +296,3 @@ and visit our [documentation](https://dominokit.com/solutions/domino-jackson/v1/
 
 Apache License 2.0. See `LICENSE`.
  
-

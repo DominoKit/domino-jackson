@@ -19,7 +19,9 @@ package org.dominokit.jackson.server.stream;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 @JsType
 public class Person {
 

@@ -18,13 +18,19 @@ package org.dominokit.jackson.stream;
 /** Stack interface. */
 public interface Stack<T> {
 
-  /** @return remove the top of the stack and return the value */
+  /**
+   * @return remove the top of the stack and return the value
+   */
   T pop();
 
-  /** @return the top of the stack without removing it */
+  /**
+   * @return the top of the stack without removing it
+   */
   T peek();
 
-  /** @return int size of the stack */
+  /**
+   * @return int size of the stack
+   */
   int size();
 
   /** Removes all elements of the stack */
@@ -37,7 +43,9 @@ public interface Stack<T> {
    */
   void push(T value);
 
-  /** @param newTop the value to replace the top of the stack, the stack size remain the same */
+  /**
+   * @param newTop the value to replace the top of the stack, the stack size remain the same
+   */
   void replaceTop(T newTop);
 
   /**

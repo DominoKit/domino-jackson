@@ -42,8 +42,10 @@ public class Type {
 
   private static final int FIRST_ARGUMENT = 0;
   private static final int SECOND_ARGUMENT = 1;
+
   /** Constant <code>BEAN_JSON_SERIALIZER_IMPL="BeanJsonSerializerImpl"</code> */
   public static final String BEAN_JSON_SERIALIZER_IMPL = "BeanJsonSerializerImpl";
+
   /** Constant <code>BEAN_JSON_DESERIALIZER_IMPL="BeanJsonDeserializerImpl"</code> */
   public static final String BEAN_JSON_DESERIALIZER_IMPL = "BeanJsonDeserializerImpl";
 
@@ -603,7 +605,9 @@ public class Type {
                         .equals("JsonSubTypes")) // Get JsonSubType annotation mirror
             .flatMap(
                 am ->
-                    am.getElementValues().entrySet()
+                    am
+                        .getElementValues()
+                        .entrySet()
                         .stream()) // do a flat map for JsonSubType element values map entries
             .filter(
                 entry ->
@@ -623,7 +627,9 @@ public class Type {
         .collect(
             Collectors.toMap(
                 am ->
-                    am.getElementValues().entrySet()
+                    am
+                        .getElementValues()
+                        .entrySet()
                         .stream() // create a stream from all element values map entries for a given
                         // JsonSubType.Type
                         .filter(
@@ -643,7 +649,9 @@ public class Type {
                         .findFirst()
                         .orElse(null),
                 am ->
-                    am.getElementValues().entrySet()
+                    am
+                        .getElementValues()
+                        .entrySet()
                         .stream() // create a stream from all element values map entries for a given
                         // JsonSubType.Type
                         .filter(

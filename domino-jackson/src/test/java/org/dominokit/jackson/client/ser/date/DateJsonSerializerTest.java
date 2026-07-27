@@ -20,7 +20,9 @@ import java.util.Date;
 import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.BaseDateJsonSerializer.DateJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class DateJsonSerializerTest extends AbstractJsonSerializerTest<Date> {
 
   @Override

@@ -42,7 +42,9 @@ public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserialize
   private final Class<E> enumClass;
   private final E[] values;
 
-  /** @param enumClass class of the enumeration */
+  /**
+   * @param enumClass class of the enumeration
+   */
   private EnumKeyDeserializer(Class<E> enumClass, E[] values) {
     if (null == enumClass) {
       throw new IllegalArgumentException("enumClass cannot be null");
@@ -73,6 +75,7 @@ public final class EnumKeyDeserializer<E extends Enum<E>> extends KeyDeserialize
     throw new IllegalArgumentException(
         "[" + name + "] is not a valid enum constant for Enum type " + getEnumClass().getName());
   }
+
   /**
    * Getter for the field <code>enumClass</code>.
    *

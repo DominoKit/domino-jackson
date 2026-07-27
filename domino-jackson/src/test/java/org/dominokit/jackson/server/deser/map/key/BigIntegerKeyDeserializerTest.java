@@ -20,7 +20,9 @@ import java.math.BigInteger;
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigIntegerKeyDeserializerTest extends AbstractKeyDeserializerTest<BigInteger> {
 
   @Override

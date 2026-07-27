@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser.number;
 import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.BaseNumberJsonSerializer.ByteJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class ByteJsonSerializerTest extends AbstractJsonSerializerTest<Byte> {
 
   @Override

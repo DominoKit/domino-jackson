@@ -232,12 +232,14 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
   private static final int PEEKED_SINGLE_QUOTED = 8;
   private static final int PEEKED_DOUBLE_QUOTED = 9;
   private static final int PEEKED_UNQUOTED = 10;
+
   /** When this is returned, the string value is stored in peekedString. */
   private static final int PEEKED_BUFFERED = 11;
 
   private static final int PEEKED_SINGLE_QUOTED_NAME = 12;
   private static final int PEEKED_DOUBLE_QUOTED_NAME = 13;
   private static final int PEEKED_UNQUOTED_NAME = 14;
+
   /** When this is returned, the integer value is stored in peekedLong. */
   private static final int PEEKED_LONG = 15;
 
@@ -297,6 +299,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
    * The nesting stack. Using a manual array rather than an ArrayList saves 20%.
    */
   private Stack<Integer> stack = JacksonContextProvider.get().integerStackFactory().make();
+
   //  private int stackSize = 0;
 
   {
@@ -560,7 +563,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
         if (peekStack == JsonScope.EMPTY_ARRAY) {
           return peeked = PEEKED_END_ARRAY;
         }
-        // fall-through to handle ",]"
+      // fall-through to handle ",]"
       case ';':
       case ',':
         // In lenient mode, a 0-length literal in an array means 'null'.
@@ -1418,7 +1421,9 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
     }
   }
 
-  /** @param toFind a string to search for. Must not contain a newline. */
+  /**
+   * @param toFind a string to search for. Must not contain a newline.
+   */
   private boolean skipTo(String toFind) {
     outer:
     for (; pos + toFind.length() <= limit || fillBuffer(toFind.length()); pos++) {
@@ -1497,7 +1502,7 @@ public class DefaultJsonReader implements org.dominokit.jackson.stream.JsonReade
       case '\n':
         lineNumber++;
         lineStart = pos;
-        // fall-through
+      // fall-through
 
       case '\'':
       case '"':

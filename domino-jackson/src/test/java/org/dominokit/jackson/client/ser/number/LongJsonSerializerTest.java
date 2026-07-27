@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser.number;
 import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.BaseNumberJsonSerializer.LongJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class LongJsonSerializerTest extends AbstractJsonSerializerTest<Long> {
 
   @Override

@@ -18,7 +18,9 @@ package org.dominokit.jackson.client.deser.map.key;
 
 import org.dominokit.jackson.deser.map.key.BaseNumberKeyDeserializer.FloatKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class FloatKeyDeserializerTest extends AbstractKeyDeserializerTest<Float> {
 
   @Override

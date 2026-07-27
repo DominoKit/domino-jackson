@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser.map.key;
 import java.sql.Date;
 import org.dominokit.jackson.deser.map.key.BaseDateKeyDeserializer.SqlDateKeyDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class SqlDateKeyDeserializerTest extends AbstractKeyDeserializerTest<Date> {
 
   @Override

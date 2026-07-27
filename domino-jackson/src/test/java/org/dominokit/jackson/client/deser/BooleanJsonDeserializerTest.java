@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.deser;
 import org.dominokit.jackson.JsonDeserializer;
 import org.dominokit.jackson.deser.BooleanJsonDeserializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BooleanJsonDeserializerTest extends AbstractJsonDeserializerTest<Boolean> {
 
   @Override

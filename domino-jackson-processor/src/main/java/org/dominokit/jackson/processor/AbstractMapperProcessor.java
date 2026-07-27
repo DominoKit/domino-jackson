@@ -41,10 +41,13 @@ public abstract class AbstractMapperProcessor extends AbstractProcessor {
 
   /** Constant <code>messager</code> */
   public static Messager messager;
+
   /** Constant <code>typeUtils</code> */
   public static Types typeUtils;
+
   /** Constant <code>filer</code> */
   public static Filer filer;
+
   /** Constant <code>elementUtils</code> */
   public static Elements elementUtils;
 

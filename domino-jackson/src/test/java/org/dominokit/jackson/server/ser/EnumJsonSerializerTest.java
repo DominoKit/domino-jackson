@@ -20,7 +20,9 @@ import org.dominokit.jackson.JsonSerializer;
 import org.dominokit.jackson.ser.EnumJsonSerializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class EnumJsonSerializerTest
     extends AbstractJsonSerializerTest<EnumJsonSerializerTest.EnumTest> {
 

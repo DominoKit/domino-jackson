@@ -20,7 +20,9 @@ import java.math.BigDecimal;
 import org.dominokit.jackson.client.ser.AbstractJsonSerializerTest;
 import org.dominokit.jackson.ser.BaseNumberJsonSerializer.BigDecimalJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigDecimalJsonSerializerTest extends AbstractJsonSerializerTest<BigDecimal> {
 
   @Override

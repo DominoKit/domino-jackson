@@ -24,7 +24,9 @@ import org.dominokit.jackson.deser.collection.IterableJsonDeserializer;
 import org.dominokit.jackson.server.deser.AbstractJsonDeserializerTest;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class IterableJsonDeserializerTest extends AbstractJsonDeserializerTest<Iterable<String>> {
 
   @Override

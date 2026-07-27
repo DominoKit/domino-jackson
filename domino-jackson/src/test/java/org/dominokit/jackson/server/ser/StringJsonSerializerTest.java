@@ -19,7 +19,9 @@ package org.dominokit.jackson.server.ser;
 import org.dominokit.jackson.ser.StringJsonSerializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class StringJsonSerializerTest extends AbstractJsonSerializerTest<String> {
 
   @Override

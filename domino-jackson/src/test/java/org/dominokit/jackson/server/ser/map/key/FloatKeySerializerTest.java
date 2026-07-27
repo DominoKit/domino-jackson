@@ -19,7 +19,9 @@ package org.dominokit.jackson.server.ser.map.key;
 import org.dominokit.jackson.ser.map.key.ToStringKeySerializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class FloatKeySerializerTest extends AbstractKeySerializerTest<Float> {
 
   @Override

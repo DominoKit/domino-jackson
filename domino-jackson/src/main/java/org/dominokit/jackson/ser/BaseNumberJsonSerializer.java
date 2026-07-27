@@ -33,7 +33,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final BigDecimalJsonSerializer INSTANCE = new BigDecimalJsonSerializer();
 
-    /** @return an instance of {@link BigDecimalJsonSerializer} */
+    /**
+     * @return an instance of {@link BigDecimalJsonSerializer}
+     */
     public static BigDecimalJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -52,7 +54,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final BigIntegerJsonSerializer INSTANCE = new BigIntegerJsonSerializer();
 
-    /** @return an instance of {@link BigIntegerJsonSerializer} */
+    /**
+     * @return an instance of {@link BigIntegerJsonSerializer}
+     */
     public static BigIntegerJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -71,7 +75,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final ByteJsonSerializer INSTANCE = new ByteJsonSerializer();
 
-    /** @return an instance of {@link ByteJsonSerializer} */
+    /**
+     * @return an instance of {@link ByteJsonSerializer}
+     */
     public static ByteJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -92,7 +98,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final DoubleJsonSerializer INSTANCE = new DoubleJsonSerializer();
 
-    /** @return an instance of {@link DoubleJsonSerializer} */
+    /**
+     * @return an instance of {@link DoubleJsonSerializer}
+     */
     public static DoubleJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -122,7 +130,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final FloatJsonSerializer INSTANCE = new FloatJsonSerializer();
 
-    /** @return an instance of {@link FloatJsonSerializer} */
+    /**
+     * @return an instance of {@link FloatJsonSerializer}
+     */
     public static FloatJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -141,7 +151,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final IntegerJsonSerializer INSTANCE = new IntegerJsonSerializer();
 
-    /** @return an instance of {@link IntegerJsonSerializer} */
+    /**
+     * @return an instance of {@link IntegerJsonSerializer}
+     */
     public static IntegerJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -160,7 +172,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final LongJsonSerializer INSTANCE = new LongJsonSerializer();
 
-    /** @return an instance of {@link LongJsonSerializer} */
+    /**
+     * @return an instance of {@link LongJsonSerializer}
+     */
     public static LongJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -190,7 +204,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final ShortJsonSerializer INSTANCE = new ShortJsonSerializer();
 
-    /** @return an instance of {@link ShortJsonSerializer} */
+    /**
+     * @return an instance of {@link ShortJsonSerializer}
+     */
     public static ShortJsonSerializer getInstance() {
       return INSTANCE;
     }
@@ -211,7 +227,9 @@ public abstract class BaseNumberJsonSerializer<N extends Number> extends JsonSer
 
     private static final NumberJsonSerializer INSTANCE = new NumberJsonSerializer();
 
-    /** @return an instance of {@link NumberJsonSerializer} */
+    /**
+     * @return an instance of {@link NumberJsonSerializer}
+     */
     public static NumberJsonSerializer getInstance() {
       return INSTANCE;
     }

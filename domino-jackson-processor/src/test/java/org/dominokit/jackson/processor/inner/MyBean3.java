@@ -18,7 +18,9 @@ package org.dominokit.jackson.processor.inner;
 
 import org.dominokit.jackson.annotation.JSONMapper;
 
-/** @author Dmitrii Tikhomirov Created by treblereel 10/20/20 */
+/**
+ * @author Dmitrii Tikhomirov Created by treblereel 10/20/20
+ */
 @JSONMapper
 public class MyBean3 {
 

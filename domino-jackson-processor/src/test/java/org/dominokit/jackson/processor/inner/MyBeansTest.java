@@ -20,7 +20,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-/** @author Dmitrii Tikhomirov Created by treblereel 10/20/20 */
+/**
+ * @author Dmitrii Tikhomirov Created by treblereel 10/20/20
+ */
 public class MyBeansTest {
 
   private final MyBean1_Bean_MapperImpl mapper = new MyBean1_Bean_MapperImpl();

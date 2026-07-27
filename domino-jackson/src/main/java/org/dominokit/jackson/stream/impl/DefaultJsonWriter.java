@@ -599,7 +599,7 @@ public class DefaultJsonWriter implements JsonWriter {
         if (!lenient) {
           throw new IllegalStateException("JSON must have only one top-level value.");
         }
-        // fall-through
+      // fall-through
       case JsonScope.EMPTY_DOCUMENT: // first in document
         if (!lenient && !root) {
           throw new IllegalStateException("JSON must start with an array or an object.");

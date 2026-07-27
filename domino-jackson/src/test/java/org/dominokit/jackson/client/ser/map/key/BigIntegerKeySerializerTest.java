@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser.map.key;
 import java.math.BigInteger;
 import org.dominokit.jackson.ser.map.key.ToStringKeySerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigIntegerKeySerializerTest extends AbstractKeySerializerTest<BigInteger> {
 
   @Override

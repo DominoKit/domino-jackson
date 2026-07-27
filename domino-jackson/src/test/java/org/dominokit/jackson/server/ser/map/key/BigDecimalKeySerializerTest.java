@@ -20,7 +20,9 @@ import java.math.BigDecimal;
 import org.dominokit.jackson.ser.map.key.ToStringKeySerializer;
 import org.junit.Test;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class BigDecimalKeySerializerTest extends AbstractKeySerializerTest<BigDecimal> {
 
   @Override

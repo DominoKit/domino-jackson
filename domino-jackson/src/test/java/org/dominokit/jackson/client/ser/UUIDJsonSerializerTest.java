@@ -19,7 +19,9 @@ package org.dominokit.jackson.client.ser;
 import java.util.UUID;
 import org.dominokit.jackson.ser.UUIDJsonSerializer;
 
-/** @author Nicolas Morel */
+/**
+ * @author Nicolas Morel
+ */
 public class UUIDJsonSerializerTest extends AbstractJsonSerializerTest<UUID> {
 
   @Override
