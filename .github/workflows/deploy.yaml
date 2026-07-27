@@ -34,6 +34,7 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
+          cache: maven
       - run: mvn verify -B -e
 
   release:
@@ -48,15 +49,17 @@ jobs:
         with:
           java-version: 11
           distribution: 'temurin'
-          server-id: ossrh
-          server-username: SONATYPE_USERNAME
-          server-password: SONATYPE_PASSWORD
-      - id: install-secret-key
-        name: Install gpg secret key
+          cache: maven
+          server-id: 'central'
+          server-username: CENTRAL_USER
+          server-password: CENTRAL_TOKEN
+      - name: Import GPG key
         run: |
-          cat <(echo -e "${{ secrets.gpg_private_key }}") | gpg --batch --import
+          echo "${{ secrets.gpg_private_key }}" | gpg --batch --import
+        env:
+          GPG_TTY: $(tty)
       - name: publish
         run: mvn --no-transfer-progress clean deploy -B -e -Dci=true -Dgpg.passphrase=${{ secrets.gpg_passphrase }}
         env:
-          SONATYPE_USERNAME: ${{ secrets.nexus_username }}
-          SONATYPE_PASSWORD: ${{ secrets.nexus_password }}
+          CENTRAL_USER: ${{ secrets.CENTRAL_USER }}
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
