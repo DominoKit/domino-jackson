@@ -24,8 +24,7 @@ public class TypeArgumentResolutionTest {
 
   @Test
   public void keepsStringKeysInMapSubclass() {
-    ByNameHolder result =
-        ByNameHolder_MapperImpl.INSTANCE.read("{\"codes\":{\"007\":7}}");
+    ByNameHolder result = ByNameHolder_MapperImpl.INSTANCE.read("{\"codes\":{\"007\":7}}");
 
     assertEquals("007", result.getCodes().keySet().iterator().next());
     assertEquals(Integer.valueOf(7), result.getCodes().get("007"));

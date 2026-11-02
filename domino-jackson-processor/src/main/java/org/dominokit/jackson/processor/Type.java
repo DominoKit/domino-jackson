@@ -239,8 +239,8 @@ public class Type {
    * Element type of a {@link java.util.Collection} or {@link Iterable}. Resolved from the actual
    * {@code Collection} or {@code Iterable} parameterization, including superclasses, interfaces and
    * inherited type variables. {@code NameList extends ArrayList<String>} yields {@code String}.
-   * {@code NestedLists<User>} where {@code NestedLists<T> extends ArrayList<List<T>>} yields
-   * {@code List<User>}.
+   * {@code NestedLists<User>} where {@code NestedLists<T> extends ArrayList<List<T>>} yields {@code
+   * List<User>}.
    */
   public static TypeMirror elementType(TypeMirror typeMirror) {
     List<TypeMirror> args = containerTypeArguments(typeMirror);
