@@ -56,8 +56,7 @@ public class ParameterDeserializerBuilder {
             .returns(ParameterizedTypeName.get(JsonDeserializer.class))
             .addAnnotation(Override.class)
             .addStatement(
-                "return $L",
-                new FieldDeserializersChainBuilder(parameter.asType()).getInstance(parameter))
+                "return $L", new FieldDeserializersChainBuilder(type, false).getInstance(parameter))
             .build();
 
     ParameterizedTypeName deserializerType =

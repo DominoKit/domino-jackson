@@ -94,7 +94,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
       return Optional.empty();
     } else {
       return Optional.of(
-          new FieldSerializerChainBuilder(identityInfo.getType().get())
+          new FieldSerializerChainBuilder(beanType, false)
               .getInstance(identityInfo.getType().get()));
     }
   }
@@ -213,8 +213,7 @@ public class AptSerializerBuilder extends AbstractJsonMapperGenerator {
             .addAnnotation(Override.class)
             .addStatement(
                 "return $L",
-                new FieldSerializerChainBuilder(property.getValue())
-                    .getInstance(property.getValue()));
+                new FieldSerializerChainBuilder(beanType, false).getInstance(property.getValue()));
     newSerializerMethodBuilder.returns(
         ParameterizedTypeName.get(ClassName.get(JsonSerializer.class), DEFAULT_WILDCARD));
     builder.addMethod(newSerializerMethodBuilder.build());
