@@ -72,7 +72,7 @@
         <maven.gwt.plugin>1.1.0</maven.gwt.plugin>
         <spotless.maven.plugin>2.46.1</spotless.maven.plugin>
 
-        <jackson.version>2.16.0</jackson.version>
+        <jackson.version>2.18.6</jackson.version>
         <elemental2.version>1.3.2</elemental2.version>
         <gwt.i18n.version>1.0.2</gwt.i18n.version>
     </properties>
