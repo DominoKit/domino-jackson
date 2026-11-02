@@ -18,6 +18,7 @@ package org.dominokit.jackson.processor.deserialization;
 import static java.util.Objects.nonNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.squareup.javapoet.*;
 import java.beans.Introspector;
 import java.util.Optional;
@@ -120,24 +121,31 @@ class DeserializerBuilder extends AccessorsFilter {
   }
 
   private AccessorInfo setterInfo(Element field) {
-    Optional<AccessorInfo> accessor;
-    if (Type.isRecord(beanType)) {
-      accessor =
-          getAccessors(beanType).stream()
-              .filter(
-                  accessorInfo -> accessorInfo.getName().equals(field.getSimpleName().toString()))
-              .findFirst();
-    } else {
-      accessor =
-          getAccessors(beanType).stream()
-              .filter(accessorInfo -> accessorInfo.getName().startsWith("set"))
-              .filter(
-                  accessorInfo ->
-                      Introspector.decapitalize(accessorInfo.getName().substring(3))
-                          .equals(field.getSimpleName().toString()))
-              .findFirst();
-    }
+    String fieldName = field.getSimpleName().toString();
+    // Records are skipped: initDeserializers does not call this method for them, so the record
+    // accessor lookup that used to live here was unused.
 
-    return accessor.orElseGet(() -> new AccessorInfo(field.getSimpleName().toString()));
+    // @JsonPOJOBuilder(withPrefix) names the builder method. An empty prefix means the method is
+    // the field name (id(String)). Any other prefix is stripped and decapitalized (withId).
+    return Optional.ofNullable(typeUtils.asElement(beanType).getAnnotation(JsonPOJOBuilder.class))
+        .flatMap(annotation -> findAccessor(annotation.withPrefix(), fieldName))
+        // Compatibility with builders written before withPrefix was honored. The annotation
+        // defaults withPrefix to "with", while those methods were matched as set*.
+        .or(() -> findAccessor("set", fieldName))
+        .orElseGet(() -> new AccessorInfo(fieldName));
+  }
+
+  private Optional<AccessorInfo> findAccessor(String prefix, String fieldName) {
+    return getAccessors(beanType).stream()
+        .filter(
+            accessorInfo ->
+                accessorInfo.method.isPresent()
+                    && accessorInfo.method.get().getParameters().size() == 1)
+        .filter(accessorInfo -> accessorInfo.getName().startsWith(prefix))
+        .filter(
+            accessorInfo ->
+                Introspector.decapitalize(accessorInfo.getName().substring(prefix.length()))
+                    .equals(fieldName))
+        .findFirst();
   }
 }
