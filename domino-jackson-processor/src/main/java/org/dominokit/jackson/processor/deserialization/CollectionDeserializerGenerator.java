@@ -62,14 +62,14 @@ public final class CollectionDeserializerGenerator {
     String packageName = MoreElements.getPackage(element).getQualifiedName().toString();
     String simpleName = element.getSimpleName() + "BeanJsonDeserializerImpl";
     ClassName generated = ClassName.get(packageName, simpleName);
-    TypeName raw = TypeName.get(typeUtils.erasure(typeMirror));
+    TypeName declared = TypeName.get(typeMirror);
     TypeSpec type =
         TypeSpec.classBuilder(simpleName)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-            .superclass(ParameterizedTypeName.get(ClassName.get(base), raw, elementType))
+            .superclass(ParameterizedTypeName.get(ClassName.get(base), declared, elementType))
             .addMethod(newInstance(generated, elementType))
             .addMethod(constructor(elementType))
-            .addMethod(newCollection(raw))
+            .addMethod(newCollection(declared))
             .build();
     write(element, packageName, type);
     TypeRegistry.registerCollectionDeserializer(typeMirror, generated);

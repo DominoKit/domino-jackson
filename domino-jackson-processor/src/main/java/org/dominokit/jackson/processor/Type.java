@@ -236,42 +236,111 @@ public class Type {
   }
 
   /**
-   * Element type of a {@link java.util.Collection} or {@link Iterable}. If this type declares no
-   * type arguments, the superclass chain is walked until one does. {@code NameList extends
-   * ArrayList<String>} yields {@code String}.
+   * Element type of a {@link java.util.Collection} or {@link Iterable}. Resolved from the actual
+   * {@code Collection} or {@code Iterable} parameterization, including superclasses, interfaces and
+   * inherited type variables. {@code NameList extends ArrayList<String>} yields {@code String}.
+   * {@code NestedLists<User>} where {@code NestedLists<T> extends ArrayList<List<T>>} yields
+   * {@code List<User>}.
    */
   public static TypeMirror elementType(TypeMirror typeMirror) {
     List<TypeMirror> args = containerTypeArguments(typeMirror);
     return args.isEmpty() ? objectType() : args.get(0);
   }
 
-  /** Key type of a {@link java.util.Map}, resolved the same way as {@link #elementType}. */
+  /**
+   * Key type of a {@link java.util.Map}. {@code ByName<Integer>} where {@code ByName<V> extends
+   * HashMap<String, V>} yields {@code String}.
+   */
   public static TypeMirror keyType(TypeMirror typeMirror) {
-    List<TypeMirror> args = containerTypeArguments(typeMirror);
+    List<TypeMirror> args = mapTypeArguments(typeMirror);
     return args.isEmpty() ? objectType() : args.get(0);
   }
 
-  /** Value type of a {@link java.util.Map}, resolved the same way as {@link #elementType}. */
+  /**
+   * Value type of a {@link java.util.Map}. {@code ByName<Integer>} where {@code ByName<V> extends
+   * HashMap<String, V>} yields {@code Integer}.
+   */
   public static TypeMirror valueType(TypeMirror typeMirror) {
-    List<TypeMirror> args = containerTypeArguments(typeMirror);
+    List<TypeMirror> args = mapTypeArguments(typeMirror);
     return args.size() < 2 ? objectType() : args.get(1);
   }
 
   private static List<TypeMirror> containerTypeArguments(TypeMirror start) {
-    TypeMirror current = start;
+    if (isMap(start)) {
+      return argumentsOf(start, "java.util.Map");
+    }
+    List<TypeMirror> collection = argumentsOf(start, "java.util.Collection");
+    if (!collection.isEmpty()) {
+      return collection;
+    }
+    return argumentsOf(start, "java.lang.Iterable");
+  }
+
+  private static List<TypeMirror> mapTypeArguments(TypeMirror start) {
+    return argumentsOf(start, "java.util.Map");
+  }
+
+  /**
+   * Type arguments of the first supertype whose erasure is {@code erasedName}, with type variables
+   * of each subclass substituted. Interfaces are visited, not only the superclass.
+   */
+  private static List<TypeMirror> argumentsOf(TypeMirror start, String erasedName) {
+    ArrayDeque<TypeMirror> pending = new ArrayDeque<>();
     Set<String> seen = new HashSet<>();
-    while (current != null && current.getKind() == TypeKind.DECLARED) {
+    pending.add(start);
+    while (!pending.isEmpty()) {
+      TypeMirror current = pending.removeFirst();
+      if (current == null || current.getKind() != TypeKind.DECLARED) {
+        continue;
+      }
+      if (!seen.add(current.toString())) {
+        continue;
+      }
       DeclaredType declared = (DeclaredType) current;
+      if (erasureIs(current, erasedName)) {
+        return declared.getTypeArguments().isEmpty()
+            ? List.of()
+            : new ArrayList<>(declared.getTypeArguments());
+      }
       TypeElement element = (TypeElement) declared.asElement();
-      if (!seen.add(element.getQualifiedName().toString())) {
-        break;
+      Map<TypeParameterElement, TypeMirror> bindings = typeBindings(element, declared);
+      TypeMirror superclass = element.getSuperclass();
+      if (superclass.getKind() == TypeKind.DECLARED) {
+        pending.add(substitute(superclass, bindings));
       }
-      if (!declared.getTypeArguments().isEmpty() && (isIterable(current) || isMap(current))) {
-        return new ArrayList<>(declared.getTypeArguments());
+      for (TypeMirror iface : element.getInterfaces()) {
+        pending.add(substitute(iface, bindings));
       }
-      current = element.getSuperclass();
     }
     return List.of();
+  }
+
+  private static Map<TypeParameterElement, TypeMirror> typeBindings(
+      TypeElement element, DeclaredType declared) {
+    List<? extends TypeParameterElement> parameters = element.getTypeParameters();
+    List<? extends TypeMirror> arguments = declared.getTypeArguments();
+    Map<TypeParameterElement, TypeMirror> bindings = new HashMap<>();
+    int count = Math.min(parameters.size(), arguments.size());
+    for (int i = 0; i < count; i++) {
+      bindings.put(parameters.get(i), arguments.get(i));
+    }
+    return bindings;
+  }
+
+  private static TypeMirror substitute(
+      TypeMirror type, Map<TypeParameterElement, TypeMirror> bindings) {
+    if (bindings.isEmpty()) {
+      return type;
+    }
+    return getDeclaredType(type, bindings);
+  }
+
+  private static boolean erasureIs(TypeMirror type, String qualifiedName) {
+    TypeElement element = elementUtils.getTypeElement(qualifiedName);
+    if (element == null || type.getKind() != TypeKind.DECLARED) {
+      return false;
+    }
+    return typeUtils.isSameType(typeUtils.erasure(type), typeUtils.erasure(element.asType()));
   }
 
   private static TypeMirror objectType() {
