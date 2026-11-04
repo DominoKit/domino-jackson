@@ -87,6 +87,10 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
   private String getFieldDeserializer(TypeMirror typeMirror) {
     typeMirror = Type.removeOuterWildCards(typeMirror);
 
+    if (TypeRegistry.containsDeserializer(Type.stringifyTypeWithPackage(typeMirror))) {
+      deserializers.addLast(TypeRegistry.getCustomDeserializer(typeMirror));
+      return GET_INSTANCE;
+    }
     if (Type.isIterable(typeMirror)) return getIterableDeserializer(typeMirror);
     if (Type.isMap(typeMirror)) return getMapDeserializer(typeMirror);
     if (Type.isArray(typeMirror)) return getArrayDeserializer(typeMirror);
@@ -148,11 +152,15 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
   }
 
   private String getMapDeserializer(TypeMirror typeMirror) {
-    deserializers.addLast(TypeName.get(TypeRegistry.getMapDeserializer(typeMirror)));
+    if (TypeRegistry.hasMapDeserializer(typeMirror)) {
+      deserializers.addLast(TypeRegistry.getMapDeserializer(typeMirror));
+    } else {
+      deserializers.addLast(MapDeserializerGenerator.generate(typeMirror));
+    }
     return NEW_INSTANCE
-        + getKeyDeserializer(Type.firstTypeArgument(typeMirror))
+        + getKeyDeserializer(Type.keyType(typeMirror))
         + ", "
-        + getFieldDeserializer(Type.secondTypeArgument(typeMirror))
+        + getFieldDeserializer(Type.valueType(typeMirror))
         + ")";
   }
 
@@ -177,8 +185,12 @@ public class FieldDeserializersChainBuilder implements MappersChainBuilder {
   }
 
   private String getIterableDeserializer(TypeMirror typeMirror) {
-    deserializers.addLast(TypeName.get(TypeRegistry.getCollectionDeserializer(typeMirror)));
-    return NEW_INSTANCE + getFieldDeserializer(Type.firstTypeArgument(typeMirror)) + ")";
+    if (TypeRegistry.hasCollectionDeserializer(typeMirror)) {
+      deserializers.addLast(TypeRegistry.getCollectionDeserializer(typeMirror));
+    } else {
+      deserializers.addLast(CollectionDeserializerGenerator.generate(typeMirror));
+    }
+    return NEW_INSTANCE + getFieldDeserializer(Type.elementType(typeMirror)) + ")";
   }
 
   private String getArrayDeserializer(TypeMirror typeMirror) {

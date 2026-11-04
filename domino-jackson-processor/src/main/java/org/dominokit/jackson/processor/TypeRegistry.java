@@ -63,8 +63,10 @@ public final class TypeRegistry implements RegistryWrapper {
 
   private static Map<String, ClassMapper> simpleTypes = new HashMap<>();
   private static Map<String, ClassMapper> keysMappers = new HashMap<>();
-  private static Map<String, Class> collectionsDeserializers = new HashMap<>();
-  private static Map<String, Class> mapDeserializers = new HashMap<>();
+  private static Map<String, TypeName> collectionsDeserializers = new HashMap<>();
+  private static Map<String, TypeName> mapDeserializers = new HashMap<>();
+  private static Set<String> generatedCollectionDeserializers = new HashSet<>();
+  private static Set<String> generatedMapDeserializers = new HashSet<>();
   private static Map<String, ClassMapper> customMappers = new HashMap<>();
   private static Set<String> inActiveGenSerializers = new HashSet<>();
   private static Set<String> inActiveGenDeserializers = new HashSet<>();
@@ -635,50 +637,47 @@ public final class TypeRegistry implements RegistryWrapper {
 
   // Collections deserializers
   static {
-    collectionsDeserializers.put(
-        AbstractCollection.class.getCanonicalName(), AbstractCollectionJsonDeserializer.class);
-    collectionsDeserializers.put(
-        AbstractList.class.getCanonicalName(), AbstractListJsonDeserializer.class);
-    collectionsDeserializers.put(
-        AbstractQueue.class.getCanonicalName(), AbstractQueueJsonDeserializer.class);
-    collectionsDeserializers.put(
-        AbstractSequentialList.class.getCanonicalName(),
-        AbstractSequentialListJsonDeserializer.class);
-    collectionsDeserializers.put(
-        AbstractSet.class.getCanonicalName(), AbstractSetJsonDeserializer.class);
-    collectionsDeserializers.put(
-        ArrayList.class.getCanonicalName(), ArrayListJsonDeserializer.class);
-    collectionsDeserializers.put(
-        Collection.class.getCanonicalName(), CollectionJsonDeserializer.class);
-    collectionsDeserializers.put(EnumSet.class.getCanonicalName(), EnumSetJsonDeserializer.class);
-    collectionsDeserializers.put(HashSet.class.getCanonicalName(), HashSetJsonDeserializer.class);
-    collectionsDeserializers.put(Iterable.class.getCanonicalName(), IterableJsonDeserializer.class);
-    collectionsDeserializers.put(
-        LinkedHashSet.class.getCanonicalName(), LinkedHashSetJsonDeserializer.class);
-    collectionsDeserializers.put(
-        LinkedList.class.getCanonicalName(), LinkedListJsonDeserializer.class);
-    collectionsDeserializers.put(List.class.getCanonicalName(), ListJsonDeserializer.class);
-    collectionsDeserializers.put(
-        PriorityQueue.class.getCanonicalName(), PriorityQueueJsonDeserializer.class);
-    collectionsDeserializers.put(Queue.class.getCanonicalName(), QueueJsonDeserializer.class);
-    collectionsDeserializers.put(Set.class.getCanonicalName(), SetJsonDeserializer.class);
-    collectionsDeserializers.put(
-        SortedSet.class.getCanonicalName(), SortedSetJsonDeserializer.class);
-    collectionsDeserializers.put(Stack.class.getCanonicalName(), StackJsonDeserializer.class);
-    collectionsDeserializers.put(TreeSet.class.getCanonicalName(), TreeSetJsonDeserializer.class);
-    collectionsDeserializers.put(Vector.class.getCanonicalName(), VectorJsonDeserializer.class);
+    collectionDeserializer(AbstractCollection.class, AbstractCollectionJsonDeserializer.class);
+    collectionDeserializer(AbstractList.class, AbstractListJsonDeserializer.class);
+    collectionDeserializer(AbstractQueue.class, AbstractQueueJsonDeserializer.class);
+    collectionDeserializer(
+        AbstractSequentialList.class, AbstractSequentialListJsonDeserializer.class);
+    collectionDeserializer(AbstractSet.class, AbstractSetJsonDeserializer.class);
+    collectionDeserializer(ArrayList.class, ArrayListJsonDeserializer.class);
+    collectionDeserializer(Collection.class, CollectionJsonDeserializer.class);
+    collectionDeserializer(EnumSet.class, EnumSetJsonDeserializer.class);
+    collectionDeserializer(HashSet.class, HashSetJsonDeserializer.class);
+    collectionDeserializer(Iterable.class, IterableJsonDeserializer.class);
+    collectionDeserializer(LinkedHashSet.class, LinkedHashSetJsonDeserializer.class);
+    collectionDeserializer(LinkedList.class, LinkedListJsonDeserializer.class);
+    collectionDeserializer(List.class, ListJsonDeserializer.class);
+    collectionDeserializer(PriorityQueue.class, PriorityQueueJsonDeserializer.class);
+    collectionDeserializer(Queue.class, QueueJsonDeserializer.class);
+    collectionDeserializer(Set.class, SetJsonDeserializer.class);
+    collectionDeserializer(SortedSet.class, SortedSetJsonDeserializer.class);
+    collectionDeserializer(Stack.class, StackJsonDeserializer.class);
+    collectionDeserializer(TreeSet.class, TreeSetJsonDeserializer.class);
+    collectionDeserializer(Vector.class, VectorJsonDeserializer.class);
   }
 
   // Maps deserializers
   static {
-    mapDeserializers.put(Map.class.getName(), MapJsonDeserializer.class);
-    mapDeserializers.put(AbstractMap.class.getName(), AbstractMapJsonDeserializer.class);
-    mapDeserializers.put(EnumMap.class.getName(), EnumMapJsonDeserializer.class);
-    mapDeserializers.put(HashMap.class.getName(), HashMapJsonDeserializer.class);
-    mapDeserializers.put(IdentityHashMap.class.getName(), IdentityHashMapJsonDeserializer.class);
-    mapDeserializers.put(LinkedHashMap.class.getName(), LinkedHashMapJsonDeserializer.class);
-    mapDeserializers.put(SortedMap.class.getName(), SortedMapJsonDeserializer.class);
-    mapDeserializers.put(TreeMap.class.getName(), TreeMapJsonDeserializer.class);
+    mapDeserializer(Map.class, MapJsonDeserializer.class);
+    mapDeserializer(AbstractMap.class, AbstractMapJsonDeserializer.class);
+    mapDeserializer(EnumMap.class, EnumMapJsonDeserializer.class);
+    mapDeserializer(HashMap.class, HashMapJsonDeserializer.class);
+    mapDeserializer(IdentityHashMap.class, IdentityHashMapJsonDeserializer.class);
+    mapDeserializer(LinkedHashMap.class, LinkedHashMapJsonDeserializer.class);
+    mapDeserializer(SortedMap.class, SortedMapJsonDeserializer.class);
+    mapDeserializer(TreeMap.class, TreeMapJsonDeserializer.class);
+  }
+
+  private static void collectionDeserializer(Class<?> collectionType, Class<?> deserializer) {
+    collectionsDeserializers.put(collectionType.getCanonicalName(), TypeName.get(deserializer));
+  }
+
+  private static void mapDeserializer(Class<?> mapType, Class<?> deserializer) {
+    mapDeserializers.put(mapType.getName(), TypeName.get(deserializer));
   }
 
   /**
@@ -690,6 +689,10 @@ public final class TypeRegistry implements RegistryWrapper {
    */
   public static void resetTypeRegistry() {
     customMappers.clear();
+    generatedCollectionDeserializers.forEach(collectionsDeserializers::remove);
+    generatedCollectionDeserializers.clear();
+    generatedMapDeserializers.forEach(mapDeserializers::remove);
+    generatedMapDeserializers.clear();
   }
 
   /**
@@ -857,37 +860,65 @@ public final class TypeRegistry implements RegistryWrapper {
     throw new TypeDeserializerNotFoundException(typeName);
   }
 
+  public static boolean hasCollectionDeserializer(TypeMirror typeMirror) {
+    return collectionsDeserializers.containsKey(asNoneGeneric(typeMirror));
+  }
+
   /**
    * getCollectionDeserializer.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
-   * @return a {@link java.lang.Class} object.
+   * @return a {@link com.squareup.javapoet.TypeName} object.
    */
-  public static Class<?> getCollectionDeserializer(TypeMirror typeMirror) {
+  public static TypeName getCollectionDeserializer(TypeMirror typeMirror) {
     return getCollectionDeserializer(asNoneGeneric(typeMirror));
+  }
+
+  /**
+   * Registers a generated collection deserializer. {@link #resetTypeRegistry()} removes it; the JDK
+   * entries stay.
+   */
+  public static void registerCollectionDeserializer(TypeMirror typeMirror, TypeName deserializer) {
+    String key = asNoneGeneric(typeMirror);
+    collectionsDeserializers.put(key, deserializer);
+    generatedCollectionDeserializers.add(key);
   }
 
   private static String asNoneGeneric(TypeMirror type) {
     return typeUtils.asElement(type).toString().replace("<E>", "");
   }
 
-  private static Class<?> getCollectionDeserializer(String collectionType) {
+  private static TypeName getCollectionDeserializer(String collectionType) {
     if (collectionsDeserializers.containsKey(collectionType))
       return collectionsDeserializers.get(collectionType);
     throw new TypeDeserializerNotFoundException(collectionType);
+  }
+
+  public static boolean hasMapDeserializer(TypeMirror typeMirror) {
+    return mapDeserializers.containsKey(asNoneGeneric(typeMirror));
   }
 
   /**
    * getMapDeserializer.
    *
    * @param typeMirror a {@link javax.lang.model.type.TypeMirror} object.
-   * @return a {@link java.lang.Class} object.
+   * @return a {@link com.squareup.javapoet.TypeName} object.
    */
-  public static Class<?> getMapDeserializer(TypeMirror typeMirror) {
+  public static TypeName getMapDeserializer(TypeMirror typeMirror) {
     return getMapDeserializer(asNoneGeneric(typeMirror));
   }
 
-  private static Class<?> getMapDeserializer(String mapType) {
+  /**
+   * Registers a generated map deserializer. {@link #resetTypeRegistry()} removes it; the JDK
+   * entries stay.
+   */
+  public static void registerMapDeserializer(TypeMirror typeMirror, TypeName deserializer) {
+    String key = asNoneGeneric(typeMirror);
+    mapDeserializers.put(key, deserializer);
+    generatedMapDeserializers.add(key);
+  }
+
+  private static TypeName getMapDeserializer(String mapType) {
     if (mapDeserializers.containsKey(mapType)) return mapDeserializers.get(mapType);
     throw new TypeDeserializerNotFoundException(mapType);
   }
