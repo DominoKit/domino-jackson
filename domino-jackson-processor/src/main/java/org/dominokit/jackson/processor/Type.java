@@ -558,7 +558,12 @@ public class Type {
   }
 
   /**
-   * Returns all subtypes described with @JsonSubInfo and @JsonSubType for given TypeMirror
+   * Returns all subtypes described with @JsonTypeInfo and @JsonSubTypes for given TypeMirror.
+   *
+   * <p>As Jackson does, the annotations are looked up on the type itself first and then on its
+   * supertypes (interfaces before the superclass, recursively), so a class inherits the type
+   * information declared on one of its ancestors. When @JsonSubTypes comes from a supertype, only
+   * the listed subtypes assignable to the given type are kept.
    *
    * @param type {@link javax.lang.model.type.TypeMirror} to be inspected for subtypes
    * @return SubTypesInfo object containing information for subtypes
@@ -567,20 +572,72 @@ public class Type {
     SubTypesInfo subTypeInfo = SubTypesInfo.emtpy();
     if (type.getKind() == TypeKind.DECLARED) {
       TypeElement beanElement = (TypeElement) ((DeclaredType) type).asElement();
-      JsonTypeInfo typeInfo = beanElement.getAnnotation(JsonTypeInfo.class);
-      if (typeInfo != null && typeInfo.use() == JsonTypeInfo.Id.NAME) {
-        if (beanElement.getAnnotation(JsonSubTypes.class) != null) {
+      List<TypeElement> hierarchy = typeHierarchy(type);
+      Optional<TypeElement> typeInfoElement = findAnnotated(hierarchy, JsonTypeInfo.class);
+      Optional<TypeElement> subTypesElement = findAnnotated(hierarchy, JsonSubTypes.class);
+      if (typeInfoElement.isPresent() && subTypesElement.isPresent()) {
+        JsonTypeInfo typeInfo = typeInfoElement.get().getAnnotation(JsonTypeInfo.class);
+        if (typeInfo.use() == JsonTypeInfo.Id.NAME) {
+          Map<String, TypeMirror> subTypes = getSubtypeTypeMirrors(subTypesElement.get());
+          if (!subTypesElement.get().equals(beanElement)) {
+            subTypes = assignableSubTypes(subTypes, type);
+          }
           subTypeInfo =
               new SubTypesInfo(
                   typeInfo.include(),
                   typeInfo.property().isEmpty()
                       ? typeInfo.use().getDefaultPropertyName()
                       : typeInfo.property(),
-                  getSubtypeTypeMirrors(beanElement));
+                  subTypes);
         }
       }
     }
     return subTypeInfo;
+  }
+
+  /**
+   * Returns the given type followed by all its supertypes, in the order Jackson uses to resolve
+   * class annotations: for each type its interfaces first and then its superclass, depth first,
+   * without duplicates.
+   */
+  private static List<TypeElement> typeHierarchy(TypeMirror type) {
+    Set<TypeElement> hierarchy = new LinkedHashSet<>();
+    collectTypeHierarchy(type, hierarchy);
+    return new ArrayList<>(hierarchy);
+  }
+
+  private static void collectTypeHierarchy(TypeMirror type, Set<TypeElement> hierarchy) {
+    if (type.getKind() != TypeKind.DECLARED) {
+      return;
+    }
+    TypeElement element = (TypeElement) ((DeclaredType) type).asElement();
+    if (!hierarchy.add(element)) {
+      return;
+    }
+    for (TypeMirror anInterface : element.getInterfaces()) {
+      collectTypeHierarchy(anInterface, hierarchy);
+    }
+    collectTypeHierarchy(element.getSuperclass(), hierarchy);
+  }
+
+  private static Optional<TypeElement> findAnnotated(
+      List<TypeElement> hierarchy, Class<? extends Annotation> annotation) {
+    return hierarchy.stream()
+        .filter(element -> nonNull(element.getAnnotation(annotation)))
+        .findFirst();
+  }
+
+  private static Map<String, TypeMirror> assignableSubTypes(
+      Map<String, TypeMirror> subTypes, TypeMirror type) {
+    TypeMirror erasedType = typeUtils.erasure(type);
+    Map<String, TypeMirror> assignable = new LinkedHashMap<>();
+    subTypes.forEach(
+        (name, subType) -> {
+          if (typeUtils.isAssignable(typeUtils.erasure(subType), erasedType)) {
+            assignable.put(name, subType);
+          }
+        });
+    return assignable;
   }
 
   /**

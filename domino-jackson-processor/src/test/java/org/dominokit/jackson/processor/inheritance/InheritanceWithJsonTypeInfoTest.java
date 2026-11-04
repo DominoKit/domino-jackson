@@ -15,6 +15,7 @@
  */
 package org.dominokit.jackson.processor.inheritance;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +23,7 @@ import org.junit.Test;
 public class InheritanceWithJsonTypeInfoTest {
 
   @Test
-  public void serializerTest() {
+  public void serializerTest() throws Exception {
 
     DataInput dataInput = new DataInput("1", "diPostfix", "diName", "diDType");
     DataOutput dataOutput = new DataOutput("2", "doPostfix", "doName");
@@ -36,8 +37,11 @@ public class InheritanceWithJsonTypeInfoTest {
     dataList.setIoSpecification(ioSpecification);
 
     String result = DataList_MapperImpl.INSTANCE.write(dataList);
+    // genericField is declared as DataInput, which inherits @JsonTypeInfo from Data: like
+    // Jackson, the type id is written for it too
+    Assert.assertEquals(new ObjectMapper().writeValueAsString(dataList), result);
     Assert.assertEquals(
-        "{\"ioSpecification\":[{\"@type\":\"dataInput\",\"id\":\"1_diPostfix\",\"dtype\":\"diDType\",\"itemSubjectRef\":\"1_diPostfixItem\",\"name\":\"diName\",\"genericField\":{\"id\":\"1X_diPostfixX\",\"dtype\":\"diDTypeX\",\"itemSubjectRef\":\"1X_diPostfixXItem\",\"name\":\"diNameX\",\"genericField\":null}},{\"@type\":\"dataOutput\",\"id\":\"2_doPostfix\",\"dtype\":null,\"itemSubjectRef\":\"2_doPostfixItem\",\"name\":\"doName\",\"genericField\":null}]}",
+        "{\"ioSpecification\":[{\"@type\":\"dataInput\",\"id\":\"1_diPostfix\",\"dtype\":\"diDType\",\"itemSubjectRef\":\"1_diPostfixItem\",\"name\":\"diName\",\"genericField\":{\"@type\":\"dataInput\",\"id\":\"1X_diPostfixX\",\"dtype\":\"diDTypeX\",\"itemSubjectRef\":\"1X_diPostfixXItem\",\"name\":\"diNameX\",\"genericField\":null}},{\"@type\":\"dataOutput\",\"id\":\"2_doPostfix\",\"dtype\":null,\"itemSubjectRef\":\"2_doPostfixItem\",\"name\":\"doName\",\"genericField\":null}]}",
         result);
   }
 
@@ -45,7 +49,7 @@ public class InheritanceWithJsonTypeInfoTest {
   public void deserializerTest() {
 
     String json =
-        "{\"ioSpecification\":[{\"@type\":\"dataInput\",\"id\":\"1_diPostfix\",\"dtype\":\"diDType\",\"itemSubjectRef\":\"1_diPostfixItem\",\"name\":\"diName\",\"genericField\":{\"id\":\"1X_diPostfixX\",\"dtype\":\"diDTypeX\",\"itemSubjectRef\":\"1X_diPostfixXItem\",\"name\":\"diNameX\",\"genericField\":null}},{\"@type\":\"dataOutput\",\"id\":\"2_doPostfix\",\"dtype\":null,\"itemSubjectRef\":\"2_doPostfixItem\",\"name\":\"doName\",\"genericField\":null}]}";
+        "{\"ioSpecification\":[{\"@type\":\"dataInput\",\"id\":\"1_diPostfix\",\"dtype\":\"diDType\",\"itemSubjectRef\":\"1_diPostfixItem\",\"name\":\"diName\",\"genericField\":{\"@type\":\"dataInput\",\"id\":\"1X_diPostfixX\",\"dtype\":\"diDTypeX\",\"itemSubjectRef\":\"1X_diPostfixXItem\",\"name\":\"diNameX\",\"genericField\":null}},{\"@type\":\"dataOutput\",\"id\":\"2_doPostfix\",\"dtype\":null,\"itemSubjectRef\":\"2_doPostfixItem\",\"name\":\"doName\",\"genericField\":null}]}";
     DataList result = DataList_MapperImpl.INSTANCE.read(json);
 
     DataInput dataInput = new DataInput("1", "diPostfix", "diName", "diDType");
