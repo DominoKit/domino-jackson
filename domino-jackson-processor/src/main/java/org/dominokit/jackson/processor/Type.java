@@ -564,23 +564,46 @@ public class Type {
    * @return SubTypesInfo object containing information for subtypes
    */
   public static SubTypesInfo getSubTypes(TypeMirror type) {
-    SubTypesInfo subTypeInfo = SubTypesInfo.emtpy();
-    if (type.getKind() == TypeKind.DECLARED) {
-      TypeElement beanElement = (TypeElement) ((DeclaredType) type).asElement();
-      JsonTypeInfo typeInfo = beanElement.getAnnotation(JsonTypeInfo.class);
-      if (typeInfo != null && typeInfo.use() == JsonTypeInfo.Id.NAME) {
-        if (beanElement.getAnnotation(JsonSubTypes.class) != null) {
-          subTypeInfo =
-              new SubTypesInfo(
-                  typeInfo.include(),
-                  typeInfo.property().isEmpty()
-                      ? typeInfo.use().getDefaultPropertyName()
-                      : typeInfo.property(),
-                  getSubtypeTypeMirrors(beanElement));
-        }
-      }
+    if (type.getKind() != TypeKind.DECLARED) {
+      return SubTypesInfo.emtpy();
     }
-    return subTypeInfo;
+    TypeElement beanElement = (TypeElement) ((DeclaredType) type).asElement();
+    // @JsonTypeInfo is not @Inherited. Jackson still applies a declaration from a superclass.
+    Element typeInfoElement = findAnnotatedElement(beanElement, JsonTypeInfo.class);
+    Element subTypesElement = findAnnotatedElement(beanElement, JsonSubTypes.class);
+    if (typeInfoElement == null || subTypesElement == null) {
+      return SubTypesInfo.emtpy();
+    }
+    JsonTypeInfo typeInfo = typeInfoElement.getAnnotation(JsonTypeInfo.class);
+    if (typeInfo == null || typeInfo.use() != JsonTypeInfo.Id.NAME) {
+      return SubTypesInfo.emtpy();
+    }
+    return new SubTypesInfo(
+        typeInfo.include(),
+        typeInfo.property().isEmpty()
+            ? typeInfo.use().getDefaultPropertyName()
+            : typeInfo.property(),
+        getSubtypeTypeMirrors(subTypesElement));
+  }
+
+  /**
+   * Nearest element that declares {@code annotation}, including superclasses. {@link
+   * Element#getAnnotation} does not walk superclasses unless the annotation is {@code @Inherited}.
+   */
+  private static Element findAnnotatedElement(
+      Element element, Class<? extends Annotation> annotation) {
+    Element current = element;
+    while (current instanceof TypeElement) {
+      if (current.getAnnotation(annotation) != null) {
+        return current;
+      }
+      TypeMirror superclass = ((TypeElement) current).getSuperclass();
+      if (superclass.getKind() != TypeKind.DECLARED) {
+        return null;
+      }
+      current = typeUtils.asElement(superclass);
+    }
+    return null;
   }
 
   /**
