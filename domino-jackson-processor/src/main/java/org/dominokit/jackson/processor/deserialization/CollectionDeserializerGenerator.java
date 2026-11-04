@@ -42,7 +42,9 @@ import org.dominokit.jackson.processor.TypeRegistry;
 
 /**
  * Generates a deserializer for a {@link java.util.Collection} that is not already in the registry.
- * JSON stays an array. {@code newCollection} returns {@code new TheDeclaredClass()}.
+ * JSON stays an array. {@code newCollection} returns {@code new TheDeclaredClass()}. One class is
+ * generated per raw type and is generic over that type's own parameters, so two fields of the same
+ * subclass with different type arguments share it.
  */
 public final class CollectionDeserializerGenerator {
 
@@ -58,32 +60,39 @@ public final class CollectionDeserializerGenerator {
         Type.isAssignableFrom(typeMirror, List.class)
             ? BaseListJsonDeserializer.class
             : BaseCollectionJsonDeserializer.class;
-    TypeName elementType = TypeName.get(Type.elementType(typeMirror));
+    DeclaredContainer container = new DeclaredContainer(element);
+    TypeName elementType = TypeName.get(Type.elementType(container.getOpen()));
     String packageName = MoreElements.getPackage(element).getQualifiedName().toString();
     String simpleName = element.getSimpleName() + "BeanJsonDeserializerImpl";
     ClassName generated = ClassName.get(packageName, simpleName);
-    TypeName declared = TypeName.get(typeMirror);
-    TypeSpec type =
+    TypeName self = container.parameterize(generated);
+    TypeSpec.Builder type =
         TypeSpec.classBuilder(simpleName)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-            .superclass(ParameterizedTypeName.get(ClassName.get(base), declared, elementType))
-            .addMethod(newInstance(generated, elementType))
-            .addMethod(constructor(elementType))
-            .addMethod(newCollection(declared))
-            .build();
-    write(element, packageName, type);
+            .superclass(
+                ParameterizedTypeName.get(
+                    ClassName.get(base), container.getDeclared(), elementType));
+    container.addTypeVariables(type);
+    type.addMethod(newInstance(self, container, elementType))
+        .addMethod(constructor(elementType))
+        .addMethod(newCollection(container.getDeclared()));
+    write(element, packageName, type.build());
     TypeRegistry.registerCollectionDeserializer(typeMirror, generated);
     return generated;
   }
 
-  private static MethodSpec newInstance(ClassName generated, TypeName elementType) {
-    return MethodSpec.methodBuilder("newInstance")
-        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-        .returns(generated)
+  private static MethodSpec newInstance(
+      TypeName self, DeclaredContainer container, TypeName elementType) {
+    MethodSpec.Builder method =
+        MethodSpec.methodBuilder("newInstance")
+            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .returns(self);
+    container.addTypeVariables(method);
+    return method
         .addParameter(
             ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), elementType),
             "deserializer")
-        .addStatement("return new $T(deserializer)", generated)
+        .addStatement("return new $T(deserializer)", self)
         .build();
   }
 

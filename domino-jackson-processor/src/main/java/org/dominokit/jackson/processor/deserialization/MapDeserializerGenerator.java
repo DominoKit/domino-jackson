@@ -41,7 +41,9 @@ import org.dominokit.jackson.processor.TypeRegistry;
 
 /**
  * Generates a deserializer for a {@link java.util.Map} that is not already in the registry. JSON
- * stays an object. {@code newMap} returns {@code new TheDeclaredClass()}.
+ * stays an object. {@code newMap} returns {@code new TheDeclaredClass()}. One class is generated
+ * per raw type and is generic over that type's own parameters, so {@code ByName<Integer>} and
+ * {@code ByName<String>} share it.
  */
 public final class MapDeserializerGenerator {
 
@@ -53,36 +55,44 @@ public final class MapDeserializerGenerator {
     if (!Type.isMap(typeMirror)) {
       fail(element, "is not a Map");
     }
-    TypeName keyType = TypeName.get(Type.keyType(typeMirror));
-    TypeName valueType = TypeName.get(Type.valueType(typeMirror));
+    DeclaredContainer container = new DeclaredContainer(element);
+    TypeName keyType = TypeName.get(Type.keyType(container.getOpen()));
+    TypeName valueType = TypeName.get(Type.valueType(container.getOpen()));
     String packageName = MoreElements.getPackage(element).getQualifiedName().toString();
     String simpleName = element.getSimpleName() + "BeanJsonDeserializerImpl";
     ClassName generated = ClassName.get(packageName, simpleName);
-    TypeName declared = TypeName.get(typeMirror);
-    TypeSpec type =
+    TypeName self = container.parameterize(generated);
+    TypeSpec.Builder type =
         TypeSpec.classBuilder(simpleName)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .superclass(
                 ParameterizedTypeName.get(
-                    ClassName.get(BaseMapJsonDeserializer.class), declared, keyType, valueType))
-            .addMethod(newInstance(generated, keyType, valueType))
-            .addMethod(constructor(keyType, valueType))
-            .addMethod(newMap(declared))
-            .build();
-    write(element, packageName, type);
+                    ClassName.get(BaseMapJsonDeserializer.class),
+                    container.getDeclared(),
+                    keyType,
+                    valueType));
+    container.addTypeVariables(type);
+    type.addMethod(newInstance(self, container, keyType, valueType))
+        .addMethod(constructor(keyType, valueType))
+        .addMethod(newMap(container.getDeclared()));
+    write(element, packageName, type.build());
     TypeRegistry.registerMapDeserializer(typeMirror, generated);
     return generated;
   }
 
-  private static MethodSpec newInstance(ClassName generated, TypeName keyType, TypeName valueType) {
-    return MethodSpec.methodBuilder("newInstance")
-        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-        .returns(generated)
+  private static MethodSpec newInstance(
+      TypeName self, DeclaredContainer container, TypeName keyType, TypeName valueType) {
+    MethodSpec.Builder method =
+        MethodSpec.methodBuilder("newInstance")
+            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .returns(self);
+    container.addTypeVariables(method);
+    return method
         .addParameter(keyDeserializer(keyType), "keyDeserializer")
         .addParameter(
             ParameterizedTypeName.get(ClassName.get(JsonDeserializer.class), valueType),
             "valueDeserializer")
-        .addStatement("return new $T(keyDeserializer, valueDeserializer)", generated)
+        .addStatement("return new $T(keyDeserializer, valueDeserializer)", self)
         .build();
   }
 
