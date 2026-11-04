@@ -616,11 +616,7 @@ public class Type {
                         .getSimpleName()
                         .toString()
                         .equals("value")) // find the "value" element of JsonSubType
-            .flatMap(
-                entry ->
-                    ((List<AnnotationMirror>) entry.getValue().getValue())
-                        .stream()) // treat JsonSubType.value() as list of annotation mirrors of
-            // JsonSubType.Type
+            .flatMap(entry -> subtypeMirrors(entry.getValue()).stream())
             .collect(Collectors.toList());
 
     return subTypes.stream()
@@ -664,6 +660,26 @@ public class Type {
                         .map(entry -> (TypeMirror) entry.getValue().getValue())
                         .findFirst()
                         .orElse(null)));
+  }
+
+  /**
+   * {@code @JsonSubTypes.value()} is a list of annotation mirrors under javac. The language model
+   * specifies a list of {@link javax.lang.model.element.AnnotationValue}, each wrapping a mirror.
+   */
+  private static List<AnnotationMirror> subtypeMirrors(AnnotationValue value) {
+    List<?> raw = (List<?>) value.getValue();
+    List<AnnotationMirror> mirrors = new ArrayList<>();
+    for (Object item : raw) {
+      if (item instanceof AnnotationMirror) {
+        mirrors.add((AnnotationMirror) item);
+      } else if (item instanceof AnnotationValue) {
+        Object nested = ((AnnotationValue) item).getValue();
+        if (nested instanceof AnnotationMirror) {
+          mirrors.add((AnnotationMirror) nested);
+        }
+      }
+    }
+    return mirrors;
   }
 
   /**
